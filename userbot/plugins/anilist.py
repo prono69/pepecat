@@ -4,6 +4,8 @@ from urllib.parse import quote_plus
 import aiohttp
 import bs4
 import jikanpy
+import datetime
+import textwrap
 import requests
 from jikanpy import Jikan
 from jikanpy.exceptions import APIException
@@ -457,7 +459,6 @@ async def user(event):
         await edit_delete(event, "`Format : .iuser <username>`",5)
         return
         
-    jikan = jikanpy.jikan.Jikan()    
     try:
         user = jikan.user(search_query)
     except APIException:
@@ -636,28 +637,6 @@ async def get_anime(message):
     await message.client.send_file(message.chat_id, file=main_poster, caption=captions)
     await message.delete()
 
-
-@catub.cat_cmd(
-    pattern="smanga(?: |$)(.*)",
-    command=("smanga", plugin_category),
-    info={
-        "header": "Search manga in a different format :)",
-        "usage": "{tr}smanga <manga name>",
-        "examples": "{tr}smanga Black Clover",
-    },
-)
-async def manga(message):
-    search_query = message.pattern_match.group(1)
-    await edit_or_reply(message, "`Searching Manga..`")
-    jikan = jikanpy.jikan.Jikan()
-    search_result = jikan.search("manga", search_query)
-    first_mal_id = search_result["results"][0]["mal_id"]
-    caption, image = get_anime_manga(first_mal_id, "anime_manga", message.chat_id)
-    await message.client.send_file(
-        message.chat_id, file=image, caption=caption, parse_mode="HTML"
-    )
-    await message.delete()
-        
     
 @catub.cat_cmd(
     pattern="aq",

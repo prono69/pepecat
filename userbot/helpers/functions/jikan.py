@@ -273,10 +273,11 @@ def get_anime_manga(mal_id, search_type, _user_id):
         📡 <b>Status</b>: <code>{result['status']}</code>
         🔢 <b>Volumes</b>: <code>{result['volumes']}</code>
         📃 <b>Chapters</b>: <code>{result['chapters']}</code>
+        📈 <b>Rank</b>: <code>{result['rank']}</code>
         💯 <b>Score</b>: <code>{result['score']}</code>
         🎭 <b>Genres</b>: <code>{genre_string}</code>
 
-        📖 <b>Synopsis</b>: <code>{synopsis_string}</code>
+        📖 <b>Synopsis</b>: <code>{synopsis_string}</code> <a href='{result['url']}'>Read More</a>
         """
         )
     return caption, image
