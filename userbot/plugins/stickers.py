@@ -1,4 +1,5 @@
 import asyncio
+import os
 import base64
 import io
 import math
@@ -7,6 +8,8 @@ import re
 import string
 import urllib.request
 from os import remove
+import zipfile
+from collections import defaultdict
 
 import cloudscraper
 import emoji as catemoji
@@ -16,6 +19,7 @@ from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl import functions, types
 from telethon.tl.functions.messages import GetStickerSetRequest
+from telethon.errors import MessageNotModifiedError
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.types import (
     DocumentAttributeFilename,
@@ -58,6 +62,8 @@ KANGING_STR = [
     "Roses are red violets are blue, kanging this sticker so my pacc looks cool",
     "Imprisoning this sticker...",
     "Mr.Steal Your Sticker is stealing this sticker... ",
+    "Aaja Bsdk aa Sala Kurkure...",
+    "Dekh bsdk main tera sticker kang kar raha hu",
 ]
 
 
@@ -67,14 +73,45 @@ def verify_cond(catarray, text):
 
 def pack_name(userid, pack, is_anim):
     if is_anim:
-        return f"catuserbot_{userid}_{pack}_anim"
-    return f"catuserbot_{userid}_{pack}"
+        return f"bang_bros_{pack}_anim"
+    return f"bang_bros_{pack}"
 
 
 def char_is_emoji(character):
     return character in catemoji.UNICODE_EMOJI["en"]
 
+def find_instance(items, class_or_tuple):
+    for item in items:
+        if isinstance(item, class_or_tuple):
+            return item
+    return None
 
+def progress(current, total):
+    logger.info(
+        "Uploaded: {} of {}\nCompleted {}".format(
+            current, total, (current / total) * 100
+        )
+    )
+    
+def is_it_animated_sticker(message):
+    try:
+        if message.media and message.media.document:
+            mime_type = message.media.document.mime_type
+            return "tgsticker" in mime_type
+        else:
+            return False
+    except BaseException:
+        return False
+        
+
+def zipdir(path, ziph):
+    # ziph is zipfile handle
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            ziph.write(os.path.join(root, file))
+            os.remove(os.path.join(root, file))
+    
+    
 def pack_nick(username, pack, is_anim):
     if Config.CUSTOM_STICKER_PACKNAME:
         if is_anim:
@@ -83,9 +120,9 @@ def pack_nick(username, pack, is_anim):
             packnick = f"{Config.CUSTOM_STICKER_PACKNAME} Vol.{pack}"
     else:
         if is_anim:
-            packnick = f"@{username} Vol.{pack} (Animated)"
+            packnick = f"@{username}'s Secret Layer Vol.{pack} Animated"
         else:
-            packnick = f"@{username} Vol.{pack}"
+            packnick = f"@{username}'s Secret Layer Vol.{pack}"
     return packnick
 
 
@@ -298,7 +335,7 @@ async def kang(args):  # sourcery no-metrics
         return
     if photo:
         splat = ("".join(args.text.split(maxsplit=1)[1:])).split()
-        emoji = emoji if emojibypass else "😂"
+        emoji = emoji if emojibypass else "🦆"
         pack = 1
         if len(splat) == 2:
             if char_is_emoji(splat[0][0]):
@@ -350,8 +387,7 @@ async def kang(args):  # sourcery no-metrics
                 )
             await edit_delete(
                 catevent,
-                f"`Sticker kanged successfully!\
-                    \nYour Pack is` [here](t.me/addstickers/{packname}) `and emoji for the kanged sticker is {emoji}`",
+                f"**Kanged in moi [Collection](t.me/addstickers/{packname})!** \n**Emoji : **`{emoji}`",
                 parse_mode="md",
                 time=10,
             )
@@ -381,8 +417,7 @@ async def kang(args):  # sourcery no-metrics
             else:
                 await edit_delete(
                     catevent,
-                    f"`Sticker kanged successfully!\
-                    \nYour Pack is` [here](t.me/addstickers/{packname}) `and emoji for the kanged sticker is {emoji}`",
+                    f"**Kanged in moi [Collection](t.me/addstickers/{packname})!** \n**Emoji : **`{emoji}`",
                     parse_mode="md",
                     time=10,
                 )
@@ -716,8 +751,111 @@ async def get_pack_info(event):
         f"**Emojis In Pack:**\n{' '.join(pack_emojis)}"
     )
     await catevent.edit(OUTPUT)
+    
 
+@catub.cat_cmd(
+    pattern="loda ?(.*)",
+    command=("loda", plugin_category),
+    info={
+        "header": "To download whole sticker pack in a zip file",
+        "description": "See Header",
+        "usage": "{tr}loda <reply to a sticker>",
+    },
+)
+async def _(event):
+    if event.fwd_from:
+        return
+    if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
+        os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
+    if event.reply_to_msg_id:
+        reply_message = await event.get_reply_message()
+        # https://gist.github.com/udf/e4e3dbb2e831c8b580d8fddd312714f7
+        if not reply_message.sticker:
+            return
+        sticker = reply_message.sticker
+        sticker_attrib = find_instance(sticker.attributes, DocumentAttributeSticker)
+        if not sticker_attrib.stickerset:
+            await edit_delete(event, "This sticker is not part of a pack", 4)
+            return
+        is_a_s = is_it_animated_sticker(reply_message)
+        file_ext_ns_ion = "webp"
+        file_caption = "`Now Pay me 69$`"
+        a = await edit_or_reply(event, "`Hold on! Doing mejik")
+        if is_a_s:
+            file_ext_ns_ion = "tgs"
+            file_caption = "Forward the ZIP file to @AnimatedStickersRoBot to get lottIE JSON containing the vector information."
+        sticker_set = await bot(GetStickerSetRequest(sticker_attrib.stickerset))
+        pack_file = os.path.join(
+            Config.TMP_DOWNLOAD_DIRECTORY, sticker_set.set.short_name, "pack.txt"
+        )
+        if os.path.isfile(pack_file):
+            os.remove(pack_file)
+        # Sticker emojis are retrieved as a mapping of
+        # <emoji>: <list of document ids that have this emoji>
+        # So we need to build a mapping of <document id>: <list of emoji>
+        # Thanks, Durov
+        emojis = defaultdict(str)
+        for pack in sticker_set.packs:
+            for document_id in pack.documents:
+                emojis[document_id] += pack.emoticon
 
+                
+        async def download(sticker, emojis, path, file):
+            await bot.download_media(sticker, file=os.path.join(path, file))
+            with open(pack_file, "a") as f:
+                f.write(f"{{'image_file': '{file}','emojis':{emojis[sticker.id]}}},")
+
+        pending_tasks = [
+            asyncio.ensure_future(
+                download(
+                    document,
+                    emojis,
+                    Config.TMP_DOWNLOAD_DIRECTORY + sticker_set.set.short_name,
+                    f"{i:03d}.{file_ext_ns_ion}",
+                )
+            )
+            for i, document in enumerate(sticker_set.documents)
+        ]
+        
+        num_tasks = len(pending_tasks)
+        while True:
+            done, pending_tasks = await asyncio.wait(
+                pending_tasks, timeout=2.5, return_when=asyncio.FIRST_COMPLETED
+            )
+            try:
+                await a.edit(
+                    f"Downloaded {num_tasks - len(pending_tasks)}/{sticker_set.set.count}"
+                )
+            except MessageNotModifiedError:
+                pass
+            if not pending_tasks:
+                break
+        # https://gist.github.com/udf/e4e3dbb2e831c8b580d8fddd312714f7
+        directory_name = Config.TMP_DOWNLOAD_DIRECTORY + sticker_set.set.short_name
+        zipf = zipfile.ZipFile(directory_name + ".zip", "w", zipfile.ZIP_DEFLATED)
+        zipdir(directory_name, zipf)
+        zipf.close()
+        await bot.send_file(
+            event.chat_id,
+            directory_name + ".zip",
+            caption=file_caption,
+            force_document=True,
+            allow_cache=False,
+            reply_to=event.message.id,
+            progress_callback=progress,
+        )
+        try:
+            os.remove(directory_name + ".zip")
+            os.remove(directory_name)
+        except BaseException:
+            pass
+        await a.edit("`Task Completed`")
+        await asyncio.sleep(1)
+        await event.delete()
+    else:
+        await edit_or_reply("**TODO :** Not Implemented")
+
+        
 @catub.cat_cmd(
     pattern="stickers ?(.*)",
     command=("stickers", plugin_category),
@@ -747,3 +885,4 @@ async def cb_sticker(event):
             packid = (pack.button).get("data-popup")
             reply += f"\n **• ID: **`{packid}`\n [{packtitle}]({packlink})"
     await catevent.edit(reply)
+    

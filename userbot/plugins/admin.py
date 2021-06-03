@@ -438,7 +438,7 @@ async def startmute(event):
     command=("unmute", plugin_category),
     info={
         "header": "To allow user to send messages again",
-        "description": "Will change user permissions ingroup to send messages again.\
+        "description": "Will change user permissions in group to send messages again.\
         \nNote : You need proper rights for this.",
         "usage": [
             "{tr}unmute <userid/username/reply>",
@@ -554,13 +554,13 @@ async def endmute(event):
         "header": "For pining messages in chat",
         "description": "reply to a message to pin it in that in chat\
         \nNote : You need proper rights for this if you want to use in group.",
-        "options": {"loud": "To notify everyone without this.it will pin silently"},
+        "options": {"loud": "To notify everyone in the chat. Without thus it will pin silently"},
         "usage": [
             "{tr}pin <reply>",
             "{tr}pin loud <reply>",
         ],
     },
-)
+)    
 async def pin(event):
     "To pin a message in chat"
     to_pin = event.reply_to_msg_id
@@ -599,7 +599,7 @@ async def pin(event):
         ],
     },
 )
-async def pin(event):
+async def unpin(event):
     "To unpin message(s) in the group"
     to_unpin = event.reply_to_msg_id
     options = (event.pattern_match.group(1)).strip()
@@ -639,7 +639,7 @@ async def pin(event):
         "header": "To get recent deleted messages in group",
         "description": "To check recent deleted messages in group, by default will show 5. you can get 1 to 15 messages.",
         "flags": {
-            "u": "use this flag to upload media to chat else will just show as media."
+            "u": "use this flag to upload media to the chat else it will just show as media type."
         },
         "usage": [
             "{tr}undlt <count>",

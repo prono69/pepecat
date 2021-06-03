@@ -6,11 +6,10 @@ from io import BytesIO, StringIO
 import bs4
 import jikanpy
 import requests
-from jikanpy import Jikan
 from telethon.tl.types import DocumentAttributeAnimated
+from html_telegraph_poster import TelegraphPoster
 from telethon.utils import is_video
 
-jikan = Jikan()
 url = "https://graphql.anilist.co"
 # Anime Helper
 
@@ -202,7 +201,7 @@ def getBannerLink(mal, kitsu_search=True):
     return getPosterLink(mal)
 
 
-def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
+def get_anime_manga(mal_id, search_type, _user_id):
     jikan = jikanpy.jikan.Jikan()
     if search_type == "anime_anime":
         result = jikan.anime(mal_id)
@@ -210,7 +209,7 @@ def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
         if trailer:
             LOL = f"<a href='{trailer}'>Trailer</a>"
         else:
-            LOL = "<i>No Trailer Available</i>"
+            LOL = "<code>No Trailer Available</code>"
         image = getBannerLink(mal_id)
         studio_string = ", ".join(
             studio_info["name"] for studio_info in result["studios"]
@@ -232,7 +231,7 @@ def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
     alternative_names.extend(result["title_synonyms"])
     if alternative_names:
         alternative_names_string = ", ".join(alternative_names)
-        caption += f"\n<b>Also known as</b>: <i>{alternative_names_string}</i>"
+        caption += f"\n<b>Also known as</b>: <code>{alternative_names_string}</code>"
     genre_string = ", ".join(genre_info["name"] for genre_info in result["genres"])
     if result["synopsis"] is not None:
         synopsis = result["synopsis"].split(" ", 60)
@@ -249,30 +248,35 @@ def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
     if search_type == "anime_anime":
         caption += textwrap.dedent(
             f"""
-        🆎 <b>Type</b>: <i>{result['type']}</i>
-        📡 <b>Status</b>: <i>{result['status']}</i>
-        🎙️ <b>Aired</b>: <i>{result['aired']['string']}</i>
-        🔢 <b>Episodes</b>: <i>{result['episodes']}</i>
-        💯 <b>Score</b>: <i>{result['score']}</i>
-        🌐 <b>Premiered</b>: <i>{result['premiered']}</i>
-        ⌛ <b>Duration</b>: <i>{result['duration']}</i>
-        🎭 <b>Genres</b>: <i>{genre_string}</i>
-        🎙️ <b>Studios</b>: <i>{studio_string}</i>
-        💸 <b>Producers</b>: <i>{producer_string}</i>
+        🆎 <b>Type</b>: <code>{result['type']}</code>
+        🆔 <b>MAL ID</b>: <code>{result['mal_id']}</code>
+        📡 <b>Status</b>: <code>{result['status']}</code>
+        🎙️ <b>Aired</b>: <code>{result['aired']['string']}</code>
+        🔢 <b>Episodes</b>: <code>{result['episodes']}</code>
+        💯 <b>Score</b>: <code>{result['score']}/10</code>
+        🔞 <b>Rating</b>: <code>{result['rating']}</code>
+        🌐 <b>Premiered</b>: <code>{result['premiered']}</code>
+        ⌛ <b>Duration</b>: <code>{result['duration']}</code>
+        🎭 <b>Genres</b>: <code>{genre_string}</code>
+        🎙️ <b>Studios</b>: <code>{studio_string}</code>
+        💸 <b>Producers</b>: <code>{producer_string}</code>
+
         🎬 <b>Trailer:</b> {LOL}
-        📖 <b>Synopsis</b>: <i>{synopsis_string}</i> <a href='{result['url']}'>Read More</a>
+
+        📖 <b>Synopsis</b>: <code>{synopsis_string}</code> <a href='{result['url']}'>Read More</a>
         """
         )
     elif search_type == "anime_manga":
         caption += textwrap.dedent(
             f"""
-        🆎 <b>Type</b>: <i>{result['type']}</i>
-        📡 <b>Status</b>: <i>{result['status']}</i>
-        🔢 <b>Volumes</b>: <i>{result['volumes']}</i>
-        📃 <b>Chapters</b>: <i>{result['chapters']}</i>
-        💯 <b>Score</b>: <i>{result['score']}</i>
-        🎭 <b>Genres</b>: <i>{genre_string}</i>
-        📖 <b>Synopsis</b>: <i>{synopsis_string}</i>
+        🆎 <b>Type</b>: <code>{result['type']}</code>
+        📡 <b>Status</b>: <code>{result['status']}</code>
+        🔢 <b>Volumes</b>: <code>{result['volumes']}</code>
+        📃 <b>Chapters</b>: <code>{result['chapters']}</code>
+        💯 <b>Score</b>: <code>{result['score']}</code>
+        🎭 <b>Genres</b>: <code>{genre_string}</code>
+
+        📖 <b>Synopsis</b>: <code>{synopsis_string}</code>
         """
         )
     return caption, image
@@ -296,6 +300,17 @@ def get_poster(query):
         # img_path = wget.download(image, os.path.join(Config.DOWNLOAD_LOCATION, 'imdb_poster.jpg'))
         return image
 
+
+def post_to_telegraph(anime_title, html_format_content):
+    post_client = TelegraphPoster(use_api=True)
+    auth_name = "@LazyAF_Pepe"
+    bish = "https://t.me/LazyAF_Pepe"
+    post_client.create_api_token(auth_name)
+    post_page = post_client.post(
+        title=anime_title, author=auth_name, author_url=bish, text=html_format_content
+    )
+    return post_page["url"]
+    
 
 def replace_text(text):
     return text.replace('"', "").replace("\\r", "").replace("\\n", "").replace("\\", "")
@@ -352,3 +367,4 @@ def is_gif(file):
     if not is_video(file):
         return False
     return DocumentAttributeAnimated() in getattr(file, "document", file).attributes
+    

@@ -18,6 +18,8 @@ from ..helpers.functions import (
     callAPI,
     formatJSON,
     get_anime_manga,
+    post_to_telegraph,
+    get_poster,
     getBannerLink,
     memory_file,
     replace_text,
@@ -56,13 +58,13 @@ async def anilist(event):
 
 
 @catub.cat_cmd(
-    pattern="anime(?: |$)(.*)",
-    command=("anime", plugin_category),
+    pattern="ianime(?: |$)(.*)",
+    command=("ianime", plugin_category),
     info={
         "header": "Shows you the details of the anime.",
         "description": "Fectchs anime information from anilist",
-        "usage": "{tr}anime <name of anime>",
-        "examples": "{tr}anime fairy tail",
+        "usage": "{tr}ianime <name of anime>",
+        "examples": "{tr}ianime fairy tail",
     },
 )
 async def anilist(event):
@@ -162,7 +164,7 @@ async def get_manga(event):
     info={
         "header": "Shows you character infomation.",
         "usage": "{tr}char <char name>",
-        "examples": "{tr}char erza scarlet",
+        "examples": "{tr}char Shota Nagisa",
     },
 )
 async def character(event):
@@ -184,9 +186,9 @@ async def character(event):
         return await edit_delete(catevent, "`Character not found.`")
     first_mal_id = search_result["results"][0]["mal_id"]
     character = jikan.character(first_mal_id)
-    caption = f"[{character['name']}]({character['url']})"
+    caption = f"[🇯🇵] [{character['name']}]({character['url']})"
     if character["name_kanji"] != "Japanese":
-        caption += f" ({character['name_kanji']})\n"
+        caption += f" — `{character['name_kanji']}`\n"
     else:
         caption += "\n"
     if character["nicknames"]:
@@ -202,7 +204,7 @@ async def character(event):
     for entity in character:
         if character[entity] is None:
             character[entity] = "Unknown"
-    caption += f"\n🔰**Extracted Character Data**🔰\n\n{about_string}"
+    caption += f"\n\n🔰**Extracted Character Data**🔰\n\n{about_string}"
     caption += f" [Read More]({mal_url})..."
     await catevent.delete()
     await event.client.send_file(
@@ -228,7 +230,7 @@ async def character(event):
         ],
     },
 )
-async def anime_doqnload(event):
+async def anime_download(event):
     "Anime download links."
     search_query = event.pattern_match.group(2)
     input_str = event.pattern_match.group(1)
@@ -293,13 +295,13 @@ async def upcoming(event):
 
 
 @catub.cat_cmd(
-    pattern="w(hat)?anime$",
-    command=("whatanime", plugin_category),
+    pattern="w(hat)?a$",
+    command=("wa", plugin_category),
     info={
         "header": "Reverse search of anime.",
         "usage": [
-            "{tr}whatanime reply to photo/gif/video",
-            "{tr}wanime reply to photo/gif/video",
+            "{tr}whata reply to photo/gif/video",
+            "{tr}wa reply to photo/gif/video",
         ],
     },
 )
@@ -377,3 +379,297 @@ async def whatanime(event):
                 f'{readable_time(js0["from"])} - {readable_time(js0["to"])}',
                 file=js0["image"],
             )
+
+            
+@catub.cat_cmd(
+    pattern="imanga(?: |$)(.*)",
+    command=("imanga", plugin_category),
+    info={
+        "header": "Searches for manga.",
+        "usage": "{tr}imanga <manga name>",
+        "examples": "{tr}imanga fairy tail",
+    },
+)
+async def manga(event):
+    query = event.pattern_match.group(1)
+    await edit_or_reply(event, "`Searching Manga...`")
+    if not query:
+        await edit_delete(event, "`Bruh.. Gib me Something to Search`", 5)
+        return
+    res = ""
+    manga = ""
+    try:
+        res = jikan.search("manga", query).get("results")[0].get("mal_id")
+    except APIException:
+        await edit_delete(event, "Error connecting to the API. Please try again!", 5)
+        return ""
+    if res:
+        try:
+            manga = jikan.manga(res)
+        except APIException:
+            await edit_delete(event, "Error connecting to the API. Please try again!", 5)
+            return ""
+        title = manga.get("title")
+        japanese = manga.get("title_japanese")
+        type = manga.get("type")
+        status = manga.get("status")
+        score = manga.get("score")
+        volumes = manga.get("volumes")
+        chapters = manga.get("chapters")
+        genre_lst = manga.get("genres")
+        genres = ""
+        for genre in genre_lst:
+            genres += genre.get("name") + ", "
+        genres = genres[:-2]
+        synopsis = manga.get("synopsis")
+        image = manga.get("image_url")
+        url = manga.get("url")
+        rep = f"<b>{title} ({japanese})</b>\n"
+        rep += f"<b>Type:</b> <code>{type}</code>\n"
+        rep += f"<b>Status:</b> <code>{status}</code>\n"
+        rep += f"<b>Genres:</b> <code>{genres}</code>\n"
+        rep += f"<b>Score:</b> <code>{score}</code>\n"
+        rep += f"<b>Volumes:</b> <code>{volumes}</code>\n"
+        rep += f"<b>Chapters:</b> <code>{chapters}</code>\n\n"
+        rep += f"<a href='{image}'>\u200c</a>"
+        rep += f"📖 <b>Synopsis</b>: <i>{synopsis}</i>\n"
+        rep += f'<b>Read More:</b> <a href="{url}">MyAnimeList</a>'
+        await edit_or_reply(event, rep, parse_mode="HTML", link_preview=True)
+
+
+@catub.cat_cmd(
+    pattern="iuser ?(.*)",
+    command=("iuser", plugin_category),
+    info={
+        "header": "Search profiles of MAL.",
+        "usage": "{tr}iuser <username>",
+        "examples": "{tr}iuser KenKaneki",
+    },
+)
+async def user(event):
+    search_query = event.pattern_match.group(1)
+    message = await event.get_reply_message()
+    if search_query:
+        pass
+    elif message:
+        search_query = message.text
+    else:
+        await edit_delete(event, "`Format : .iuser <username>`",5)
+        return
+
+    try:
+        user = jikan.user(search_query)
+    except APIException:
+        await edit_delete(event, "`Username not Found Nibba`",5)
+        return
+
+    date_format = "%Y-%m-%d"
+    if user["image_url"] is None:
+        img = "https://telegra.ph//file/9b4205e1b1cc68a4ffd5e.jpg"
+    else:
+        img = user["image_url"]
+
+    try:
+        user_birthday = datetime.datetime.fromisoformat(user["birthday"])
+        user_birthday_formatted = user_birthday.strftime(date_format)
+    except BaseException:
+        user_birthday_formatted = "Unknown"
+
+    user_joined_date = datetime.datetime.fromisoformat(user["joined"])
+    user_joined_date_formatted = user_joined_date.strftime(date_format)
+    user_last_online = datetime.datetime.fromisoformat(user["last_online"])
+    user_last_online_formatted = user_last_online.strftime(date_format)
+
+    for entity in user:
+        if user[entity] is None:
+            user[entity] = "Unknown"
+
+    about = user["about"].split(" ", 60)
+
+    try:
+        about.pop(60)
+    except IndexError:
+        pass
+
+    about_string = " ".join(about)
+    about_string = about_string.replace("<br>", "").strip().replace("\r\n", "\n")
+
+    caption = ""
+
+    caption += textwrap.dedent(
+        f"""
+    **Username**: [{user['username']}]({user['url']})
+
+    **Gender**: `{user['gender']}`
+    **MAL ID**: `{user['user_id']}`
+    **Birthday**: `{user_birthday_formatted}`
+    **Joined**: `{user_joined_date_formatted}`
+    **Last Online**: `{user_last_online_formatted}`
+    
+    **Days wasted watching Anime**: `{user['anime_stats']['days_watched']}`
+    **Days wasted reading Manga**: `{user['manga_stats']['days_read']}`
+
+    """
+    )
+
+    caption += f"**About**: {about_string}"
+    await event.client.send_file(event.chat_id, file=img, caption=caption)
+            
+
+@catub.cat_cmd(
+    pattern="anime ?(.*)",
+    command=("anime", plugin_category),
+    info={
+        "header": "Search Anime in a noice format :)",
+        "usage": "{tr}anime <anime name>",
+        "examples": "{tr}anime boku no pico",
+    },
+)
+async def get_anime(message):
+    try:
+        query = message.pattern_match.group(1)
+    except IndexError:
+        if message.reply_to_msg_id:
+            query = await message.get_reply_message().text
+        else:
+            await edit_delete(message,
+                "You gave nothing to search. (｡ì _ í｡)\n `Usage: .anime <anime name>`",5
+            )
+            return
+    except Exception as err:
+        await edit_delete(message, f"**Encountered an Unknown Exception**: \n{err}",5)
+        return
+
+    p_rm = await edit_or_reply(message, "`Searching Anime...`")
+    f_mal_id = ""
+    try:
+        jikan = jikanpy.AioJikan()
+        search_res = await jikan.search("anime", query)
+        f_mal_id = search_res["results"][0]["mal_id"]
+    except IndexError:
+        await p_rm.edit(f"No Results Found for {query}")
+        return
+    except Exception as err:
+        await p_rm.edit(f"**Encountered an Unknown Exception**: \n{err}")
+        return
+
+    results_ = await jikan.anime(f_mal_id)
+    await jikan.close()
+
+    # Get All Info of anime
+    anime_title = results_["title"]
+    id = results_["mal_id"]
+    jap_title = results_["title_japanese"]
+    eng_title = results_["title_english"]
+    type_ = results_["type"]
+    results_["source"]
+    episodes = results_["episodes"]
+    status = results_["status"]
+    results_["aired"].get("string")
+    results_["duration"]
+    rating = results_["rating"]
+    score = results_["score"]
+    synopsis = results_["synopsis"]
+    results_["background"]
+    producer_list = results_["producers"]
+    studios_list = results_["studios"]
+    genres_list = results_["genres"]
+
+    # Info for Buttons
+    mal_dir_link = results_["url"]
+    trailer_link = results_["trailer_url"]
+
+    main_poster = ""
+    telegraph_poster = ""
+    # Poster Links Search
+    try:
+        main_poster = get_poster(anime_title)
+    except BaseException:
+        pass
+    try:
+        telegraph_poster = getBannerLink(f_mal_id)
+    except BaseException:
+        pass
+    # if not main_poster:
+    main_poster = telegraph_poster
+    if not telegraph_poster:
+        telegraph_poster = main_poster
+
+    genress_md = ""
+    producer_md = ""
+    studio_md = ""
+    for i in genres_list:
+        genress_md += f"{i['name']} "
+    for i in producer_list:
+        producer_md += f"[{i['name']}]({i['url']}) "
+    for i in studios_list:
+        studio_md += f"[{i['name']}]({i['url']}) "
+
+    # Build synopsis telegraph post
+    html_enc = ""
+    html_enc += f"<img src = '{telegraph_poster}' title = {anime_title}/>"
+    html_enc += f"<br><b>» Studios:</b> {studio_md}</br>"
+    html_enc += f"<br><b>» Producers:</b> {producer_md}</br>"
+    html_enc += "<br><b>» Synopsis: </b></br>"
+    html_enc += f"<br><em>{synopsis}</em></br>"
+    synopsis_link = post_to_telegraph(anime_title, html_enc)
+
+    # Build captions:
+    captions = f"""📺 `{anime_title}` - `{eng_title}` - `{jap_title}`
+
+**🆎 Type:** `{type_}`
+**🆔 ID:** `{id}`
+**🎭 Genre:** `{genress_md}`
+**🔢 Episodes:** `{episodes}`
+**📡 Status:** `{status}`
+**💯 Score:** `{score}/10`
+**🔞 Rating:** `{rating}`
+
+[🎬 Trailer]({trailer_link})
+
+[📖 Synopsis]({synopsis_link}) | [📚 More Info]({mal_dir_link})
+
+©️ @LazyAF_Pepe"""
+
+    await p_rm.delete()
+    await message.client.send_file(message.chat_id, file=main_poster, caption=captions)
+    await message.delete()
+
+
+@catub.cat_cmd(
+    pattern="smanga(?: |$)(.*)",
+    command=("smanga", plugin_category),
+    info={
+        "header": "Search manga in a different format :)",
+        "usage": "{tr}smanga <manga name>",
+        "examples": "{tr}smanga Black Clover",
+    },
+)
+async def manga(message):
+    search_query = message.pattern_match.group(1)
+    await edit_or_reply(message, "`Searching Manga..`")
+    jikan = jikanpy.jikan.Jikan()
+    search_result = jikan.search("manga", search_query)
+    first_mal_id = search_result["results"][0]["mal_id"]
+    caption, image = get_anime_manga(first_mal_id, "anime_manga", message.chat_id)
+    await message.client.send_file(
+        message.chat_id, file=image, caption=caption, parse_mode="HTML"
+    )
+    await message.delete()
+        
+    
+@catub.cat_cmd(
+    pattern="aq",
+    command=("aq", plugin_category),
+    info={
+        "header": "Get random Anime quotes.",
+        "usage": "{tr}aq",
+        "examples": "{tr}aq",
+    },
+)
+async def k(message):
+	data = requests.get("https://animechan.vercel.app/api/random").json()
+	anime = data['anime']
+	character = data['character']
+	quote = data['quote']
+	await edit_or_reply(message, f"❅ <b><u>Anime:</b></u>\n ➥ <code>{anime}</code>\n\n❅ <b><u>Character:</b></u>\n ➥ <code>{character}</code>\n\n❅ <b><u>Quote:</u></b>\n ➥ <code>{quote}</code>", parse_mode="html")

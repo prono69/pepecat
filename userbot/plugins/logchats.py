@@ -87,7 +87,7 @@ async def log_tagged_messages(event):
     except Exception as e:
         LOGS.info(str(e))
     messaget = media_type(event)
-    resalt = f"#TAGS \n<b>Group : </b><code>{hmm.title}</code>"
+    resalt = f"#TAGS 🔔 \n<b>Group : </b><code>{hmm.title}</code>"
     if full is not None:
         resalt += (
             f"\n<b>From : </b> 👤{_format.htmlmentionuser(full.first_name , full.id)}"
@@ -96,7 +96,7 @@ async def log_tagged_messages(event):
         resalt += f"\n<b>Message type : </b><code>{messaget}</code>"
     else:
         resalt += f"\n<b>Message : </b>{event.message.message}"
-    resalt += f"\n<b>Message link: </b><a href = 'https://t.me/c/{hmm.id}/{event.message.id}'> link</a>"
+    resalt += f"\n<b>Message link: </b><a href = 'https://t.me/c/{hmm.id}/{event.message.id}'> HERE</a>"
     if not event.is_private:
         await event.client.send_message(
             Config.PM_LOGGER_GROUP_ID,

@@ -2,7 +2,7 @@
 Syntax: .speedtest
 Available Options: image, file, text"""
 
-from time import time
+from datetime import datetime
 
 import speedtest
 
@@ -17,7 +17,7 @@ plugin_category = "utils"
 def convert_from_bytes(size):
     power = 2 ** 10
     n = 0
-    units = {0: "", 1: "Kbps", 2: "Mbps", 3: "Gbps", 4: "Tbps"}
+    units = {0: "", 1: "kilobytes", 2: "megabytes", 3: "gigabytes", 4: "terabytes"}
     while size > power:
         size /= power
         n += 1
@@ -31,10 +31,7 @@ def convert_from_bytes(size):
         "header": "Botserver's speedtest by ookla.",
         "options": {
             "text": "will give output as text",
-            "image": (
-                "Will give output as image this is default option if "
-                "no input is given."
-            ),
+            "image": "Will give output as image this is default option if no input is given.",
             "file": "will give output as png file.",
         },
         "usage": ["{tr}speedtest <option>", "{tr}speedtest"],
@@ -54,13 +51,13 @@ async def _(event):
     catevent = await edit_or_reply(
         event, "`Calculating my internet speed. Please wait!`"
     )
-    start = time()
+    start = datetime.now()
     s = speedtest.Speedtest()
     s.get_best_server()
     s.download()
     s.upload()
-    end = time()
-    ms = round(end - start, 2)
+    end = datetime.now()
+    ms = (end - start).microseconds / 1000
     response = s.results.dict()
     download_speed = response.get("download")
     upload_speed = response.get("upload")
@@ -76,16 +73,14 @@ async def _(event):
             await catevent.edit(
                 """`SpeedTest completed in {} seconds`
 
-`Download: {} (or) {} MB/s`
-`Upload: {} (or) {} MB/s`
-`Ping: {} ms`
+`Download: {}`
+`Upload: {}`
+`Ping: {}`
 `Internet Service Provider: {}`
 `ISP Rating: {}`""".format(
                     ms,
                     convert_from_bytes(download_speed),
-                    round(download_speed / 8e6, 2),
                     convert_from_bytes(upload_speed),
-                    round(upload_speed / 8e6, 2),
                     ping_time,
                     i_s_p,
                     i_s_p_rating,
@@ -104,17 +99,15 @@ async def _(event):
     except Exception as exc:
         await catevent.edit(
             """**SpeedTest** completed in {} seconds
-Download: {} (or) {} MB/s
-Upload: {} (or) {} MB/s
-Ping: {} ms
+Download: {}
+Upload: {}
+Ping: {}
 
 __With the Following ERRORs__
 {}""".format(
                 ms,
                 convert_from_bytes(download_speed),
-                round(download_speed / 8e6, 2),
                 convert_from_bytes(upload_speed),
-                round(upload_speed / 8e6, 2),
                 ping_time,
                 str(exc),
             )

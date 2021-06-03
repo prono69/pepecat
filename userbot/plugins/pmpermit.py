@@ -587,7 +587,7 @@ async def pmpermit_on(event):
                 event, "__Pmpermit has been enabled for your account succesfully.__"
             )
         else:
-            await edit_delete(event, "__Pmpermit is already enabled for your account__")
+            await edit_delete(event, "__Pmpermit is already enabled for your account")
     else:
         if gvarstatus("pmpermit") is not None:
             delgvar("pmpermit")
@@ -595,9 +595,7 @@ async def pmpermit_on(event):
                 event, "__Pmpermit has been disabled for your account succesfully__"
             )
         else:
-            await edit_delete(
-                event, "__Pmpermit is already disabled for your account__"
-            )
+            await edit_delete(event, "__Pmpermit is already disabled for your account")
 
 
 @catub.cat_cmd(
@@ -616,7 +614,7 @@ async def approve_p_m(event):
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
+            f"__Turn on pmpermit by doing __`{cmdhd}pmpermit on` __for working of this plugin__",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -695,7 +693,7 @@ async def disapprove_p_m(event):
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
+            f"__Turn on pmpermit by doing __`{cmdhd}pmpermit on` __for working of this plugin__",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -743,7 +741,7 @@ async def block_p_m(event):
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
+            f"__Turn on pmpermit by doing __`{cmdhd}pmpermit on` __for working of this plugin__",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -799,7 +797,7 @@ async def unblock_pm(event):
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
+            f"__Turn on pmpermit by doing __`{cmdhd}pmpermit on` __for working of this plugin__",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -830,7 +828,7 @@ async def approve_p_m(event):
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __to work this plugin__",
+            f"__Turn on pmpermit by doing __`{cmdhd}pmpermit on` __to work this plugin__",
         )
     approved_users = pmpermit_sql.get_all_approved()
     APPROVED_PMs = "**Current Approved PMs**\n\n"

@@ -2,6 +2,7 @@ import time
 
 import heroku3
 
+from fake_useragent import UserAgent
 from .Config import Config
 from .core import logger
 from .core.session import catub
@@ -18,20 +19,26 @@ bot = catub
 StartTime = time.time()
 catversion = "3.0.0"
 
+CAT_ID = ["790841356", "986755683", "880678601"]
+
+agent = UserAgent()
+def user_agent():
+    return agent.random
+
 if Config.UPSTREAM_REPO == "goodcat":
     UPSTREAM_REPO_URL = "https://github.com/sandy1709/catuserbot"
 elif Config.UPSTREAM_REPO == "badcat":
     UPSTREAM_REPO_URL = "https://github.com/Jisan09/catuserbot"
 else:
     UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
-
+ 
 if Config.PRIVATE_GROUP_BOT_API_ID == 0:
     BOTLOG = False
     BOTLOG_CHATID = "me"
 else:
     BOTLOG = True
     BOTLOG_CHATID = Config.PRIVATE_GROUP_BOT_API_ID
-
+ 
 try:
     if Config.HEROKU_API_KEY is not None or Config.HEROKU_APP_NAME is not None:
         HEROKU_APP = heroku3.from_key(Config.HEROKU_API_KEY).apps()[
@@ -41,8 +48,8 @@ try:
         HEROKU_APP = None
 except Exception:
     HEROKU_APP = None
-
-
+ 
+ 
 # Global Configiables
 COUNT_MSG = 0
 USERS = {}

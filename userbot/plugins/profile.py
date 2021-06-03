@@ -30,11 +30,11 @@ USERNAME_TAKEN = "```This username is already taken.```"
 
 
 @catub.cat_cmd(
-    pattern="pbio (.*)",
-    command=("pbio", plugin_category),
+    pattern="cbio (.*)",
+    command=("cbio", plugin_category),
     info={
         "header": "To set bio for this account.",
-        "usage": "{tr}pbio <your bio>",
+        "usage": "{tr}cbio <your bio>",
     },
 )
 async def _(event):
@@ -48,11 +48,11 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="pname (.*)",
-    command=("pname", plugin_category),
+    pattern="cname (.*)",
+    command=("cname", plugin_category),
     info={
         "header": "To set/change name for this account.",
-        "usage": ["{tr}pname firstname ; last name", "{tr}pname firstname"],
+        "usage": ["{tr}cname firstname ; last name", "{tr}pname firstname"],
     },
 )
 async def _(event):
@@ -74,11 +74,11 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="ppic$",
-    command=("ppic", plugin_category),
+    pattern="cpic$",
+    command=("cpic", plugin_category),
     info={
         "header": "To set profile pic for this account.",
-        "usage": "{tr}ppic <reply to image or gif>",
+        "usage": "{tr}cpic <reply to image or gif>",
     },
 )
 async def _(event):
@@ -99,7 +99,7 @@ async def _(event):
     else:
         if photo:
             await catevent.edit("`now, Uploading to Telegram ...`")
-            if photo.endswith((".mp4", ".MP4")):
+            if photo.endswith((".mp4", ".MP4", ".gif")):
                 # https://t.me/tgbetachat/324694
                 size = os.stat(photo).st_size
                 if size > 2097152:
@@ -121,7 +121,7 @@ async def _(event):
                 await catevent.edit(f"**Error:**\n`{str(e)}`")
             else:
                 await edit_or_reply(
-                    catevent, "`My profile picture was succesfully changed`"
+                    catevent, "`Haha yes! profile picture was succesfully changed`"
                 )
     try:
         os.remove(photo)
@@ -130,11 +130,11 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="pusername (.*)",
-    command=("pusername", plugin_category),
+    pattern="cusername (.*)",
+    command=("cusername", plugin_category),
     info={
         "header": "To set/update username for this account.",
-        "usage": "{tr}pusername <new username>",
+        "usage": "{tr}cusername <new username>",
     },
 )
 async def update_username(username):
@@ -226,7 +226,6 @@ async def remove_profilepic(delpfp):
     await edit_delete(
         delpfp, f"`Successfully deleted {len(input_photos)} profile picture(s).`"
     )
-
 
 @catub.cat_cmd(
     pattern="myusernames$",

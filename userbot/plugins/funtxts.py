@@ -46,4 +46,27 @@ async def hmm(cat):
 async def hmm(cat):
     "Some random facts"
     factcat = nekos.fact()
-    await edit_or_reply(cat, factcat)
+    await edit_or_reply(cat, f"`{factcat}`")
+    
+    
+@catub.cat_cmd(
+    pattern="uwu ?(.*)",
+    command=("uwu", plugin_category),
+    info={
+        "header": "OwOify text",
+        "usage": "{tr}uwu <text>",
+    },
+)
+async def uwu(cat):
+    "UwU"
+    textx = await cat.get_reply_message()
+    message = cat.pattern_match.group(1)
+    if message:
+        pass
+    elif textx:
+        message = textx.text
+    else:
+        await edit_or_reply(cat, "`Give some text to owoify`")
+        return
+    kk = nekos.owoify(f"{message}")
+    await edit_or_reply(cat, f"`{kk}`")

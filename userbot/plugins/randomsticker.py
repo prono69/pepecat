@@ -15,7 +15,7 @@ from ..helpers import reply_id
 plugin_category = "extra"
 
 BASE_URL = "https://headp.at/pats/{}"
-PAT_IMAGE = "pat.webp"
+PAT_IMAGE = "pat.jpg"
 
 
 @catub.cat_cmd(

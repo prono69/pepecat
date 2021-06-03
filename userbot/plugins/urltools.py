@@ -118,7 +118,42 @@ async def _(event):
             "Input URL {} returned status_code {}".format(input_str, r.status_code),
         )
 
-
+@catub.cat_cmd(
+    pattern="isup(?: |$)(.*)",
+    command=("isup", plugin_category),
+    info={
+        "header": "To check if the website is up or not",
+        "usage": "{tr}isup <url/reply to url>",
+        "examples": "{tr}isup google.com",
+    },
+)
+async def _(event):
+    input_str = "".join(event.text.split(maxsplit=1)[1:])
+    reply = await event.get_reply_message()
+    if not input_str and reply:
+        input_str = reply.text
+    if not input_str:
+        return await edit_delete(
+            event, "`Either reply to link or give link as input to get data`", 5
+        )
+    check = url(input_str)
+    if not check:
+        catstr = "http://" + input_str
+        check = url(catstr)
+    if not check:
+        return await edit_delete(event, "`The given link is not supported`", 5)
+    if not input_str.startswith("http"):
+        input_str = "http://" + input_str
+    sample_url = "https://da.gd/up/{}".format(input_str)
+    response_api = requests.get(sample_url).text
+    if response_api:
+        await edit_or_reply(event, 
+            "`Is Website Up????`\n☞ {}\n\n\nAns: `{}`".format(input_str, response_api)
+        )
+    else:
+        await edit_or_reply(event, "I can't seem to find {} on the internet".format(input_str))
+        
+        
 # By Priyam Kalra
 @catub.cat_cmd(
     pattern="hl(?: |$)(.*)",

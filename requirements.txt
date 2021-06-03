@@ -8,6 +8,7 @@ dataclasses
 DateTime
 emoji
 fonttools
+fake_useragent
 geopy
 gitpython
 glitch_this
@@ -22,6 +23,7 @@ html-telegraph-poster
 humanize
 jikanpy
 justwatch
+kwot
 lottie
 lyricsgenius
 motor
@@ -37,6 +39,8 @@ pyfiglet
 PyGithub
 pygments
 pylast
+pendulum
+PyLyrics
 pymediainfo
 pySmartDL
 python-barcode
@@ -62,6 +66,8 @@ urlextract
 validators
 vcsi
 wand
+scipy
+wordcloud
 wget
 wikipedia
 youtube-search-python

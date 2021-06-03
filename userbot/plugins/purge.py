@@ -1,6 +1,6 @@
 # Userbot module for purging unneeded messages(usually spam or ot).
 from asyncio import sleep
-
+from telethon import events
 from telethon.errors import rpcbaseerrors
 
 from userbot import catub
@@ -13,6 +13,7 @@ plugin_category = "utils"
 
 
 purgelist = {}
+_YEETPURGES = {0: dict(), 1: dict()}  # Dont even try to kang this
 
 
 @catub.cat_cmd(
@@ -242,3 +243,36 @@ async def delete_it(event):
     else:
         if not input_str:
             await event.delete()
+
+@catub.cat_cmd(
+    pattern="(s(?:elf)?)?y(?:eet)?p(?:urge)?",
+    command=("yp or syp", plugin_category),
+    info={
+        "header": "Oy for Pros.",
+        "description": "Nothing",
+        "usage": "{tr}yp LMAO",
+    },
+)
+async def yeetpurge(e):
+    global _YEETPURGES
+    selfonly = 1 if e.pattern_match.group(1) else 0
+    if not e.is_reply:
+        await edit_or_reply(e, "err \\\nNo reply")
+        return
+    if e.sender_id not in _YEETPURGES[selfonly]:
+        _YEETPURGES[selfonly][e.sender_id] = {}
+    cond = e.chat_id not in _YEETPURGES[selfonly][e.sender_id]
+    if cond:
+        _YEETPURGES[selfonly][e.sender_id][e.chat_id] = e
+        await edit_or_reply(e, "`Yeetpurge from destination set! Reply to end destination`")
+        return
+    ype = _YEETPURGES[selfonly][e.sender_id].pop(e.chat_id)
+    minmax = sorted([ype.reply_to_msg_id, e.reply_to_msg_id])
+    messages = [e.message, ype.message]
+    kw = {"min_id": minmax[0] - 1, "max_id": minmax[1] + 1}
+    if selfonly:
+        kw["from_user"] = "me"
+    async for m in e.client.iter_messages(e.chat_id, **kw):
+        messages.append(m)
+    await e.client.delete_messages(e.chat_id, messages)
+    # Maa ki chut kang mat karna

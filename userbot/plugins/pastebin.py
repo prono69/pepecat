@@ -137,7 +137,7 @@ async def _(event):
             .get("key")
         )
         url = f"https://nekobin.com/{key}"
-    reply_text = f"**Pasted to Nekobin : **[neko]({url})\n**Raw url : **[Raw](https://nekobin.com/raw/{key})"
+    reply_text = f"**Pasted to Nekobin : **[Neko]({url})\n**Raw url : **[Raw](https://nekobin.com/raw/{key})"
     await catevent.edit(reply_text)
 
 

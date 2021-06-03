@@ -187,13 +187,41 @@ async def dyno_usage(dyno):
         f"**|**  [`{percentage}`**%**]"
     )
 
-
 @catub.cat_cmd(
-    pattern="(herokulogs|logs)$",
+    pattern="(logs)$",
     command=("logs", plugin_category),
     info={
         "header": "To get recent 100 lines logs from heroku.",
-        "usage": ["{tr}herokulogs", "{tr}logs"],
+        "usage": ["{tr}logs"],
+    },
+)
+async def _(dyno):
+    try:
+        Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
+        app = Heroku.app(Config.HEROKU_APP_NAME)
+    except BaseException:
+        return await dyno.reply(
+            " Please make sure your Heroku API Key, Your App name are configured correctly in the heroku var"
+        )
+    await edit_or_reply(dyno, "Getting Logs....")
+    with open("logs.txt", "w") as log:
+        log.write(app.get_log())
+    await dyno.client.send_file(
+        dyno.chat_id,
+        "logs.txt",
+        reply_to=dyno.id,
+        caption="logs of 100+ lines",
+    )
+    await dyno.delete()
+    return os.remove("logs.txt")
+    
+
+@catub.cat_cmd(
+    pattern="(hlogs)$",
+    command=("hlogs", plugin_category),
+    info={
+        "header": "To get recent 100 lines logs from heroku.",
+        "usage": ["{tr}hlogs"],
     },
 )
 async def _(dyno):

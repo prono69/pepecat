@@ -423,8 +423,7 @@ async def _(event):  # sourcery no-metrics
     if error != "":
         return await edit_delete(event, error, 10)
     pkeys = clist.keys()
-    n_pkeys = [i for i in pkeys if i is not None]
-    pkeys = sorted(n_pkeys)
+    pkeys = sorted(pkeys)
     output = ""
     for plugin in pkeys:
         output += f"• {plugin}\n"
