@@ -1,13 +1,13 @@
 import re
 from datetime import datetime
-
+ 
 from telethon import Button, functions
 from telethon.events import CallbackQuery
 from telethon.utils import get_display_name
-
+ 
 from userbot import catub
 from userbot.core.logger import logging
-
+ 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import _format, get_user_from_event, reply_id
@@ -16,12 +16,12 @@ from ..sql_helper import global_list as sqllist
 from ..sql_helper import pmpermit_sql
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import mention
-
+ 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
 cmdhd = Config.COMMAND_HAND_LER
-
-
+ 
+ 
 async def do_pm_permit_action(event, chat):  # sourcery no-metrics
     reply_to_id = await reply_id(event)
     try:
@@ -115,9 +115,9 @@ async def do_pm_permit_action(event, chat):  # sourcery no-metrics
         )
     else:
         USER_BOT_NO_WARN = f"""__Hi__ {mention}__, I haven't approved you yet to personal message me. 
-
+ 
 You have {warns}/{totalwarns} warns until you get blocked by the CatUserbot.
-
+ 
 Choose an option from below to specify the reason of your message and wait for me to check it. __⬇️"""
     addgvar("pmpermit_text", USER_BOT_NO_WARN)
     PM_WARNS[str(chat.id)] += 1
@@ -138,8 +138,8 @@ Choose an option from below to specify the reason of your message and wait for m
     sql.del_collection("pmmessagecache")
     sql.add_collection("pmwarns", PM_WARNS, {})
     sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
-
-
+ 
+ 
 async def do_pm_options_action(event, chat):
     try:
         PM_WARNS = sql.get_collection("pmwarns").json
@@ -185,8 +185,8 @@ Now you can't do anything unless my master comes online and unblocks you.**"
         )
     except BaseException:
         return
-
-
+ 
+ 
 async def do_pm_enquire_action(event, chat):
     try:
         PM_WARNS = sql.get_collection("pmwarns").json
@@ -235,8 +235,8 @@ Now you can't do anything unless my master comes online and unblocks you.**"
         )
     except BaseException:
         return
-
-
+ 
+ 
 async def do_pm_request_action(event, chat):
     try:
         PM_WARNS = sql.get_collection("pmwarns").json
@@ -285,8 +285,8 @@ Now you can't do anything unless my master comes online and unblocks you.**"
         )
     except BaseException:
         return
-
-
+ 
+ 
 async def do_pm_chat_action(event, chat):
     try:
         PM_WARNS = sql.get_collection("pmwarns").json
@@ -335,8 +335,8 @@ Now you can't do anything unless my master comes online and unblocks you.**"
         )
     except BaseException:
         return
-
-
+ 
+ 
 async def do_pm_spam_action(event, chat):
     try:
         PMMESSAGE_CACHE = sql.get_collection("pmmessagecache").json
@@ -365,8 +365,8 @@ Now you can't do anything unless my master comes online and unblocks you.**"
         )
     except BaseException:
         return
-
-
+ 
+ 
 @catub.cat_cmd(incoming=True, func=lambda e: e.is_private, edited=False)
 async def on_new_private_message(event):
     if gvarstatus("pmpermit") is None:
@@ -387,8 +387,8 @@ async def on_new_private_message(event):
     if str(chat.id) in sqllist.get_collection_list("pmoptions"):
         return await do_pm_options_action(event, chat)
     await do_pm_permit_action(event, chat)
-
-
+ 
+ 
 @catub.cat_cmd(outgoing=True, func=lambda e: e.is_private, edited=False)
 async def you_dm_other(event):
     if gvarstatus("pmpermit") is None:
@@ -439,8 +439,8 @@ async def you_dm_other(event):
             del PMMESSAGE_CACHE[str(chat.id)]
         sql.del_collection("pmmessagecache")
         sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
-
-
+ 
+ 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"show_pmpermit_options")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
@@ -448,7 +448,7 @@ async def on_plug_in_callback_query_handler(event):
         return await event.answer(text, cache_time=0, alert=True)
     text = f"""Ok, Now you are accessing the availabe menu of my master, {mention}.
 __Let's make this smooth and let me know why you are here.__
-
+ 
 **Choose one of the following reasons why you are here:**"""
     buttons = [
         (Button.inline(text="To enquire something.", data="to_enquire_something"),),
@@ -471,8 +471,8 @@ __Let's make this smooth and let me know why you are here.__
         sql.del_collection("pmwarns")
         sql.add_collection("pmwarns", PM_WARNS, {})
     await event.edit(text, buttons=buttons)
-
-
+ 
+ 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_enquire_something")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
@@ -492,8 +492,8 @@ Then we can extend this conversation more but not right now.__"""
         sql.add_collection("pmwarns", PM_WARNS, {})
     sqllist.rm_from_list("pmoptions", event.query.user_id)
     await event.edit(text)
-
-
+ 
+ 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_request_something")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
@@ -501,7 +501,7 @@ async def on_plug_in_callback_query_handler(event):
         return await event.answer(text, cache_time=0, alert=True)
     text = """__Okay. I have notified my master about this. When he/she comes comes online\
  or when my master is free he/she will look into this chat and will ping you so we can have a friendly chat.__\
-
+ 
 **But right now please do not spam unless you wish to get blocked.**"""
     sqllist.add_to_list("pmrequest", event.query.user_id)
     try:
@@ -514,8 +514,8 @@ async def on_plug_in_callback_query_handler(event):
         sql.add_collection("pmwarns", PM_WARNS, {})
     sqllist.rm_from_list("pmoptions", event.query.user_id)
     await event.edit(text)
-
-
+ 
+ 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_chat_with_my_master")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
@@ -534,8 +534,8 @@ some other time. Right now I am a little busy. when I come online and if I am fr
         sql.add_collection("pmwarns", PM_WARNS, {})
     sqllist.rm_from_list("pmoptions", event.query.user_id)
     await event.edit(text)
-
-
+ 
+ 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_spam_my_master_inbox")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
@@ -567,8 +567,8 @@ async def on_plug_in_callback_query_handler(event):
         sql.add_collection("pmwarns", PM_WARNS, {})
     sqllist.rm_from_list("pmoptions", event.query.user_id)
     await event.edit(text)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="pmguard (on|off)$",
     command=("pmguard", plugin_category),
@@ -587,7 +587,7 @@ async def pmpermit_on(event):
                 event, "__Pmpermit has been enabled for your account succesfully.__"
             )
         else:
-            await edit_delete(event, "__Pmpermit is already enabled for your account")
+            await edit_delete(event, "__Pmpermit is already enabled for your account__")
     else:
         if gvarstatus("pmpermit") is not None:
             delgvar("pmpermit")
@@ -595,9 +595,11 @@ async def pmpermit_on(event):
                 event, "__Pmpermit has been disabled for your account succesfully__"
             )
         else:
-            await edit_delete(event, "__Pmpermit is already disabled for your account")
-
-
+            await edit_delete(
+                event, "__Pmpermit is already disabled for your account__"
+            )
+ 
+ 
 @catub.cat_cmd(
     pattern="(a|approve)(?: |$)(.*)",
     command=("approve", plugin_category),
@@ -614,7 +616,7 @@ async def approve_p_m(event):
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmpermit on` __for working of this plugin__",
+            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -672,8 +674,8 @@ async def approve_p_m(event):
             event,
             f"[{user.first_name}](tg://user?id={user.id}) __is already in approved list__",
         )
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="(da|disapprove)(?: |$)(.*)",
     command=("disapprove", plugin_category),
@@ -693,12 +695,12 @@ async def disapprove_p_m(event):
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmpermit on` __for working of this plugin__",
+            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
         )
     if event.is_private:
         user = await event.get_chat()
         reason = event.pattern_match.group(2)
-
+ 
     else:
         reason = event.pattern_match.group(2)
         if reason != "all":
@@ -723,8 +725,8 @@ async def disapprove_p_m(event):
             event,
             f"[{user.first_name}](tg://user?id={user.id}) __is not yet approved__",
         )
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="block(?: |$)(.*)",
     command=("block", plugin_category),
@@ -741,7 +743,7 @@ async def block_p_m(event):
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmpermit on` __for working of this plugin__",
+            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -779,8 +781,8 @@ async def block_p_m(event):
         event,
         f"[{user.first_name}](tg://user?id={user.id}) __is blocked, he can no longer personal message you.__\n**Reason:** __{reason}__",
     )
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="unblock(?: |$)(.*)",
     command=("unblock", plugin_category),
@@ -797,7 +799,7 @@ async def unblock_pm(event):
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmpermit on` __for working of this plugin__",
+            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __for working of this plugin__",
         )
     if event.is_private:
         user = await event.get_chat()
@@ -811,8 +813,8 @@ async def unblock_pm(event):
     await event.edit(
         f"[{user.first_name}](tg://user?id={user.id}) __is unblocked he/she can personal message you from now on.__\n**Reason:** __{reason}__"
     )
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="listapproved$",
     command=("listapproved", plugin_category),
@@ -828,7 +830,7 @@ async def approve_p_m(event):
     if gvarstatus("pmpermit") is None:
         return await edit_delete(
             event,
-            f"__Turn on pmpermit by doing __`{cmdhd}pmpermit on` __to work this plugin__",
+            f"__Turn on pmpermit by doing __`{cmdhd}pmguard on` __to work this plugin__",
         )
     approved_users = pmpermit_sql.get_all_approved()
     APPROVED_PMs = "**Current Approved PMs**\n\n"
@@ -843,3 +845,4 @@ async def approve_p_m(event):
         file_name="approvedpms.txt",
         caption="`Current Approved PMs`",
     )
+    

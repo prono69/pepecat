@@ -186,9 +186,9 @@ async def character(event):
         return await edit_delete(catevent, "`Character not found.`")
     first_mal_id = search_result["results"][0]["mal_id"]
     character = jikan.character(first_mal_id)
-    caption = f"[🇯🇵] [{character['name']}]({character['url']})"
+    caption = f"🇯🇵 [{character['name']}]({character['url']})"
     if character["name_kanji"] != "Japanese":
-        caption += f" — `{character['name_kanji']}`\n"
+        caption += f" • `{character['name_kanji']}`\n"
     else:
         caption += "\n"
     if character["nicknames"]:
@@ -456,7 +456,8 @@ async def user(event):
     else:
         await edit_delete(event, "`Format : .iuser <username>`",5)
         return
-
+        
+    jikan = jikanpy.jikan.Jikan()    
     try:
         user = jikan.user(search_query)
     except APIException:

@@ -1,10 +1,10 @@
 from datetime import datetime
-
+ 
 from telethon.utils import get_display_name
-
+ 
 from userbot import catub
 from userbot.core.logger import logging
-
+ 
 from ..Config import Config
 from ..core import CMD_INFO, PLG_INFO
 from ..core.data import _sudousers_list, sudo_enabled_cmds
@@ -13,27 +13,27 @@ from ..helpers.utils import get_user_from_event, mentionuser
 from ..sql_helper import global_collectionjson as sql
 from ..sql_helper import global_list as sqllist
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-
+ 
 plugin_category = "tools"
-
+ 
 LOGS = logging.getLogger(__name__)
-
-
+ 
+ 
 async def _init() -> None:
     sudousers = _sudousers_list()
     Config.SUDO_USERS.clear()
     for user_d in sudousers:
         Config.SUDO_USERS.add(user_d)
-
-
+ 
+ 
 def get_key(val):
     for key, value in PLG_INFO.items():
         for cmd in value:
             if val == cmd:
                 return key
     return None
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="sudo (on|off)$",
     command=("sudo", plugin_category),
@@ -86,8 +86,8 @@ async def chat_blacklist(event):
                 text,
             )
     await edit_delete(event, "It was turned off already")
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="addsudo(?: |$)(.*)",
     command=("addsudo", plugin_category),
@@ -126,8 +126,8 @@ async def add_sudo_user(event):
     output += "**Bot is reloading to apply the changes. Please wait for a minute**"
     msg = await edit_or_reply(event, output)
     await event.client.reload(msg)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="delsudo(?: |$)(.*)",
     command=("delsudo", plugin_category),
@@ -157,8 +157,8 @@ async def _(event):
     output += "**Bot is reloading to apply the changes. Please wait for a minute**"
     msg = await edit_or_reply(event, output)
     await event.client.reload(msg)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="vsudo$",
     command=("vsudo", plugin_category),
@@ -186,8 +186,8 @@ async def _(event):
         result += f"**Username :** {username}\n"
         result += f"Added on {sudousers[str(chat)]['date']}\n\n"
     await edit_or_reply(event, result)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="addscmd(s)? ((.|\n)*)",
     command=("addscmd", plugin_category),
@@ -279,8 +279,8 @@ async def _(event):  # sourcery no-metrics
         output += "\n**Errors:**\n" + errors
     msg = await edit_or_reply(catevent, output)
     await event.client.reload(msg)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="rmscmd(s)? ((.|\n)*)?",
     command=("rmscmd", plugin_category),
@@ -371,8 +371,8 @@ async def _(event):  # sourcery no-metrics
         output += "\n**Errors:**\n" + errors
     msg = await edit_or_reply(catevent, output)
     await event.client.reload(msg)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="vscmds( -d)?$",
     command=("vscmds", plugin_category),
@@ -423,7 +423,8 @@ async def _(event):  # sourcery no-metrics
     if error != "":
         return await edit_delete(event, error, 10)
     pkeys = clist.keys()
-    pkeys = sorted(pkeys)
+    n_pkeys = [i for i in pkeys if i is not None]
+    pkeys = sorted(n_pkeys)
     output = ""
     for plugin in pkeys:
         output += f"• {plugin}\n"
@@ -436,6 +437,6 @@ async def _(event):  # sourcery no-metrics
         + output
     )
     await edit_or_reply(event, finalstr, aslink=True, linktext=text)
-
-
+ 
+ 
 catub.loop.create_task(_init())

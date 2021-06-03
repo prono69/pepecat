@@ -28,9 +28,6 @@ plugin_category = "fun"
     },
 )
 async def danbooru(message):
-	reply_to = await reply_id(message)
-	if await age_verification(message, reply_to):
-		return
     await edit_or_reply(message, "`Processing…`")
 
     rating = "Explicit" if "nsfw" in message.pattern_match.group(1) else "Safe"
@@ -48,13 +45,13 @@ async def danbooru(message):
         if response.status_code == 200:
             response = response.json()
         else:
-            await edit_delete(message, 
-                f"`An error occurred, response code:` **{response.status_code}**", 4
+            await edit_delete(
+                message, f"`An error occurred, response code:` **{response.status_code}**",4
             )
             return
 
     if not response:
-        await edit_delete(message, f"`No results for query:` __{search_query}__", 4)
+        await edit_delete(message, f"`No results for query:` __{search_query}__",4)
         return
 
     valid_urls = [
@@ -64,7 +61,7 @@ async def danbooru(message):
     ]
 
     if not valid_urls:
-        await edit_delete(message, f"`Failed to find URLs for query:` __{search_query}__", 4)
+        await edit_delete(message, f"`Failed to find URLs for query:` __{search_query}__",4)
         return
     for image_url in valid_urls:
         try:
@@ -72,8 +69,8 @@ async def danbooru(message):
             await message.delete()
             return
         except Exception as e:
-            await edit_delete(message, f"{e}", 10)
-    await edit_delete(message, f"``Failed to fetch media for query:` __{search_query}__", 4)
+            await edit_or_reply(message, f"{e}")
+    await edit_delete(message, f"``Failed to fetch media for query:` __{search_query}__",4)
 
 
 @catub.cat_cmd(
@@ -86,16 +83,13 @@ async def danbooru(message):
     },
 )
 async def boobs(e):
-	reply_to = await reply_id(e)
-	if await age_verification(e, reply_to):
-		return
     a = await edit_or_reply(e, "`Finding some big boobs...`")
     await sleep(1)
     await a.edit("`Sending some big boobs...`")
     nsfw = requests.get("http://api.oboobs.ru/noise/1").json()[0]["preview"]
     urllib.request.urlretrieve("http://media.oboobs.ru/{}".format(nsfw), "*.jpg")
     os.rename("*.jpg", "boobs.jpg")
-    await e.client.send_file(e.chat_id, "boobs.jpg", reply_to=reply_to)
+    await e.client.send_file(e.chat_id, "boobs.jpg")
     os.remove("boobs.jpg")
     await a.delete()
 
@@ -110,16 +104,13 @@ async def boobs(e):
     },
 )
 async def butts(e):
-	reply_to = await reply_id(e)
-	if await age_verification(e, reply_to):
-		return
     a = await edit_or_reply(e, "`Finding some beautiful butts...`")
     await sleep(1)
     await a.edit("`Sending some beautiful butts...`")
     nsfw = requests.get("http://api.obutts.ru/noise/1").json()[0]["preview"]
     urllib.request.urlretrieve("http://media.obutts.ru/{}".format(nsfw), "*.jpg")
     os.rename("*.jpg", "butts.jpg")
-    await e.client.send_file(e.chat_id, "butts.jpg", reply_to=reply_to)	
+    await e.client.send_file(e.chat_id, "butts.jpg")
     os.remove("butts.jpg")
     await a.delete()
 
@@ -152,13 +143,10 @@ PENIS_TEMPLATE = """
     },
 )
 async def emoji_penis(e):
-	reply_to = await reply_id(e)
-	if await age_verification(e, reply_to):
-		return
     emoji = e.pattern_match.group(1)
-    await edit_or_reply("`Dickifying...`")
+    o = await edit_or_reply(e, "`Dickifying...`")
     message = PENIS_TEMPLATE
     if emoji:
         message = message.replace("🍆", emoji)
-    await edit_or_reply(message)
+    await o.edit(message)
     

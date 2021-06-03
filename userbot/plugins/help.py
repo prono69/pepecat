@@ -1,16 +1,16 @@
 from telethon import functions
-
+ 
 from userbot import catub
-
+ 
 from ..Config import Config
 from ..core import CMD_INFO, GRP_INFO, PLG_INFO
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import reply_id
-
+ 
 cmdprefix = Config.COMMAND_HAND_LER
-
+ 
 plugin_category = "tools"
-
+ 
 hemojis = {
     "admin": "👮‍♂️",
     "bot": "🤖",
@@ -20,24 +20,24 @@ hemojis = {
     "utils": "🗂",
     "extra": "➕",
 }
-
-
+ 
+ 
 def get_key(val):
     for key, value in PLG_INFO.items():
         for cmd in value:
             if val == cmd:
                 return key
     return None
-
-
+ 
+ 
 def getkey(val):
     for key, value in GRP_INFO.items():
         for plugin in value:
             if val == plugin:
                 return key
     return None
-
-
+ 
+ 
 async def cmdinfo(input_str, event, plugin=False):
     if input_str[0] == cmdprefix:
         input_str = input_str[1:]
@@ -66,8 +66,8 @@ async def cmdinfo(input_str, event, plugin=False):
             outstr += f"**Category :** `{category}`\n\n"
     outstr += f"**•  Intro :**\n{about[0]}"
     return outstr
-
-
+ 
+ 
 async def plugininfo(input_str, event, flag):
     try:
         cmds = PLG_INFO[input_str]
@@ -94,8 +94,8 @@ async def plugininfo(input_str, event, flag):
     outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help <command name>`\
         \n**Note : **If command name is same as plugin name then use this `{cmdprefix}help -c <command name>`."
     return outstr
-
-
+ 
+ 
 async def grpinfo():
     outstr = "**Plugins in Catuserbot are:**\n\n"
     outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help <plugin name>`\n\n"
@@ -107,8 +107,8 @@ async def grpinfo():
             outstr += f"`{plugin}`  "
         outstr += "\n\n"
     return outstr
-
-
+ 
+ 
 async def cmdlist():
     outstr = "**Total list of Commands in your Catuserbot are :**\n\n"
     category = ["admin", "bot", "fun", "misc", "tools", "utils", "extra"]
@@ -123,10 +123,10 @@ async def cmdlist():
             outstr += "\n"
     outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help -c <command name>`"
     return outstr
-
-
+ 
+ 
 @catub.cat_cmd(
-    pattern="help ?(-)?(c|p|t)? ?(.*)?",
+    pattern="help ?(-c|-p|-t)? ?(.*)?",
     command=("help", plugin_category),
     info={
         "header": "To get guide for catuserbot.",
@@ -146,8 +146,8 @@ async def cmdlist():
 )
 async def _(event):
     "To get guide for catuserbot."
-    flag = event.pattern_match.group(2)
-    input_str = event.pattern_match.group(3)
+    flag = event.pattern_match.group(1)
+    input_str = event.pattern_match.group(2)
     reply_to_id = await reply_id(event)
     if flag and flag == "-c" and input_str:
         outstr = await cmdinfo(input_str, event)
@@ -158,7 +158,7 @@ async def _(event):
         if outstr is None:
             return
     else:
-        if flag == "t":
+        if flag == "-t":
             outstr = await grpinfo()
         else:
             results = await event.client.inline_query(Config.TG_BOT_USERNAME, "help")
@@ -166,8 +166,8 @@ async def _(event):
             await event.delete()
             return
     await edit_or_reply(event, outstr)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="cmds(?: |$)(.*)",
     command=("cmds", plugin_category),
@@ -199,8 +199,8 @@ async def _(event):
     await edit_or_reply(
         event, outstr, aslink=True, linktext="Total Commands of Catuserbot are :"
     )
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="s (.*)",
     command=("s", plugin_category),
@@ -220,8 +220,8 @@ async def _(event):
     else:
         out = f"I can't find any such command `{cmd}` in CatUserbot"
     await edit_or_reply(event, out)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="dc$",
     command=("dc", plugin_category),
@@ -246,3 +246,4 @@ async def _(event):
               \n**DC5 : **Singapore, SG\
                 "
     await edit_or_reply(event, result)
+    
