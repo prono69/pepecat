@@ -293,6 +293,7 @@ async def _(event):
         await catevent.delete()
         await delete_messages(event, chat, purgeflag)
 
+
 @catub.cat_cmd(
     pattern="dzd(?: |$)(.*)",
     command=("dzd", plugin_category),
@@ -332,7 +333,7 @@ async def kakashi(event):
         await event.client.delete_messages(
             conv.chat_id, [msg_start.id, response.id, msg.id, details.id, song.id]
         )
-                
+
 
 # reverse search by  @Lal_bakthan
 @catub.cat_cmd(

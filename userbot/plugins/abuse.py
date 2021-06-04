@@ -2,11 +2,13 @@
 \nImproved by @amnd33p"""
 
 import random
+
 from userbot import catub
 
 from ..core.managers import edit_or_reply
 
 plugin_category = "extra"
+
 
 @catub.cat_cmd(
     pattern="x(.*)",
@@ -269,4 +271,3 @@ async def _(event):
         ]
     index = random.choice(emoticons)
     await edit_or_reply(event, index)
-    

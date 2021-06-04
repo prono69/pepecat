@@ -4,8 +4,8 @@ import asyncio
 import os
 import random
 
-from . import catub
 from ..helpers.functions import deEmojify
+from . import catub
 
 plugin_category = "extra"
 senpais = [37, 38, 48, 55]

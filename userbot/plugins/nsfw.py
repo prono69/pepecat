@@ -9,14 +9,13 @@ This module can search images in danbooru and send in to the chat!
 import os
 import urllib
 from asyncio import sleep
-from userbot import catub
-from ..core.managers import edit_or_reply, edit_delete
-import request
 
-from ..helpers.functions import age_verification
-from ..helpers.utils import reply_id
+from userbot import catub
+
+from ..core.managers import edit_delete, edit_or_reply
 
 plugin_category = "fun"
+
 
 @catub.cat_cmd(
     pattern="ani(mu|nsfw) ?(.*)",
@@ -46,12 +45,14 @@ async def danbooru(message):
             response = response.json()
         else:
             await edit_delete(
-                message, f"`An error occurred, response code:` **{response.status_code}**",4
+                message,
+                f"`An error occurred, response code:` **{response.status_code}**",
+                4,
             )
             return
 
     if not response:
-        await edit_delete(message, f"`No results for query:` __{search_query}__",4)
+        await edit_delete(message, f"`No results for query:` __{search_query}__", 4)
         return
 
     valid_urls = [
@@ -61,7 +62,9 @@ async def danbooru(message):
     ]
 
     if not valid_urls:
-        await edit_delete(message, f"`Failed to find URLs for query:` __{search_query}__",4)
+        await edit_delete(
+            message, f"`Failed to find URLs for query:` __{search_query}__", 4
+        )
         return
     for image_url in valid_urls:
         try:
@@ -70,7 +73,9 @@ async def danbooru(message):
             return
         except Exception as e:
             await edit_or_reply(message, f"{e}")
-    await edit_delete(message, f"``Failed to fetch media for query:` __{search_query}__",4)
+    await edit_delete(
+        message, f"``Failed to fetch media for query:` __{search_query}__", 4
+    )
 
 
 @catub.cat_cmd(
@@ -149,4 +154,3 @@ async def emoji_penis(e):
     if emoji:
         message = message.replace("🍆", emoji)
     await o.edit(message)
-    

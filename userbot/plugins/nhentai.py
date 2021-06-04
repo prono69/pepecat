@@ -4,12 +4,14 @@ import re
 
 from hentai import Hentai, Utils
 from natsort import natsorted
+
 from userbot import catub
 
-from ..core.managers import edit_or_reply, edit_delete
+from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import post_to_telegraph
 
 plugin_category = "extra"
+
 
 @catub.cat_cmd(
     pattern="nhentai(?: |$)(.*)",
@@ -38,7 +40,9 @@ async def _(event):
         doujin = Hentai(code)
     except BaseException as n_e:
         if "404" in str(n_e):
-            return await edit_delete(event, f"No doujin found for `{code}`. You shouldn't use nhentai :-(")
+            return await edit_delete(
+                event, f"No doujin found for `{code}`. You shouldn't use nhentai :-("
+            )
         return await edit_delete(event, f"**ERROR :** `{n_e}`")
     msg = ""
     imgs = "".join(f"<img src='{url}'/>" for url in doujin.image_urls)

@@ -76,7 +76,9 @@ class Config(object):
     # specify NO_LOAD with plugin names for not loading in userbot
     NO_LOAD = [x for x in os.environ.get("NO_LOAD", "").split()]
     # For custom alive pic
-    ALIVE_PIC = os.environ.get("ALIVE_PIC", "https://telegra.ph/file/ba9acea0064aaed188195.jpg")
+    ALIVE_PIC = os.environ.get(
+        "ALIVE_PIC", "https://telegra.ph/file/ba9acea0064aaed188195.jpg"
+    )
     # for Custom pmpermit pic
     PMPERMIT_PIC = os.environ.get("PMPERMIT_PIC", None)
     # for custom pic for .digitalpfp

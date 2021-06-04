@@ -2,10 +2,11 @@
 import asyncio
 import os
 from datetime import datetime
-from . import catub
 
 import requests
 from bs4 import BeautifulSoup
+
+from . import catub
 
 plugin_category = "extra"
 DELETE_TIMEOUT = 0

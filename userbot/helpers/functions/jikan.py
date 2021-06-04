@@ -6,8 +6,8 @@ from io import BytesIO, StringIO
 import bs4
 import jikanpy
 import requests
-from telethon.tl.types import DocumentAttributeAnimated
 from html_telegraph_poster import TelegraphPoster
+from telethon.tl.types import DocumentAttributeAnimated
 from telethon.utils import is_video
 
 url = "https://graphql.anilist.co"
@@ -311,7 +311,7 @@ def post_to_telegraph(anime_title, html_format_content):
         title=anime_title, author=auth_name, author_url=bish, text=html_format_content
     )
     return post_page["url"]
-    
+
 
 def replace_text(text):
     return text.replace('"', "").replace("\\r", "").replace("\\n", "").replace("\\", "")
@@ -368,4 +368,3 @@ def is_gif(file):
     if not is_video(file):
         return False
     return DocumentAttributeAnimated() in getattr(file, "document", file).attributes
-    

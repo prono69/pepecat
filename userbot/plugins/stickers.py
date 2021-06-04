@@ -1,25 +1,25 @@
 import asyncio
-import os
 import base64
 import io
 import math
+import os
 import random
 import re
 import string
 import urllib.request
-from os import remove
 import zipfile
 from collections import defaultdict
+from os import remove
 
 import cloudscraper
 import emoji as catemoji
 from bs4 import BeautifulSoup as bs
 from PIL import Image
 from telethon import events
+from telethon.errors import MessageNotModifiedError
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl import functions, types
 from telethon.tl.functions.messages import GetStickerSetRequest
-from telethon.errors import MessageNotModifiedError
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.types import (
     DocumentAttributeFilename,
@@ -80,11 +80,13 @@ def pack_name(userid, pack, is_anim):
 def char_is_emoji(character):
     return character in catemoji.UNICODE_EMOJI["en"]
 
+
 def find_instance(items, class_or_tuple):
     for item in items:
         if isinstance(item, class_or_tuple):
             return item
     return None
+
 
 def progress(current, total):
     logger.info(
@@ -92,7 +94,8 @@ def progress(current, total):
             current, total, (current / total) * 100
         )
     )
-    
+
+
 def is_it_animated_sticker(message):
     try:
         if message.media and message.media.document:
@@ -102,7 +105,7 @@ def is_it_animated_sticker(message):
             return False
     except BaseException:
         return False
-        
+
 
 def zipdir(path, ziph):
     # ziph is zipfile handle
@@ -110,8 +113,8 @@ def zipdir(path, ziph):
         for file in files:
             ziph.write(os.path.join(root, file))
             os.remove(os.path.join(root, file))
-    
-    
+
+
 def pack_nick(username, pack, is_anim):
     if Config.CUSTOM_STICKER_PACKNAME:
         if is_anim:
@@ -751,7 +754,7 @@ async def get_pack_info(event):
         f"**Emojis In Pack:**\n{' '.join(pack_emojis)}"
     )
     await catevent.edit(OUTPUT)
-    
+
 
 @catub.cat_cmd(
     pattern="loda ?(.*)",
@@ -799,7 +802,6 @@ async def _(event):
             for document_id in pack.documents:
                 emojis[document_id] += pack.emoticon
 
-                
         async def download(sticker, emojis, path, file):
             await bot.download_media(sticker, file=os.path.join(path, file))
             with open(pack_file, "a") as f:
@@ -816,7 +818,7 @@ async def _(event):
             )
             for i, document in enumerate(sticker_set.documents)
         ]
-        
+
         num_tasks = len(pending_tasks)
         while True:
             done, pending_tasks = await asyncio.wait(
@@ -855,7 +857,7 @@ async def _(event):
     else:
         await edit_or_reply("**TODO :** Not Implemented")
 
-        
+
 @catub.cat_cmd(
     pattern="stickers ?(.*)",
     command=("stickers", plugin_category),
@@ -885,4 +887,3 @@ async def cb_sticker(event):
             packid = (pack.button).get("data-popup")
             reply += f"\n **• ID: **`{packid}`\n [{packtitle}]({packlink})"
     await catevent.edit(reply)
-    

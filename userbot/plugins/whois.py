@@ -36,9 +36,9 @@ async def fetch_info(replied_user, event):
     first_name = replied_user.user.first_name
     last_name = replied_user.user.last_name
     if last_name:
-    	last = last_name
+        last = last_name
     else:
-    	last = "None"
+        last = "None"
     try:
         dc_id, location = get_input_location(replied_user.profile_photo)
     except Exception:
@@ -54,11 +54,7 @@ async def fetch_info(replied_user, event):
         Config.TMP_DOWNLOAD_DIRECTORY + str(user_id) + ".jpg",
         download_big=True,
     )
-    first_name = (
-        first_name.replace("\u2060", "")
-        if first_name
-        else ("None")
-    )
+    first_name = first_name.replace("\u2060", "") if first_name else ("None")
     last_name = last_name.replace("\u2060", "") if last_name else (" ")
     username = "@{}".format(username) if username else ("None")
     user_bio = "None" if not user_bio else user_bio
@@ -188,8 +184,8 @@ async def who(event):
             os.remove(photo)
         await cat.delete()
     except TypeError:
-    	message_out_str = "<b>📷 NO DP Found📷</b>\n\n" + caption
-    	await cat.edit(message_out_str, parse_mode="html")
+        message_out_str = "<b>📷 NO DP Found📷</b>\n\n" + caption
+        await cat.edit(message_out_str, parse_mode="html")
 
 
 @catub.cat_cmd(

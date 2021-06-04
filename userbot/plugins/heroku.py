@@ -187,6 +187,7 @@ async def dyno_usage(dyno):
         f"**|**  [`{percentage}`**%**]"
     )
 
+
 @catub.cat_cmd(
     pattern="(logs)$",
     command=("logs", plugin_category),
@@ -214,7 +215,7 @@ async def _(dyno):
     )
     await dyno.delete()
     return os.remove("logs.txt")
-    
+
 
 @catub.cat_cmd(
     pattern="(hlogs)$",

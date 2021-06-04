@@ -6,27 +6,82 @@
 """
 
 import os
-from userbot import catub, user_agent
-from ..core.managers import edit_or_reply
+
 import nekos
 import requests
 from PIL import Image
 
+from userbot import catub, user_agent
+
+from ..core.managers import edit_or_reply
 from ..helpers.functions import age_verification
 from ..helpers.utils import reply_id
 
-
 POSSIBLE = [
-        'feet', 'yuri', 'trap', 'futanari', 'hololewd', 'lewdkemo',
-        'solog', 'feetg', 'cum', 'erokemo', 'les', 'wallpaper', 'lewdk',
-        'ngif', 'tickle', 'lewd', 'feed', 'gecg', 'eroyuri', 'eron',
-        'cum_jpg', 'bj', 'nsfw_neko_gif', 'solo', 'kemonomimi', 'nsfw_avatar',
-        'gasm', 'poke', 'anal', 'slap', 'hentai', 'avatar', 'erofeet', 'holo',
-        'keta', 'blowjob', 'pussy', 'tits', 'holoero', 'lizard', 'pussy_jpg',
-        'pwankg', 'classic', 'kuni', 'waifu', 'pat', '8ball', 'kiss', 'femdom',
-        'neko', 'spank', 'cuddle', 'erok', 'fox_girl', 'boobs', 'random_hentai_gif',
-        'smallboobs', 'hug', 'ero', 'smug', 'goose', 'baka', 'woof'
-    ]
+    "feet",
+    "yuri",
+    "trap",
+    "futanari",
+    "hololewd",
+    "lewdkemo",
+    "solog",
+    "feetg",
+    "cum",
+    "erokemo",
+    "les",
+    "wallpaper",
+    "lewdk",
+    "ngif",
+    "tickle",
+    "lewd",
+    "feed",
+    "gecg",
+    "eroyuri",
+    "eron",
+    "cum_jpg",
+    "bj",
+    "nsfw_neko_gif",
+    "solo",
+    "kemonomimi",
+    "nsfw_avatar",
+    "gasm",
+    "poke",
+    "anal",
+    "slap",
+    "hentai",
+    "avatar",
+    "erofeet",
+    "holo",
+    "keta",
+    "blowjob",
+    "pussy",
+    "tits",
+    "holoero",
+    "lizard",
+    "pussy_jpg",
+    "pwankg",
+    "classic",
+    "kuni",
+    "waifu",
+    "pat",
+    "8ball",
+    "kiss",
+    "femdom",
+    "neko",
+    "spank",
+    "cuddle",
+    "erok",
+    "fox_girl",
+    "boobs",
+    "random_hentai_gif",
+    "smallboobs",
+    "hug",
+    "ero",
+    "smug",
+    "goose",
+    "baka",
+    "woof",
+]
 
 
 plugin_category = "fun"
@@ -35,6 +90,7 @@ neko_help = "**ALL :**  "
 
 for i in POSSIBLE:
     neko_help += f"`{i.lower()}`   "
+
 
 @catub.cat_cmd(
     pattern="nn ?(.*)",
@@ -57,7 +113,9 @@ async def _(event):
         return
     catevent = await edit_or_reply(event, "`Processing Nekos...`")
     target = nekos.img(f"{choose}")
-    await event.client.send_file(event.chat_id, file=target, caption=f"**{choose}**",reply_to=reply_to)
+    await event.client.send_file(
+        event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
+    )
     await catevent.delete()
 
 
@@ -72,12 +130,14 @@ async def _(event):
 async def dva(event):
     "Search dva images"
     reply_to = await reply_id(event)
-    nsfw = requests.get("https://api.computerfreaker.cf/v1/dva",headers={"User-Agent": user_agent()}).json()
+    nsfw = requests.get(
+        "https://api.computerfreaker.cf/v1/dva", headers={"User-Agent": user_agent()}
+    ).json()
     url = nsfw.get("url")
     if not url:
         await edit_or_reply(event, "`uuuf.. No URL found from the API`")
         return
-    await event.client.send_file(event.chat_id, file=url,reply_to=reply_to)
+    await event.client.send_file(event.chat_id, file=url, reply_to=reply_to)
     await event.delete()
 
 
@@ -99,7 +159,9 @@ async def avatarlewd(event):
         f.write(requests.get(nekos.img(target)).content)
     img = Image.open("temp.png")
     img.save("temp.webp", "webp")
-    await event.client.send_file(event.chat_id, file=open("temp.webp", "rb"),reply_to=reply_to)
+    await event.client.send_file(
+        event.chat_id, file=open("temp.webp", "rb"), reply_to=reply_to
+    )
     os.remove("temp.webp")
     await event.delete()
 
@@ -117,7 +179,7 @@ async def _(event):
     reply_to = await reply_id(event)
     target = nekos.cat()
     catevent = await edit_or_reply(event, "`Finding ur ket...`")
-    await event.client.send_file(event.chat_id, file=target,reply_to=reply_to)
+    await event.client.send_file(event.chat_id, file=target, reply_to=reply_to)
     await catevent.delete()
 
 
@@ -139,7 +201,7 @@ async def lewdn(event):
     if not url:
         await edit_or_reply(event, "`Uff.. No NEKO found from the API`")
         return
-    await event.client.send_file(event.chat_id, file=url,reply_to=reply_to)
+    await event.client.send_file(event.chat_id, file=url, reply_to=reply_to)
     await event.delete()
 
 
@@ -161,7 +223,9 @@ async def gasm(event):
         f.write(requests.get(nekos.img(target)).content)
     img = Image.open("temp.png")
     img.save("temp.webp", "webp")
-    await event.client.send_file(event.chat_id, file=open("temp.webp", "rb"),reply_to=reply_to)
+    await event.client.send_file(
+        event.chat_id, file=open("temp.webp", "rb"), reply_to=reply_to
+    )
     os.remove("temp.webp")
     await event.delete()
 
@@ -182,6 +246,8 @@ async def waifu(event):
         f.write(requests.get(nekos.img(target)).content)
     img = Image.open("temp.png")
     img.save("temp.webp", "webp")
-    await event.client.send_file(event.chat_id, file=open("temp.webp", "rb"),reply_to=reply_to)
+    await event.client.send_file(
+        event.chat_id, file=open("temp.webp", "rb"), reply_to=reply_to
+    )
     os.remove("temp.webp")
     await event.delete()

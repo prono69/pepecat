@@ -8,8 +8,6 @@
 import os
 
 import numpy as np
-from . import catub
-from ..core.managers import edit_or_reply, edit_delete
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from PIL import Image
@@ -17,7 +15,11 @@ from scipy.ndimage import gaussian_gradient_magnitude
 from telethon.tl.types import DocumentAttributeFilename
 from wordcloud import ImageColorGenerator, WordCloud
 
+from ..core.managers import edit_delete, edit_or_reply
+from . import catub
+
 plugin_category = "extra"
+
 
 @catub.cat_cmd(
     pattern="wc",
@@ -30,11 +32,11 @@ plugin_category = "extra"
 )
 async def _(event):
     if not event.reply_to_msg_id:
-        await edit_delete(event, "`Are you mad Bish! Reply to Any media..`",3)
+        await edit_delete(event, "`Are you mad Bish! Reply to Any media..`", 3)
         return
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        await edit_delete(event, "`Reply to a image/sticker/video`",3)
+        await edit_delete(event, "`Reply to a image/sticker/video`", 3)
         return
     await edit_or_reply(event, "`Downloading Media..`")
     if reply_message.photo:

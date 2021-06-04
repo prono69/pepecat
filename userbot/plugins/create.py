@@ -99,7 +99,7 @@ async def _(event):
         except Exception as e:
             await event.edit(str(e))
     else:
-    	await event.edit("Read `.help create` to know how to use me")
+        await event.edit("Read `.help create` to know how to use me")
 
 
 @catub.cat_cmd(
@@ -139,4 +139,3 @@ async def _(e):
         except BaseException:
             pass
     await z.edit("Done")
-    

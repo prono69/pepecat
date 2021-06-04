@@ -227,6 +227,7 @@ async def remove_profilepic(delpfp):
         delpfp, f"`Successfully deleted {len(input_photos)} profile picture(s).`"
     )
 
+
 @catub.cat_cmd(
     pattern="myusernames$",
     command=("myusernames", plugin_category),

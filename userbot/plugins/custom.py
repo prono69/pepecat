@@ -1,12 +1,12 @@
 from urlextract import URLExtract
- 
+
 from userbot import catub
 from userbot.core.logger import logging
- 
+
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
- 
+
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
 cmdhd = Config.COMMAND_HAND_LER
@@ -21,7 +21,8 @@ vlist = [
     "IALIVE_PIC",
     "PM_PIC",
 ]
- 
+
+
 @catub.cat_cmd(
     pattern="(set|get|del)dv(?: |$)(.*)",
     command=("dv", plugin_category),
@@ -99,7 +100,7 @@ async def bad(event):
             event, f"**📑 Give correct var name from the list :\n\n**{vnlist}", time=60
         )
 
-        
+
 @catub.cat_cmd(
     pattern="custom (pmpermit|pmblock|pmpic)$",
     command=("custom", plugin_category),
@@ -148,8 +149,8 @@ async def custom_catuserbot(event):
             return await edit_delete(event, "`the given link is not supported`", 5)
         addgvar("pmpermit_pic", urls[0])
     await edit_or_reply(event, f"__Your custom {input_str} has been updated__")
- 
- 
+
+
 @catub.cat_cmd(
     pattern="delcustom (pmpermit|pmblock|pmpic)$",
     command=("delcustom", plugin_category),
@@ -183,4 +184,3 @@ async def custom_catuserbot(event):
     await edit_or_reply(
         event, f"__Succesfully deleted your customization of {input_str}.__"
     )
-    

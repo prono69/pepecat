@@ -1,19 +1,19 @@
 """Check your internet speed powered by speedtest.net
 Syntax: .speedtest
 Available Options: image, file, text"""
- 
+
 from time import time
- 
+
 import speedtest
- 
+
 from userbot import catub
- 
+
 from ..core.managers import edit_or_reply
 from ..helpers.utils import reply_id
- 
+
 plugin_category = "utils"
- 
- 
+
+
 def convert_from_bytes(size):
     power = 2 ** 10
     n = 0
@@ -22,8 +22,8 @@ def convert_from_bytes(size):
         size /= power
         n += 1
     return f"{round(size, 2)} {units[n]}"
- 
- 
+
+
 @catub.cat_cmd(
     pattern="speedtest(?: |$)(.*)",
     command=("speedtest", plugin_category),
@@ -119,4 +119,3 @@ __With the Following ERRORs__
                 str(exc),
             )
         )
-        

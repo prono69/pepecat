@@ -1,6 +1,6 @@
 # Userbot module for purging unneeded messages(usually spam or ot).
 from asyncio import sleep
-from telethon import events
+
 from telethon.errors import rpcbaseerrors
 
 from userbot import catub
@@ -244,6 +244,7 @@ async def delete_it(event):
         if not input_str:
             await event.delete()
 
+
 @catub.cat_cmd(
     pattern="(s(?:elf)?)?y(?:eet)?p(?:urge)?",
     command=("yp or syp", plugin_category),
@@ -264,7 +265,9 @@ async def yeetpurge(e):
     cond = e.chat_id not in _YEETPURGES[selfonly][e.sender_id]
     if cond:
         _YEETPURGES[selfonly][e.sender_id][e.chat_id] = e
-        await edit_or_reply(e, "`Yeetpurge from destination set! Reply to end destination`")
+        await edit_or_reply(
+            e, "`Yeetpurge from destination set! Reply to end destination`"
+        )
         return
     ype = _YEETPURGES[selfonly][e.sender_id].pop(e.chat_id)
     minmax = sorted([ype.reply_to_msg_id, e.reply_to_msg_id])

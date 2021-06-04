@@ -1,5 +1,5 @@
-from . import catub
 from ..core.managers import edit_or_reply
+from . import catub
 
 plugin_category = "utils"
 
@@ -64,8 +64,9 @@ async def get_stats(event):
     try:
         stats = await bot.get_stats(chat)
     except:
-        await edit_or_reply(event,
-            "Failed to get stats for the current chat, Make sure you are **admin** and chat has more than **500 members**."
+        await edit_or_reply(
+            event,
+            "Failed to get stats for the current chat, Make sure you are **admin** and chat has more than **500 members**.",
         )
         return
     min_time = stats.period.min_date.strftime("From %d/%m/%Y, %H:%M:%S")
@@ -75,7 +76,7 @@ async def get_stats(event):
     msg = f"Group stats:\n{min_time} {max_time}\nMembers count increased by {member_count}\nMessage count increased by {message_count}"
     await edit_or_reply(event, msg)
 
-    
+
 @catub.cat_cmd(
     pattern="dm ?(.*)",
     command=("dm", plugin_category),
@@ -107,11 +108,13 @@ async def _(dc):
         await bot.send_message(chat_id, masg)
         await dc.edit(f"**{MASTER}:** Your message was successfully delivered")
     for i in c[1:]:
-        msg += i + " " 
+        msg += i + " "
     if msg == "":  # hoho
         return
     try:
         await borg.send_message(chat_id, msg)
-        await edit_or_reply(dc, f"**{MASTER}:** Your message was successfully delivered")
+        await edit_or_reply(
+            dc, f"**{MASTER}:** Your message was successfully delivered"
+        )
     except BaseException:
-        await edit_or_reply(dc, ".dm (username)|(text)")    
+        await edit_or_reply(dc, ".dm (username)|(text)")

@@ -4,8 +4,9 @@
 # Copyright (C) 2020 BY - GitHub.com/code-rgb [TG - @DeletedUser420]
 # All rights reserved.
 
-import requests
 import re
+
+import requests
 from telethon.errors import MessageNotModifiedError
 
 from userbot import catub
@@ -22,6 +23,7 @@ API = "https://meme-api.herokuapp.com/gimme"
 plugin_category = "misc"
 
 REDDIT_REGEX = r"(?:^|\s+)(\/?r\/\S+)"
+
 
 @catub.cat_cmd(
     pattern="reddit(?: |$)(.*)",

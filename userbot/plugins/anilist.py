@@ -1,11 +1,11 @@
+import datetime
 import html
+import textwrap
 from urllib.parse import quote_plus
 
 import aiohttp
 import bs4
 import jikanpy
-import datetime
-import textwrap
 import requests
 from jikanpy import Jikan
 from jikanpy.exceptions import APIException
@@ -20,10 +20,10 @@ from ..helpers.functions import (
     callAPI,
     formatJSON,
     get_anime_manga,
-    post_to_telegraph,
     get_poster,
     getBannerLink,
     memory_file,
+    post_to_telegraph,
     replace_text,
 )
 from ..helpers.utils import _cattools, reply_id
@@ -382,7 +382,7 @@ async def whatanime(event):
                 file=js0["image"],
             )
 
-            
+
 @catub.cat_cmd(
     pattern="imanga(?: |$)(.*)",
     command=("imanga", plugin_category),
@@ -409,7 +409,9 @@ async def manga(event):
         try:
             manga = jikan.manga(res)
         except APIException:
-            await edit_delete(event, "Error connecting to the API. Please try again!", 5)
+            await edit_delete(
+                event, "Error connecting to the API. Please try again!", 5
+            )
             return ""
         title = manga.get("title")
         japanese = manga.get("title_japanese")
@@ -456,13 +458,13 @@ async def user(event):
     elif message:
         search_query = message.text
     else:
-        await edit_delete(event, "`Format : .iuser <username>`",5)
+        await edit_delete(event, "`Format : .iuser <username>`", 5)
         return
-        
+
     try:
         user = jikan.user(search_query)
     except APIException:
-        await edit_delete(event, "`Username not Found Nibba`",5)
+        await edit_delete(event, "`Username not Found Nibba`", 5)
         return
 
     date_format = "%Y-%m-%d"
@@ -516,7 +518,7 @@ async def user(event):
 
     caption += f"**About**: {about_string}"
     await event.client.send_file(event.chat_id, file=img, caption=caption)
-            
+
 
 @catub.cat_cmd(
     pattern="anime ?(.*)",
@@ -534,12 +536,14 @@ async def get_anime(message):
         if message.reply_to_msg_id:
             query = await message.get_reply_message().text
         else:
-            await edit_delete(message,
-                "You gave nothing to search. (｡ì _ í｡)\n `Usage: .anime <anime name>`",5
+            await edit_delete(
+                message,
+                "You gave nothing to search. (｡ì _ í｡)\n `Usage: .anime <anime name>`",
+                5,
             )
             return
     except Exception as err:
-        await edit_delete(message, f"**Encountered an Unknown Exception**: \n{err}",5)
+        await edit_delete(message, f"**Encountered an Unknown Exception**: \n{err}", 5)
         return
 
     p_rm = await edit_or_reply(message, "`Searching Anime...`")
@@ -638,7 +642,7 @@ async def get_anime(message):
     await message.client.send_file(message.chat_id, file=main_poster, caption=captions)
     await message.delete()
 
-    
+
 @catub.cat_cmd(
     pattern="aq",
     command=("aq", plugin_category),
@@ -649,8 +653,12 @@ async def get_anime(message):
     },
 )
 async def k(message):
-	data = requests.get("https://animechan.vercel.app/api/random").json()
-	anime = data['anime']
-	character = data['character']
-	quote = data['quote']
-	await edit_or_reply(message, f"❅ <b><u>Anime:</b></u>\n ➥ <code>{anime}</code>\n\n❅ <b><u>Character:</b></u>\n ➥ <code>{character}</code>\n\n❅ <b><u>Quote:</u></b>\n ➥ <code>{quote}</code>", parse_mode="html")
+    data = requests.get("https://animechan.vercel.app/api/random").json()
+    anime = data["anime"]
+    character = data["character"]
+    quote = data["quote"]
+    await edit_or_reply(
+        message,
+        f"❅ <b><u>Anime:</b></u>\n ➥ <code>{anime}</code>\n\n❅ <b><u>Character:</b></u>\n ➥ <code>{character}</code>\n\n❅ <b><u>Quote:</u></b>\n ➥ <code>{quote}</code>",
+        parse_mode="html",
+    )

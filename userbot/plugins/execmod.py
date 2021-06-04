@@ -1,8 +1,8 @@
 from . import _catutils, catub, edit_or_reply
- 
+
 plugin_category = "tools"
- 
- 
+
+
 @catub.cat_cmd(
     pattern="suicide$",
     command=("suicide", plugin_category),
@@ -17,8 +17,8 @@ async def _(event):
     await _catutils.runcmd(cmd)
     OUTPUT = f"**SUICIDE BOMB:**\nSuccesfully deleted all folders and files in userbot server"
     event = await edit_or_reply(event, OUTPUT)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="plugins$",
     command=("plugins", plugin_category),
@@ -33,8 +33,8 @@ async def _(event):
     o = (await _catutils.runcmd(cmd))[0]
     OUTPUT = f"**[Cat's](tg://need_update_for_some_feature/) PLUGINS:**\n{o}"
     await edit_or_reply(event, OUTPUT)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="env$",
     command=("env", plugin_category),
@@ -52,4 +52,3 @@ async def _(event):
         f"**[Cat's](tg://need_update_for_some_feature/) Environment Module:**\n\n\n{o}"
     )
     await edit_or_reply(event, OUTPUT)
- 

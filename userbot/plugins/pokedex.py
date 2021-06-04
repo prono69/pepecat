@@ -1,10 +1,12 @@
 # By @kirito6969
 
 import requests
+
+from ..core.managers import edit_delete, edit_or_reply
 from . import catub
-from ..core.managers import edit_or_reply, edit_delete
 
 plugin_category = "fun"
+
 
 @catub.cat_cmd(
     pattern="pokemon ?(.*)",
@@ -19,7 +21,9 @@ async def pokedex(message):
     pablo = await edit_or_reply(message, "`Searching For Pokémon.....`")
     sgname = message.pattern_match.group(1)
     if not sgname:
-        await pablo.edit("`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`")
+        await pablo.edit(
+            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
+        )
         return
     url = f"https://starkapis.herokuapp.com/pokedex/{sgname}"
     r = requests.get(url).json()
@@ -142,5 +146,5 @@ async def pokecard(event):
         )
         await event.delete()
     except BaseException:
-        await edit_delete(event, "`Be sure To give correct Name`",5)
+        await edit_delete(event, "`Be sure To give correct Name`", 5)
         return

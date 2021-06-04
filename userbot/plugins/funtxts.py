@@ -47,8 +47,8 @@ async def hmm(cat):
     "Some random facts"
     factcat = nekos.fact()
     await edit_or_reply(cat, f"`{factcat}`")
-    
-    
+
+
 @catub.cat_cmd(
     pattern="uwu ?(.*)",
     command=("uwu", plugin_category),

@@ -1,16 +1,16 @@
 """
 All Thenks goes to Emily ( The creater of This Plugin) from ftg userbot
 """
- 
+
 from userbot import catub
- 
+
 from ..core.managers import edit_delete, edit_or_reply
- 
+
 plugin_category = "extra"
- 
+
 name = "Profile Photos"
- 
- 
+
+
 @catub.cat_cmd(
     pattern="poto(?: |$)(.*)",
     command=("poto", plugin_category),
@@ -73,8 +73,7 @@ async def potocmd(event):
             return await edit_delere(
                 event, "`No photo found of this NIBBA / NIBBI. Now u Die!`"
             )
- 
+
         send_photos = await event.client.download_media(photos[uid - 1])
         await event.client.send_file(event.chat_id, send_photos)
     await event.delete()
-    
