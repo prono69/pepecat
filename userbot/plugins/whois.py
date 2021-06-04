@@ -35,10 +35,14 @@ async def fetch_info(replied_user, event):
     user_id = replied_user.user.id
     first_name = replied_user.user.first_name
     last_name = replied_user.user.last_name
+    if last_name:
+    	last = last_name
+    else:
+    	last = "None"
     try:
         dc_id, location = get_input_location(replied_user.profile_photo)
     except Exception:
-        dc_id = "Couldn't fetch DC ID!"
+        dc_id = "None"
     common_chat = replied_user.common_chats_count
     username = replied_user.user.username
     user_bio = replied_user.about
@@ -53,13 +57,14 @@ async def fetch_info(replied_user, event):
     first_name = (
         first_name.replace("\u2060", "")
         if first_name
-        else ("This User has no First Name")
+        else ("None")
     )
     last_name = last_name.replace("\u2060", "") if last_name else (" ")
-    username = "@{}".format(username) if username else ("This User has no Username")
-    user_bio = "This User has no About" if not user_bio else user_bio
-    caption = "<b><i>USER INFO from Durov's Database :</i></b>\n\n"
-    caption += f"<b>👤 First Name:</b> {first_name} {last_name}\n"
+    username = "@{}".format(username) if username else ("None")
+    user_bio = "None" if not user_bio else user_bio
+    caption = "<b><i>USER INFO :</i></b>\n\n"
+    caption += f"<b>👤 First Name:</b> {first_name}\n"
+    caption += f"<b>👤 Last Name:</b> {last}\n"
     caption += f"<b>🤵 Username:</b> {username}\n"
     caption += f"<b>🔖 ID:</b> <code>{user_id}</code>\n"
     caption += f"<b>🌏 Data Centre ID:</b> {dc_id}\n"
@@ -183,7 +188,8 @@ async def who(event):
             os.remove(photo)
         await cat.delete()
     except TypeError:
-        await cat.edit(caption, parse_mode="html")
+    	message_out_str = "<b>📷 NO DP Found📷</b>\n\n" + caption
+        await cat.edit(message_out_str, parse_mode="html")
 
 
 @catub.cat_cmd(

@@ -19,6 +19,7 @@ googletrans==4.0.0-rc1
 gtts
 hachoir
 heroku3
+hentai
 html-telegraph-poster
 humanize
 jikanpy
@@ -29,6 +30,7 @@ lyricsgenius
 motor
 moviepy
 nekos.py
+natsort
 Pillow
 prettytable
 prsaw

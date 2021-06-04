@@ -568,7 +568,7 @@ async def get_anime(message):
     episodes = results_["episodes"]
     status = results_["status"]
     results_["aired"].get("string")
-    results_["duration"]
+    duration = results_["duration"]
     rating = results_["rating"]
     score = results_["score"]
     synopsis = results_["synopsis"]
@@ -617,15 +617,16 @@ async def get_anime(message):
     synopsis_link = post_to_telegraph(anime_title, html_enc)
 
     # Build captions:
-    captions = f"""📺 `{anime_title}` - `{eng_title}` - `{jap_title}`
+    captions = f"""📺 **{anime_title}** ({eng_title}) - `{jap_title}`
 
 **🆎 Type:** `{type_}`
 **🆔 ID:** `{id}`
 **🎭 Genre:** `{genress_md}`
 **🔢 Episodes:** `{episodes}`
-**📡 Status:** `{status}`
+**⏰ Duration:** `{duration}`
 **💯 Score:** `{score}/10`
 **🔞 Rating:** `{rating}`
+**📡 Status:** `{status}`
 
 [🎬 Trailer]({trailer_link})
 
