@@ -5,11 +5,11 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="ipm ?(.*)",
-    command=("ipm", plugin_category),
+    pattern="apm ?(.*)",
+    command=("apm", plugin_category),
     info={
         "header": "DM a hooman",
-        "usage": "{tr}ipm <text>|<username>",
+        "usage": "{tr}apm <text>|<username>",
     },
 )
 async def _(cat):

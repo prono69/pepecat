@@ -189,7 +189,7 @@ async def who(event):
         await cat.delete()
     except TypeError:
     	message_out_str = "<b>📷 NO DP Found📷</b>\n\n" + caption
-        await cat.edit(message_out_str, parse_mode="html")
+    	await cat.edit(message_out_str, parse_mode="html")
 
 
 @catub.cat_cmd(
