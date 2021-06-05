@@ -3,12 +3,11 @@
 import io
 import logging
 import os
-from re import sub
 
 from PIL import Image, ImageDraw
 
+from ..core.managers import edit_delete, edit_or_reply
 from . import catub
-from ..core.managers import edit_or_reply, edit_delete
 
 plugin_category = "extra"
 logger = logging.getLogger(__name__)
@@ -89,7 +88,7 @@ async def dotifycmd(message):
     },
 )
 async def dotificmd(message):
-    """Image to BW dots """
+    """Image to BW dots"""
     mode = True
     reply, pix = await parse(message)
     if reply:
