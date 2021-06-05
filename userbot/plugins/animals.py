@@ -53,6 +53,7 @@ async def animal_image(message):
         file=await prep_animal_image(animal_data),
         reply_to_id=message.reply_to_msg_id,
     )
+    await message.delete()
 
 
 @catub.cat_cmd(

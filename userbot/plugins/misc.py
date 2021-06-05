@@ -1,5 +1,6 @@
-from ..core.managers import edit_or_reply
+from ..core.managers import edit_or_reply, edit_delete
 from . import catub
+from requests import get
 
 plugin_category = "utils"
 
@@ -118,3 +119,43 @@ async def _(dc):
         )
     except BaseException:
         await edit_or_reply(dc, ".dm (username)|(text)")
+
+        
+@catub.cat_cmd(
+    pattern="ip ?(.*)",
+    command=("ip", plugin_category),
+    info={
+        "header": "Find information about an IP address",
+        "usage": "{tr}ip <ip address>",
+    },
+)
+async def ipcmd(event):
+        """Use as .ip <ip> (optional)"""
+        ip = event.pattern_match.group(1)
+        if not ip:
+        	await edit_delete(event, "`Give me an ip address :(`")
+
+        lookup = get(f"http://ip-api.com/json/{ip}").json()
+        fixed_lookup = {}
+
+        for key, value in lookup.items():
+            special = {"lat": "Latitude", "lon": "Longitude", "isp": "ISP", "as": "AS", "asname": "AS name"}
+            if key in special:
+                fixed_lookup[special[key]] = str(value)
+                continue
+
+            key = sub(r"([a-z])([A-Z])", r"\g<1> \g<2>", key)
+            key = key.capitalize()
+
+            if not value:
+                value = "None"
+
+            fixed_lookup[key] = str(value)
+
+        text = ""
+
+        for key, value in fixed_lookup.items():
+            text = text + f"<b>{key}:</b> <code>{value}</code>\n"
+
+        await edit_or_reply(event, f"<b><u>IP Information of {ip}</u></b>\n\n{text}",parse_mode='html')
+        

@@ -27,7 +27,7 @@ async def fetch_info(replied_user, event):
             user_id=replied_user.user.id, offset=42, max_id=0, limit=80
         )
     )
-    replied_user_profile_photos_count = "User haven't set profile pic"
+    replied_user_profile_photos_count = "0"
     try:
         replied_user_profile_photos_count = replied_user_profile_photos.count
     except AttributeError:
@@ -35,10 +35,6 @@ async def fetch_info(replied_user, event):
     user_id = replied_user.user.id
     first_name = replied_user.user.first_name
     last_name = replied_user.user.last_name
-    if last_name:
-        last = last_name
-    else:
-        last = "None"
     try:
         dc_id, location = get_input_location(replied_user.profile_photo)
     except Exception:
@@ -55,12 +51,12 @@ async def fetch_info(replied_user, event):
         download_big=True,
     )
     first_name = first_name.replace("\u2060", "") if first_name else ("None")
-    last_name = last_name.replace("\u2060", "") if last_name else (" ")
+    last_name = last_name.replace("\u2060", "") if last_name else ("None")
     username = "@{}".format(username) if username else ("None")
     user_bio = "None" if not user_bio else user_bio
     caption = "<b><i>USER INFO :</i></b>\n\n"
     caption += f"<b>👤 First Name:</b> {first_name}\n"
-    caption += f"<b>👤 Last Name:</b> {last}\n"
+    caption += f"<b>👤 Last Name:</b> {last_name}\n"
     caption += f"<b>🤵 Username:</b> {username}\n"
     caption += f"<b>🔖 ID:</b> <code>{user_id}</code>\n"
     caption += f"<b>🌏 Data Centre ID:</b> {dc_id}\n"
@@ -168,7 +164,7 @@ async def who(event):
     try:
         photo, caption = await fetch_info(replied_user, event)
     except AttributeError:
-        return await edit_or_reply(cat, "`Could not fetch info of that user.`")
+        return await edit_or_reply(cat, "`Could not fetch info of that user!`")
     message_id_to_reply = await reply_id(event)
     try:
         await event.client.send_file(
@@ -184,7 +180,7 @@ async def who(event):
             os.remove(photo)
         await cat.delete()
     except TypeError:
-        message_out_str = "<b>📷 NO DP Found📷</b>\n\n" + caption
+        message_out_str = "<b>📷 NO DP Found 📷</b>\n\n" + caption
         await cat.edit(message_out_str, parse_mode="html")
 
 
