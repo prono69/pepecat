@@ -1,5 +1,6 @@
-from requests import get
 from re import sub
+
+from requests import get
 
 from ..core.managers import edit_delete, edit_or_reply
 from . import catub
