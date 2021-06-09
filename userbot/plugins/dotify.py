@@ -3,6 +3,7 @@
 import io
 import logging
 import os
+import json
 
 from PIL import Image, ImageDraw
 
@@ -14,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 @catub.cat_cmd(
-    pattern="tgs ?(.*)",
+    pattern="tgs",
     command=("tgs", plugin_category),
     info={
         "header": "Destory a sticker",
@@ -34,7 +35,7 @@ async def tgscmd(message):
         await edit_delete(message, "`Reply to an animated sticker`", 3)
         return
         await reply.download_media("tgs.tgs")
-        await edit_or_reply(event, "`Fixing this sticker...`")
+        await edit_or_reply(message, "`Fixing this sticker...`")
         os.system("lottie_convert.py tgs.tgs json.json")
         json = open("json.json", "r")
         jsn = json.read()
