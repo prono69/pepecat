@@ -121,7 +121,7 @@ def higlighted_text(
         )
         source_img = Image.alpha_composite(source_img, trans)
     source_img.save(output_img, "png")
-    
+
 
 async def clippy(borg, msg, chat_id, reply_to_id):
     chat = "@clippy"
