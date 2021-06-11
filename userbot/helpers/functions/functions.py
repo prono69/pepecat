@@ -5,7 +5,7 @@ from textwrap import wrap
 from uuid import uuid4
 
 import requests
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageColor, ImageDraw, ImageFont
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from ...Config import Config
@@ -121,7 +121,7 @@ def higlighted_text(
         )
         source_img = Image.alpha_composite(source_img, trans)
     source_img.save(output_img, "png")
-
+    
 
 async def clippy(borg, msg, chat_id, reply_to_id):
     chat = "@clippy"

@@ -114,7 +114,7 @@ async def butts(e):
     a = await edit_or_reply(e, "`Finding some beautiful butts...`")
     await sleep(1)
     await a.edit("`Sending some beautiful butts...`")
-    nsfw = requests.get("http://api.obutts.ru/butts/noise/1").json()[0]["preview"]
+    nsfw = requests.get("http://api.obutts.ru/butts/10/1/random").json()[0]["preview"]
     urllib.request.urlretrieve("http://media.obutts.ru/{}".format(nsfw), "*.jpg")
     os.rename("*.jpg", "butts.jpg")
     await e.client.send_file(e.chat_id, "butts.jpg")
