@@ -3,7 +3,6 @@
 import io
 import logging
 import os
-import json
 
 from PIL import Image, ImageDraw
 
