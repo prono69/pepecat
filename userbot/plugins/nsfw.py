@@ -4,20 +4,20 @@
 This module can search images in danbooru and send in to the chat!
 ──「 **Danbooru Search** 」──
 """
- 
+
 import os
 import urllib
- 
+
 import requests
- 
+
 from userbot import catub
- 
+
 from ..helpers.functions import age_verification
 from . import edit_delete, edit_or_reply, reply_id
- 
+
 plugin_category = "fun"
- 
- 
+
+
 @catub.cat_cmd(
     pattern="ani(mu|nsfw) ?(.*)",
     command=("ani", plugin_category),
@@ -46,7 +46,7 @@ async def danbooru(message):
         "random": "true",
         "tags": f"Rating:{rating} {search_query}".strip(),
     }
- 
+
     with requests.get(
         "http://danbooru.donmai.us/posts.json", params=params
     ) as response:
@@ -59,17 +59,17 @@ async def danbooru(message):
                 4,
             )
             return
- 
+
     if not response:
         await edit_delete(message, f"`No results for query:` __{search_query}__", 4)
         return
- 
+
     valid_urls = [
         response[0][url]
         for url in ["file_url", "large_file_url", "source"]
         if url in response[0].keys()
     ]
- 
+
     if not valid_urls:
         await edit_delete(
             message, f"`Failed to find URLs for query:` __{search_query}__", 4
@@ -87,8 +87,8 @@ async def danbooru(message):
     await edit_delete(
         message, f"``Failed to fetch media for query:` __{search_query}__", 4
     )
- 
- 
+
+
 @catub.cat_cmd(
     pattern="boobs(?: |$)(.*)",
     command=("boobs", plugin_category),
@@ -110,8 +110,8 @@ async def boobs(e):
     await e.client.send_file(e.chat_id, "boobs.jpg", reply_to=reply_to)
     os.remove("boobs.jpg")
     await a.delete()
- 
- 
+
+
 @catub.cat_cmd(
     pattern="butts(?: |$)(.*)",
     command=("butts", plugin_category),
@@ -133,7 +133,7 @@ async def butts(e):
     await e.client.send_file(e.chat_id, "butts.jpg", reply_to=reply_to)
     os.remove("butts.jpg")
     await a.delete()
-    
+
 
 PENIS_TEMPLATE = """
 🍆🍆

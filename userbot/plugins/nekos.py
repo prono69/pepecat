@@ -6,14 +6,13 @@
 """
 
 import os
- 
+
 import nekos
 import requests
 from PIL import Image
- 
+
 from ..helpers.functions import age_verification
 from . import _catutils, catub, edit_delete, edit_or_reply, reply_id, user_agent
- 
 
 POSSIBLE = [
     "feet",
@@ -105,7 +104,9 @@ async def _(event):
     reply_to = await reply_id(event)
     choose = event.pattern_match.group(1)
     if choose not in POSSIBLE:
-        return await edit_delete(event, "`Choose correct argument from POSSIBLE list (*_*)`")
+        return await edit_delete(
+            event, "`Choose correct argument from POSSIBLE list (*_*)`"
+        )
     if await age_verification(event, reply_to):
         return
     catevent = await edit_or_reply(event, "`Processing Nekos...`")
@@ -118,8 +119,8 @@ async def _(event):
     except:
         pass
     await catevent.delete()
- 
- 
+
+
 @catub.cat_cmd(
     pattern="dva$",
     command=("dva", plugin_category),
@@ -141,8 +142,8 @@ async def dva(event):
         return await edit_delete(event, "`uuuf.. No URL found from the API`")
     await event.client.send_file(event.chat_id, file=url, reply_to=reply_to)
     await event.delete()
- 
- 
+
+
 @catub.cat_cmd(
     pattern="nsfw$",
     command=("nsfw", plugin_category),
@@ -166,8 +167,8 @@ async def avatarlewd(event):
     )
     os.remove("temp.webp")
     await event.delete()
- 
- 
+
+
 @catub.cat_cmd(
     pattern="icat$",
     command=("icat", plugin_category),
@@ -183,8 +184,8 @@ async def _(event):
     catevent = await edit_or_reply(event, "`Finding ur ket...`")
     await event.client.send_file(event.chat_id, file=target, reply_to=reply_to)
     await catevent.delete()
- 
- 
+
+
 @catub.cat_cmd(
     pattern="lewdn$",
     command=("lewdn", plugin_category),
@@ -204,8 +205,8 @@ async def lewdn(event):
         return await edit_delete(event, "`Uff.. No NEKO found from the API`")
     await event.client.send_file(event.chat_id, file=url, reply_to=reply_to)
     await event.delete()
- 
- 
+
+
 @catub.cat_cmd(
     pattern="gasm$",
     command=("gasm", plugin_category),
@@ -229,8 +230,8 @@ async def gasm(event):
     )
     os.remove("temp.webp")
     await event.delete()
- 
- 
+
+
 @catub.cat_cmd(
     pattern="ifu$",
     command=("ifu", plugin_category),
@@ -252,4 +253,3 @@ async def waifu(event):
     )
     os.remove("temp.webp")
     await event.delete()
-    
