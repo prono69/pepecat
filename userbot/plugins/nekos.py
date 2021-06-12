@@ -6,16 +6,14 @@
 """
 
 import os
-
+ 
 import nekos
 import requests
 from PIL import Image
-
-from userbot import catub, user_agent
-
-from ..core.managers import edit_or_reply
+ 
 from ..helpers.functions import age_verification
-from ..helpers.utils import reply_id
+from . import _catutils, catub, edit_delete, edit_or_reply, reply_id, user_agent
+ 
 
 POSSIBLE = [
     "feet",
@@ -96,7 +94,7 @@ for i in POSSIBLE:
     pattern="nn ?(.*)",
     command=("nn", plugin_category),
     info={
-        "header": "Contains NSFW 🔞\nSearch images from nekos",
+        "header": "Contains NSFW \nSearch images from nekos",
         "usage": "{tr}nn <argument from choice>",
         "examples": "{tr}nn neko",
         "Choice": neko_help,
@@ -107,18 +105,21 @@ async def _(event):
     reply_to = await reply_id(event)
     choose = event.pattern_match.group(1)
     if choose not in POSSIBLE:
-        await edit_or_reply("`Choose correct argument from POSSIBLE list (*_*)`")
-        return
+        return await edit_delete(event, "`Choose correct argument from POSSIBLE list (*_*)`")
     if await age_verification(event, reply_to):
         return
     catevent = await edit_or_reply(event, "`Processing Nekos...`")
     target = nekos.img(f"{choose}")
-    await event.client.send_file(
+    nohorny = await event.client.send_file(
         event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
     )
+    try:
+        await _catutils.unsavegif(event, nohorny)
+    except:
+        pass
     await catevent.delete()
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="dva$",
     command=("dva", plugin_category),
@@ -130,27 +131,28 @@ async def _(event):
 async def dva(event):
     "Search dva images"
     reply_to = await reply_id(event)
+    if await age_verification(event, reply_to):
+        return
     nsfw = requests.get(
         "https://api.computerfreaker.cf/v1/dva", headers={"User-Agent": user_agent()}
     ).json()
     url = nsfw.get("url")
     if not url:
-        await edit_or_reply(event, "`uuuf.. No URL found from the API`")
-        return
+        return await edit_delete(event, "`uuuf.. No URL found from the API`")
     await event.client.send_file(event.chat_id, file=url, reply_to=reply_to)
     await event.delete()
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="nsfw$",
     command=("nsfw", plugin_category),
     info={
-        "header": "NSFW 🔞\nSearch nsfw from nekos",
+        "header": "NSFW \nSearch nsfw from nekos",
         "usage": "{tr}nsfw",
     },
 )
 async def avatarlewd(event):
-    "NSFW 🔞. Search nsfw from nekos"
+    "NSFW. Search nsfw from nekos"
     reply_to = await reply_id(event)
     if await age_verification(event, reply_to):
         return
@@ -164,57 +166,56 @@ async def avatarlewd(event):
     )
     os.remove("temp.webp")
     await event.delete()
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="icat$",
     command=("icat", plugin_category),
     info={
-        "header": "Search cute cats 🐱",
+        "header": "Search cute cats.",
         "usage": "{tr}icat",
     },
 )
 async def _(event):
-    "Search cute cats 🐱"
+    "Search cute cats."
     reply_to = await reply_id(event)
     target = nekos.cat()
     catevent = await edit_or_reply(event, "`Finding ur ket...`")
     await event.client.send_file(event.chat_id, file=target, reply_to=reply_to)
     await catevent.delete()
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="lewdn$",
     command=("lewdn", plugin_category),
     info={
-        "header": "NSFW 🔞\nSearch lewd nekos",
+        "header": "NSFW \nSearch lewd nekos",
         "usage": "{tr}lewdn",
     },
 )
 async def lewdn(event):
-    "NSFW 🔞. Search lewd nekos"
+    "NSFW.Search lewd nekos"
     reply_to = await reply_id(event)
     if await age_verification(event, reply_to):
         return
     nsfw = requests.get("https://nekos.life/api/lewd/neko").json()
     url = nsfw.get("neko")
     if not url:
-        await edit_or_reply(event, "`Uff.. No NEKO found from the API`")
-        return
+        return await edit_delete(event, "`Uff.. No NEKO found from the API`")
     await event.client.send_file(event.chat_id, file=url, reply_to=reply_to)
     await event.delete()
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="gasm$",
     command=("gasm", plugin_category),
     info={
-        "header": "NSFW 🔞\nIt's gasm",
+        "header": "NSFW \nIt's gasm",
         "usage": "{tr}gasm",
     },
 )
 async def gasm(event):
-    "NSFW 🔞. It's gasm"
+    "NSFW. It's gasm"
     reply_to = await reply_id(event)
     if await age_verification(event, reply_to):
         return
@@ -228,8 +229,8 @@ async def gasm(event):
     )
     os.remove("temp.webp")
     await event.delete()
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="ifu$",
     command=("ifu", plugin_category),
@@ -251,3 +252,4 @@ async def waifu(event):
     )
     os.remove("temp.webp")
     await event.delete()
+    
