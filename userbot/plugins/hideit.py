@@ -1,13 +1,13 @@
 # Template by @Infinity20998
 # Modified by @o_s_h_o_r_a_j
 from userbot import catub
- 
+
 from ..core.managers import edit_delete
 from ..helpers.utils import reply_id
- 
+
 plugin_category = "extra"
- 
- 
+
+
 @catub.cat_cmd(
     pattern="hc ?(.*)",
     command=("hc", plugin_category),
@@ -32,8 +32,8 @@ async def hideit01(event):
         )
     results = await event.client.inline_query(bot, hidetxt)
     await results[0].click(event.chat_id, reply_to=reply_to_id)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="hq ?(.*)",
     command=("hq", plugin_category),

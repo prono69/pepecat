@@ -1,7 +1,6 @@
 import random
 import re
 import time
-import random
 from platform import python_version
 
 from telethon import version
