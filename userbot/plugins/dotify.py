@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 @catub.cat_cmd(
-    pattern="tgs",
+    pattern="tgs ?(.*)",
     command=("tgs", plugin_category),
     info={
         "header": "Destory a sticker",
@@ -27,32 +27,28 @@ async def tgscmd(message):
     if not reply:
         await edit_delete(message, "`Reply to an animated sticker`", 3)
         return
-    if not reply.file:
-        await edit_delete(message, "`Reply to an animated sticker`", 3)
-        return
     if not reply.file.name.endswith(".tgs"):
         await edit_delete(message, "`Reply to an animated sticker`", 3)
         return
-        await reply.download_media("tgs.tgs")
-        await edit_or_reply(message, "`Fixing this sticker...`")
-        os.system("lottie_convert.py tgs.tgs json.json")
-        json = open("json.json", "r")
-        jsn = json.read()
-        json.close()
-        jsn = (
-            jsn.replace("[1]", "[20]")
-            .replace("[2]", "[30]")
-            .replace("[3]", "[40]")
-            .replace("[4]", "[50]")
-            .replace("[5]", "[60]")
-        )
+    await reply.download_media("tgs.tgs")
+    await edit_or_reply(message, "`Fixing this sticker...`")
+    os.system("lottie_convert.py tgs.tgs json.json")
+    json = open("json.json", "r")
+    jsn = json.read()
+    json.close()
+    jsn = (
+      jsn.replace("[1]", "[20]")
+      .replace("[2]", "[30]")
+      .replace("[3]", "[40]")
+      .replace("[4]", "[50]")
+      .replace("[5]", "[60]"))
 
-        open("json.json", "w").write(jsn)
-        os.system("lottie_convert.py json.json tgs.tgs")
-        await message.reply(file="tgs.tgs")
-        os.remove("json.json")
-        os.remove("tgs.tgs")
-        await message.delete()
+    open("json.json", "w").write(jsn)
+    os.system("lottie_convert.py json.json tgs.tgs")
+    await message.reply(file="tgs.tgs")
+    os.remove("json.json")
+    os.remove("tgs.tgs")
+    await message.delete()
 
 
 @catub.cat_cmd(

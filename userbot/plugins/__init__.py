@@ -22,7 +22,7 @@ from ..sql_helper.globals import gvarstatus
 bot = catub
 LOGS = logging.getLogger(__name__)
 USERID = catub.uid if Config.OWNER_ID == 0 else Config.OWNER_ID
-ALIVE_NAME = gvarstatus(ALIVE_NAME)
+ALIVE_NAME = gvarstatus("ALIVE_NAME") or "ПIKIƬΛ"
 AUTONAME = Config.AUTONAME
 DEFAULT_BIO = Config.DEFAULT_BIO
 
