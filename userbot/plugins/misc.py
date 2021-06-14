@@ -1,11 +1,12 @@
-from re import sub
 import os
+from re import sub
+
+from quotefancy import get_quote
 from requests import get
+from telethon.errors import ChatSendMediaForbiddenError
 
 from ..core.managers import edit_delete, edit_or_reply
 from . import catub
-from telethon.errors import ChatSendMediaForbiddenError
-from quotefancy import get_quote
 
 plugin_category = "misc"
 
@@ -114,18 +115,18 @@ async def ipcmd(event):
     },
 )
 async def _(e):
-  match = e.pattern_match.group(1)
-  if match:
-    user = match
-  elif e.is_reply:
-    user = (await e.get_reply_message()).sender_id
-  else:
-    user = 'me'
-  a = await e.client.get_messages(e.chat_id, 0, from_user=user)
-  user = await e.client.get_entity(user)
-  await edit_or_reply(e, f"Total msgs of `{user.first_name}`\n**Here :** `{a.total}`")
+    match = e.pattern_match.group(1)
+    if match:
+        user = match
+    elif e.is_reply:
+        user = (await e.get_reply_message()).sender_id
+    else:
+        user = "me"
+    a = await e.client.get_messages(e.chat_id, 0, from_user=user)
+    user = await e.client.get_entity(user)
+    await edit_or_reply(e, f"Total msgs of `{user.first_name}`\n**Here :** `{a.total}`")
 
-  
+
 @ultroid_cmd(pattern="qfancy$")
 @catub.cat_cmd(
     pattern="qfancy ?(.*)",
@@ -147,4 +148,3 @@ async def quotefancy(e):
         await edit_or_reply(e, f"`{quote}`")
     except Exception as e:
         await edit_delete(e, f"**ERROR** - {str(e)}")
-  

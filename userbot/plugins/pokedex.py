@@ -1,7 +1,7 @@
 # By @kirito6969
 
-import requests
 import pokedex
+import requests
 
 from ..core.managers import edit_delete, edit_or_reply
 from . import catub
@@ -116,7 +116,6 @@ async def pokedex(event):
   """
     await event.client.send_file(event.chat_id, lst, caption=cap)
     await xx.delete()
-
 
 
 @catub.cat_cmd(
