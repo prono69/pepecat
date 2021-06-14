@@ -1,11 +1,13 @@
 from re import sub
-
+import os
 from requests import get
 
 from ..core.managers import edit_delete, edit_or_reply
 from . import catub
+from telethon.errors import ChatSendMediaForbiddenError
+from quotefancy import get_quote
 
-plugin_category = "utils"
+plugin_category = "misc"
 
 
 @catub.cat_cmd(
@@ -101,3 +103,48 @@ async def ipcmd(event):
     await edit_or_reply(
         event, f"<b>IP Information of {ip}</b>\n\n{text}", parse_mode="html"
     )
+
+
+@catub.cat_cmd(
+    pattern="totalmsgs ?(.*)",
+    command=("totalmsgs", plugin_category),
+    info={
+        "header": "Returns your or any user's total msg count in current chat",
+        "usage": "{tr}totalmsgs [username]/<reply>/nothing",
+    },
+)
+async def _(e):
+  match = e.pattern_match.group(1)
+  if match:
+    user = match
+  elif e.is_reply:
+    user = (await e.get_reply_message()).sender_id
+  else:
+    user = 'me'
+  a = await e.client.get_messages(e.chat_id, 0, from_user=user)
+  user = await e.client.get_entity(user)
+  await edit_or_reply(e, f"Total msgs of `{user.first_name}`\n**Here :** `{a.total}`")
+
+  
+@ultroid_cmd(pattern="qfancy$")
+@catub.cat_cmd(
+    pattern="qfancy ?(.*)",
+    command=("qfancy", plugin_category),
+    info={
+        "header": "Gets random quotes from QuoteFancy.com.",
+        "usage": "{tr}qfancy",
+    },
+)
+async def quotefancy(e):
+    mes = await edit_or_reply(e, "`Processing...`")
+    img = get_quote("img", download=True)
+    try:
+        await e.client.send_file(e.chat_id, img)
+        os.remove(img)
+        await mes.delete()
+    except ChatSendMediaForbiddenError:
+        quote = get_quote("text")
+        await edit_or_reply(e, f"`{quote}`")
+    except Exception as e:
+        await edit_delete(e, f"**ERROR** - {str(e)}")
+  

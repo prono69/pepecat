@@ -1,6 +1,7 @@
 # By @kirito6969
 
 import requests
+import pokedex
 
 from ..core.managers import edit_delete, edit_or_reply
 from . import catub
@@ -17,109 +18,105 @@ plugin_category = "fun"
         "examples": "{tr}pokemon Suicune",
     },
 )
-async def pokedex(message):
-    pablo = await edit_or_reply(message, "`Searching For Pokémon.....`")
-    sgname = message.pattern_match.group(1)
-    if not sgname:
-        await pablo.edit(
-            "`Please Give Me A Valid Input. You Can Check Help Menu To Know More!`"
-        )
+async def pokedex(event):
+    pokemon = event.pattern_match.group(1).lower()
+    if not pokemon:
+        await edit_delete(event, "`Give a Pokemon Name`")
         return
-    url = f"https://starkapis.herokuapp.com/pokedex/{sgname}"
-    r = requests.get(url).json()
-    pokemon = r
-    if pokemon.get("error") is not None:
-        kk = f"""
-Error:   {pokemon.get("error")}"""
-        await pablo.edit(kk)
+    xx = await edit_or_reply(event, "`Booting up the pokedex.......`")
+    move = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon}")
+    rw = f"https://some-random-api.ml/pokedex?pokemon={pokemon}"
+    w = requests.get(f"https://api.pokemontcg.io/v1/cards?name={pokemon}")
+    lol = w.json()
+    r = requests.get(rw)
+    a = r.json()
+    try:
+        name = a["name"]
+    except Exception:
+        await edit_delete(event, "`Be sure To give correct Name`")
         return
-    name = str(pokemon.get("name"))
-    number = str(pokemon.get("number"))
-    species = str(pokemon.get("species"))
-    typo = pokemon.get("types")
-    types = ""
-    for tu in typo:
-        types += str(tu) + ",  "
-
-    lol = pokemon.get("abilities")
-    lmao = lol.get("normal")
-    ok = ""
-    for ty in lmao:
-        ok = str(ty) + ",  "
-
-    kk = lol.get("hidden")
-    hm = ""
-    for pq in kk:
-        hm += str(pq) + ",  "
-    hell = pokemon.get("eggGroups")
-    uio = ""
-    for x in hell:
-        uio += str(x) + ",  "
-
-    height = pokemon.get("height")
-    weight = pokemon.get("weight")
-    yes = pokemon.get("family")
-    Id = str(yes.get("id"))
-    evo = str(yes.get("evolutionStage"))
-    pol = yes.get("evolutionLine")
-    xy = ""
-    for p in pol:
-        xy += str(p) + ",  "
-
-    start = pokemon.get("starter")
-    if not start:
-        start = "No"
-    elif start:
-        start = "True"
+    typ = a["type"]
+    species = a["species"]
+    abilities = a["abilities"]
+    height = a["height"]
+    weight = a["weight"]
+    esatge = r.json()["family"]["evolutionStage"]
+    try:
+        weaknesses = lol["cards"][0]["weaknesses"][0]["type"]
+    except BaseException:
+        weaknesses = None
+    l = r.json()["family"]["evolutionLine"]
+    # ambiguous variable name 'l' flake8(E741)
+    if not l:
+        line = "None"
     else:
-        pass
+        line = ", ".join(map(str, l))
+    gen = a["generation"]
+    try:
+        move1 = move.json()["moves"][0]["move"]["name"]
+    except IndexError:
+        move1 = None
+    try:
+        move2 = move.json()["moves"][1]["move"]["name"]
+    except IndexError:
+        move2 = None
+    try:
+        move3 = move.json()["moves"][2]["move"]["name"]
+    except IndexError:
+        move3 = None
+    try:
+        move4 = move.json()["moves"][3]["move"]["name"]
+    except IndexError:
+        move4 = None
+    try:
+        move5 = move.json()["moves"][4]["move"]["name"]
+    except IndexError:
+        move5 = None
+    try:
+        move6 = move.json()["moves"][5]["move"]["name"]
+    except IndexError:
+        move6 = None
+    try:
+        move7 = move.json()["moves"][6]["move"]["name"]
+    except IndexError:
+        move7 = None
+    description = a["description"]
+    typ = ", ".join(map(str, typ))
+    Stats = a["stats"]
+    species = ", ".join(map(str, species))
+    abilities = ", ".join(map(str, abilities))
+    poli = pokedex.Pokedex()
+    pname = poli.get_pokemon_by_name(pokemon)
+    pokemon = pname[0]
+    lst = pokemon.get("sprite")
+    cap = f"""
 
-    leg = pokemon.get("legendary")
+**NAME** : `{name}`
+**TYPE** : `{typ}`
+**SPECIES** : `{species}`
+**Evolution Line** : `{line}`
+**Evolution Stage** : `{esatge}`
+**Generation** : `{gen}`
 
-    if not leg:
-        leg = "No"
-    elif leg:
-        leg = "True"
-    else:
-        pass
+**ABILITIES** : `{abilities}`
+**WEAKNESSES** :`{weaknesses}`
+**HEIGHT** : `{height}`
+**WEIGHT** : `{weight}`
 
-    myt = pokemon.get("mythical")
-    if not myt:
-        myt = "No"
-    elif myt:
-        myt = "True"
-    else:
-        pass
-    ultra = pokemon.get("ultraBeast")
+    **Stats**                               **Moves**
+**Hp**      : `{Stats['hp']}`               `(1){move1}`
+**Attack**  : `{Stats['attack']}`           `(2){move2}`
+**Defense** : `{Stats['defense']}`          `(3){move3}`
+**Sp_atk**  : `{Stats['sp_atk']}`           `(4){move4}`
+**Sp_def**  : `{Stats['sp_def']}`           `(5){move5}`
+**Speed**   : `{Stats['speed']}`            `(6){move6}`
+**Total**   : `{Stats['total']}`            `(7){move7}`
 
-    if not ultra:
-        ultra = "No"
-    elif ultra:
-        ultra = "True"
-    else:
-        pass
+**DESCRIPTION** : `{description}`
+  """
+    await event.client.send_file(event.chat_id, lst, caption=cap)
+    await xx.delete()
 
-    megA = pokemon.get("mega")
-
-    if not megA:
-        megA = "No"
-    elif megA:
-        megA = "True"
-    else:
-        pass
-
-    gEn = pokemon.get("gen")
-    link = pokemon.get("sprite")
-    des = pokemon.get("description")
-    caption = f"<b><u>Pokemon Information Gathered Successfully</b></u>\n\n\n<b>Name:-   {name}\nNumber:-  {number}\nSpecies:- {species}\nType:- {types}\n\n<u>Abilities</u>\nNormal Abilities:- {ok}\nHidden Abilities:- {hm}\nEgg Group:-  {uio}\nHeight:- {height}\nWeight:- {weight}\n\n<u>Family</u>\nID:- {Id}\nEvolution Stage:- {evo}\nEvolution Line:- {xy}\nStarter:- {start}\nLegendary:- {leg}\nMythical:- {myt}\nUltra Beast:- {ultra}\nMega:- {megA}\nGen:-  {gEn}\n\nDescription:-  <i>{des}</i></b>"
-
-    await message.client.send_file(
-        message.chat_id,
-        file=link,
-        caption=caption,
-        parse_mode="HTML",
-    )
-    await pablo.delete()
 
 
 @catub.cat_cmd(

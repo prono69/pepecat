@@ -49,7 +49,9 @@ pySmartDL
 python-barcode
 python-dotenv
 pytz
+pokedex.py
 qrcode
+quotefancy
 randomstuff.py
 regex
 requests
