@@ -49,7 +49,7 @@ async def tgscmd(message):
 
         open("json.json", "w").write(jsn)
         os.system("lottie_convert.py json.json tgs.tgs")
-        await reply.reply(file="tgs.tgs")
+        await message.reply(file="tgs.tgs")
         os.remove("json.json")
         os.remove("tgs.tgs")
         await message.delete()

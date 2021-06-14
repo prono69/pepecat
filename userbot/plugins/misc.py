@@ -9,31 +9,6 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="apm ?(.*)",
-    command=("apm", plugin_category),
-    info={
-        "header": "DM a hooman",
-        "usage": "{tr}apm <text>|<username>",
-    },
-)
-async def _(cat):
-    kk = cat.pattern_match.group(1)
-    a = await edit_or_reply(cat, "`Sending Message...`")
-    replied = await cat.get_reply_message()
-    query = kk
-    if replied:
-        text = replied.message
-        username = query
-    elif "|" in query:
-        text, username = query.split("|")
-
-    await bot.send_message(f"{username}", f"{text}")
-    await a.edit("`Done`")
-    await sleep(2)
-    await a.delete()
-
-
-@catub.cat_cmd(
     pattern="reveal",
     command=("reveal", plugin_category),
     info={
@@ -81,48 +56,6 @@ async def get_stats(event):
     await edit_or_reply(event, msg)
 
 
-@catub.cat_cmd(
-    pattern="dm ?(.*)",
-    command=("dm", plugin_category),
-    info={
-        "header": "DM a hooman",
-        "usage": [
-            "{tr}dm <username>|<text>",
-            "{tr}dm <text>|<reply>",
-        ],
-    },
-)
-async def _(dc):
-
-    d = dc.pattern_match.group(1)
-
-    c = d.split("|")
-
-    chat_id = c[0]
-    try:
-        chat_id = int(chat_id)
-
-    except BaseException:
-
-        pass
-
-    msg = ""
-    masg = await dc.get_reply_message()
-    if dc.reply_to_msg_id:
-        await bot.send_message(chat_id, masg)
-        await dc.edit(f"**{MASTER}:** Your message was successfully delivered")
-    for i in c[1:]:
-        msg += i + " "
-    if msg == "":  # hoho
-        return
-    try:
-        await borg.send_message(chat_id, msg)
-        await edit_or_reply(
-            dc, f"**{MASTER}:** Your message was successfully delivered"
-        )
-    except BaseException:
-        await edit_or_reply(dc, ".dm (username)|(text)")
-
 
 @catub.cat_cmd(
     pattern="ip ?(.*)",
@@ -167,5 +100,5 @@ async def ipcmd(event):
         text = text + f"<b>{key}:</b> <code>{value}</code>\n"
 
     await edit_or_reply(
-        event, f"<b><u>IP Information of {ip}</u></b>\n\n{text}", parse_mode="html"
+        event, f"<b>IP Information of {ip}</b>\n\n{text}", parse_mode="html"
     )

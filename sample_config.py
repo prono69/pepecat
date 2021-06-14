@@ -153,7 +153,7 @@ class Config(object):
         "GROUP_REG_SED_EX_BOT_S", r"(regex|moku|BananaButler_|rgx|l4mR)bot"
     )
     # time.py
-    COUNTRY = str(os.environ.get("COUNTRY", ""))
+    COUNTRY = str(os.environ.get("COUNTRY", "India"))
     TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
     # For updater plugin
     UPSTREAM_REPO_BRANCH = os.environ.get("UPSTREAM_REPO_BRANCH", "master")
