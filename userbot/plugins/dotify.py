@@ -37,11 +37,12 @@ async def tgscmd(message):
     jsn = json.read()
     json.close()
     jsn = (
-      jsn.replace("[1]", "[20]")
-      .replace("[2]", "[30]")
-      .replace("[3]", "[40]")
-      .replace("[4]", "[50]")
-      .replace("[5]", "[60]"))
+        jsn.replace("[1]", "[20]")
+        .replace("[2]", "[30]")
+        .replace("[3]", "[40]")
+        .replace("[4]", "[50]")
+        .replace("[5]", "[60]")
+    )
 
     open("json.json", "w").write(jsn)
     os.system("lottie_convert.py json.json tgs.tgs")
