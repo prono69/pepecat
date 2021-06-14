@@ -1,6 +1,7 @@
 import random
 import re
 import time
+import random
 from platform import python_version
 
 from telethon import version
@@ -14,6 +15,37 @@ from ..helpers.functions import catalive, check_data_base_heal_th, get_readable_
 from ..helpers.utils import reply_id
 from ..sql_helper.globals import gvarstatus
 from . import mention
+
+ANIME_QUOTE = [
+    "自業自得 - One’s act, one’s profit 🖤",
+    "十人十色 - Ten men, ten colors 🖤",
+    "起死回生 - Wake from death and return to life 🖤",
+    "我田引水 - Pulling water to my own rice paddy 🖤",
+    "悪因悪果 - Evil cause, evil effect 🖤",
+    "見ぬが花 - Not seeing is a flower 🖤",
+    "弱肉強食 - The weak are meat; the strong eat 🖤",
+    "酔生夢死 - Drunken life, dreamy death 🖤",
+    "一期一会 - One life, one encounter  🖤",
+    "異体同心 - Different body, same mind 🖤",
+    "羊頭狗肉 - Sheep head, dog meat 🖤",
+    "会者定離 - Meeting person always separated 🖤",
+    "美人薄命 - Beautiful person, thin life 🖤",
+    "自業自得 - Work of self, obtainment of self 🖤",
+    "虎穴に入らずんば虎子を得ず。- If you do not enter the tiger’s cave, you will not catch its cub  🖤",
+    "猿も木から落ちる。- Even monkeys fall from trees 🖤",
+    "蓼食う虫も好き好き – There are even bugs that eat knotweed 🖤",
+    "蛙の子は蛙。- Child of a frog is a frog 🖤",
+    "覆水盆に帰らず。- Spilt water will not return to the tray 🖤",
+    "猫に小判 - Gold coins to a cat 🖤",
+    "井の中の蛙大海を知らず。- A frog in a well does not know the great sea 🖤",
+    "二兎を追う者は一兎をも得ず。- One who chases after two hares won’t catch even one 🖤",
+    "門前の小僧習わぬ経を読む。- An apprentice near a temple will recite the scriptures untaught  🖤",
+    "七転び八起き - Fall down seven times, stand up eight 🖤",
+    "案ずるより産むが易し。- Giving birth to a baby is easier than worrying about it 🖤",
+    "馬鹿は死ななきゃ治らない。- Unless an idiot dies, he won’t be cured 🖤",
+    "秋茄子は嫁に食わすな。- Don’t let your daughter-in-law eat your autumn eggplants 🖤",
+    "花より団子 - Dumplings rather than flowers 🖤",
+]
 
 plugin_category = "utils"
 
@@ -32,10 +64,11 @@ plugin_category = "utils"
 async def amireallyalive(event):
     "A kind of showing bot details"
     reply_to_id = await reply_id(event)
+    ANIME = f"{random.choice(ANIME_QUOTE)}"
     uptime = await get_readable_time((time.time() - StartTime))
     _, check_sgnirts = check_data_base_heal_th()
     EMOJI = gvarstatus("ALIVE_EMOJI") or "  ✥ "
-    CUSTOM_ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "✮ MY BOT IS RUNNING SUCCESSFULLY ✮"
+    CUSTOM_ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or ANIME
     CAT_IMG = gvarstatus("ALIVE_PIC")
     if CAT_IMG:
         CAT = [x for x in CAT_IMG.split()]
@@ -47,7 +80,7 @@ async def amireallyalive(event):
         cat_caption += f"**{EMOJI} Catuserbot Version :** `{catversion}`\n"
         cat_caption += f"**{EMOJI} Python Version :** `{python_version()}\n`"
         cat_caption += f"**{EMOJI} Uptime :** `{uptime}\n`"
-        cat_caption += f"**{EMOJI} Master:** {mention}\n"
+        cat_caption += f"**{EMOJI} SENSI:** {mention}\n"
         await event.client.send_file(
             event.chat_id, PIC, caption=cat_caption, reply_to=reply_to_id
         )

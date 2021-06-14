@@ -13,6 +13,7 @@ cmdhd = Config.COMMAND_HAND_LER
 
 vlist = [
     "ALIVE_PIC",
+    "ALIVE_NAME",
     "ALIVE_EMOJI",
     "ALIVE_TEXT",
     "ALLOW_NSFW",
@@ -21,6 +22,7 @@ vlist = [
     "IALIVE_PIC",
     "PM_PIC",
     "PM_TEXT",
+    "PING_PICS",
     "PM_BLOCK",
     "MAX_FLOOD_IN_PMS",
     "START_TEXT",
