@@ -240,9 +240,8 @@ async def delete_it(event):
                     )
             except rpcbaseerrors.BadRequestError:
                 await edit_or_reply(event, "`Well, I can't delete a message`")
-    else:
-        if not input_str:
-            await event.delete()
+    elif not input_str:
+        await event.delete()
 
 
 @catub.cat_cmd(

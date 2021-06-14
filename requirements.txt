@@ -1,5 +1,6 @@
 aiofiles
-aiohttp[speedups]
+aiohttp
+cairosvg
 cloudscraper
 colour
 covid
@@ -33,7 +34,6 @@ nekos.py
 natsort
 Pillow
 prettytable
-prsaw
 psutil
 psycopg2
 PyDictionary
@@ -44,11 +44,13 @@ pylast
 pendulum
 PyLyrics
 pymediainfo
+PyMuPDF
 pySmartDL
 python-barcode
 python-dotenv
 pytz
 qrcode
+randomstuff.py
 regex
 requests
 search-engine-parser
@@ -71,6 +73,6 @@ wand
 scipy
 wordcloud
 wget
-wikipedia
+git+https://github.com/goldsmith/Wikipedia
 youtube-search-python
 youtube_dl
