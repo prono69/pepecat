@@ -5,7 +5,7 @@ from datetime import datetime
 
 from ..core.managers import edit_or_reply
 from ..sql_helper.globals import gvarstatus
-from . import catub, mention, hmention, reply_id
+from . import catub, hmention, mention, reply_id
 
 plugin_category = "tools"
 
@@ -23,7 +23,7 @@ PING_TEXT = os.environ.get("PING_TEXT") or "𝔖𝔱𝔞𝔯𝔱𝔦𝔫𝔤 �
 PONG_TEXT = os.environ.get("PONG_TEXT") or "𝔑𝔬𝔴, 𝔏𝔢𝔱 𝔗𝔥𝔢 𝔊𝔞𝔪𝔢 𝔅𝔢𝔤𝔦𝔫!!"
 # Custom mention line
 PING_MENTION = os.environ.get("PING_MENTION") or "ℜ𝔲𝔩𝔢𝔰 𝔅𝔶"
-#lol
+# lol
 PONG = "ɪ ꜱʟᴀʏ ᴅʀᴀɢᴏɴꜱ ᴀᴛ ɴɪɢʜᴛ ᴡʜɪʟᴇ ʏᴏᴜ ꜱʟᴇᴇᴘ🖤🥀"
 
 
@@ -54,7 +54,9 @@ async def _(event):
         catevent = await edit_or_reply(event, "ＯｗＯ， ｙｏｕ ａｇａｉｎ？")
         end = datetime.now()
         ms = (end - start).microseconds / 1000
-        await catevent.edit(f"僕のぴこは史上最高のアニメです🖤\n┏━━━━━━━━━━━┓\n┃ ⁭⁫🖤  **{ms} ms** \n┃ ⁭⁫🖤  {mention}\n┗━━━━━━━━━━━┛")
+        await catevent.edit(
+            f"僕のぴこは史上最高のアニメです🖤\n┏━━━━━━━━━━━┓\n┃ ⁭⁫🖤  **{ms} ms** \n┃ ⁭⁫🖤  {mention}\n┗━━━━━━━━━━━┛"
+        )
 
 
 @catub.cat_cmd(
@@ -105,7 +107,7 @@ async def _(event):
         f"‎‎‎‎‎‎‎‎‎⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛📶📶📶📶📶📶📶⬛\n⬛⬛⬛⬛📶⬛⬛📶⬛\n⬛⬛⬛⬛📶⬛⬛📶⬛\n⬛⬛⬛⬛📶⬛⬛📶⬛\n⬛⬛⬛⬛⬛📶📶⬛⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛⬛📶📶📶📶📶⬛⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛⬛📶📶📶📶📶⬛⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛📶📶📶📶📶📶📶⬛\n⬛⬛⬛⬛⬛⬛📶⬛⬛\n⬛⬛⬛⬛⬛📶⬛⬛⬛\n⬛⬛⬛⬛📶⬛⬛⬛⬛\n⬛📶📶📶📶📶📶📶⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛⬛📶📶📶📶📶⬛⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛📶⬛⬛⬛⬛⬛📶⬛\n⬛📶⬛📶⬛⬛⬛📶⬛\n⬛⬛📶📶⬛⬛📶⬛⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛\n⬛📶⬛📶📶📶📶📶⬛\n⬛⬛⬛⬛⬛⬛⬛⬛⬛ \n‎‎‎‎‎‎‎‎‎ \n \n My 🇵 🇮 🇳 🇬  Is : {ms} ms"
     )
 
-    
+
 @catub.cat_cmd(
     pattern="mping$",
     command=("mping", plugin_category),
@@ -132,9 +134,7 @@ async def _(event):
                 PING_PIC = random.choice(PING_PICS)
         except IndexError:
             error = "fix"  # This line is just to prevent any NoneType error
-        caption = (
-            f"<b><i>{PONG}<i><b>\n<code>✦ {ms} ms</code>\n✦ <b><i>Ｓｅｎｓｅｉ　タくエ－　{hmention}</b></i>"
-        )
+        caption = f"<b><i>{PONG}<i><b>\n<code>✦ {ms} ms</code>\n✦ <b><i>Ｓｅｎｓｅｉ　タくエ－　{hmention}</b></i>"
         await event.client.send_file(
             event.chat_id,
             PING_PIC,
@@ -143,4 +143,4 @@ async def _(event):
             reply_to=reply_to_id,
             link_preview=False,
             allow_cache=True,
-        )    
+        )

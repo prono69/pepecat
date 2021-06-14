@@ -1,16 +1,16 @@
 from validators.url import url
- 
+
 from userbot import catub
 from userbot.core.logger import logging
- 
+
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
- 
+
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
 cmdhd = Config.COMMAND_HAND_LER
- 
+
 vlist = [
     "ALIVE_PIC",
     "ALIVE_EMOJI",
@@ -28,14 +28,14 @@ vlist = [
     "NO_OF_COLUMNS_IN_HELP",
     "CUSTOM_STICKER_PACKNAME",
 ]
- 
+
 oldvars = {
     "PM_PIC": "pmpermit_pic",
     "PM_TEXT": "pmpermit_txt",
     "PM_BLOCK": "pmblock",
 }
- 
- 
+
+
 @catub.cat_cmd(
     pattern="(set|get|del)dv(?: |$)([\s\S]*)",
     command=("dv", plugin_category),
@@ -108,8 +108,8 @@ async def bad(event):  # sourcery no-metrics
         await edit_delete(
             event, f"**📑 Give correct var name from the list :\n\n**{vnlist}", time=60
         )
- 
- 
+
+
 @catub.cat_cmd(
     pattern="custom (pmpermit|pmpic|pmblock|startmsg)$",
     command=("custom", plugin_category),
@@ -164,8 +164,8 @@ async def custom_catuserbot(event):
             return await edit_delete(event, "`the given link is not supported`", 5)
         addgvar("pmpermit_pic", urls)
     await edit_or_reply(event, f"__Your custom {input_str} has been updated__")
- 
- 
+
+
 @catub.cat_cmd(
     pattern="delcustom (pmpermit|pmpic|pmblock|startmsg)$",
     command=("delcustom", plugin_category),

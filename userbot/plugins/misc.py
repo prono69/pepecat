@@ -56,7 +56,6 @@ async def get_stats(event):
     await edit_or_reply(event, msg)
 
 
-
 @catub.cat_cmd(
     pattern="ip ?(.*)",
     command=("ip", plugin_category),
