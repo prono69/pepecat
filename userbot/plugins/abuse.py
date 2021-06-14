@@ -11,7 +11,7 @@ plugin_category = "extra"
 
 
 @catub.cat_cmd(
-    pattern="x(.*)",
+    pattern="x ?(.*)",
     command=("x", plugin_category),
     info={
         "header": "Its time to abuse someone :)",

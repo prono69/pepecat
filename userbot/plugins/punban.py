@@ -13,7 +13,7 @@ from . import catub
 
 API = "https://weaverbottest.herokuapp.com/gimme"
 
-plugin_category = "useless"
+plugin_category = "fun"
 
 pawn = [
     "nsfw",
