@@ -5,8 +5,8 @@
 import requests as r
 from bs4 import BeautifulSoup as bs
 
-from . import catub
 from ..core.managers import edit_or_reply
+from . import catub
 
 plugin_category = "extra"
 

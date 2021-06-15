@@ -1,7 +1,7 @@
 # By @kirito6969
 
-from pokedex import pokedex
 import requests
+from pokedex import pokedex
 
 from ..core.managers import edit_delete, edit_or_reply
 from . import catub

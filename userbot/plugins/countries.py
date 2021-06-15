@@ -1,10 +1,11 @@
 # Kanged from FridayUserBot
 # Ported by @kirito6969
 
-from . import catub
-from ..core.managers import edit_or_reply, edit_delete
 import flag
 from countryinfo import CountryInfo
+
+from ..core.managers import edit_delete, edit_or_reply
+from . import catub
 
 plugin_category = "extra"
 
@@ -19,7 +20,7 @@ plugin_category = "extra"
     },
 )
 async def country_(message):
-    msg_ = await edit_or_reply(message, "`Searching For Country.....`")
+    await edit_or_reply(message, "`Searching For Country.....`")
     lol = message.pattern_match.group(1)
     if not lol:
         await edit_delete(message, "`Please Give Input!`")
@@ -28,27 +29,29 @@ async def country_(message):
     try:
         a = country.info()
     except:
-        await edit_delete(message, "`Country Not Found. Maybe You Need to Learn Geography!`")
+        await edit_delete(
+            message, "`Country Not Found. Maybe You Need to Learn Geography!`"
+        )
         return
     name = a.get("name")
     bb = a.get("altSpellings")
     hu = ""
     for p in bb:
-    	hu += p + ",  "
+        hu += p + ",  "
     area = a.get("area")
     borders = ""
     hell = a.get("borders")
     for fk in hell:
-	    borders += fk + ",  "
-    call = "" 
+        borders += fk + ",  "
+    call = ""
     WhAt = a.get("callingCodes")
     for what in WhAt:
-	    call+= what + "  "
+        call += what + "  "
     capital = a.get("capital")
     currencies = ""
     fker = a.get("currencies")
     for FKer in fker:
-	    currencies += FKer + ",  "
+        currencies += FKer + ",  "
     HmM = a.get("demonym")
     geo = a.get("geoJSON")
     pablo = geo.get("features")
@@ -58,15 +61,15 @@ async def country_(message):
     iso = ""
     iSo = a.get("ISO")
     for hitler in iSo:
-      po = iSo.get(hitler)
-      iso += po + ",  "
+        po = iSo.get(hitler)
+        iso += po + ",  "
     fla = iSo.get("alpha2")
     nox = fla.upper()
     okie = flag.flag(nox)
     languages = a.get("languages")
     lMAO = ""
     for lmao in languages:
-	    lMAO += lmao + ",  "
+        lMAO += lmao + ",  "
     nonive = a.get("nativeName")
     waste = a.get("population")
     reg = a.get("region")
@@ -74,11 +77,11 @@ async def country_(message):
     tik = a.get("timezones")
     tom = ""
     for jerry in tik:
-	    tom += jerry + ",   "
+        tom += jerry + ",   "
     GOT = a.get("tld")
     lanester = ""
     for targaryen in GOT:
-	    lanester += targaryen + ",   "
+        lanester += targaryen + ",   "
     wiki = a.get("wiki")
     caption = f"""<b><u>information gathered successfully</b></u>
 <b>
