@@ -255,7 +255,7 @@ async def _(event):
             "What are you running after, a white rabbit?",
             "As The Doctor would say... RUN!",
         ]
-    else:
+    elif not input_str:
         emoticons = [
             "( ͡° ͜ʖ ͡°)",
             r"¯\_(ツ)_/¯",

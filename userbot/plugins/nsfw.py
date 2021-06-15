@@ -35,8 +35,8 @@ plugin_category = "fun"
 )
 async def danbooru(message):
     "Get anime charecter pic or nsfw"
-    reply_to = await reply_id(e)
-    if await age_verification(e, reply_to):
+    reply_to = await reply_id(message)
+    if await age_verification(message, reply_to):
         return
     await edit_or_reply(message, "`Processing…`")
     rating = "Explicit" if "nsfw" in message.pattern_match.group(1) else "Safe"
@@ -105,7 +105,7 @@ async def boobs(e):
         return
     a = await edit_or_reply(e, "`Sending boobs...`")
     nsfw = requests.get("http://api.oboobs.ru/noise/1").json()[0]["preview"]
-    urllib.request.urlretrieve("http://media.oboobs.ru/{}".format(nsfw), "*.jpg")
+    urllib.request.urlretrieve(f"http://media.oboobs.ru/{nsfw}", "*.jpg")
     os.rename("*.jpg", "boobs.jpg")
     await e.client.send_file(e.chat_id, "boobs.jpg", reply_to=reply_to)
     os.remove("boobs.jpg")
@@ -128,7 +128,7 @@ async def butts(e):
         return
     a = await edit_or_reply(e, "`Sending beautiful butts...`")
     nsfw = requests.get("http://api.obutts.ru/butts/10/1/random").json()[0]["preview"]
-    urllib.request.urlretrieve("http://media.obutts.ru/{}".format(nsfw), "*.jpg")
+    urllib.request.urlretrieve(f"http://media.obutts.ru/{nsfw}", "*.jpg")
     os.rename("*.jpg", "butts.jpg")
     await e.client.send_file(e.chat_id, "butts.jpg", reply_to=reply_to)
     os.remove("butts.jpg")

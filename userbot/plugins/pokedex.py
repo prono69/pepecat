@@ -1,6 +1,6 @@
 # By @kirito6969
 
-import pokedex
+from pokedex import pokedex
 import requests
 
 from ..core.managers import edit_delete, edit_or_reply

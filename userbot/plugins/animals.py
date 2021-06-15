@@ -44,6 +44,7 @@ async def prep_animal_image(animal_data):
 )
 async def animal_image(message):
     lol = message.pattern_match.group(1)
+    await edit_or_reply(message, f"`Finding a cute {lol}...`")
     if not lol:
         await edit_delete(message, "`Are you really a Human ?`", 5)
         return

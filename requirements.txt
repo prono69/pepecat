@@ -5,11 +5,13 @@ cloudscraper
 colour
 covid
 cowpy
+countryinfo
 dataclasses
 DateTime
 emoji
 fonttools
 fake_useragent
+emoji-country-flag
 geopy
 gitpython
 glitch_this

@@ -1,20 +1,21 @@
 # Created by @Jisan7509
 # All rights reserved.
-
+ 
 import asyncio
-
+ 
 import requests
 from bs4 import BeautifulSoup
-
+from telethon.errors.rpcerrorlist import WebpageCurlFailedError
+ 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import age_verification
 from ..helpers.utils import _catutils, reply_id
 from . import catub
-
+ 
 API = "https://weaverbottest.herokuapp.com/gimme"
-
-plugin_category = "fun"
-
+ 
+plugin_category = "extra"
+ 
 pawn = [
     "nsfw",
     "nsfw_gifs",
@@ -52,13 +53,13 @@ pawn = [
     "Exxxtras",
     "adorableporn",
 ]
-
+ 
 pawn.sort(key=str.casefold)
 horny = "**Catagory :** "
 for i in pawn:
     horny += f" `{i.lower()}` ||"
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="porn(?: |$)(.*)",
     command=("porn", plugin_category),
@@ -108,9 +109,9 @@ async def bad(event):
                 ]
                 try:
                     media_url = links[1]
-                except:
+                except IndexError:
                     media_url = links[0]
-            except:
+            except IndexError:
                 pass
         try:
             sandy = await event.client.send_file(
@@ -124,7 +125,7 @@ async def bad(event):
                 await _catutils.unsavegif(event, sandy)
             await event.delete()
             break
-        except:
+        except WebpageCurlFailedError:
             await edit_or_reply(event, f"**Value error!!..Link is :** {media_url}")
             await asyncio.sleep(3)
             await edit_or_reply(
@@ -138,8 +139,8 @@ async def bad(event):
                     event,
                     "**ಥ‿ಥ   Sorry i could'nt found, try with difference catagory**",
                 )
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="bulkporn(?: |$)(.*)",
     command=("bulkporn", plugin_category),
@@ -201,9 +202,9 @@ async def pussy(event):
                 ]
                 try:
                     media_url = links[1]
-                except:
+                except IndexError:
                     media_url = links[0]
-            except:
+            except IndexError:
                 media_url = m
         try:
             sandy = await event.client.send_file(
@@ -220,15 +221,15 @@ async def pussy(event):
                 f"**Bluk Download Started.\n\nCatagory :  `{sub_r}`\nFile Downloaded :  {i+1}/{count}**",
             )
             await asyncio.sleep(2)
-        except:
+        except WebpageCurlFailedError:
             await event.client.send_message(
                 event.chat_id, f"**Value error!!..Link is :** {m}"
             )
         i += 1
         if i == count:
             await event.delete()
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="listporn(?: |$)(.*)",
     command=("listporn", plugin_category),
@@ -291,15 +292,15 @@ async def cat(event):
                 ]
                 try:
                     media_url = links[1]
-                except:
+                except IndexError:
                     media_url = links[0]
-            except:
+            except IndexError:
                 media_url = m
         pwnlist += f"<b><i>{i+1}. <a href = {p}>{t}</a></i>   [<a href = {media_url}>Download</a>]</b>\n"
         i += 1
     await edit_or_reply(event, pwnlist, parse_mode="html")
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="linkdl(?: |$)([\s\S]*)",
     command=("linkdl", plugin_category),
@@ -340,9 +341,9 @@ async def pussy(event):
                 ]
                 try:
                     media_url = links[1]
-                except:
+                except IndexError:
                     media_url = links[0]
-            except:
+            except IndexError:
                 media_url = m
         try:
             sandy = await event.client.send_file(
@@ -354,7 +355,7 @@ async def pussy(event):
                 event, f"**Download Started.\n\nFile Downloaded :  {i+1}/{len(plink)}**"
             )
             await asyncio.sleep(2)
-        except:
+        except WebpageCurlFailedError:
             await event.client.send_message(
                 event.chat_id, f"**Value error!!..Link is :** {m}"
             )

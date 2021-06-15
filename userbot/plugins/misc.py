@@ -8,7 +8,7 @@ from telethon.errors import ChatSendMediaForbiddenError
 from ..core.managers import edit_delete, edit_or_reply
 from . import catub
 
-plugin_category = "misc"
+plugin_category = "extra"
 
 
 @catub.cat_cmd(
@@ -34,17 +34,17 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="gstat",
+    pattern="gstat ?(.*)",
     command=("gstat", plugin_category),
     info={
         "header": "Check group status.",
-        "usage": "{tr}gstat",
+        "usage": "{tr}gstat <group name>",
     },
 )
 async def get_stats(event):
-    chat = event.text.split(" ", 1)[1]
+    chat = event.pattern_match.group(1)
     try:
-        stats = await bot.get_stats(chat)
+        stats = await event.client.get_stats(chat)
     except:
         await edit_or_reply(
             event,
@@ -127,7 +127,6 @@ async def _(e):
     await edit_or_reply(e, f"Total msgs of `{user.first_name}`\n**Here :** `{a.total}`")
 
 
-@ultroid_cmd(pattern="qfancy$")
 @catub.cat_cmd(
     pattern="qfancy ?(.*)",
     command=("qfancy", plugin_category),
