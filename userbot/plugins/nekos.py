@@ -10,83 +10,12 @@ import os
 import nekos
 import requests
 from PIL import Image
-
+from simplejson.errors import JSONDecodeError
 from ..helpers.functions import age_verification
-from . import _catutils, catub, edit_delete, edit_or_reply, reply_id, user_agent
-
-POSSIBLE = [
-    "feet",
-    "yuri",
-    "trap",
-    "futanari",
-    "hololewd",
-    "lewdkemo",
-    "solog",
-    "feetg",
-    "cum",
-    "erokemo",
-    "les",
-    "wallpaper",
-    "lewdk",
-    "ngif",
-    "tickle",
-    "lewd",
-    "feed",
-    "gecg",
-    "eroyuri",
-    "eron",
-    "cum_jpg",
-    "bj",
-    "nsfw_neko_gif",
-    "solo",
-    "kemonomimi",
-    "nsfw_avatar",
-    "gasm",
-    "poke",
-    "anal",
-    "slap",
-    "hentai",
-    "avatar",
-    "erofeet",
-    "holo",
-    "keta",
-    "blowjob",
-    "pussy",
-    "tits",
-    "holoero",
-    "lizard",
-    "pussy_jpg",
-    "pwankg",
-    "classic",
-    "kuni",
-    "waifu",
-    "pat",
-    "8ball",
-    "kiss",
-    "femdom",
-    "neko",
-    "spank",
-    "cuddle",
-    "erok",
-    "fox_girl",
-    "boobs",
-    "random_hentai_gif",
-    "smallboobs",
-    "hug",
-    "ero",
-    "smug",
-    "goose",
-    "baka",
-    "woof",
-]
+from . import _catutils, catub, useless, edit_delete, edit_or_reply, reply_id, user_agent
 
 
 plugin_category = "fun"
-
-neko_help = "**ALL :**  "
-
-for i in POSSIBLE:
-    neko_help += f"`{i.lower()}`   "
 
 
 @catub.cat_cmd(
@@ -96,7 +25,7 @@ for i in POSSIBLE:
         "header": "Contains NSFW \nSearch images from nekos",
         "usage": "{tr}nn <argument from choice>",
         "examples": "{tr}nn neko",
-        "Choice": neko_help,
+        "options": useless.nsfw(useless.hemtai) ,
     },
 )
 async def _(event):
@@ -105,7 +34,7 @@ async def _(event):
     choose = event.pattern_match.group(1)
     if choose not in POSSIBLE:
         return await edit_delete(
-            event, "`Choose correct argument from POSSIBLE list (*_*)`"
+            event, "**Wrong Category!!** Do `.help -c nn` for Category list (*_*)`"
         )
     if await age_verification(event, reply_to):
         return
@@ -134,10 +63,16 @@ async def dva(event):
     reply_to = await reply_id(event)
     if await age_verification(event, reply_to):
         return
-    nsfw = requests.get(
-        "https://api.computerfreaker.cf/v1/dva", headers={"User-Agent": user_agent()}
-    ).json()
-    url = nsfw.get("url")
+    try:
+        nsfw = requests.get(
+            "https://api.computerfreaker.cf/v1/dva",
+            headers={"User-Agent": user_agent()},
+        ).json()
+        url = nsfw.get("url")
+    except JSONDecodeError:
+        return await edit_delete(
+            event, "`uuuf.. seems like api down, try again later.`"
+        )
     if not url:
         return await edit_delete(event, "`uuuf.. No URL found from the API`")
     await event.client.send_file(event.chat_id, file=url, reply_to=reply_to)

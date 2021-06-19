@@ -8,6 +8,7 @@ check = 0
 while flag:
     try:
         from .chatbot import *
+        from . import nsfw as useless
         from .functions import *
         from .memeifyhelpers import *
         from .progress import *

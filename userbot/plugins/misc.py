@@ -137,9 +137,10 @@ async def _(e):
 )
 async def quotefancy(e):
     mes = await edit_or_reply(e, "`Processing...`")
+    reply = await reply_id(e)
     img = get_quote("img", download=True)
     try:
-        await e.client.send_file(e.chat_id, img)
+        await e.client.send_file(e.chat_id, img, reply_to=reply)
         os.remove(img)
         await mes.delete()
     except ChatSendMediaForbiddenError:

@@ -85,7 +85,7 @@ async def country_(message):
     wiki = a.get("wiki")
     caption = f"""<b><u>information gathered successfully</b></u>
 <b>
-Country Name:- ({okie}) {name}
+Country Name:- {name}  {okie}
 Alternative Spellings:- {hu}
 Country Area:- {area} square kilometers
 Borders:- {borders}
