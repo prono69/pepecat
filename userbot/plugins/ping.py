@@ -116,7 +116,10 @@ async def _(event):
     if event.fwd_from:
         return
     reply_to_id = await reply_id(event)
-    PING_PICS = (gvarstatus("PING_PICS") or "https://telegra.ph/file/1328d62db93ad22b69ba2.jpg https://telegra.ph/file/b2da6e4c55dd29600e4ed.jpg")
+    PING_PICS = (
+        gvarstatus("PING_PICS")
+        or "https://telegra.ph/file/1328d62db93ad22b69ba2.jpg https://telegra.ph/file/b2da6e4c55dd29600e4ed.jpg"
+    )
     PING_PICS = PING_PICS.rsplit(",")
     start = datetime.now()
     cat = await edit_or_reply(event, "<b><i>Ｓｌａｙｉｎｇ　🥀　</b></i>", parse_mode="html")

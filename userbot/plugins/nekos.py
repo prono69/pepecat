@@ -11,9 +11,17 @@ import nekos
 import requests
 from PIL import Image
 from simplejson.errors import JSONDecodeError
-from ..helpers.functions import age_verification
-from . import _catutils, catub, useless, edit_delete, edit_or_reply, reply_id, user_agent
 
+from ..helpers.functions import age_verification
+from . import (
+    _catutils,
+    catub,
+    edit_delete,
+    edit_or_reply,
+    reply_id,
+    useless,
+    user_agent,
+)
 
 plugin_category = "fun"
 
@@ -25,7 +33,7 @@ plugin_category = "fun"
         "header": "Contains NSFW \nSearch images from nekos",
         "usage": "{tr}nn <argument from choice>",
         "examples": "{tr}nn neko",
-        "options": useless.nsfw(useless.hemtai) ,
+        "options": useless.nsfw(useless.hemtai),
     },
 )
 async def _(event):
