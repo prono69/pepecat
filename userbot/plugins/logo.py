@@ -6,21 +6,21 @@ import asyncio
 import os
 import re
 import urllib
- 
+
 import PIL
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
- 
+
 from userbot import catub
- 
+
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import clippy
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import convert_toimage, reply_id
- 
+
 # ======================================================================================================================================================================================
- 
+
 vars_list = {
     "lbg": "LOGO_BACKGROUND",
     "lfc": "LOGO_FONT_COLOR",
@@ -29,12 +29,12 @@ vars_list = {
     "lfw": "LOGO_FONT_WIDTH",
     "lf": "LOGO_FONT",
 }
- 
+
 # ======================================================================================================================================================================================
- 
+
 plugin_category = "extra"
- 
- 
+
+
 @catub.cat_cmd(
     pattern="(|s)logo(?: |$)(.*)",
     command=("logo", plugin_category),
@@ -108,8 +108,8 @@ async def very(event):
     await catevent.delete()
     if os.path.exists(file_name):
         os.remove(file_name)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="(|c)lbg(?: |$)(.*)",
     command=("lbg", plugin_category),
@@ -175,8 +175,8 @@ async def bad(event):
         await edit_delete(
             event, f"**Background for logo changed to :-** `{input_str}`", time=10
         )
- 
- 
+
+
 @catub.cat_cmd(
     pattern="lf(|c|s|h|w)(?: |$)(.*)",
     command=("lf", plugin_category),
@@ -311,8 +311,8 @@ async def pussy(event):
                         event,
                         f"**Font hight is between 0 - 30, You can't set limit to {input_str}",
                     )
- 
- 
+
+
 @catub.cat_cmd(
     pattern="(g|d|r)lvar(?: |$)(.*)",
     command=("lvar", plugin_category),

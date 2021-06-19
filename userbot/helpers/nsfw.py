@@ -1,5 +1,3 @@
-from ..core.managers import edit_or_reply
- 
 pawn = [
     "nsfw",
     "nsfw_gifs",
@@ -37,7 +35,7 @@ pawn = [
     "Exxxtras",
     "adorableporn",
 ]
- 
+
 hemtai = [
     "feet",
     "yuri",
@@ -103,7 +101,7 @@ hemtai = [
     "baka",
     "woof",
 ]
- 
+
 """ 
 async def importent(event):
     cat = ["-1001199597035", "-1001459701099", "-1001436155389", "-1001321431101"]
@@ -112,15 +110,15 @@ async def importent(event):
         await event.client.kick_participant(event.chat_id, "me")
         return True
     return False
-"""    
- 
- 
+"""
+
+
 def nsfw(catagory):
     catagory.sort(key=str.casefold)
     horny = "**Catagory :** "
     for i in catagory:
         horny += f" `{i.lower()}` ||"
     return horny
- 
- 
+
+
 API = "https://weaverbottest.herokuapp.com/gimme"
