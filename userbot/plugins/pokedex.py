@@ -1,7 +1,7 @@
 # By @kirito6969
 
 import requests
-from pokedex import pokedex
+from pokedex.pokedex import Pokedex
 
 from ..core.managers import edit_delete, edit_or_reply
 from . import catub
@@ -85,13 +85,13 @@ async def pokedex(event):
     Stats = a["stats"]
     species = ", ".join(map(str, species))
     abilities = ", ".join(map(str, abilities))
-    poli = pokedex.Pokedex()
+    poli = Pokedex()
     pname = poli.get_pokemon_by_name(pokemon)
     pokemon = pname[0]
     lst = pokemon.get("sprite")
     cap = f"""
 
-**NAME** : `{name}`
+**NAME** : `{name}.upper()`
 **TYPE** : `{typ}`
 **SPECIES** : `{species}`
 **Evolution Line** : `{line}`
