@@ -89,9 +89,10 @@ async def pokedex(event):
     pname = poli.get_pokemon_by_name(pokemon)
     pokemon = pname[0]
     lst = pokemon.get("sprite")
+    iname = f"{name}".upper()
     cap = f"""
 
-**NAME** : `{name}.upper()`
+**NAME** : `{iname}`
 **TYPE** : `{typ}`
 **SPECIES** : `{species}`
 **Evolution Line** : `{line}`
