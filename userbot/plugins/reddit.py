@@ -26,7 +26,7 @@ REDDIT_REGEX = r"(?:^|\s+)(\/?r\/\S+)"
 
 
 @catub.cat_cmd(
-    pattern="reddit(?: |$)(.*)",
+    pattern="reddit(?:\s|$)([\s\S]*)",
     command=("reddit", plugin_category),
     info={
         "header": "get a random reddit post.",

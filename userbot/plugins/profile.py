@@ -23,14 +23,14 @@ PP_CHANGED = "```Profile picture changed successfully.```"
 PP_TOO_SMOL = "```This image is too small, use a bigger image.```"
 PP_ERROR = "```Failure occured while processing image.```"
 BIO_SUCCESS = "```Successfully edited Bio.```"
-NAME_OK = "```Your name was succesfully changed.```"
-USERNAME_SUCCESS = "```Your username was succesfully changed.```"
+NAME_OK = "```Your name was successfully changed.```"
+USERNAME_SUCCESS = "```Your username was successfully changed.```"
 USERNAME_TAKEN = "```This username is already taken.```"
 # ===============================================================
 
 
 @catub.cat_cmd(
-    pattern="cbio (.*)",
+    pattern="cbio ([\s\S]*)",
     command=("cbio", plugin_category),
     info={
         "header": "To set bio for this account.",
@@ -42,17 +42,17 @@ async def _(event):
     bio = event.pattern_match.group(1)
     try:
         await event.client(functions.account.UpdateProfileRequest(about=bio))
-        await edit_delete(event, "`Succesfully changed my profile bio`")
+        await edit_delete(event, "`successfully changed my profile bio`")
     except Exception as e:
         await edit_or_reply(event, f"**Error:**\n`{str(e)}`")
 
 
 @catub.cat_cmd(
-    pattern="cname (.*)",
+    pattern="cname ([\s\S]*)",
     command=("cname", plugin_category),
     info={
         "header": "To set/change name for this account.",
-        "usage": ["{tr}cname firstname ; last name", "{tr}pname firstname"],
+        "usage": ["{tr}cname firstname ; last name", "{tr}cname firstname"],
     },
 )
 async def _(event):
@@ -130,7 +130,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="cusername (.*)",
+    pattern="cusername ([\s\S]*)",
     command=("cusername", plugin_category),
     info={
         "header": "To set/update username for this account.",
@@ -194,7 +194,7 @@ async def count(event):
 
 
 @catub.cat_cmd(
-    pattern="delpfp ?(.*)",
+    pattern="delpfp ?([\s\S]*)",
     command=("delpfp", plugin_category),
     info={
         "header": "To delete profile pic for this account.",
