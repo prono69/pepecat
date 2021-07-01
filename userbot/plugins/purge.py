@@ -451,8 +451,8 @@ async def fastpurger(event):  # sourcery no-metrics
         )
     await sleep(5)
     await hi.delete()
- 
- 
+
+
 @catub.cat_cmd(
     pattern="upurge( -a)?(?:\s|$)([\s\S]*)",
     command=("upurge", plugin_category),
@@ -576,6 +576,7 @@ async def fast_purger(event):  # sourcery no-metrics
         )
     await sleep(5)
     await hi.delete()
+
 
 @catub.cat_cmd(
     pattern="(s(?:elf)?)?y(?:eet)?p(?:urge)?",

@@ -1,6 +1,6 @@
 import os
 import re
- 
+
 import pygments
 import requests
 from pygments.formatters import ImageFormatter
@@ -8,36 +8,36 @@ from pygments.lexers import Python3Lexer
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.utils import get_extension
 from urlextract import URLExtract
- 
+
 from userbot import catub
- 
+
 from ..Config import Config
 from ..core.events import MessageEdited
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.tools import media_type
 from ..helpers.utils import pastetext, reply_id
- 
+
 plugin_category = "utils"
- 
+
 extractor = URLExtract()
- 
+
 LOGS = logging.getLogger(__name__)
- 
+
 pastebins = {
     "Pasty": "p",
     "Neko": "n",
     "Spacebin": "s",
     "Dog": "d",
 }
- 
- 
+
+
 def get_key(val):
     for key, value in pastebins.items():
         if val == value:
             return key
- 
- 
+
+
 @catub.cat_cmd(
     pattern="pcode(?:\s|$)([\s\S]*)",
     command=("pcode", plugin_category),
@@ -99,8 +99,8 @@ async def paste_img(event):
             os.remove(d_file_name)
     except Exception as e:
         await edit_delete(catevent, f"**Error:**\n`{str(e)}`", time=10)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="(d|p|s|n)?(paste|neko)(?:\s|$)([\S\s]*)",
     command=("paste", plugin_category),
@@ -174,8 +174,8 @@ async def paste_bin(event):
         await catevent.edit(result, link_preview=False, parse_mode="html")
     except Exception as e:
         await edit_delete(catevent, f"**Error while pasting text:**\n`{str(e)}`")
- 
- 
+
+
 @catub.cat_cmd(
     command=("neko", plugin_category),
     info={
@@ -191,8 +191,8 @@ async def paste_bin(event):
 async def _(event):
     "To paste text to a neko bin."
     # just to show in help menu as seperate
- 
- 
+
+
 @catub.cat_cmd(
     pattern="g(et)?paste(?:\s|$)([\s\S]*)",
     command=("getpaste", plugin_category),
@@ -251,8 +251,8 @@ async def get_dogbin_content(event):
         )
     reply_text = f"**Fetched dogbin URL content successfully!**\n\n**Content:** \n```{resp.text}```"
     await edit_or_reply(catevent, reply_text)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="paster(?:\s|$)([\s\S]*)",
     command=("paster", plugin_category),
