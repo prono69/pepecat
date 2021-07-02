@@ -22,7 +22,7 @@ plugin_category = "extra"
 
 
 @catub.cat_cmd(
-    pattern="porn(?: |$)(.*)",
+    pattern="porn(?:\s|$)([\s\S]*)",
     command=("porn", plugin_category),
     info={
         "header": "Get a porn video or gif or pic.",
@@ -105,7 +105,7 @@ async def very(event):
 
 
 @catub.cat_cmd(
-    pattern="bulkporn(?: |$)(.*)",
+    pattern="bulkporn(?:\s|$)([\s\S]*)",
     command=("bulkporn", plugin_category),
     info={
         "header": "download porn videos or gifs or pics in bulk.",
@@ -196,7 +196,7 @@ async def bad(event):
 
 
 @catub.cat_cmd(
-    pattern="rsearch(?: |$)(.*)",
+    pattern="rsearch(?:\s|$)([\s\S]*)",
     command=("rsearch", plugin_category),
     info={
         "header": "Get a list porn video or gif or pic from reddit /redgif /imgur.",
@@ -209,7 +209,7 @@ async def bad(event):
     },
 )
 async def pussy(event):
-    """Send a list of porn"""
+    """Send a list of reddit posts"""
     reply_to = await reply_id(event)
     intxt = event.pattern_match.group(1)
     if intxt and " " in intxt:
@@ -266,7 +266,7 @@ async def pussy(event):
 
 
 @catub.cat_cmd(
-    pattern="xlist(?: |$)(.*)",
+    pattern="xlist(?:\s|$)([\s\S]*)",
     command=("xlist", plugin_category),
     info={
         "header": "Get a list of porn videos from xvideo",
@@ -283,7 +283,7 @@ async def pussy(event):
     },
 )
 async def cat(event):
-    """Send a list of xvideos"""
+    """Send a list of xvideos posts"""
     reply_to = await reply_id(event)
     intxt = event.pattern_match.group(1)
     page = 0
@@ -304,7 +304,7 @@ async def cat(event):
     col = soup.findAll("div", {"class": "thumb"})
     if not col:
         return await edit_delete(
-            event, "`No links found for that query , try differnt search...`", 7
+            event, "`No links found for that query , try differnt search...`", 60
         )
     await edit_or_reply(event, "**Just hold a min you horny kid...**")
     listlink = []
@@ -340,13 +340,13 @@ async def cat(event):
     pattern="linkdl(?: |$)([\s\S]*)",
     command=("linkdl", plugin_category),
     info={
-        "header": "download porn video or gif in bulk or single from xvideos, imgur or redgif or direct link.\n\nFor multiple link give one space between links or reply to to any link contain text, like listporn or xsearch post",
+        "header": "download porn video or gif in bulk or single from xvideos, imgur or redgif or direct link.\n\nFor multiple link give one space between links or reply to to any link contain text, like listporn or xlist post",
         "usage": "{tr}linkdl <input link /reply to link>",
         "examples": "{tr}linkdl https://redgifs.com/watch/virtuousgorgeousindianspinyloach https://i.imgur.com/3Ffkon9.gifv",
     },
 )
 async def wants_ur_noods(event):
-    """Download porn from link"""
+    """Download ~~porns~~ *posts from link"""
     reply_to = await reply_id(event)
     intxt = event.pattern_match.group(1)
     reply = await event.get_reply_message()
