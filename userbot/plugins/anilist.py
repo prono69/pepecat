@@ -235,7 +235,7 @@ async def anilist(event):
     pattern="manga(?:\s|$)([\s\S]*)",
     command=("manga", plugin_category),
     info={
-        "header": "Searches for manga.",
+        "header": "Search your favourite manga.",
         "usage": "{tr}manga <manga name",
         "examples": "{tr}manga fairy tail",
     },
@@ -669,7 +669,7 @@ async def whatanime(event):
     pattern="imanga(?: |$)(.*)",
     command=("imanga", plugin_category),
     info={
-        "header": "Searches for manga.",
+        "header": "Shows you details about a manga.",
         "usage": "{tr}imanga <manga name>",
         "examples": "{tr}imanga fairy tail",
     },
@@ -727,7 +727,7 @@ async def manga(event):
     pattern="anime ?(.*)",
     command=("anime", plugin_category),
     info={
-        "header": "Search Anime in a noice format :)",
+        "header": "Search anime in a noice format.",
         "usage": "{tr}anime <anime name>",
         "examples": "{tr}anime boku no pico",
     },
