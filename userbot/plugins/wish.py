@@ -9,6 +9,7 @@ from . import catub
 
 plugin_category = "extra"
 
+
 @catub.cat_cmd(
     pattern="wish ?(.*)",
     command=("wish", plugin_category),

@@ -18,7 +18,6 @@ from userbot import catub
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import media_type, readable_time, time_formatter
-from ..tools import post_to_telegraph
 from ..helpers.functions import (
     airing_query,
     anilist_user,
@@ -35,6 +34,7 @@ from ..helpers.functions import (
     weekdays,
 )
 from ..helpers.utils import _cattools, reply_id
+from ..tools import post_to_telegraph
 
 jikan = Jikan()
 
