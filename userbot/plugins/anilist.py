@@ -33,8 +33,8 @@ from ..helpers.functions import (
     search_in_animefiller,
     weekdays,
 )
-from ..helpers.utils import _cattools, reply_id
 from ..helpers.tools import post_to_telegraph
+from ..helpers.utils import _cattools, reply_id
 
 jikan = Jikan()
 
