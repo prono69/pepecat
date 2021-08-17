@@ -1,18 +1,18 @@
 """
 Thenks goes to Emily ( The creater of Poto cmd) from ftg userbot
 """
- 
+
 from PIL import Image, ImageFilter, UnidentifiedImageError
- 
+
 from userbot import catub
- 
+
 from ..core.managers import edit_delete, edit_or_reply
- 
+
 plugin_category = "extra"
- 
+
 name = "Profile Photos"
- 
- 
+
+
 @catub.cat_cmd(
     pattern="poto(?:\s|$)([\s\S]*)",
     command=("poto", plugin_category),
@@ -75,12 +75,12 @@ async def potocmd(event):
             return await edit_delete(
                 event, "`No photo found of this NIBBA / NIBBI. Now u Die!`"
             )
- 
+
         send_photos = await event.client.download_media(photos[uid - 1])
         await event.client.send_file(event.chat_id, send_photos)
     await event.delete()
- 
- 
+
+
 @catub.cat_cmd(
     pattern="blur(?:\s|$)([\s\S]*)",
     command=("blur", plugin_category),
@@ -116,4 +116,3 @@ async def potocmd(event):
         return await edit_delete(event, "`Replay to a picture or user message... `")
     await event.delete()
     await event.client.send_file(event.chat_id, pic_name, reply_to=reply_to_id)
-    

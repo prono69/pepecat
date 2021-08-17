@@ -108,8 +108,8 @@ async def amireallyalive(event):
             event,
             caption,
         )
- 
- 
+
+
 temp = """{ALIVE_TEXT}
 **{EMOJI} Database :** `{dbhealth}`
 **{EMOJI} Telethon Version :** `{telever}`
@@ -117,8 +117,8 @@ temp = """{ALIVE_TEXT}
 **{EMOJI} Python Version :** `{pyver}`
 **{EMOJI} Uptime :** `{uptime}`
 **{EMOJI} Master:** {mention}"""
- 
- 
+
+
 @catub.cat_cmd(
     pattern="ialive$",
     command=("ialive", plugin_category),
@@ -143,8 +143,8 @@ async def amireallyalive(event):
     results = await event.client.inline_query(Config.TG_BOT_USERNAME, cat_caption)
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     await event.delete()
- 
- 
+
+
 @catub.tgbot.on(CallbackQuery(data=re.compile(b"stats")))
 async def on_plug_in_callback_query_handler(event):
     statstext = await catalive(StartTime)

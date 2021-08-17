@@ -1,5 +1,4 @@
 import html
-import textwrap
 import os
 import re
 import textwrap
@@ -25,9 +24,9 @@ from ..helpers.functions import (
     callAPI,
     formatJSON,
     get_anime_manga,
-    get_poster,
     get_anime_schedule,
     get_filler_episodes,
+    get_poster,
     getBannerLink,
     memory_file,
     post_to_telegraph,
