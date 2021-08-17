@@ -57,7 +57,7 @@ async def tgscmd(message):
     command=("doti", plugin_category),
     info={
         "header": "Image to Colorful dots",
-        "description": "The bigger, the slower and bugger! Recommended not more than 1000",
+        "description": "The bigger, the slower and bugger! Recommended not more than 500",
         "usage": [
             "{tr}doti <reply to image> [deafult is 100]",
             "{tr}doti <count> <reply to image>",
@@ -77,7 +77,7 @@ async def dotifycmd(message):
     command=("doty", plugin_category),
     info={
         "header": "Image to BW dots",
-        "description": "The bigger, the slower and bugger! Recommended not more than 1000",
+        "description": "The bigger, the slower and bugger! Recommended not more than 500",
         "usage": [
             "{tr}doty <reply to image> [deafult is 100]",
             "{tr}doty <count> <reply to image>",

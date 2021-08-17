@@ -34,7 +34,7 @@ from ..helpers.functions import (
     weekdays,
 )
 from ..helpers.utils import _cattools, reply_id
-from ..tools import post_to_telegraph
+from ..helpers.tools import post_to_telegraph
 
 jikan = Jikan()
 
