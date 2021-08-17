@@ -7,8 +7,8 @@ from io import BytesIO, StringIO
 import bs4
 import jikanpy
 import requests
-from html_telegraph_poster import TelegraphPoster
 from aiohttp import ClientSession
+from html_telegraph_poster import TelegraphPoster
 from jikanpy import Jikan
 from telethon.tl.types import DocumentAttributeAnimated
 from telethon.utils import is_video

@@ -2,26 +2,26 @@
 Created by @Jisan7509
 #catuserbot
 """
- 
+
 import asyncio
 import os
 import re
 import urllib
- 
+
 import PIL
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
- 
+
 from userbot import catub
- 
+
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import clippy
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import convert_toimage, reply_id
- 
+
 # ======================================================================================================================================================================================
- 
+
 vars_list = {
     "lbg": "LOGO_BACKGROUND",
     "lfc": "LOGO_FONT_COLOR",
@@ -32,12 +32,12 @@ vars_list = {
     "lfsc": "LOGO_FONT_STROKE_COLOR",
     "lf": "LOGO_FONT",
 }
- 
+
 # ======================================================================================================================================================================================
- 
+
 plugin_category = "extra"
- 
- 
+
+
 @catub.cat_cmd(
     pattern="(|s)logo(?: |$)([\s\S]*)",
     command=("logo", plugin_category),
@@ -131,8 +131,8 @@ async def very(event):
     await catevent.delete()
     if os.path.exists(file_name):
         os.remove(file_name)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="(|c)lbg(?:\s|$)([\s\S]*)",
     command=("lbg", plugin_category),
@@ -197,8 +197,8 @@ async def bad(event):
         await edit_delete(
             event, f"**Background for logo changed to :-** `{input_str}`", time=10
         )
- 
- 
+
+
 @catub.cat_cmd(
     pattern="lf(|c|s|h|w|sc|sw)(?:\s|$)([\s\S]*)",
     command=("lf", plugin_category),
@@ -353,8 +353,8 @@ async def pussy(event):
                     event,
                     f"**Font stroke width size is between 0 - 100, You can't set limit to :** `{input_str}`",
                 )
- 
- 
+
+
 @catub.cat_cmd(
     pattern="(g|d|r)lvar(?:\s|$)([\s\S]*)",
     command=("lvar", plugin_category),
@@ -419,4 +419,3 @@ async def cat(event):
             f"**📑 Give correct vars name :**\n__Correct Vars code list is :__\n\n1. `lbg` : **LOGO_BACKGROUND**\n2. `lfc` : **LOGO_FONT_COLOR**\n3. `lf` : **LOGO_FONT**\n4. `lfs` : **LOGO_FONT_SIZE**\n5. `lfh` : **LOGO_FONT_HEIGHT**\n6. `lfw` : **LOGO_FONT_WIDTH**",
             time=60,
         )
-        
