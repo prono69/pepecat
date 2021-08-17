@@ -282,15 +282,15 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="ip(?:\s|$)([\s\S]*)",
-    command=("ip", plugin_category),
+    pattern="ipp(?:\s|$)([\s\S]*)",
+    command=("ipp", plugin_category),
     info={
         "header": "Find details of an IP address",
         "description": "To check detailed info of provided ip address.",
         "usage": "{tr}ip <mine/ip address",
         "examples": [
-            "{tr}ip mine",
-            "{tr}ip 13.106.3.255",
+            "{tr}ipp mine",
+            "{tr}ipp 13.106.3.255",
         ],
     },
 )

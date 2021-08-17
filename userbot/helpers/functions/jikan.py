@@ -430,10 +430,11 @@ async def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
         caption += textwrap.dedent(
             f"""
         🆎 <b>Type</b>: <i>{result['type']}</i>
-        🆔 <b>MAL ID</b>: <i>{result ['mal_id']}</i>
+        🆔 <b>MAL ID</b>: <i>{result['mal_id']}</i>
         📡 <b>Status</b>: <i>{result['status']}</i>
         🎙️ <b>Aired</b>: <i>{result['aired']['string']}</i>
         🔢 <b>Episodes</b>: <i>{result['episodes']}</i>
+        🔞 <b>Rating</b>: <i>{result['rating']}</i>
         💯 <b>Score</b>: <i>{result['score']}</i>
         🌐 <b>Premiered</b>: <i>{result['premiered']}</i>
         ⌛ <b>Duration</b>: <i>{result['duration']}</i>
@@ -457,9 +458,10 @@ async def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
         📡 <b>Status</b>: <i>{result['status']}</i>
         🔢 <b>Volumes</b>: <i>{result['volumes']}</i>
         📃 <b>Chapters</b>: <i>{result['chapters']}</i>
+        📊 <b>Rank</b>: <i>{result['rank']}</i>
         💯 <b>Score</b>: <i>{result['score']}</i>
-        📊 <b>Ranking</b> <i>{result['rank']}</i>
         🎭 <b>Genres</b>: <i>{genre_string}</i>
+        
         📖 <b>Synopsis</b>: <i>{synopsis_string}</i>
         """
         )
@@ -483,17 +485,6 @@ def get_poster(query):
     if image is not None:
         # img_path = wget.download(image, os.path.join(Config.DOWNLOAD_LOCATION, 'imdb_poster.jpg'))
         return image
-
-
-def post_to_telegraph(anime_title, html_format_content):
-    post_client = TelegraphPoster(use_api=True)
-    auth_name = "@LazyAF_Pepe"
-    bish = "https://t.me/LazyAF_Pepe"
-    post_client.create_api_token(auth_name)
-    post_page = post_client.post(
-        title=anime_title, author=auth_name, author_url=bish, text=html_format_content
-    )
-    return post_page["url"]
 
 
 def replace_text(text):

@@ -7,6 +7,7 @@ import random
 from ..core.managers import edit_or_reply
 from . import catub
 
+plugin_category = "extra"
 
 @catub.cat_cmd(
     pattern="wish ?(.*)",
