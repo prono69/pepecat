@@ -1,24 +1,25 @@
 """
-All Thenks goes to Emily ( The creater of This Plugin) from ftg userbot
+Thenks goes to Emily ( The creater of Poto cmd) from ftg userbot
 """
+ 
 from PIL import Image, ImageFilter, UnidentifiedImageError
-
+ 
 from userbot import catub
-
+ 
 from ..core.managers import edit_delete, edit_or_reply
-
+ 
 plugin_category = "extra"
-
+ 
 name = "Profile Photos"
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="poto(?:\s|$)([\s\S]*)",
     command=("poto", plugin_category),
     info={
         "header": "To get user or group profile pic.",
         "description": "Reply to a user to get his profile pic or use command along\
-        with profile pic number to get desired pic else use `.poto all` to get\
+        with profile pic number to get desired pic else use .poto all to get\
         all pics. If you don't reply to any one\
         then the bot will get the chat profile pic.",
         "usage": [
@@ -33,7 +34,7 @@ async def potocmd(event):
     uid = "".join(event.raw_text.split(maxsplit=1)[1:])
     user = await event.get_reply_message()
     chat = event.input_chat
-    if user:
+    if user and user.sender:
         photos = await event.client.get_profile_photos(user.sender)
         u = True
     else:
@@ -71,17 +72,17 @@ async def potocmd(event):
             await edit_or_reply(event, "`Are you comedy me ?`")
             return
         if int(uid) > (len(photos)):
-            return await edit_delere(
+            return await edit_delete(
                 event, "`No photo found of this NIBBA / NIBBI. Now u Die!`"
             )
-
+ 
         send_photos = await event.client.download_media(photos[uid - 1])
         await event.client.send_file(event.chat_id, send_photos)
     await event.delete()
-
-
+ 
+ 
 @catub.cat_cmd(
-    pattern="blur(?: |$)(.*)",
+    pattern="blur(?:\s|$)([\s\S]*)",
     command=("blur", plugin_category),
     info={
         "header": "To blur picture.",
@@ -92,7 +93,7 @@ async def potocmd(event):
         ],
     },
 )
-async def blurcmd(event):
+async def potocmd(event):
     "To blur pic"
     reply_to_id = await reply_id(event)
     rinp = event.pattern_match.group(1)
@@ -115,3 +116,4 @@ async def blurcmd(event):
         return await edit_delete(event, "`Replay to a picture or user message... `")
     await event.delete()
     await event.client.send_file(event.chat_id, pic_name, reply_to=reply_to_id)
+    

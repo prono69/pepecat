@@ -163,7 +163,7 @@ async def purge_to(event):
                 "#PURGE \n`Purge of " + str(count) + " messages done successfully.`",
             )
     except Exception as e:
-        await edit_delete(event, f"**Error**\n`{str(e)}`")
+        await edit_delete(event, f"**Error**\n`{e}`")
 
 
 @catub.cat_cmd(
@@ -273,7 +273,7 @@ async def fastpurger(event):  # sourcery no-metrics
                         if msgs:
                             await event.client.delete_messages(chat, msgs)
                     elif ty == "s":
-                        error += f"\n• __You can't use s flag along with otherflags.__"
+                        error += "\n• __You can't use s flag along with otherflags.__"
                     else:
                         error += f"\n• `{ty}` __is Invalid flag.__"
             else:
@@ -374,7 +374,8 @@ async def fastpurger(event):  # sourcery no-metrics
                     if msgs:
                         await event.client.delete_messages(chat, msgs)
                 elif ty == "s":
-                    error += f"\n• __You can't use s with other flags or you haven't given search query.__"
+                    error += "\n• __You can't use s with other flags or you haven't given search query.__"
+
                 else:
                     error += f"\n• `{ty}` __is Invalid flag.__"
         elif p_type == "s":
@@ -421,7 +422,8 @@ async def fastpurger(event):  # sourcery no-metrics
                 if msgs:
                     await event.client.delete_messages(chat, msgs)
             elif ty == "s":
-                error += f"\n• __You can't use s with other flags or you haven't given search query.__"
+                error += "\n• __You can't use s with other flags or you haven't given search query.__"
+
             else:
                 error += f"\n• `{ty}` __is Invalid flag.__"
     elif input_str.isnumeric():
