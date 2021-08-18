@@ -22,12 +22,12 @@ plugin_category = "extra"
 
 
 @catub.cat_cmd(
-    pattern="wc",
-    command=("wc", plugin_category),
+    pattern="wwc",
+    command=("wwc", plugin_category),
     info={
         "header": "It's Mejik",
         "description": "Huehue! Try yourself! 🌚",
-        "usage": "{tr}wc <reply to a image/sticker/video>",
+        "usage": "{tr}wwc <reply to a image/sticker/video>",
     },
 )
 async def _(event):

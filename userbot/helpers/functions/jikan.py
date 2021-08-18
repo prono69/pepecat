@@ -449,7 +449,7 @@ async def get_anime_manga(mal_id, search_type, _user_id):  # sourcery no-metrics
             + f"{TRAILER}\n"
             + html_pc,
         )
-        caption += f"<b>{TRAILER}</b>\n📖 <a href='{synopsis_link}'><b>Synopsis</b></a> <b>&</b> <a href='{result['url']}'><b>Read More</b></a>"
+        caption += f"\n<b>{TRAILER}</b>\n📖 <a href='{synopsis_link}'><b>Synopsis</b></a> <b>&</b> <a href='{result['url']}'><b>Read More</b></a>"
     elif search_type == "anime_manga":
         caption += textwrap.dedent(
             f"""

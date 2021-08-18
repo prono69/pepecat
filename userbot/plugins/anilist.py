@@ -65,7 +65,7 @@ async def anime_quote(event):
     character = data["character"]
     quote = data["quote"]
     await edit_or_reply(
-        message,
+        event,
         f"❅ <b><u>Anime:</b></u>\n ➥ <code>{anime}</code>\n\n❅ <b><u>Character:</b></u>\n ➥ <code>{character}</code>\n\n❅ <b><u>Quote:</u></b>\n ➥ <code>{quote}</code>",
         parse_mode="html",
     )
@@ -817,8 +817,6 @@ async def get_anime(message):
     # Build synopsis telegraph post
     html_enc = ""
     html_enc += f"<img src = '{telegraph_poster}' title = {anime_title}/>"
-    html_enc += f"<br><b>» Studios:</b> {studio_md}</br>"
-    html_enc += f"<br><b>» Producers:</b> {producer_md}</br>"
     html_enc += "<br><b>» Synopsis: </b></br>"
     html_enc += f"<br><em>{synopsis}</em></br>"
     synopsis_link = await post_to_telegraph(anime_title, html_enc)
