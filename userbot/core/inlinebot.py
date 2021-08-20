@@ -423,7 +423,7 @@ async def inline_handler(event):  # sourcery no-metrics
             if HELP_PIC and HELP_PIC.endswith((".jpg", ".jpeg", ".png")):
                 result = builder.photo(
                     HELP_PIC,
-                    #title="Help Menu",
+                    # title="Help Menu",
                     text=_result[0],
                     buttons=_result[1],
                 )
