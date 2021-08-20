@@ -40,7 +40,7 @@ async def _(event):
     "Search images from nekos"
     reply_to = await reply_id(event)
     choose = event.pattern_match.group(1)
-    if choose not in POSSIBLE:
+    if choose not in useless.hemtai:
         return await edit_delete(
             event, "**Wrong Category!!** Do `.help -c nn` for Category list (*_*)`"
         )
