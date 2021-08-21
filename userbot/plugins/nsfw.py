@@ -24,7 +24,7 @@ plugin_category = "fun"
 
 @catub.cat_cmd(
     pattern="ani(mu|nsfw) ?(.*)",
-    command=("ani | animu | aninsfw", plugin_category),
+    command=("ani", plugin_category),
     info={
         "header": "Contains NSFW 🔞.\nTo search images in danbooru!",
         "usage": [
@@ -159,7 +159,7 @@ PENIS_TEMPLATE = """
 
 @catub.cat_cmd(
     pattern=r"(?:penis|dick)\s?(.)?",
-    command=("dick | penis", plugin_category),
+    command=("dick", plugin_category),
     info={
         "header": "NSFW 🔞\nThis is Something EPIC that horny girls wanna see for sure ! 🌚",
         "usage": "{tr}dick",
@@ -177,10 +177,10 @@ async def emoji_penis(e):
 
 @catub.cat_cmd(
     pattern="(loli|nloli|sloli) ?(.*)?",
-    command=("loli | nloli | sloli", plugin_category),
+    command=("loli", plugin_category),
     info={
         "header": "Contains NSFW 🔞.\nTo search Loli images. Thanks to lolicon API!",
-        "description": "I am not responsible for anything if FBI catches u :)",
+        "description": "If you are not a Loli person then Fuck You!\nI am not responsible for anything if FBI catches u :)",
         "usage": [
             "{tr}loli - Gets a mixed loli image",
             "{tr}sloli - Gets a SFW only image",
