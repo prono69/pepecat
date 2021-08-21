@@ -179,7 +179,7 @@ async def emoji_penis(e):
     command=("loli | nloli | sloli", plugin_category),
     info={
         "header": "Contains NSFW 🔞.\nTo search Loli images. Thanks to lolicon API!",
-        "description": "I am not responsible for anything if FBI catches u :)"
+        "description": "I am not responsible for anything if FBI catches u :)",
         "usage": [
             "{tr}loli - Gets a mixed loli image",
             "{tr}sloli - Gets a SFW only image",
