@@ -76,7 +76,7 @@ def main_menu():
             Button.inline("🔒 Close Menu", data="close"),
         ),
     ]
- 
+
     return text, buttons
 
 
