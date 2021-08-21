@@ -1,26 +1,26 @@
 from typing import Dict, List, Union
- 
+
 from ..helpers.utils.extdl import install_pip
- 
+
 try:
     from urlextract import URLExtract
 except ModuleNotFoundError:
     install_pip("urlextract")
     from urlextract import URLExtract
- 
+
 from ..Config import Config
- 
+
 extractor = URLExtract()
- 
- 
+
+
 def get_data(about, ktype):
     data = about[ktype]
     urls = extractor.find_urls(data)
     if len(urls) > 0:
         return data
     return data.capitalize()
- 
- 
+
+
 def _format_about(
     about: Union[str, Dict[str, Union[str, List[str], Dict[str, str]]]]
 ) -> str:  # sourcery no-metrics
@@ -92,4 +92,3 @@ def _format_about(
                 tmp_chelp += f"__{get_data(about ,t_n)}__"
                 tmp_chelp += "\n"
     return tmp_chelp.replace("{tr}", Config.COMMAND_HAND_LER)
- 
