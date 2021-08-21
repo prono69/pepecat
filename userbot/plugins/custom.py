@@ -1,29 +1,29 @@
+from PIL import Image
+from telegraph import Telegraph, exceptions, upload_file
+from telethon.tl import types
 from urlextract import URLExtract
-from userbot.core.events import edit_message
-from validators.url import url
- 
+
 from userbot import catub
 from userbot.core.logger import logging
- 
+
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from telegraph import Telegraph, upload_file, exceptions
-from telethon.tl import types
-from PIL import Image
 from . import BOTLOG_CHATID
- 
+
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
 cmdhd = Config.COMMAND_HAND_LER
- 
+
 telegraph = Telegraph()
 r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
 auth_url = r["auth_url"]
- 
+
+
 def resize_image(image):
     im = Image.open(image)
     im.save(image, "PNG")
+
 
 extractor = URLExtract()
 vlist = [
@@ -97,14 +97,14 @@ async def bad(event):  # sourcery no-metrics
         vname, vinfo = vname.split(" ", 1)
     reply = await event.get_reply_message()
     if not vinfo and reply:
-        #==============================================================================
+        # ==============================================================================
         # These useless auto link gen for pic/sticker/everything by https://t.me/i_osho
         try:
             animated = reply.document.mime_type == "application/x-tgsticker"
         except:
             animated = None
         try:
-            size = reply.file.size/1024
+            size = reply.file.size / 1024
             if (size >= 5000) or animated:
                 await event.edit("`Making message link...`")
                 if reply.chat.username and type(reply.peer_id) != types.PeerUser:
@@ -114,13 +114,20 @@ async def bad(event):  # sourcery no-metrics
                 else:
                     channel_id = gvarstatus("PUBLIC_CHANNEL_ID")
                     if channel_id == None:
-                        return await edit_delete(event, "Add `PUBLIC_CHANNEL_ID` in dv for auto link gen to work`")
+                        return await edit_delete(
+                            event,
+                            "Add `PUBLIC_CHANNEL_ID` in dv for auto link gen to work`",
+                        )
                     chat = await event.client.get_entity(int(channel_id))
                     sent = await event.client.send_file(chat.id, reply.media)
                     vinfo = f"https://t.me/{chat.username}/{sent.id}"
-            elif (type(reply.media) == types.MessageMediaDocument) or (type(reply.media) == types.MessageMediaPhoto):
+            elif (type(reply.media) == types.MessageMediaDocument) or (
+                type(reply.media) == types.MessageMediaPhoto
+            ):
                 await event.edit("`Creating link...`")
-                downloaded_file_name = await event.client.download_media(reply, Config.TEMP_DIR)
+                downloaded_file_name = await event.client.download_media(
+                    reply, Config.TEMP_DIR
+                )
                 try:
                     if downloaded_file_name.endswith((".webp")):
                         resize_image(downloaded_file_name)
@@ -131,8 +138,8 @@ async def bad(event):  # sourcery no-metrics
                 except exceptions.TelegraphException as exc:
                     return await event.edit(f"**Error** : `{str(exc)}`")
         except AttributeError:
-            vinfo = reply.text        
-            #==============================================================================
+            vinfo = reply.text
+            # ==============================================================================
     if vname in vlist:
         if vname in oldvars:
             vname = oldvars[vname]
@@ -145,8 +152,8 @@ async def bad(event):  # sourcery no-metrics
                 return await edit_delete(
                     event, f"Give some values which you want to save for **{vname}**"
                 )
-            check = vinfo.split(" ")
-            #for i in check:
+            vinfo.split(" ")
+            # for i in check:
             #    if "PIC" in vname and not url(i):
             #        return await edit_delete(event, "**Give me a correct link...**")
             addgvar(vname, vinfo)

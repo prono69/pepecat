@@ -3,8 +3,9 @@
 from userbot import catub
 
 from ..core.managers import edit_delete
-from ..helpers.utils import reply_id
 from ..helpers.functions import deEmojify, hide_inlinebot
+from ..helpers.utils import reply_id
+
 plugin_category = "extra"
 
 
@@ -27,14 +28,12 @@ async def GayIfUChangeCredit(event):
     song = event.pattern_match.group(1)
     reply_to_id = await reply_id(event)
     if not song:
-        return await edit_delete(
-            event, "`Gimme a song u baka!`", 15
-        )
+        return await edit_delete(event, "`Gimme a song u baka!`", 15)
     await event.delete()
     results = await event.client.inline_query(bot, song)
     await results[0].click(event.chat_id, reply_to=reply_to_id)
 
-    
+
 @catub.cat_cmd(
     pattern="isong ?(.*)",
     command=("isong", plugin_category),
@@ -59,4 +58,3 @@ async def music(event):
         )
     await event.delete()
     await hide_inlinebot(event.client, bot, music, event.chat_id, reply_to_id)
-    

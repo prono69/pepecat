@@ -5,14 +5,14 @@ import random
 import re
 import time
 from uuid import uuid4
- 
+
 from telethon import Button, types
 from telethon.errors import QueryIdInvalidError
 from telethon.events import CallbackQuery, InlineQuery
 from youtubesearchpython import VideosSearch
- 
+
 from userbot import catub
- 
+
 from ..Config import Config
 from ..helpers.functions import rand_key
 from ..helpers.functions.utube import (
@@ -26,22 +26,24 @@ from ..plugins import mention
 from ..sql_helper.globals import gvarstatus
 from . import CMD_INFO, GRP_INFO, PLG_INFO, check_owner
 from .logger import logging
- 
+
 LOGS = logging.getLogger(__name__)
- 
+
 BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
-CATLOGO = gvarstatus("INLINE_PIC") or "https://telegra.ph/file/493268c1f5ebedc967eba.jpg"
+CATLOGO = (
+    gvarstatus("INLINE_PIC") or "https://telegra.ph/file/493268c1f5ebedc967eba.jpg"
+)
 tr = Config.COMMAND_HAND_LER
- 
- 
+
+
 def getkey(val):
     for key, value in GRP_INFO.items():
         for plugin in value:
             if val == plugin:
                 return key
     return None
- 
- 
+
+
 def ibuild_keyboard(buttons):
     keyb = []
     for btn in buttons:
@@ -50,8 +52,8 @@ def ibuild_keyboard(buttons):
         else:
             keyb.append([Button.url(btn[0], btn[1])])
     return keyb
- 
- 
+
+
 def main_menu():
     text = f"𝗖𝗮𝘁𝗨𝘀𝗲𝗿𝗯𝗼𝘁 𝗛𝗲𝗹𝗽𝗲𝗿\
         \n𝗣𝗿𝗼𝘃𝗶𝗱𝗲𝗱 𝗯𝘆 {mention}"
@@ -77,18 +79,18 @@ def main_menu():
         ),
         (Button.inline("🔒 Close Menu", data="close"),),
     ]
- 
+
     return text, buttons
- 
- 
+
+
 def command_in_category(cname):
     cmds = 0
     for i in GRP_INFO[cname]:
         for _ in PLG_INFO[i]:
             cmds += 1
     return cmds
- 
- 
+
+
 def paginate_help(
     page_number,
     loaded_plugins,
@@ -161,7 +163,7 @@ def paginate_help(
     modulo_page = page_number % max_num_pages
     if plugins:
         if len(pairs) > number_of_rows:
- 
+
             pairs = pairs[
                 modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
             ] + [
@@ -206,8 +208,8 @@ def paginate_help(
             )
         ]
     return pairs
- 
- 
+
+
 @catub.tgbot.on(InlineQuery)
 async def inline_handler(event):  # sourcery no-metrics
     builder = event.builder
@@ -334,7 +336,7 @@ async def inline_handler(event):  # sourcery no-metrics
                 return
             timestamp = int(time.time() * 2)
             newtroll = {str(timestamp): {"userid": u, "text": txct}}
- 
+
             buttons = [Button.inline("show message 🔐", data=f"troll_{timestamp}")]
             result = builder.article(
                 title="Troll Message",
@@ -384,7 +386,7 @@ async def inline_handler(event):  # sourcery no-metrics
                 return
             timestamp = int(time.time() * 2)
             newsecret = {str(timestamp): {"userid": u, "text": txct}}
- 
+
             buttons = [Button.inline("show message 🔐", data=f"secret_{timestamp}")]
             result = builder.article(
                 title="secret message",
@@ -407,7 +409,7 @@ async def inline_handler(event):  # sourcery no-metrics
                 jsondata = False
             timestamp = int(time.time() * 2)
             newhide = {str(timestamp): {"text": query}}
- 
+
             buttons = [Button.inline("Read Message ", data=f"hide_{timestamp}")]
             result = builder.article(
                 title="Hidden Message",
@@ -603,8 +605,8 @@ async def inline_handler(event):  # sourcery no-metrics
             ),
         )
         await event.answer([result] if result else None)
- 
- 
+
+
 @catub.tgbot.on(CallbackQuery(data=re.compile(b"close")))
 @check_owner
 async def on_plug_in_callback_query_handler(event):
@@ -612,8 +614,8 @@ async def on_plug_in_callback_query_handler(event):
         (Button.inline("Open Menu", data="mainmenu"),),
     ]
     await event.edit("Menu Closed", buttons=buttons)
- 
- 
+
+
 @catub.tgbot.on(CallbackQuery(data=re.compile(b"check")))
 async def on_plugin_callback_query_handler(event):
     text = f"𝙿𝚕𝚞𝚐𝚒𝚗𝚜: {len(PLG_INFO)}\
@@ -623,8 +625,8 @@ async def on_plugin_callback_query_handler(event):
         \n{tr}𝚜 <𝚚𝚞𝚎𝚛𝚢> : 𝚃𝚘 𝚜𝚎𝚊𝚛𝚌𝚑 𝚊𝚗𝚢 𝚌𝚘𝚖𝚖𝚊𝚗𝚍𝚜.\
         "
     await event.answer(text, cache_time=0, alert=True)
- 
- 
+
+
 @catub.tgbot.on(CallbackQuery(data=re.compile(b"(.*)_menu")))
 @check_owner
 async def on_plug_in_callback_query_handler(event):
@@ -634,8 +636,8 @@ async def on_plug_in_callback_query_handler(event):
         \n**Total plugins :** {len(GRP_INFO[category])}\
         \n**Total Commands:** {command_in_category(category)}"
     await event.edit(text, buttons=buttons)
- 
- 
+
+
 @catub.tgbot.on(
     CallbackQuery(
         data=re.compile(b"back_([a-z]+)_([a-z1-9]+)_([0-9]+)_?([a-z1-9]+)?_?([0-9]+)?")
@@ -666,15 +668,15 @@ async def on_plug_in_callback_query_handler(event):
                 \n**Category: **__{getkey(category)}__\
                 \n**Total Commands:** __{len(PLG_INFO[category])}__"
     await event.edit(text, buttons=buttons)
- 
- 
+
+
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"mainmenu")))
 @check_owner
 async def on_plug_in_callback_query_handler(event):
     _result = main_menu()
     await event.edit(_result[0], buttons=_result[1])
- 
- 
+
+
 @catub.tgbot.on(
     CallbackQuery(data=re.compile(rb"(.*)_prev\((.+?)\)_([a-z]+)_?([a-z]+)?_?(.*)?"))
 )
@@ -704,8 +706,8 @@ async def on_plug_in_callback_query_handler(event):
         except Exception as e:
             LOGS.error(str(e))
     await event.edit(buttons=buttons)
- 
- 
+
+
 @catub.tgbot.on(
     CallbackQuery(data=re.compile(rb"(.*)_next\((.+?)\)_([a-z]+)_?([a-z]+)?_?(.*)?"))
 )
@@ -732,8 +734,8 @@ async def on_plug_in_callback_query_handler(event):
             category_pgno=category_pgno,
         )
     await event.edit(buttons=buttons)
- 
- 
+
+
 @catub.tgbot.on(
     CallbackQuery(
         data=re.compile(b"(.*)_cmdhelp_([a-z1-9]+)_([0-9]+)_([a-z]+)_([0-9]+)")
