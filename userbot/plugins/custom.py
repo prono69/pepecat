@@ -1,17 +1,29 @@
 from urlextract import URLExtract
+from userbot.core.events import edit_message
 from validators.url import url
-
+ 
 from userbot import catub
 from userbot.core.logger import logging
-
+ 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
+from telegraph import Telegraph, upload_file, exceptions
+from telethon.tl import types
+from PIL import Image
 from . import BOTLOG_CHATID
-
+ 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
 cmdhd = Config.COMMAND_HAND_LER
+ 
+telegraph = Telegraph()
+r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
+auth_url = r["auth_url"]
+ 
+def resize_image(image):
+    im = Image.open(image)
+    im.save(image, "PNG")
 
 extractor = URLExtract()
 vlist = [
@@ -20,15 +32,18 @@ vlist = [
     "ALIVE_EMOJI",
     "ALIVE_TEMPLATE",
     "ALIVE_TEXT",
+    "ALIVE_CHANNEL",
     "ALLOW_NSFW",
     "HELP_EMOJI",
     "HELP_TEXT",
     "HELP_PIC",
     "IALIVE_PIC",
+    "INLINE_PIC",
     "PM_PIC",
     "PM_TEXT",
     "PING_PICS",
     "PM_BLOCK",
+    "PUBLIC_CHANNEL_ID",
     "MAX_FLOOD_IN_PMS",
     "START_TEXT",
     "NO_OF_ROWS_IN_HELP",
@@ -82,21 +97,58 @@ async def bad(event):  # sourcery no-metrics
         vname, vinfo = vname.split(" ", 1)
     reply = await event.get_reply_message()
     if not vinfo and reply:
-        vinfo = reply.text
+        #==============================================================================
+        # These useless auto link gen for pic/sticker/everything by https://t.me/i_osho
+        try:
+            animated = reply.document.mime_type == "application/x-tgsticker"
+        except:
+            animated = None
+        try:
+            size = reply.file.size/1024
+            if (size >= 5000) or animated:
+                await event.edit("`Making message link...`")
+                if reply.chat.username and type(reply.peer_id) != types.PeerUser:
+                    username = reply.chat.username
+                    msg_id = reply.id
+                    vinfo = f"https://t.me/{username}/{msg_id}"
+                else:
+                    channel_id = gvarstatus("PUBLIC_CHANNEL_ID")
+                    if channel_id == None:
+                        return await edit_delete(event, "Add `PUBLIC_CHANNEL_ID` in dv for auto link gen to work`")
+                    chat = await event.client.get_entity(int(channel_id))
+                    sent = await event.client.send_file(chat.id, reply.media)
+                    vinfo = f"https://t.me/{chat.username}/{sent.id}"
+            elif (type(reply.media) == types.MessageMediaDocument) or (type(reply.media) == types.MessageMediaPhoto):
+                await event.edit("`Creating link...`")
+                downloaded_file_name = await event.client.download_media(reply, Config.TEMP_DIR)
+                try:
+                    if downloaded_file_name.endswith((".webp")):
+                        resize_image(downloaded_file_name)
+                    media_urls = upload_file(downloaded_file_name)
+                    vinfo = f"https://telegra.ph{media_urls[0]}"
+                except AttributeError:
+                    return await event.edit("`Error while making link`")
+                except exceptions.TelegraphException as exc:
+                    return await event.edit(f"**Error** : `{str(exc)}`")
+        except AttributeError:
+            vinfo = reply.text        
+            #==============================================================================
     if vname in vlist:
         if vname in oldvars:
             vname = oldvars[vname]
         if cmd == "set":
             if not vinfo and vname == "ALIVE_TEMPLATE":
-                return await edit_delete(event, f"Check @cat_alive")
+                return await edit_delete(
+                    event, "**💠 Check @cat_alive for alive teplate types.**", 60
+                )
             if not vinfo:
                 return await edit_delete(
                     event, f"Give some values which you want to save for **{vname}**"
                 )
             check = vinfo.split(" ")
-            for i in check:
-                if (("PIC" in vname) or ("pic" in vname)) and not url(i):
-                    return await edit_delete(event, "**Give me a correct link...**")
+            #for i in check:
+            #    if "PIC" in vname and not url(i):
+            #        return await edit_delete(event, "**Give me a correct link...**")
             addgvar(vname, vinfo)
             if BOTLOG_CHATID:
                 await event.client.send_message(
@@ -183,7 +235,7 @@ async def custom_catuserbot(event):
     if input_str == "pmpic":
         urls = extractor.find_urls(reply.text)
         if not urls:
-            return await edit_delete(event, "`the given link is not supported`", 5)
+            return await edit_delete(event, "`The given link is not supported`", 5)
         text = " ".join(urls)
         addgvar("pmpermit_pic", text)
     await edit_or_reply(event, f"__Your custom {input_str} has been updated__")

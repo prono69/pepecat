@@ -82,7 +82,7 @@ async def _(event):
             ms = (end - start).seconds
             os.remove(downloaded_file_name)
             await catevent.edit(
-                f"**link : **[telegraph](https://telegra.ph{media_urls[0]})\
+                f"**YOUR LINK : **[HERE](https://telegra.ph{media_urls[0]})\
                     \n**Time Taken : **`{ms} seconds.`",
                 link_preview=True,
             )

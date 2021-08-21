@@ -7,7 +7,9 @@ This module can search images in danbooru and send in to the chat!
 
 import os
 import urllib
-
+import html
+import aiohttp
+from urllib.parse import quote as urlencode
 import requests
 
 from userbot import catub
@@ -15,6 +17,7 @@ from userbot import catub
 from ..helpers.functions import age_verification
 from . import edit_delete, edit_or_reply, reply_id
 
+session = aiohttp.ClientSession()
 plugin_category = "fun"
 
 
@@ -169,3 +172,49 @@ async def emoji_penis(e):
     if emoji:
         message = message.replace("🍆", emoji)
     await o.edit(message)
+
+    
+@catub.cat_cmd(
+    pattern="(loli|nloli|sloli) ?(.*)?",
+    command=("loli | nloli | sloli", plugin_category),
+    info={
+        "header": "Contains NSFW 🔞.\nTo search Loli images. Thanks to lolicon API!",
+        "description": "I am not responsible for anything if FBI catches u :)"
+        "usage": [
+            "{tr}loli - Gets a mixed loli image",
+            "{tr}sloli - Gets a SFW only image",
+            "{tr}nloli - Gets a NSFW only image"
+        ],
+    },
+)
+async def loli(event):
+    match = event.pattern_match.group(1)
+    word = event.pattern_match.group(2)
+    reply_to = await reply_id(event)
+    if await age_verification(event, reply_to):
+        return
+    if mode := match:
+        if mode.startswith('s'):
+            mode = 0
+        else:
+            mode = 1
+    else:
+        mode = 2
+    async with session.get(f'https://api.lolicon.app/setu/v2?num=1&r18={mode}&keyword={urlencode(word)}') as resp:
+        data = await resp.json()
+    if not data['data'][0]:
+      return await edit_delete(event, "***Unknown Error occured while fetching data***", 3)
+    else:
+        data = data['data'][0]
+        pic = data['urls']['original']
+        title = f'{data["title"]} by {data["author"]}'
+        adult = f'{data["r18"]}'
+        description = None
+        tags = None
+        caption = f'<a href="https://pixiv.net/artworks/{data["pid"]}">{html.escape(data["title"])}</a> by <a href="https://pixiv.net/users/{data["uid"]}">{html.escape(data["author"])}</a>\n'
+        if data['tags']:
+            tags = f'{html.escape(", ".join(data["tags"]))}'
+        lol = f"<b>{caption}</b>\n<b>✘ Title:</b> <i>{title}</i>\n<b>✘ Adult:</b> <i>{adult}</i>\n<b>✘ Tags:</b> <i>{tags}</i>"
+    await event.delete()
+    await event.client.send_file(event.chat_id,file=pic, caption=lol, parse_mode='html')
+    
