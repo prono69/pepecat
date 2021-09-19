@@ -27,9 +27,9 @@ async def writer(e):
     else:
         return await edit_delete(e, "`Give Some Text`")
     await edit_delete(e, "`Processing ...`")
-    img = Image.open("helpers/resources/template.jpg")
+    img = Image.open("userbot/helpers/resources/template.jpg")
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("helpers/styles/assfont.ttf", 30)
+    font = ImageFont.truetype("userbot/helpers/styles/assfont.ttf", 30)
     x, y = 150, 140
     (text)
     line_height = font.getsize("hg")[1]

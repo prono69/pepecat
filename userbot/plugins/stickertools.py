@@ -133,7 +133,7 @@ async def ultiny(event):
         return
     xx = await edit_or_reply(event, "`Processing...`")
     ik = await event.client.download_media(reply)
-    im1 = Image.open("helpers/resources/ultroid_blank.png")
+    im1 = Image.open("userbot/helpers/resources/ultroid_blank.png")
     if ik.endswith(".tgs"):
         await event.client.download_media(reply, "ult.tgs")
         os.system("lottie_convert.py ult.tgs json.json")
