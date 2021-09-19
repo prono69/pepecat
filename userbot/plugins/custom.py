@@ -46,6 +46,8 @@ vlist = [
     "PUBLIC_CHANNEL_ID",
     "MAX_FLOOD_IN_PMS",
     "START_TEXT",
+    "START_PIC",
+    "THUMB_IMAGE",
     "NO_OF_ROWS_IN_HELP",
     "NO_OF_COLUMNS_IN_HELP",
     "CUSTOM_STICKER_PACKNAME",
@@ -90,7 +92,7 @@ async def bad(event):  # sourcery no-metrics
     vnlist = "".join(f"{i}. `{each}`\n" for i, each in enumerate(vlist, start=1))
     if not vname:
         return await edit_delete(
-            event, f"**📑 Give correct var name from the list :\n\n**{vnlist}", time=60
+            event, f"** Give correct var name from the list :\n\n**{vnlist}", time=60
         )
     vinfo = None
     if " " in vname:
@@ -146,7 +148,7 @@ async def bad(event):  # sourcery no-metrics
         if cmd == "set":
             if not vinfo and vname == "ALIVE_TEMPLATE":
                 return await edit_delete(
-                    event, "**💠 Check @cat_alive for alive teplate types.**", 60
+                    event, "** Check @cat_alive for alive teplate types.**", 60
                 )
             if not vinfo:
                 return await edit_delete(

@@ -76,6 +76,7 @@ async def bot_start(event):
         return
     reply_to = await reply_id(event)
     mention = f"[{chat.first_name}](tg://user?id={chat.id})"
+    PIC = gvarstatus("START_PIC") or "https://telegra.ph/file/360adbb434e877f5bf790.mp4"
     my_mention = f"[{user.first_name}](tg://user?id={user.id})"
     first = chat.first_name
     last = chat.last_name
@@ -121,12 +122,14 @@ async def bot_start(event):
             \nHow can i help you ?"
         buttons = None
     try:
-        await event.client.send_message(
+        await event.client.send_file(
             chat.id,
-            start_msg,
+            PIC,
+            caption=start_msg,
             link_preview=False,
             buttons=buttons,
             reply_to=reply_to,
+            allow_cache = True,
         )
     except Exception as e:
         if BOTLOG:
@@ -476,3 +479,14 @@ async def antif_on_msg(event):
         raise StopPropagation
     if user_id in FloodConfig.BANNED_USERS:
         FloodConfig.BANNED_USERS.remove(user_id)
+
+        
+@catub.bot_cmd(
+    pattern=f"^/ping?([\s]+)?$",
+)
+async def _(event):
+    start = datetime.now()
+    catevent = await event.reply("Pong!")
+    end = datetime.now()
+    ms = (end - start).microseconds / 1000
+    await catevent.edit(f"Pong!\n`{ms} ms`")        

@@ -25,6 +25,7 @@ USERID = catub.uid if Config.OWNER_ID == 0 else Config.OWNER_ID
 ALIVE_NAME = gvarstatus("ALIVE_NAME") or "ПIKIƬΛ"
 AUTONAME = Config.AUTONAME
 DEFAULT_BIO = Config.DEFAULT_BIO
+THUMB_IMAGE = gvarstatus("THUMB_IMAGE") or "https://telegra.ph/file/ba9acea0064aaed188195.jpg"
 
 
 Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
@@ -66,12 +67,12 @@ if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
 
 
 # thumb image
-if Config.THUMB_IMAGE is not None:
-    check = url(Config.THUMB_IMAGE)
+if THUMB_IMAGE is not None:
+    check = url(THUMB_IMAGE)
     if check:
         try:
             with open(thumb_image_path, "wb") as f:
-                f.write(requests.get(Config.THUMB_IMAGE).content)
+                f.write(requests.get(THUMB_IMAGE).content)
         except Exception as e:
             LOGS.info(str(e))
 

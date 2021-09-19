@@ -49,7 +49,7 @@ async def _(event):
         end = datetime.now()
         ms = (end - start).microseconds / 1000
         await catevent.edit(
-            f"僕のぴこは史上最高のアニメです🖤\n┏━━━━━━━━━━━┓\n┃ ⁭⁫🖤  **{ms} ms** \n┃ ⁭⁫🖤  {mention}\n┗━━━━━━━━━━━┛"
+            f"僕のぴこは史上最高のアニメです🖤\n┏━━━━━━━━━━━┓\n┃ ⁭⁫⌘  **{ms} ms** \n┃ ⁭⁫⌘  {mention}\n┗━━━━━━━━━━━┛"
         )
 
 
@@ -143,3 +143,4 @@ async def _(event):
             link_preview=False,
             allow_cache=True,
         )
+        
