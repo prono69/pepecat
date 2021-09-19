@@ -2,7 +2,6 @@
 
 import io
 import logging
-import os
 
 from PIL import Image, ImageDraw
 
@@ -11,6 +10,7 @@ from . import catub
 
 plugin_category = "extra"
 logger = logging.getLogger(__name__)
+
 
 @catub.cat_cmd(
     pattern="doti ?(.*)",

@@ -1,10 +1,14 @@
 import os
+
 from PIL import Image, ImageDraw, ImageFont
+
 from userbot import catub
+
 from ..helpers.utils import edit_delete
 
 plugin_category = "extra"
-    
+
+
 @catub.cat_cmd(
     pattern="write(?:\s|$)([\s\S]*)",
     command=("write", plugin_category),
@@ -14,7 +18,6 @@ plugin_category = "extra"
         "examples": "{tr}write Hello World",
     },
 )
-
 async def writer(e):
     if e.reply_to:
         reply = await e.get_reply_message()
@@ -23,12 +26,12 @@ async def writer(e):
         text = e.text.split(maxsplit=1)[1]
     else:
         return await edit_delete(e, "`Give Some Text`")
-    k = await edit_delete(e, "`Processing ...`")
+    await edit_delete(e, "`Processing ...`")
     img = Image.open("helpers/resources/template.jpg")
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype("helpers/styles/assfont.ttf", 30)
     x, y = 150, 140
-    lines = (text)
+    (text)
     line_height = font.getsize("hg")[1]
     draw.text((x, y), text, fill=(1, 22, 55), font=font)
     y = y + line_height - 5

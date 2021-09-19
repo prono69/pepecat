@@ -1,12 +1,14 @@
-#Creater by @MineisZarox, idea by @Feelded
-import random
-from userbot import catub 
-from ..core.managers import edit_or_reply, edit_delete
-from datetime import datetime
-from . import get_user_from_event
+# Creater by @MineisZarox, idea by @Feelded
 import asyncio
+import random
+
+from userbot import catub
+
+from ..core.managers import edit_delete, edit_or_reply
+from . import get_user_from_event
 
 plugin_category = "extra"
+
 
 @catub.cat_cmd(
     pattern="xban(?:\s|$)([\s\S]*)",
@@ -35,9 +37,10 @@ async def catgban(event):  # sourcery no-metrics
     cattaken = random.choice(range(8, 17))
     await asyncio.sleep(cattaken)
     await cate.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `was gbanned in {zarox} groups in {cattaken} seconds`!!"
-        )
-        
+        f"[{user.first_name}](tg://user?id={user.id}) `was gbanned in {zarox} groups in {cattaken} seconds`!!"
+    )
+
+
 @catub.cat_cmd(
     pattern="unxban(?:\s|$)([\s\S]*)",
     command=("unxban", plugin_category),
@@ -65,9 +68,10 @@ async def catgban(event):  # sourcery no-metrics
     await asyncio.sleep(2)
     cattaken = random.choice(range(8, 17))
     await cate.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `was ungbanned in {zarox} groups in {cattaken} seconds`!!"
-        )
-        
+        f"[{user.first_name}](tg://user?id={user.id}) `was ungbanned in {zarox} groups in {cattaken} seconds`!!"
+    )
+
+
 @catub.cat_cmd(
     pattern="xmute(?:\s|$)([\s\S]*)",
     command=("xmute", plugin_category),
@@ -91,8 +95,9 @@ async def catgban(event):  # sourcery no-metrics
     cattaken = random.choice(range(8, 17))
     await asyncio.sleep(cattaken)
     await cate.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `is Successfully gmuted in {zarox} groups in {cattaken} seconds`!!"
-        )
+        f"[{user.first_name}](tg://user?id={user.id}) `is Successfully gmuted in {zarox} groups in {cattaken} seconds`!!"
+    )
+
 
 @catub.cat_cmd(
     pattern="unxmute(?:\s|$)([\s\S]*)",
@@ -117,8 +122,9 @@ async def catgban(event):  # sourcery no-metrics
     cattaken = random.choice(range(8, 17))
     await asyncio.sleep(cattaken)
     await cate.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `is Successfully unmuted in {zarox} groups in {cattaken} seconds`!!"
-        )
+        f"[{user.first_name}](tg://user?id={user.id}) `is Successfully unmuted in {zarox} groups in {cattaken} seconds`!!"
+    )
+
 
 @catub.cat_cmd(
     pattern="xkick(?:\s|$)([\s\S]*)",
@@ -147,5 +153,5 @@ async def catgban(event):  # sourcery no-metrics
     cattaken = random.choice(range(8, 17))
     await asyncio.sleep(cattaken)
     await cate.edit(
-            f"[{user.first_name}](tg://user?id={user.id}) `was gkicked in {zarox} groups in {cattaken} seconds`!!"
-        )
+        f"[{user.first_name}](tg://user?id={user.id}) `was gkicked in {zarox} groups in {cattaken} seconds`!!"
+    )

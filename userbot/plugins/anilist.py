@@ -788,9 +788,9 @@ async def get_anime(message):
     mal_dir_link = results_["url"]
     trailer_link = results_["trailer_url"]
     if trailer_link:
-      trailer_link = f"[🎬 Trailer]({trailer_link})"
+        trailer_link = f"[🎬 Trailer]({trailer_link})"
     else:
-      trailer_link = "**No Trailer**"
+        trailer_link = "**No Trailer**"
 
     main_poster = ""
     telegraph_poster = ""

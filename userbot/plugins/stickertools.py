@@ -1,38 +1,26 @@
 # Ported from Ultroid for pepecat by @kirito6969
 
 import asyncio
-import io
 import os
-import random
-import re
 
 import cv2
 import numpy as np
-import requests
 from PIL import Image, ImageDraw
-from telethon.errors import ChatSendStickersForbiddenError, YouBlockedUserError
-from telethon.tl.functions.stickers import SuggestShortNameRequest
-from telethon.tl.types import (
-    DocumentAttributeFilename,
-    DocumentAttributeSticker,
-    MessageMediaPhoto,
-)
-from telethon.utils import get_input_document
 
-from . import catub, edit_or_reply, edit_delete
+from . import catub, edit_delete, edit_or_reply
 
 plugin_category = "extra"
 
 
-@catub.cat_cmd( 
-pattern="rund$",
-command=("rund", plugin_category),
+@catub.cat_cmd(
+    pattern="rund$",
+    command=("rund", plugin_category),
     info={
         "header": "Make round stickers.",
         "usage": [
             "{tr}rund",
-        ]
-},
+        ],
+    },
 )
 async def ultdround(event):
     ureply = await event.get_reply_message()
@@ -126,18 +114,17 @@ async def tgscmd(message):
     os.remove("json.json")
     os.remove("pepe.tgs")
     await message.delete()
-    
 
 
-@catub.cat_cmd( 
-pattern="tiny$",
-command=("tiny", plugin_category),
+@catub.cat_cmd(
+    pattern="tiny$",
+    command=("tiny", plugin_category),
     info={
         "header": "Make the replied sticker smol.",
         "usage": [
             "{tr}tiny <Reply to an animated sticker>",
-        ]
-},
+        ],
+    },
 )
 async def ultiny(event):
     reply = await event.get_reply_message()

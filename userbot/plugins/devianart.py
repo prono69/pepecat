@@ -1,27 +1,28 @@
 # Ported from Ultroid for pepecat by @kirito6969
 
 import random
-import aiohttp
-import aiofiles
 import re
 
+import aiofiles
+import aiohttp
 import requests
 from bs4 import BeautifulSoup as bs
 
-from . import catub, edit_or_reply, edit_delete
+from . import catub, edit_delete, edit_or_reply
 
 plugin_category = "fun"
 
-@catub.cat_cmd( 
-pattern="devian ?(.*)",
-command=("devian", plugin_category),
+
+@catub.cat_cmd(
+    pattern="devian ?(.*)",
+    command=("devian", plugin_category),
     info={
         "header": "Devian-Art Image Search",
         "description": "It will search and send u the image from Devian art.",
         "usage": [
             "{tr}devian <search query> ; <no of pics>",
-        ]
-},
+        ],
+    },
 )
 async def downakd(e):
     match = e.pattern_match.group(1)
@@ -58,7 +59,7 @@ async def downakd(e):
     )
     await xd.delete()
 
-    
+
 async def download_file(link, name):
     """for files, without progress callback with aiohttp"""
     async with aiohttp.ClientSession() as ses:
@@ -66,4 +67,4 @@ async def download_file(link, name):
             file = await aiofiles.open(name, "wb")
             await file.write(await re_ses.read())
             await file.close()
-    return name    
+    return name

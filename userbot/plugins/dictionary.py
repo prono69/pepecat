@@ -1,18 +1,18 @@
 # Urban Dictionary for catuserbot by @mrconfused
 from PyDictionary import PyDictionary
- 
+
 from userbot import catub
- 
+
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import AioHttp
 from ..helpers.utils import _format
- 
+
 LOGS = logging.getLogger(__name__)
 plugin_category = "utils"
 dictionary = PyDictionary()
- 
- 
+
+
 @catub.cat_cmd(
     pattern="ud ([\s\S]*)",
     command=("ud", plugin_category),
@@ -43,8 +43,8 @@ async def _(event):
             text="`The Urban Dictionary API could not be reached`",
         )
         LOGS.info(e)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="meaning ([\s\S]*)",
     command=("meaning", plugin_category),
@@ -66,8 +66,8 @@ async def _(event):
         await edit_or_reply(event, output)
     except Exception:
         await edit_or_reply(event, f"Couldn't fetch meaning of {word}")
- 
- 
+
+
 @catub.cat_cmd(
     pattern="synonym ([\s\S]*)",
     command=("synonym", plugin_category),
@@ -103,9 +103,8 @@ async def mean(event):
             await xx.edit(x)
     except Exception as e:
         await xx.edit(f"No synonym found!!\n{str(e)}")
-        
-        
-        
+
+
 @catub.cat_cmd(
     pattern="antonym ([\s\S]*)",
     command=("antonym", plugin_category),
@@ -141,4 +140,3 @@ async def mean(event):
             await xx.edit(x)
     except Exception as e:
         await xx.edit(f"No antonym found!!\n{str(e)}")
- 
