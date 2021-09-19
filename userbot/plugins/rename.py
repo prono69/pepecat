@@ -16,15 +16,15 @@ thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg"
 
 
 @catub.cat_cmd(
-    pattern="rnup ?(-f)? ([\s\S]*)",
-    command=("rnup", plugin_category),
+    pattern="rn ?(-f)? ([\s\S]*)",
+    command=("rn", plugin_category),
     info={
         "header": "To rename and upload the replied file.",
         "flags": {"f": "will upload as file that is document not streamable."},
         "description": "If flag is not used then will upload as steamable file",
         "usage": [
-            "{tr}rnup <new file name>",
-            "{tr}rnup -f <new file name>",
+            "{tr}rn <new file name>",
+            "{tr}rn -f <new file name>",
         ],
     },
 )

@@ -17,8 +17,8 @@ LOGS = logging.getLogger(__name__)
 
 
 @catub.cat_cmd(
-    pattern="msgto(?:\s|$)([\s\S]*)",
-    command=("msgto", plugin_category),
+    pattern="dm(?:\s|$)([\s\S]*)",
+    command=("dm", plugin_category),
     info={
         "header": "To message to person or to a chat.",
         "description": "Suppose you want to message directly to a person/chat from a paticular chat. Then simply reply to a person with this cmd and text or to a text with cmd and username/userid/chatid,",
@@ -56,7 +56,7 @@ async def catbroadcast_add(event):
         msg = await event.client.send_message(user.id, reason)
     else:
         msg = await event.client.send_message(user.id, reply)
-    await edit_delete(event, "__Successfully sent the message.__")
+    await edit_delete(event, "__Message delivered successfully.__")
 
 
 @catub.cat_cmd(

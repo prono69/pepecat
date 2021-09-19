@@ -14,13 +14,12 @@ from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from validators.url import url
 from youtubesearchpython import Video
 
-from userbot import catub
-
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import name_dl, song_dl, video_dl, yt_search
 from ..helpers.tools import media_type
 from ..helpers.utils import _catutils, reply_id
+from . import catub, hmention
 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
@@ -92,7 +91,7 @@ async def _(event):
         return await catevent.edit(
             f"Sorry!. I can't find any related video/audio for `{query}`"
         )
-    await catevent.edit("`yeah..! i found something wi8..🥰`")
+    await catevent.edit("`Yeah..! i found something wi8..🥰`")
     catthumb = Path(f"{catname}.jpg")
     if not os.path.exists(catthumb):
         catthumb = Path(f"{catname}.webp")
@@ -103,7 +102,8 @@ async def _(event):
         event.chat_id,
         song_file,
         force_document=False,
-        caption=f"**Title:** `{ytdata['title']}`",
+        caption=f"<b><i>➥ Title :- {ytdata['title']}</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
+        parse_mode="html",
         thumb=catthumb,
         supports_streaming=True,
         reply_to=reply_to_id,
@@ -175,7 +175,7 @@ async def _(event):
         return await catevent.edit(
             f"Sorry!. I can't find any related video/audio for `{query}`"
         )
-    await catevent.edit("`yeah..! i found something wi8..🥰`")
+    await catevent.edit("`Yeah..! i found something wi8..🥰`")
     catthumb = Path(f"{catname}.jpg")
     if not os.path.exists(catthumb):
         catthumb = Path(f"{catname}.webp")
@@ -186,7 +186,8 @@ async def _(event):
         event.chat_id,
         vsong_file,
         force_document=False,
-        caption=f"**Title:** `{ytdata['title']}`",
+        caption=f"<b><i>➥ Title :- {ytdata['title']}</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
+        parse_mode="html",
         thumb=catthumb,
         supports_streaming=True,
         reply_to=reply_to_id,
@@ -295,6 +296,44 @@ async def _(event):
         await delete_messages(event, chat, purgeflag)
 
 
+# reverse search by  @Lal_bakthan
+@catub.cat_cmd(
+    pattern="szm$",
+    command=("szm", plugin_category),
+    info={
+        "header": "To reverse search music file.",
+        "description": "music file lenght must be around 10 sec so use ffmpeg plugin to trim it.",
+        "usage": "{tr}szm",
+    },
+)
+async def _(event):
+    "To reverse search music by bot."
+    if not event.reply_to_msg_id:
+        return await edit_delete(event, "```Reply to an audio message.```")
+    reply_message = await event.get_reply_message()
+    chat = "@auddbot"
+    catevent = await edit_or_reply(event, "```Identifying the song```")
+    async with event.client.conversation(chat) as conv:
+        try:
+            await conv.send_message("/start")
+            await conv.get_response()
+            await conv.send_message(reply_message)
+            check = await conv.get_response()
+            if not check.text.startswith("Audio received"):
+                return await catevent.edit(
+                    "An error while identifying the song. Try to use a 5-10s long audio message."
+                )
+            await catevent.edit("Wait just a sec...")
+            result = await conv.get_response()
+            await event.client.send_read_acknowledge(conv.chat_id)
+        except YouBlockedUserError:
+            await catevent.edit("```Please unblock (@auddbot) and try again```")
+            return
+    namem = f"**Song Name : **`{result.text.splitlines()[0]}`\
+        \n\n**Details : **__{result.text.splitlines()[2]}__"
+    await catevent.edit(namem)
+
+
 @catub.cat_cmd(
     pattern="dzd(?: |$)(.*)",
     command=("dzd", plugin_category),
@@ -334,41 +373,3 @@ async def kakashi(event):
         await event.client.delete_messages(
             conv.chat_id, [msg_start.id, response.id, msg.id, details.id, song.id]
         )
-
-
-# reverse search by  @Lal_bakthan
-@catub.cat_cmd(
-    pattern="szm$",
-    command=("szm", plugin_category),
-    info={
-        "header": "To reverse search music file.",
-        "description": "music file lenght must be around 10 sec so use ffmpeg plugin to trim it.",
-        "usage": "{tr}szm",
-    },
-)
-async def _(event):
-    "To reverse search music by bot."
-    if not event.reply_to_msg_id:
-        return await edit_delete(event, "```Reply to an audio message.```")
-    reply_message = await event.get_reply_message()
-    chat = "@auddbot"
-    catevent = await edit_or_reply(event, "```Identifying the song```")
-    async with event.client.conversation(chat) as conv:
-        try:
-            await conv.send_message("/start")
-            await conv.get_response()
-            await conv.send_message(reply_message)
-            check = await conv.get_response()
-            if not check.text.startswith("Audio received"):
-                return await catevent.edit(
-                    "An error while identifying the song. Try to use a 5-10s long audio message."
-                )
-            await catevent.edit("Wait just a sec...")
-            result = await conv.get_response()
-            await event.client.send_read_acknowledge(conv.chat_id)
-        except YouBlockedUserError:
-            await catevent.edit("```Please unblock (@auddbot) and try again```")
-            return
-    namem = f"**Song Name : **`{result.text.splitlines()[0]}`\
-        \n\n**Details : **__{result.text.splitlines()[2]}__"
-    await catevent.edit(namem)

@@ -92,7 +92,7 @@ async def bad(event):  # sourcery no-metrics
     vnlist = "".join(f"{i}. `{each}`\n" for i, each in enumerate(vlist, start=1))
     if not vname:
         return await edit_delete(
-            event, f"** Give correct var name from the list :\n\n**{vnlist}", time=60
+            event, f"**📑 Give correct var name from the list :\n\n**{vnlist}", time=60
         )
     vinfo = None
     if " " in vname:
@@ -148,7 +148,7 @@ async def bad(event):  # sourcery no-metrics
         if cmd == "set":
             if not vinfo and vname == "ALIVE_TEMPLATE":
                 return await edit_delete(
-                    event, "** Check @cat_alive for alive teplate types.**", 60
+                    event, "**📑 Check @cat_alive for alive teplate types.**", 60
                 )
             if not vinfo:
                 return await edit_delete(
