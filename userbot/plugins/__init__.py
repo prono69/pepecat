@@ -25,7 +25,9 @@ USERID = catub.uid if Config.OWNER_ID == 0 else Config.OWNER_ID
 ALIVE_NAME = gvarstatus("ALIVE_NAME") or "ПIKIƬΛ"
 AUTONAME = Config.AUTONAME
 DEFAULT_BIO = Config.DEFAULT_BIO
-THUMB_IMAGE = gvarstatus("THUMB_IMAGE") or "https://telegra.ph/file/ba9acea0064aaed188195.jpg"
+THUMB_IMAGE = (
+    gvarstatus("THUMB_IMAGE") or "https://telegra.ph/file/ba9acea0064aaed188195.jpg"
+)
 
 
 Heroku = heroku3.from_key(Config.HEROKU_API_KEY)

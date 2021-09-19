@@ -208,7 +208,7 @@ async def doge(event):
         if files and os.path.exists(files):
             os.remove(files)
 
-            
+
 # by Yato
 @catub.cat_cmd(
     pattern="(|h)penguin(?:\s|$)([\s\S]*)",
@@ -339,4 +339,3 @@ async def gandhi(event):
     for files in (temp_name, file_name):
         if files and os.path.exists(files):
             os.remove(files)
-            

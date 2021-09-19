@@ -1,10 +1,10 @@
 import random
 import re
-import requests
 import time
 from datetime import datetime
 from platform import python_version
 
+import requests
 from telethon import version
 from telethon.errors.rpcerrorlist import (
     MediaEmptyError,
@@ -21,7 +21,6 @@ from ..helpers.functions import catalive, check_data_base_heal_th, get_readable_
 from ..helpers.utils import reply_id
 from ..sql_helper.globals import gvarstatus
 from . import mention
-
 
 plugin_category = "utils"
 
@@ -47,7 +46,7 @@ async def amireallyalive(event):
     ms = (end - start).microseconds / 1000
     _, check_sgnirts = check_data_base_heal_th()
     EMOJI = gvarstatus("ALIVE_EMOJI") or "〣 "
-    #================================================
+    # ================================================
     api_url = f"https://animechan.vercel.app/api/random"
     try:
         response = requests.get(api_url).json()
@@ -58,7 +57,7 @@ async def amireallyalive(event):
         res = requests.get(api_url).json()
         quote = res["quote"]
     ANIME_QUOTE = f"__{quote}__"
-    #================================================
+    # ================================================
     ALIVE_TEXT = ANIME_QUOTE or gvarstatus("ALIVE_TEXT")
     CAT_IMG = gvarstatus("ALIVE_PIC")
     cat_caption = gvarstatus("ALIVE_TEMPLATE") or temp

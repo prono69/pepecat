@@ -129,7 +129,7 @@ async def bot_start(event):
             link_preview=False,
             buttons=buttons,
             reply_to=reply_to,
-            allow_cache = True,
+            allow_cache=True,
         )
     except Exception as e:
         if BOTLOG:
@@ -480,7 +480,7 @@ async def antif_on_msg(event):
     if user_id in FloodConfig.BANNED_USERS:
         FloodConfig.BANNED_USERS.remove(user_id)
 
-        
+
 @catub.bot_cmd(
     pattern=f"^/ping?([\s]+)?$",
 )
@@ -489,4 +489,4 @@ async def _(event):
     catevent = await event.reply("Pong!")
     end = datetime.now()
     ms = (end - start).microseconds / 1000
-    await catevent.edit(f"Pong!\n`{ms} ms`")        
+    await catevent.edit(f"Pong!\n`{ms} ms`")

@@ -1,10 +1,11 @@
-#Created by @MineisZarox
-from urllib import request
-from userbot import catub
-import re
-import requests
-from ..core.managers import edit_delete, edit_or_reply
+# Created by @MineisZarox
 import os
+import re
+
+import requests
+
+from userbot import catub
+
 try:
     from pyquery import PyQuery as pq
 except ModuleNotFoundError:
@@ -13,13 +14,19 @@ except ModuleNotFoundError:
 
 plugin_category = "extra"
 
+
 def get_download_url(link):
-    post_request = requests.post('https://www.expertsphp.com/download.php', data={'url': link})
+    post_request = requests.post(
+        "https://www.expertsphp.com/download.php", data={"url": link}
+    )
 
     request_content = post_request.content
-    str_request_content = str(request_content, 'utf-8')
-    download_url = pq(str_request_content)('table.table-condensed')('tbody')('td')('a').attr('href')
+    str_request_content = str(request_content, "utf-8")
+    download_url = pq(str_request_content)("table.table-condensed")("tbody")("td")(
+        "a"
+    ).attr("href")
     return download_url
+
 
 @catub.cat_cmd(
     pattern="pid?(?:\s|$)([\s\S]*)",

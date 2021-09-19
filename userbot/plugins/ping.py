@@ -143,4 +143,3 @@ async def _(event):
             link_preview=False,
             allow_cache=True,
         )
-        
