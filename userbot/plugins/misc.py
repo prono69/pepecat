@@ -1,8 +1,6 @@
 # Modified open by @DazaiSun
 import os
 from re import sub
-import asyncio
-import time
 
 from quotefancy import get_quote
 from requests import get
@@ -13,6 +11,7 @@ from . import catub
 
 plugin_category = "extra"
 opn = []
+
 
 @catub.cat_cmd(
     pattern="open",

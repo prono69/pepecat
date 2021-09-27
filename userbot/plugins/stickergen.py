@@ -339,8 +339,8 @@ async def gandhi(event):
     for files in (temp_name, file_name):
         if files and os.path.exists(files):
             os.remove(files)
-            
-            
+
+
 @catub.cat_cmd(
     pattern="(|h)pay(?:\s|$)([\s\S]*)",
     command=("pay", plugin_category),
@@ -404,4 +404,3 @@ async def pay(event):
     for files in (temp_name, file_name):
         if files and os.path.exists(files):
             os.remove(files)
-            

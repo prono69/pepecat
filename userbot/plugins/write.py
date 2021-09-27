@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from userbot import catub
 
-from ..helpers.utils import edit_delete, edit_or_reply
+from ..helpers.utils import edit_delete
 
 plugin_category = "extra"
 
