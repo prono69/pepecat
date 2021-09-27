@@ -1,5 +1,8 @@
+# Modified open by @DazaiSun
 import os
 from re import sub
+import asyncio
+import time
 
 from quotefancy import get_quote
 from requests import get
@@ -9,28 +12,39 @@ from ..core.managers import edit_delete, edit_or_reply
 from . import catub
 
 plugin_category = "extra"
-
+opn = []
 
 @catub.cat_cmd(
-    pattern="reveal",
-    command=("reveal", plugin_category),
+    pattern="open",
+    command=("open", plugin_category),
     info={
         "header": "Reveal documents.",
-        "usage": "{tr}reveal <reply to document>",
+        "usage": "{tr}open <reply to document>",
     },
 )
 async def _(event):
-    b = await event.client.download_media(await event.get_reply_message())
-    a = open(b, "r")
-    c = a.read()
-    a.close()
-    a = await edit_or_reply(event, "**Reading file...**")
-    if len(c) > 4095:
-        await a.edit("`The Total words in this file is more than telegram limits.`")
-    else:
-        await event.client.send_message(event.chat_id, f"```{c}```")
-        await a.delete()
-    remove(b)
+    xx = await edit_or_reply(event, "`Loading ...`")
+    if not event.reply_to_msg_id:
+        return await edit_or_reply(xx, "Reply to a readable file", time=10)
+    a = await event.get_reply_message()
+    if not a.media:
+        return await edit_or_reply(xx, "Reply to a readable file", time=10)
+    b = await a.download_media()
+    with open(b, "r") as c:
+        d = c.read()
+    n = 4096
+    for bkl in range(0, len(d), n):
+        opn.append(d[bkl : bkl + n])
+    for bc in opn:
+        await event.client.send_message(
+            event.chat_id,
+            f"`{bc}`",
+            reply_to=event.reply_to_msg_id,
+        )
+    await event.delete()
+    opn.clear()
+    os.remove(b)
+    await xx.delete()
 
 
 @catub.cat_cmd(

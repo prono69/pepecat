@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from userbot import catub
 
-from ..helpers.utils import edit_delete
+from ..helpers.utils import edit_delete, edit_or_reply
 
 plugin_category = "extra"
 
@@ -26,7 +26,7 @@ async def writer(e):
         text = e.text.split(maxsplit=1)[1]
     else:
         return await edit_delete(e, "`Give Some Text`")
-    await edit_delete(e, "`Processing ...`")
+    await edit_delete(e, "`Writing wait....`")
     img = Image.open("userbot/helpers/resources/template.jpg")
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype("userbot/helpers/styles/assfont.ttf", 30)

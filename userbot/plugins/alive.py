@@ -92,7 +92,7 @@ async def amireallyalive(event):
         )
 
 
-temp = """{ALIVE_TEXT}
+temp = """**{ALIVE_TEXT}**
 
 **{EMOJI} Sensi :** {mention}
 **{EMOJI} Database :** `{dbhealth}`

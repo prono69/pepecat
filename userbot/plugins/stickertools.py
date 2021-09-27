@@ -139,7 +139,7 @@ async def ultiny(event):
         os.system("lottie_convert.py ult.tgs json.json")
         with open("json.json") as json:
             jsn = json.read()
-        jsn = jsn.replace("512", "2000")
+        jsn = jsn.replace("512", "1000")
         open("json.json", "w").write(jsn)
         os.system("lottie_convert.py json.json ult.tgs")
         file = "ult.tgs"
