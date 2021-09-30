@@ -39,18 +39,29 @@ def get_download_url(link):
         ],
     },
 )
+@catub.cat_cmd(
+    pattern="pint(?:\s|$)([\s\S]*)",
+    command=("pint", plugin_category),
+    info={
+        "header": "To download pinterest posts",
+        "options": "To download image and video posts from pinterest",
+        "usage": [
+            "{tr}pint <post link>",
+        ],
+    },
+)
 async def _(event):
     "To download pinterest posts"
-    A = event.pattern_match.group(1)
+    A = "".join(event.text.split(maxsplit=1)[1:])
+    reply_to_id = await reply_id(event)
     links = re.findall(r"\bhttps?://.*\.\S+", A)
     await event.delete()
     if not links:
-        L = await event.respond("`Please give a valid link`")
-        await asyncio.sleep(2)
-        await L.delete()
+        Y = await event.respond("`Please give a valid link`", reply_to=reply_to_id)
+        await asyncio.sleep(3)
+        await Y.delete()
     else:
-        pass
-    K = await event.respond("`Downloading...`")
-    MINE = get_download_url(A)
-    await event.client.send_file(event.chat.id, MINE)
-    await K.delete()
+        Z = await event.respond("`Downloading...`", reply_to=reply_to_id)
+        MINE = get_download_url(A)
+        await event.client.send_file(event.chat.id, MINE, caption=f"➥Uploaded by = {mention}\n➥Pin = [Link]({A})", reply_to=reply_to_id)
+        await Z.delete()
