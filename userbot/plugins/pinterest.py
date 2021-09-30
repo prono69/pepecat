@@ -1,9 +1,7 @@
 # Created by @MineisZarox
 import os
 import re
-
 import requests
-
 from userbot import catub
 
 try:
@@ -29,13 +27,13 @@ def get_download_url(link):
 
 
 @catub.cat_cmd(
-    pattern="pid?(?:\s|$)([\s\S]*)",
-    command=("pid", plugin_category),
+    pattern="pint?(?:\s|$)([\s\S]*)",
+    command=("pint", plugin_category),
     info={
         "header": "To download pinterest posts",
         "options": "To download image and video posts from pinterest",
         "usage": [
-            "{tr}pid <post link>",
+            "{tr}pint <post link>",
         ],
     },
 )
