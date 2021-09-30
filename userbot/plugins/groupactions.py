@@ -235,7 +235,9 @@ async def rm_deletedacc(show):  # sourcery no-metrics
     flag = show.pattern_match.group(1)
     con = show.pattern_match.group(2).lower()
     del_u = 0
-    del_status = "`No zombies or deleted accounts found in this group, Group is clean AF!`"
+    del_status = (
+        "`No zombies or deleted accounts found in this group, Group is clean AF!`"
+    )
     if con != "clean":
         event = await edit_or_reply(
             show, "`Searching for ghost/deleted/zombie accounts...`"

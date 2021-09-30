@@ -1,5 +1,5 @@
-import random
 import asyncio
+import random
 
 import bs4
 import requests
