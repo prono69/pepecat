@@ -1,9 +1,10 @@
 # Made by @o_s_h_o_r_a_j
 # Change credit and you gay.
+from telethon.errors.rpcerrorlist import YouBlockedUserError
+
 from userbot import catub
 
 from ..core.managers import edit_delete
-from telethon.errors.rpcerrorlist import YouBlockedUserError
 from ..helpers.functions import deEmojify, hide_inlinebot
 from ..helpers.utils import reply_id
 
@@ -59,8 +60,8 @@ async def music(event):
         )
     await event.delete()
     await hide_inlinebot(event.client, bot, music, event.chat_id, reply_to_id)
-    
-    
+
+
 @catub.cat_cmd(
     pattern="fsong ?(.*)",
     command=("fsong", plugin_category),
@@ -84,11 +85,13 @@ async def _(event):
         try:
             await conv.send_message(song)
             message = await conv.get_response()
-            await event.client.send_message(event.chat_id, message, reply_to=reply_to_id)
+            await event.client.send_message(
+                event.chat_id, message, reply_to=reply_to_id
+            )
             await event.delete()
         except YouBlockedUserError:
             await edit_delete("**Error:**\nUnblock @WaveyMusicBot and try again")
-                
+
 
 @catub.cat_cmd(
     pattern="lits?(.*)",
@@ -113,4 +116,3 @@ async def lisong(event):
         return await edit_delete(event, "Give me a text")
     await event.delete()
     await hide_inlinebot(event.client, bot, song, event.chat_id, reply_to_id)
-            

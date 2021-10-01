@@ -154,8 +154,8 @@ async def _(event):
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await event.edit(animation_chars[i % 20])
-        
-        
+
+
 @catub.cat_cmd(
     pattern="kimckme$",
     command=("kimckme", plugin_category),

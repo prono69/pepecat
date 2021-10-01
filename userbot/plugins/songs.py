@@ -363,8 +363,12 @@ async def dzd(event):
             """ - don't spam notif - """
             await event.client.send_read_acknowledge(conv.chat_id)
             await catevent.delete()
-            await event.client.send_file(event.chat_id, song, caption=details.text, reply_to=reply_to_id)
-            await event.client.delete_messages(conv.chat_id, [msg_start.id, response.id, msg.id, details.id, song.id])
+            await event.client.send_file(
+                event.chat_id, song, caption=details.text, reply_to=reply_to_id
+            )
+            await event.client.delete_messages(
+                conv.chat_id, [msg_start.id, response.id, msg.id, details.id, song.id]
+            )
         except YouBlockedUserError:
             await catevent.edit("**Error:** `unblock` @DeezLoadBot `and retry!`")
             return
