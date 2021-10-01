@@ -1,8 +1,6 @@
 import asyncio
 import random
 
-import bs4
-import requests
 from telethon import functions
 from telethon.errors import FloodWaitError
 from telethon.errors.rpcerrorlist import YouBlockedUserError
