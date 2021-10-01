@@ -25,6 +25,8 @@ USERID = catub.uid if Config.OWNER_ID == 0 else Config.OWNER_ID
 ALIVE_NAME = gvarstatus("ALIVE_NAME") or "ПIKIƬΛ"
 AUTONAME = Config.AUTONAME
 DEFAULT_BIO = Config.DEFAULT_BIO
+edit_or_reply = eor
+edit_or_delete = eod
 THUMB_IMAGE = (
     gvarstatus("THUMB_IMAGE") or "https://telegra.ph/file/ba9acea0064aaed188195.jpg"
 )
