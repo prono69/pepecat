@@ -154,3 +154,19 @@ async def _(event):
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await event.edit(animation_chars[i % 20])
+        
+        
+@catub.cat_cmd(
+    pattern="kimckme$",
+    command=("kimckme", plugin_category),
+    info={
+        "header": "To kimck myself from group.",
+        "usage": [
+            "{tr}kimckme",
+        ],
+    },
+    groups_only=True,
+)
+async def kimckme(leave):
+    "to leave the group."
+    await leave.edit("`Nope, no, no, I go away`")

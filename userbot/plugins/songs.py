@@ -335,41 +335,36 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="dzd(?: |$)(.*)",
+    pattern="dzd ?(.*)",
     command=("dzd", plugin_category),
     info={
-        "header": "To search songs via DeezLoad bot",
-        "description": "Searches the song you entered in query and sends it quality of it is 320k",
-        "usage": "{tr}dzd <song name>",
-        "examples": "{tr}dzd Lily",
+        "header": "To download songs via DeezLoad bot",
+        "description": "Spotify/Deezer downloader",
+        "usage": "{tr}dzd <song link>",
+        "examples": "{tr}dzd https://www.deezer.com/track/3657911",
     },
 )
-async def kakashi(event):
-    if event.fwd_from:
-        return
+async def dzd(event):
     link = event.pattern_match.group(1)
-    if ".com" not in link:
-        catevent = await edit_or_reply(
-            event, "` I need a link to download something pro.`**(._.)**"
+    reply_message = await event.get_reply_message()
+    reply_to_id = await reply_id(event)
+    if not link and not reply_message:
+        catevent = await eod(
+            event, "**I need a link to download something pro. (._.)**"
         )
     else:
-        catevent = await edit_or_reply(event, "**Initiating Download!**")
+        catevent = await edit_or_reply(event, "**Downloading...!**")
     chat = "@DeezLoadBot"
     async with event.client.conversation(chat) as conv:
         try:
-            msg_start = await conv.send_message("/start")
-            response = await conv.get_response()
-            # r = await conv.get_response()
-            msg = await conv.send_message(link)
+            msg = await conv.send_message(link or reply_message)
             details = await conv.get_response()
             song = await conv.get_response()
             """ - don't spam notif - """
             await event.client.send_read_acknowledge(conv.chat_id)
+            await catevent.delete()
+            await event.client.send_file(event.chat_id, song, caption=details.text, reply_to=reply_to_id)
+            await event.client.delete_messages(conv.chat_id, [msg_start.id, response.id, msg.id, details.id, song.id])
         except YouBlockedUserError:
             await catevent.edit("**Error:** `unblock` @DeezLoadBot `and retry!`")
             return
-        await catevent.delete()
-        await event.client.send_file(event.chat_id, song, caption=details.text)
-        await event.client.delete_messages(
-            conv.chat_id, [msg_start.id, response.id, msg.id, details.id, song.id]
-        )

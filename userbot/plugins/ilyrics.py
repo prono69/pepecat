@@ -3,6 +3,7 @@
 from userbot import catub
 
 from ..core.managers import edit_delete
+from telethon.errors.rpcerrorlist import YouBlockedUserError
 from ..helpers.functions import deEmojify, hide_inlinebot
 from ..helpers.utils import reply_id
 
@@ -58,3 +59,58 @@ async def music(event):
         )
     await event.delete()
     await hide_inlinebot(event.client, bot, music, event.chat_id, reply_to_id)
+    
+    
+@catub.cat_cmd(
+    pattern="fsong ?(.*)",
+    command=("fsong", plugin_category),
+    info={
+        "header": "Fast song downloader",
+        "usage": [
+            "{tr}fsong <song name>",
+        ],
+    },
+)
+async def _(event):
+    "@FeelDeD"
+    song = "".join(event.text.split(maxsplit=1)[1:])
+    reply_to_id = await reply_id(event)
+    if not song:
+        await edit_delete(event, "`Give me a song name`")
+        return
+    chat = "@WaveyMusicBot"
+    await eor(event, "`Downloading ...`")
+    async with event.client.conversation(chat) as conv:
+        try:
+            await conv.send_message(song)
+            message = await conv.get_response()
+            await event.client.send_message(event.chat_id, message, reply_to=reply_to_id)
+            await event.delete()
+        except YouBlockedUserError:
+            await edit_delete("**Error:**\nUnblock @WaveyMusicBot and try again")
+                
+
+@catub.cat_cmd(
+    pattern="lits?(.*)",
+    command=("lits", plugin_category),
+    info={
+        "header": "Get part of a song",
+        "examples": "{tr}lits I love you",
+        "usage": [
+            "{tr}lits <key-word>",
+        ],
+    },
+)
+async def lisong(event):
+    "Little Song"
+    if event.fwd_from:
+        return
+    bot = "@MeloBot"
+    song = event.pattern_match.group(1)
+    song = deEmojify(song)
+    reply_to_id = await reply_id(event)
+    if not song:
+        return await edit_delete(event, "Give me a text")
+    await event.delete()
+    await hide_inlinebot(event.client, bot, song, event.chat_id, reply_to_id)
+            
