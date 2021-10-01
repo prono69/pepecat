@@ -26,7 +26,7 @@ ALIVE_NAME = gvarstatus("ALIVE_NAME") or "ПIKIƬΛ"
 AUTONAME = Config.AUTONAME
 DEFAULT_BIO = Config.DEFAULT_BIO
 eor = edit_or_reply
-eod = edit_or_delete
+eod = edit_delete
 THUMB_IMAGE = (
     gvarstatus("THUMB_IMAGE") or "https://telegra.ph/file/ba9acea0064aaed188195.jpg"
 )
