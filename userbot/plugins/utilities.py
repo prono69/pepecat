@@ -1,5 +1,6 @@
 import asyncio
 import random
+from datetime import timedelta
 
 from telethon import functions
 from telethon.errors import FloodWaitError
@@ -39,26 +40,21 @@ async def _(event):
         t = int(total)
         pluto = await edit_or_reply(event, "**Starting...**")
         while t >= 0:
-            if t > 300:
-                x = 3
-            else:
-                x = 1
-            mins, secs = divmod(t, 60)
-            timer = "**{:02d}:{:02d}**".format(mins, secs)
+            x = 3 if t > 300 else 1
             try:
-                await pluto.edit(str(timer))
+                timer = timedelta(seconds=t)
+                czy = str(timer).split(".")[0]
+                await pluto.edit(czy)
+                await asyncio.sleep(x - 0.03)
+                t -= x
             except FloodWaitError as e:
                 t -= e.seconds
                 await asyncio.sleep(e.seconds)
-            else:
-                asyncio.sleep(x - 0.08)
-                t -= x
         await pluto.edit(f"**⏱ Time Up!\n⌛️ Time: {total} seconds.**")
     except Exception as e:
         await edit_delete(event, f"`{e}`", 7)
 
 
-# t.me/realnub
 @catub.cat_cmd(
     pattern="gey(?:\s|$)([\s\S]*)",
     command=("gey", plugin_category),
@@ -83,7 +79,6 @@ async def app_search(event):
         await event.edit(str(err))
 
 
-# t.me/realnub & t.me/amnd33p
 @catub.cat_cmd(
     pattern="iapp(?:\s|$)([\s\S]*)",
     command=("iapp", plugin_category),
@@ -100,7 +95,7 @@ async def app_search(event):
         await edit_delete(event, f"**Usage:** `{chr}iapp <name>`", 10)
         return
     reply_to_id = await reply_id(event)
-    APPBOT = "@plutoniumxbot"
+    APPBOT = "@nedzbot"
     cozyneko = "app" + app_name
     event = await edit_or_reply(event, "`Searching!..`")
     try:
@@ -111,7 +106,6 @@ async def app_search(event):
         await event.edit("Exception Occured:- " + str(err))
 
 
-# t.me/realnub
 @catub.cat_cmd(
     pattern="cid(?:\s|$)([\s\S]*)",
     command=("cid", plugin_category),
@@ -137,9 +131,7 @@ async def _(event):
             await conv.send_message(args)
             check = await conv.get_response()
             replace = check.text
-            info = replace.replace(
-                "════━(@RespawnRobot)━════", f"════━({mention})━════"
-            )
+            info = replace.replace(chat, f"{mention}")
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
             await event.client(functions.contacts.UnblockRequest(chat))
