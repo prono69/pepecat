@@ -111,11 +111,10 @@ async def _(event):
 async def aexec(code, smessatatus):
     message = event = smessatatus
     p = lambda _x: print(_format.yaml_format(_x))
-    reply = await event.get_reply_message()
-    r = reply
+    reply, r = await event.get_reply_message()
     exec(
         (
-            "async def __aexec(message, event , reply, client, p, chat): "
+            "async def __aexec(message, event , reply, r, client, p, chat): "
             + "".join(f"\n {l}" for l in code.split("\n"))
         )
     )
