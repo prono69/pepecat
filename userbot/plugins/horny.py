@@ -2,9 +2,11 @@
 # Heavily Modified and fixed By @kirito6969 for pepecat
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-from . import catub, reply_id, eor, eod
+
+from . import catub, eod, eor, reply_id
 
 plugin_category = "extra"
+
 
 @catub.cat_cmd(
     pattern="xxshort",
@@ -20,12 +22,14 @@ async def _(event):
         return
     reply_to_id = await reply_id(event)
     chat = "@OpGufaBot"
-    k=await eor(event, "`Checking...`")
+    k = await eor(event, "`Checking...`")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("🤪")
             response = await conv.get_response()
-            await event.client.send_message(event.chat_id, response, reply_to=reply_to_id)
+            await event.client.send_message(
+                event.chat_id, response, reply_to=reply_to_id
+            )
             await k.delete()
         except YouBlockedUserError:
             await eod(event, "```Unblock @OpGufaBot```")
@@ -47,16 +51,19 @@ async def _(event):
     reply_to_id = await reply_id(event)
     await event.get_reply_message()
     chat = "@OpGufaBot"
-    k=await eor(event, "`Checking...`")
+    k = await eor(event, "`Checking...`")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("😏")
             response = await conv.get_response()
-            await event.client.send_message(event.chat_id, response, reply_to=reply_to_id)
+            await event.client.send_message(
+                event.chat_id, response, reply_to=reply_to_id
+            )
             await k.delete()
         except YouBlockedUserError:
             await eod(event, "```Unblock @OpGufaBot```")
             return
+
 
 @catub.cat_cmd(
     pattern="xpic",
@@ -73,16 +80,19 @@ async def _(event):
     reply_to_id = await reply_id(event)
     await event.get_reply_message()
     chat = "@OpGufaBot"
-    k=await eor(event, "```Checking...```")
+    k = await eor(event, "```Checking...```")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("💋")
             response = await conv.get_response()
-            await event.client.send_message(event.chat_id, response, reply_to=reply_to_id)
+            await event.client.send_message(
+                event.chat_id, response, reply_to=reply_to_id
+            )
             await k.delete()
         except YouBlockedUserError:
             await eod(event, "```Unblock @OpGufaBot```")
             return
+
 
 @catub.cat_cmd(
     pattern="xnxx",
@@ -98,12 +108,14 @@ async def _(event):
         return
     reply_to_id = await reply_id(event)
     chat = "@SeXn1bot"
-    k=await eor(event, "```Checking...```")
+    k = await eor(event, "```Checking...```")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("💋2016 Videolar🔞")
             response = await conv.get_response()
-            await event.client.send_message(event.chat_id, response, reply_to=reply_to_id)
+            await event.client.send_message(
+                event.chat_id, response, reply_to=reply_to_id
+            )
             await k.delete()
         except YouBlockedUserError:
             await eod(event, "```Unblock @SeXn1bot```")
@@ -124,16 +136,19 @@ async def _(event):
         return
     reply_to_id = await reply_id(event)
     chat = "@SeXn1bot"
-    k=await eor(event, "```Checking...```")
+    k = await eor(event, "```Checking...```")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("♨️Old photo👙")
             response = await conv.get_response()
-            await event.client.send_message(event.chat_id, response, reply_to=reply_to_id)
+            await event.client.send_message(
+                event.chat_id, response, reply_to=reply_to_id
+            )
             await k.delete()
         except YouBlockedUserError:
             await eod(event, "```Unblock @SeXn1bot```")
             return
+
 
 @catub.cat_cmd(
     pattern="les",
@@ -149,16 +164,19 @@ async def _(event):
         return
     reply_to_id = await reply_id(event)
     chat = "@SeXn1bot"
-    k=await eor(event, "```Checking...```")
+    k = await eor(event, "```Checking...```")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("🔞Uz_sex♨️")
             response = await conv.get_response()
-            await event.client.send_message(event.chat_id, response, reply_to=reply_to_id)
+            await event.client.send_message(
+                event.chat_id, response, reply_to=reply_to_id
+            )
             await k.delete()
         except YouBlockedUserError:
             await eod(event, "```Unblock @SeXn1bot```")
             return
+
 
 @catub.cat_cmd(
     pattern="lis",
@@ -174,12 +192,14 @@ async def _(event):
         return
     reply_to_id = await reply_id(event)
     chat = "@SeXn1bot"
-    k=await eor(event, "```Checking...```")
+    k = await eor(event, "```Checking...```")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("🔞SeX_Vido🚷")
             response = await conv.get_response()
-            await event.client.send_message(event.chat_id, response, reply_to=reply_to_id)
+            await event.client.send_message(
+                event.chat_id, response, reply_to=reply_to_id
+            )
             await k.delete()
         except YouBlockedUserError:
             await eod(event, "```Unblock @SeXn1bot```")

@@ -1,6 +1,7 @@
 # By @kirito6969
 import re
-from . import AioHttp, catub, eor, eod
+
+from . import AioHttp, catub, eod, eor
 
 plugin_category = "fun"
 
@@ -17,11 +18,21 @@ animals_data = {
     "koala": {"url": "https://some-random-api.ml/img/koala", "key": "link"},
     "kangaroo": {"url": "https://some-random-api.ml/animal/kangaroo", "key": "image"},
     "racoon": {"url": "https://some-random-api.ml/animal/racoon", "key": "image"},
-    
 }
 
-animals_with_facts = ['dog', 'cat', 'panda', 'fox', 'bird', 'koala', 'kangaroo', 'racoon', 'elephant', 'giraffe',
-                      'whale']
+animals_with_facts = [
+    "dog",
+    "cat",
+    "panda",
+    "fox",
+    "bird",
+    "koala",
+    "kangaroo",
+    "racoon",
+    "elephant",
+    "giraffe",
+    "whale",
+]
 
 animals = list(animals_data)
 
@@ -53,10 +64,14 @@ async def animal_image(message):
         return
     animal_data = animals_data[lol]
     if lol.lower() in animal_data:
-      await message.client.send_file(message.chat_id, file=await prep_animal_image(animal_data), reply_to_id=message.reply_to_msg_id,)
-      await message.delete()
+        await message.client.send_file(
+            message.chat_id,
+            file=await prep_animal_image(animal_data),
+            reply_to_id=message.reply_to_msg_id,
+        )
+        await message.delete()
     else:
-      await eod(message, "`Unsupported Animal`", 3)
+        await eod(message, "`Unsupported Animal`", 3)
 
 
 @catub.cat_cmd(

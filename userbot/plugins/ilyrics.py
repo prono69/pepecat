@@ -2,11 +2,10 @@
 # Change credit and you gay.
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from . import catub, eor, eod
-
 from ..core.managers import edit_delete
 from ..helpers.functions import deEmojify, hide_inlinebot
 from ..helpers.utils import reply_id
+from . import catub, eor
 
 plugin_category = "extra"
 
@@ -117,7 +116,7 @@ async def lisong(event):
     await event.delete()
     await hide_inlinebot(event.client, bot, song, event.chat_id, reply_to_id)
 
-    
+
 @catub.cat_cmd(
     pattern="mev ?(.*)",
     command=("mev", plugin_category),
@@ -139,4 +138,3 @@ async def nope(event):
             lol = "bruh"
     await hide_inlinebot(event.client, bot, lol, event.chat_id, reply_to_id)
     await event.delete()
-    
