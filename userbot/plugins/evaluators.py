@@ -112,6 +112,7 @@ async def aexec(code, smessatatus):
     message = event = smessatatus
     p = lambda _x: print(_format.yaml_format(_x))
     reply = await event.get_reply_message()
+    r = reply
     exec(
         (
             "async def __aexec(message, event , reply, client, p, chat): "
@@ -120,5 +121,5 @@ async def aexec(code, smessatatus):
     )
 
     return await locals()["__aexec"](
-        message, event, reply, message.client, p, message.chat_id
+        message, event, reply, r, message.client, p, message.chat_id
     )

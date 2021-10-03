@@ -15,6 +15,7 @@ from userbot import catub
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import catmemes
+from ..helpers.functions import deEmojify
 from ..helpers.utils import _catutils, parse_pre
 from . import BOTLOG, BOTLOG_CHATID, mention
 

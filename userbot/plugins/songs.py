@@ -367,7 +367,7 @@ async def dzd(event):
                 event.chat_id, song, caption=details.text, reply_to=reply_to_id
             )
             await event.client.delete_messages(
-                conv.chat_id, [msg_start.id, response.id, msg.id, details.id, song.id]
+                conv.chat_id, [msg.id, details.id, song.id]
             )
         except YouBlockedUserError:
             await catevent.edit("**Error:** `unblock` @DeezLoadBot `and retry!`")

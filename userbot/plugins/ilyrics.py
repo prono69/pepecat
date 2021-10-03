@@ -2,7 +2,7 @@
 # Change credit and you gay.
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import catub
+from . import catub, eor, eod
 
 from ..core.managers import edit_delete
 from ..helpers.functions import deEmojify, hide_inlinebot
@@ -116,3 +116,27 @@ async def lisong(event):
         return await edit_delete(event, "Give me a text")
     await event.delete()
     await hide_inlinebot(event.client, bot, song, event.chat_id, reply_to_id)
+
+    
+@catub.cat_cmd(
+    pattern="mev ?(.*)",
+    command=("mev", plugin_category),
+    info={
+        "header": "Searches and uploads the meme voice.",
+        "usage": "{tr}mev <input>",
+        "examples": "{tr}mev bruh",
+    },
+)
+async def nope(event):
+    mafia = event.pattern_match.group(1)
+    lol = deEmojify(mafia)
+    bot = "@myinstantsbot"
+    reply_to_id = await reply_id(event)
+    if not lol:
+        if event.is_reply:
+            (await event.get_reply_message()).message
+        else:
+            lol = "bruh"
+    await hide_inlinebot(event.client, bot, lol, event.chat_id, reply_to_id)
+    await event.delete()
+    
