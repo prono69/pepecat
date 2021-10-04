@@ -81,7 +81,7 @@ async def amireallyalive(event):
             pic_id = random.choice(range(num))
             try:
                 async for pic in event.client.iter_messages(chat.id, ids=pic_id):
-                    if type(pic.media) == types.MessageMediaPhoto:
+                    if type(pic.media) is types.MessageMediaPhoto:
                         await event.delete()
                         await event.respond(caption, file=pic, reply_to=reply_to_id)
                         done = True

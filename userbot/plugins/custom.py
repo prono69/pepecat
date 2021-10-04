@@ -123,8 +123,8 @@ async def bad(event):  # sourcery no-metrics
                     chat = await event.client.get_entity(int(channel_id))
                     sent = await event.client.send_file(chat.id, reply.media)
                     vinfo = f"https://t.me/{chat.username}/{sent.id}"
-            elif (type(reply.media) == types.MessageMediaDocument) or (
-                type(reply.media) == types.MessageMediaPhoto
+            elif (type(reply.media) is types.MessageMediaDocument) or (
+                type(reply.media) is types.MessageMediaPhoto
             ):
                 await event.edit("`Creating link...`")
                 downloaded_file_name = await event.client.download_media(
