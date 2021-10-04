@@ -143,8 +143,7 @@ async def bad(event):  # sourcery no-metrics
             vinfo = reply.text
             # ==============================================================================
     if vname in vlist:
-        if vname in oldvars:
-            vname = oldvars[vname]
+        vname = oldvars.get(vname)
         if cmd == "set":
             if not vinfo and vname == "ALIVE_TEMPLATE":
                 return await edit_delete(
