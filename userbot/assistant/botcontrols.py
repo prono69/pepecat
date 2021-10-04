@@ -28,7 +28,7 @@ botusername = Config.TG_BOT_USERNAME
 cmhd = Config.COMMAND_HAND_LER
 
 
-@catub.bot_cmd(pattern="^/help$", from_users=Config.OWNER_ID)
+@catub.bot_cmd(pattern=f"^/help({botusername})?([\s]+)?$", from_users=Config.OWNER_ID)
 async def bot_help(event):
     await event.reply(
         f"""The commands in the bot are:
@@ -49,6 +49,9 @@ async def bot_help(event):
 • **Cmd : **/broadcast
 • **Info : **__Reply to a message to get broadcasted to every user who started your bot. To get list of users use__ `{cmhd}bot_users`.
 • **Note : **__if user stoped/blocked the bot then he will be removed from your database that is he will erased from the bot_starters list.__
+
+• **Cmd : **/ping
+• **Info : **__Check bot ping.__
 """
     )
 

@@ -5,7 +5,8 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from ..core.managers import edit_delete
 from ..helpers.functions import deEmojify, hide_inlinebot
 from ..helpers.utils import reply_id
-from . import catub, eor
+from . import catub, eor, hmention
+from telethon import functions
 
 plugin_category = "extra"
 
@@ -55,12 +56,13 @@ async def music(event):
     reply_to_id = await reply_id(event)
     if not music:
         return await edit_delete(
-            event, "`What should I download? Give a song name`", 15
+            event, "`What should I download? Give a song name`"
         )
     await event.delete()
     await hide_inlinebot(event.client, bot, music, event.chat_id, reply_to_id)
 
-
+#By @FeelDeD
+    
 @catub.cat_cmd(
     pattern="fsong ?(.*)",
     command=("fsong", plugin_category),
@@ -71,26 +73,32 @@ async def music(event):
         ],
     },
 )
-async def _(event):
-    "@FeelDeD"
-    song = "".join(event.text.split(maxsplit=1)[1:])
-    reply_to_id = await reply_id(event)
+async def wave(odi):
+    "Song Downloader"
+    song = "".join(odi.text.split(maxsplit=1)[1:])
+    reply_to_id = await reply_id(odi)
+    await odi.edit("`Downloading ...`")
     if not song:
-        await edit_delete(event, "`Give me a song name`")
-        return
+        await edit_delete(odi, "`Give me a song name`")
     chat = "@WaveyMusicBot"
-    await eor(event, "`Downloading ...`")
-    async with event.client.conversation(chat) as conv:
+    async with odi.client.conversation(chat) as conv:
         try:
-            await conv.send_message(song)
-            message = await conv.get_response()
-            await event.client.send_message(
-                event.chat_id, message, reply_to=reply_to_id
-            )
-            await event.delete()
-        except YouBlockedUserError:
-            await edit_delete("**Error:**\nUnblock @WaveyMusicBot and try again")
-
+            await odi.client(functions.contacts.UnblockRequest(conv.chat_id))
+            start = await conv.send_message('/start')
+            await conv.get_response()
+            end = await conv.send_message(song)
+            music = await conv.get_response()
+            if not music.media:
+            	await odi.edit(f"`No result found for {song}`")
+            else:
+            	result = await odi.client.send_file(odi.chat_id, music, reply_to=reply_to_id, caption=False)
+            	await odi.delete()
+            msgs = []
+            for _ in range(start.id, end.id+2): msgs.append(_)
+            await odi.client.delete_messages(conv.chat_id, msgs)
+            await odi.client.send_read_acknowledge(conv.chat_id)
+        except result:
+        	await odi.reply("`Something went Wrong`")
 
 @catub.cat_cmd(
     pattern="lits?(.*)",

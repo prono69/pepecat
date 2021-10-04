@@ -28,8 +28,7 @@ plugin_category = "extra"
     },
 )
 async def _(event):
-    if event.fwd_from:
-        return
+    emoticons = None
     input_str = event.pattern_match.group(1)
     if input_str in "peru":
         emoticons = [

@@ -33,6 +33,7 @@ animals_with_facts = [
     "giraffe",
     "whale",
 ]
+animals_without_facts = ['dog', 'cat', 'panda', 'fox', 'redpanda', 'bird', 'koala', 'kangaroo', 'racoon']
 
 animals = list(animals_data)
 
@@ -63,7 +64,7 @@ async def animal_image(message):
         await eod(message, "`Are you really a Human ?`", 5)
         return
     animal_data = animals_data[lol]
-    if lol.lower() in animal_data:
+    if lol.lower() in animals_without_facts:
         await message.client.send_file(
             message.chat_id,
             file=await prep_animal_image(animal_data),
@@ -99,6 +100,6 @@ async def fact(message):
         except Exception:
             await eod(message, "```The fact API could not be reached```", 3)
         else:
-            await eod(message, f"**{cmd}**\n\n`{fact_text}`")
+            await eor(message, f"**{cmd}**\n\n`{fact_text}`")
     else:
         await eod(message, "`Unsupported animal...`", 3)

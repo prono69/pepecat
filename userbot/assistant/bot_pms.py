@@ -105,15 +105,14 @@ async def bot_start(event):
             )
         else:
             start_msg = f"Hey! 👤{mention},\
-                        \nI am {my_mention}'s assistant bot.\
-                        \nYou can contact to my master from here.\
-                        \n\nPowered by [Catuserbot](https://t.me/catuserbot)"
+                        \nI am {my_mention}'s personal slave 🤤.\
+                        \nYou can contact to my master from here. ｡◕‿◕｡"
         buttons = [
             (
-                Button.url("Repo", "https://github.com/sandy1709/catuserbot"),
+                Button.url("Repo", "https://github.com/prono69/pepecat"),
                 Button.url(
-                    "Deploy",
-                    "https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2FMr-confused%2Fcatpack&template=https%3A%2F%2Fgithub.com%2FMr-confused%2Fcatpack",
+                    "My Channel",
+                    "https://t.me/LazyAF_Geng",
                 ),
             )
         ]
@@ -482,7 +481,7 @@ async def antif_on_msg(event):
 
 
 @catub.bot_cmd(
-    pattern=f"^/ping?([\s]+)?$",
+    pattern=f"^/ping({botusername})?([\s]+)?$",
 )
 async def _(event):
     start = datetime.now()
