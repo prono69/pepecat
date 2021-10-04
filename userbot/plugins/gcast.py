@@ -2,12 +2,10 @@
 # Very Dangerous Plugin!
 
 
-import os
-from telethon.tl.functions.channels import EditAdminRequest
-from telethon.tl.types import ChatAdminRights
-from . import catub, eor, eod
+from . import catub, eod, eor
 
 plugin_category = "extra"
+
 
 @catub.cat_cmd(
     pattern="gcast ?(.*)",

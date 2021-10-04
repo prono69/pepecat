@@ -1,12 +1,12 @@
 # Made by @o_s_h_o_r_a_j
 # Change credit and you gay.
-from telethon.errors.rpcerrorlist import YouBlockedUserError
+
+from telethon import functions
 
 from ..core.managers import edit_delete
 from ..helpers.functions import deEmojify, hide_inlinebot
 from ..helpers.utils import reply_id
-from . import catub, eor, hmention
-from telethon import functions
+from . import catub
 
 plugin_category = "extra"
 
@@ -55,14 +55,14 @@ async def music(event):
     music = deEmojify(music)
     reply_to_id = await reply_id(event)
     if not music:
-        return await edit_delete(
-            event, "`What should I download? Give a song name`"
-        )
+        return await edit_delete(event, "`What should I download? Give a song name`")
     await event.delete()
     await hide_inlinebot(event.client, bot, music, event.chat_id, reply_to_id)
 
-#By @FeelDeD
-    
+
+# By @FeelDeD
+
+
 @catub.cat_cmd(
     pattern="fsong ?(.*)",
     command=("fsong", plugin_category),
@@ -84,21 +84,25 @@ async def wave(odi):
     async with odi.client.conversation(chat) as conv:
         try:
             await odi.client(functions.contacts.UnblockRequest(conv.chat_id))
-            start = await conv.send_message('/start')
+            start = await conv.send_message("/start")
             await conv.get_response()
             end = await conv.send_message(song)
             music = await conv.get_response()
             if not music.media:
-            	await odi.edit(f"`No result found for {song}`")
+                await odi.edit(f"`No result found for {song}`")
             else:
-            	result = await odi.client.send_file(odi.chat_id, music, reply_to=reply_to_id, caption=False)
-            	await odi.delete()
+                result = await odi.client.send_file(
+                    odi.chat_id, music, reply_to=reply_to_id, caption=False
+                )
+                await odi.delete()
             msgs = []
-            for _ in range(start.id, end.id+2): msgs.append(_)
+            for _ in range(start.id, end.id + 2):
+                msgs.append(_)
             await odi.client.delete_messages(conv.chat_id, msgs)
             await odi.client.send_read_acknowledge(conv.chat_id)
         except result:
-        	await odi.reply("`Something went Wrong`")
+            await odi.reply("`Something went Wrong`")
+
 
 @catub.cat_cmd(
     pattern="lits?(.*)",

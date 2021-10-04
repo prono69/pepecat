@@ -33,7 +33,17 @@ animals_with_facts = [
     "giraffe",
     "whale",
 ]
-animals_without_facts = ['dog', 'cat', 'panda', 'fox', 'redpanda', 'bird', 'koala', 'kangaroo', 'racoon']
+animals_without_facts = [
+    "dog",
+    "cat",
+    "panda",
+    "fox",
+    "redpanda",
+    "bird",
+    "koala",
+    "kangaroo",
+    "racoon",
+]
 
 animals = list(animals_data)
 

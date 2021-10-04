@@ -1,14 +1,16 @@
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ > 
+# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # Original file can be found at https://github.com/TeamUltroid/Ultroid/blob/main/plugins/calculator.py
 # Ported to cat userbot by @realnub. If you remove these three lines then you are a pure 100% gay, real idiot and you will die in hell for sure.
 
 
 import re
-from telethon.events import CallbackQuery, InlineQuery
-from ..core.decorators import check_owner
-from userbot import catub
-from telethon import Button
 
+from telethon import Button
+from telethon.events import CallbackQuery, InlineQuery
+
+from userbot import catub
+
+from ..core.decorators import check_owner
 
 CALC = {}
 
@@ -40,6 +42,7 @@ tultd = [Button.inline(f"{x}", data=f"calc{x}") for x in m]
 lst = list(zip(tultd[::4], tultd[1::4], tultd[2::4], tultd[3::4]))
 lst.append([Button.inline("=", data="calc=")])
 
+
 @catub.cat_cmd(
     pattern="icalc(?:\s|$)([\s\S]*)",
     command=("icalc", plugin_category),
@@ -61,14 +64,16 @@ async def icalc(e):
 async def inlinecalc(event):
     query_user_id = event.query.user_id
     query = event.text
-    result = None
     string = query.lower()
     if (
         query_user_id == Config.OWNER_ID or query_user_id in Config.SUDO_USERS
     ) and string == "calc":
-        builder = event.builder
-        calc = event.builder.article("Calc", text="**INLINE CAT CALCULATOR**", buttons=lst)
+        event.builder
+        calc = event.builder.article(
+            "Calc", text="**INLINE CAT CALCULATOR**", buttons=lst
+        )
         await event.answer([calc])
+
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(b"calc(.*)")))
 @check_owner
@@ -133,6 +138,7 @@ async def _(e):  # sourcery no-metrics
             return await e.answer(str(get + x))
         CALC.update({user: x})
         await e.answer(str(x))
+
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(b"recalc")))
 @check_owner
