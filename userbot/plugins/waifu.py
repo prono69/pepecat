@@ -103,24 +103,15 @@ async def _(hazmat):
                 conv.chat_id, [msg.id, response.id, r.id, msg_reply.id]
             )
             return
-        else:
-            downloaded_file_name = await hazmat.client.download_media(
-                response.media, Config.TMP_DOWNLOAD_DIRECTORY
-            )
-            await hazmat.client.send_file(
-                hazmat.chat_id,
-                downloaded_file_name,
-                force_document=False,
-                reply_to=message_id_to_reply,
-            )
-            # """ - cleanup chat after completed - """
-            # if msg_reply is not None:
-            # await hazmat.client.delete_messages(
-            # conv.chat_id,
-            # [msg.id, msg_reply.id, r.id, response.id])
-            # else:
-            # await hazmat.client.delete_messages(conv.chat_id,
-            # [msg.id, response.id])
+        downloaded_file_name = await hazmat.client.download_media(
+            response.media, Config.TMP_DOWNLOAD_DIRECTORY
+        )
+        await hazmat.client.send_file(
+            hazmat.chat_id,
+            downloaded_file_name,
+            force_document=False,
+            reply_to=message_id_to_reply,
+        )
     await hazmat.delete()
     return os.remove(downloaded_file_name)
 

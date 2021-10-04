@@ -27,8 +27,6 @@ async def catgban(event):  # sourcery no-metrics
         return
     if user.id == catub.uid:
         return await edit_delete(cate, "`why would I ban myself`")
-    else:
-        pass
     await asyncio.sleep(1)
     zarox = random.choice(range(90, 135))
     await cate.edit(
@@ -58,8 +56,6 @@ async def catgban(event):  # sourcery no-metrics
         return
     if user.id == catub.uid:
         return await edit_delete(cate, "`why would I ungban myself`")
-    else:
-        pass
     await asyncio.sleep(1)
     zarox = random.choice(range(90, 135))
     await cate.edit(
@@ -89,8 +85,6 @@ async def catgban(event):  # sourcery no-metrics
         return
     if user.id == catub.uid:
         return await edit_delete(cate, "`why would I mute myself`")
-    else:
-        pass
     zarox = random.choice(range(90, 135))
     cattaken = random.choice(range(8, 17))
     await asyncio.sleep(cattaken)
@@ -116,8 +110,6 @@ async def catgban(event):  # sourcery no-metrics
         return
     if user.id == catub.uid:
         return await edit_delete(cate, "`why would I unmute myself`")
-    else:
-        pass
     zarox = random.choice(range(90, 135))
     cattaken = random.choice(range(8, 17))
     await asyncio.sleep(cattaken)
@@ -143,8 +135,6 @@ async def catgban(event):  # sourcery no-metrics
         return
     if user.id == catub.uid:
         return await edit_delete(cate, "`why would I kick myself`")
-    else:
-        pass
     await asyncio.sleep(1)
     zarox = random.choice(range(90, 135))
     await cate.edit(
