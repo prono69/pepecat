@@ -68,7 +68,6 @@ async def inlinecalc(event):
     if (
         query_user_id == Config.OWNER_ID or query_user_id in Config.SUDO_USERS
     ) and string == "calc":
-        event.builder
         calc = event.builder.article(
             "Calc", text="**𝙎𝙀𝙓𝙔 𝘾𝘼𝙏 𝘾𝘼𝙇𝘾𝙐𝙇𝘼𝙏𝙊𝙍**", buttons=lst
         )
