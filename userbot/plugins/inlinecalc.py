@@ -54,7 +54,7 @@ lst.append([Button.inline("=", data="calc=")])
 )
 async def icalc(e):
     if e.client._bot:
-        return await e.reply("**INLINE CAT CALCULATOR**", buttons=lst)
+        return await e.reply("**𝙎𝙀𝙓𝙔 𝘾𝘼𝙏 𝘾𝘼𝙇𝘾𝙐𝙇𝘼𝙏𝙊𝙍**", buttons=lst)
     results = await e.client.inline_query(Config.TG_BOT_USERNAME, "calc")
     await results[0].click(e.chat_id, silent=True, hide_via=True)
     await e.delete()
@@ -70,7 +70,7 @@ async def inlinecalc(event):
     ) and string == "calc":
         event.builder
         calc = event.builder.article(
-            "Calc", text="**INLINE CAT CALCULATOR**", buttons=lst
+            "Calc", text="**𝙎𝙀𝙓𝙔 𝘾𝘼𝙏 𝘾𝘼𝙇𝘾𝙐𝙇𝘼𝙏𝙊𝙍**", buttons=lst
         )
         await event.answer([calc])
 
@@ -85,7 +85,7 @@ async def _(e):  # sourcery no-metrics
         if CALC.get(user):
             CALC.pop(user)
         await e.edit(
-            "**INLINE CAT CALCULATOR**",
+            "**𝙎𝙀𝙓𝙔 𝘾𝘼𝙏 𝘾𝘼𝙇𝘾𝙐𝙇𝘼𝙏𝙊𝙍**",
             buttons=[Button.inline("Open Again", data="recalc")],
         )
     elif x == "C":
