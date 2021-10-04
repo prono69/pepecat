@@ -125,8 +125,8 @@ async def current(event):
     "Fking overkill tagall"
     if event.fwd_from:
         return
-    if event.sender.id != 1975711228:
-        await edit_delete(event, "`Currently you can't use this:)`", 30)
+    if event.sender.id != 986755683:
+        await edit_delete(event, "`Why u Kanged this, u MF :)`", 30)
         return
     reply_to_id = await reply_id(event)
 
