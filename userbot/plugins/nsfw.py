@@ -209,16 +209,15 @@ async def loli(event):
         return await edit_delete(
             event, "***Unknown Error occured while fetching data***", 3
         )
-    else:
-        data = data["data"][0]
-        pic = data["urls"]["original"]
-        title = f'{data["title"]} by {data["author"]}'
-        adult = f'{data["r18"]}'
-        tags = None
-        caption = f'<a href="https://pixiv.net/artworks/{data["pid"]}">{html.escape(data["title"])}</a> by <a href="https://pixiv.net/users/{data["uid"]}">{html.escape(data["author"])}</a>\n'
-        if data["tags"]:
-            tags = f'{html.escape(", ".join(data["tags"]))}'
-        lol = f"<b>{caption}</b>\n<b>✘ Title:</b> <i>{title}</i>\n<b>✘ Adult:</b> <i>{adult}</i>\n<b>✘ Tags:</b> <i>{tags}</i>"
+    data = data["data"][0]
+    pic = data["urls"]["original"]
+    title = f'{data["title"]} by {data["author"]}'
+    adult = f'{data["r18"]}'
+    tags = None
+    caption = f'<a href="https://pixiv.net/artworks/{data["pid"]}">{html.escape(data["title"])}</a> by <a href="https://pixiv.net/users/{data["uid"]}">{html.escape(data["author"])}</a>\n'
+    if data["tags"]:
+        tags = f'{html.escape(", ".join(data["tags"]))}'
+    lol = f"<b>{caption}</b>\n<b>✘ Title:</b> <i>{title}</i>\n<b>✘ Adult:</b> <i>{adult}</i>\n<b>✘ Tags:</b> <i>{tags}</i>"
     await event.delete()
     await event.client.send_file(
         event.chat_id, file=pic, caption=lol, parse_mode="html"

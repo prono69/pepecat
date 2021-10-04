@@ -102,8 +102,7 @@ def is_it_animated_sticker(message):
         if message.media and message.media.document:
             mime_type = message.media.document.mime_type
             return "tgsticker" in mime_type
-        else:
-            return False
+        return False
     except BaseException:
         return False
 
@@ -124,10 +123,9 @@ def pack_nick(username, pack, is_anim):
             else f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} Vol.{pack}"
         )
 
-    elif is_anim:
+    if is_anim:
         return f"@{username}'s Secret Layer Vol.{pack} Animated"
-    else:
-        return f"@{username}'s Secret Layer Vol.{pack}"
+    return f"@{username}'s Secret Layer Vol.{pack}"
 
 
 async def resize_photo(photo):
