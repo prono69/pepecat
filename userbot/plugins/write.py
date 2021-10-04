@@ -31,7 +31,6 @@ async def writer(e):
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype("userbot/helpers/styles/assfont.ttf", 30)
     x, y = 150, 140
-    (text)
     line_height = font.getsize("hg")[1]
     draw.text((x, y), text, fill=(1, 22, 55), font=font)
     y = y + line_height - 5
