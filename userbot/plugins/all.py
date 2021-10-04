@@ -126,7 +126,7 @@ async def current(event):
     if event.fwd_from:
         return
     if event.sender.id != 986755683:
-        await edit_delete(event, "`Why u Kanged this, u MF :)`", 30)
+        await edit_delete(event, "`Why u kanged dis... MF`", 30)
         return
     reply_to_id = await reply_id(event)
 
@@ -136,7 +136,14 @@ async def current(event):
 
     input_ = event.pattern_match.group(1)
     if input_:
-        permsg = int(input_)
+        if input_ > "100":
+            await edit_delete(event, "`You can't tag more than 100 user/msg`", 15)
+            return
+        if input_ <= "0":
+            await edit_delete(event, "`BRAH!! seriously`", 15)
+            return
+        else:
+            permsg = int(input_)
     else:
         permsg = 100
     if members % permsg != 0:
