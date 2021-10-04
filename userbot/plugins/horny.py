@@ -31,6 +31,7 @@ async def _(event):
                 event.chat_id, response, reply_to=reply_to_id
             )
             await k.delete()
+            await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
             await eod(event, "```Unblock @OpGufaBot```")
             return
@@ -60,6 +61,7 @@ async def _(event):
                 event.chat_id, response, reply_to=reply_to_id
             )
             await k.delete()
+            await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
             await eod(event, "```Unblock @OpGufaBot```")
             return
@@ -89,6 +91,7 @@ async def _(event):
                 event.chat_id, response, reply_to=reply_to_id
             )
             await k.delete()
+            await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
             await eod(event, "```Unblock @OpGufaBot```")
             return
@@ -117,6 +120,7 @@ async def _(event):
                 event.chat_id, response, reply_to=reply_to_id
             )
             await k.delete()
+            await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
             await eod(event, "```Unblock @SeXn1bot```")
             return
@@ -145,6 +149,7 @@ async def _(event):
                 event.chat_id, response, reply_to=reply_to_id
             )
             await k.delete()
+            await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
             await eod(event, "```Unblock @SeXn1bot```")
             return
@@ -173,6 +178,7 @@ async def _(event):
                 event.chat_id, response, reply_to=reply_to_id
             )
             await k.delete()
+            await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
             await eod(event, "```Unblock @SeXn1bot```")
             return
@@ -201,6 +207,7 @@ async def _(event):
                 event.chat_id, response, reply_to=reply_to_id
             )
             await k.delete()
+            await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
             await eod(event, "```Unblock @SeXn1bot```")
             return

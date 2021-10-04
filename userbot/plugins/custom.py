@@ -71,7 +71,7 @@ oldvars = {
             "get": "To show the already existing var value.",
             "del": "To delete the existing value",
         },
-        "var name": "**[list of vars]**(https://catuserbot.gitbook.io/catuserbot/data-vars-setup)",
+        "var name": "**[List of Database Vars]**(https://catuserbot.gitbook.io/catuserbot/data-vars-setup)",
         "usage": [
             "{tr}setdv <var name> <var value>",
             "{tr}getdv <var name>",
@@ -123,8 +123,8 @@ async def bad(event):  # sourcery no-metrics
                     chat = await event.client.get_entity(int(channel_id))
                     sent = await event.client.send_file(chat.id, reply.media)
                     vinfo = f"https://t.me/{chat.username}/{sent.id}"
-            elif (type(reply.media) is types.MessageMediaDocument) or (
-                type(reply.media) is types.MessageMediaPhoto
+            elif (type(reply.media) == types.MessageMediaDocument) or (
+                type(reply.media) == types.MessageMediaPhoto
             ):
                 await event.edit("`Creating link...`")
                 downloaded_file_name = await event.client.download_media(
@@ -143,11 +143,12 @@ async def bad(event):  # sourcery no-metrics
             vinfo = reply.text
             # ==============================================================================
     if vname in vlist:
-        vname = oldvars.get(vname)
+        if vname in oldvars:
+            vname = oldvars[vname]
         if cmd == "set":
             if not vinfo and vname == "ALIVE_TEMPLATE":
                 return await edit_delete(
-                    event, "**📑 Check @cat_alive for alive teplate types.**", 60
+                    event, "**💠 Check @cat_alive for alive teplate types.**", 60
                 )
             if not vinfo:
                 return await edit_delete(
@@ -190,7 +191,7 @@ async def bad(event):  # sourcery no-metrics
         await edit_delete(
             event, f"**📑 Give correct var name from the list :\n\n**{vnlist}", time=60
         )
-
+        
 
 @catub.cat_cmd(
     pattern="custom (pmpermit|pmpic|pmblock|startmsg)$",
