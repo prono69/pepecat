@@ -108,7 +108,7 @@ async def wave(odi):
     pattern="lits?(.*)",
     command=("lits", plugin_category),
     info={
-        "header": "Get part of a song",
+        "header": "✨ Get part of a song ✨",
         "examples": "{tr}lits I love you",
         "usage": [
             "{tr}lits <key-word>",
@@ -145,7 +145,7 @@ async def nope(event):
     reply_to_id = await reply_id(event)
     if not lol:
         if event.is_reply:
-            (await event.get_reply_message()).message
+            lol = (await event.get_reply_message()).message
         else:
             lol = "bruh"
     await hide_inlinebot(event.client, bot, lol, event.chat_id, reply_to_id)

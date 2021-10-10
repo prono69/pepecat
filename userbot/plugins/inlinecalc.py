@@ -14,7 +14,7 @@ from ..core.decorators import check_owner
 
 CALC = {}
 
-plugin_category = "fun"
+plugin_category = "utils"
 
 m = [
     "AC",

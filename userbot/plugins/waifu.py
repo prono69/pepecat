@@ -5,7 +5,7 @@ import os
 import random
 
 from ..helpers.functions import deEmojify
-from . import catub
+from . import catub, eor, eod
 
 plugin_category = "extra"
 senpais = [37, 38, 48, 55]
@@ -30,7 +30,7 @@ async def waifu(animu):
         if animu.is_reply:
             text = (await animu.get_reply_message()).message
         else:
-            await animu.answer("`No text given, hence the waifu ran away.`")
+            await eod(animu, "`No text given, hence the waifu ran away.`")
             return
     animus = [20, 32, 33, 37, 40, 41, 42, 58]
     sticcers = await animu.client.inline_query(
@@ -45,10 +45,9 @@ async def waifu(animu):
         )
 
     except Exception:
-        return await animu.edit(
+        return await eod(animu,
             "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`"
         )
-    await asyncio.sleep(3)
     await animu.delete()
 
 
@@ -134,7 +133,7 @@ async def _(animu):
         if animu.is_reply:
             text = (await animu.get_reply_message()).message
         else:
-            await animu.answer(
+            await eod(animu,
                 "`No text given, hence the Senpai will beat u in the Toilet` 🌚"
             )
             return
@@ -150,8 +149,7 @@ async def _(animu):
         )
 
     except Exception:
-        return await animu.edit(
+        return await eod(animu,
             "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`"
         )
-    await asyncio.sleep(4)
     await animu.delete()

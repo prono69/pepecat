@@ -1,3 +1,5 @@
+# Modified by @sandeep and @kirito6969
+
 import html
 import os
 import re
@@ -838,7 +840,7 @@ async def get_anime(message):
 
 {trailer_link}
 
-[📖 Synopsis]({synopsis_link}) | [📚 More Info]({mal_dir_link})
+[📖 Synopsis]({synopsis_link}) **✘** [📚 More Info]({mal_dir_link})
 
 ©️ @LazyAF_Pepe"""
 

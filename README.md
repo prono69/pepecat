@@ -55,6 +55,13 @@ and we or our friends will try to help you.
 Thanks for using our bot 😺
 ```
 
+<details><summary>Must Read This ⚠️</summary>
+1. This bot contains some strong NSFW modules.
+2. Make sure you are at least 18 years old.
+3. Some NSFW category may can disturb you.
+
+</details>
+
 ## Credits
    - Special thanks to [LonamiWebs](https://github.com/LonamiWebs/Telethon/) for Telethon library.
    - To all devs of these [Userbots](https://github.com/sandy1709/catuserbot/tree/bugs#inspiration)
