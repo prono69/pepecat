@@ -1,11 +1,10 @@
 # Imported from ppe-remix for PepeBot
 
-import asyncio
 import os
 import random
 
 from ..helpers.functions import deEmojify
-from . import catub, eor, eod
+from . import catub, eod
 
 plugin_category = "extra"
 senpais = [37, 38, 48, 55]
@@ -45,8 +44,9 @@ async def waifu(animu):
         )
 
     except Exception:
-        return await eod(animu,
-            "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`"
+        return await eod(
+            animu,
+            "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`",
         )
     await animu.delete()
 
@@ -133,8 +133,8 @@ async def _(animu):
         if animu.is_reply:
             text = (await animu.get_reply_message()).message
         else:
-            await eod(animu,
-                "`No text given, hence the Senpai will beat u in the Toilet` 🌚"
+            await eod(
+                animu, "`No text given, hence the Senpai will beat u in the Toilet` 🌚"
             )
             return
     sticcers = await animu.client.inline_query(
@@ -149,7 +149,8 @@ async def _(animu):
         )
 
     except Exception:
-        return await eod(animu,
-            "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`"
+        return await eod(
+            animu,
+            "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`",
         )
     await animu.delete()

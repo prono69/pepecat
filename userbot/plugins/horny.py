@@ -12,10 +12,10 @@ from urllib.parse import quote as urlencode
 
 import aiohttp
 import requests
+from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from ..helpers.functions import age_verification
-from . import catub, edit_delete, edit_or_reply, reply_id, eod, eor
-from telethon.errors.rpcerrorlist import YouBlockedUserError
+from . import catub, edit_delete, edit_or_reply, eod, eor, reply_id
 
 session = aiohttp.ClientSession()
 plugin_category = "fun"
@@ -221,7 +221,7 @@ async def loli(event):
     await event.client.send_file(
         event.chat_id, file=pic, caption=lol, parse_mode="html"
     )
-    
+
 
 @catub.cat_cmd(
     pattern="xxshort",
@@ -424,4 +424,3 @@ async def _(event):
         except YouBlockedUserError:
             await eod(event, "```Unblock @SeXn1bot```")
             return
-    

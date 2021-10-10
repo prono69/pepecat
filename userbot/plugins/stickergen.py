@@ -405,32 +405,31 @@ async def pay(event):
         if files and os.path.exists(files):
             os.remove(files)
 
-#By @FeelDeD
+
+# By @FeelDeD
+
 
 @catub.cat_cmd(
     pattern="ags ?(.*)",
     command=("ags", plugin_category),
     info={
         "header": "Fun google animated sticker",
-        "usage": [
-            "{tr}ags <your text>",
-            "{tr}ags <reply>"
-        ],
+        "usage": ["{tr}ags <your text>", "{tr}ags <reply>"],
     },
 )
-async def app(odi):    
+async def app(odi):
     if odi.fwd_from:
         return
     bot = "@GooglaxBot"
     text = odi.pattern_match.group(1)
     if not text:
-      if odi.is_reply:
-        text = (await odi.get_reply_message()).message
-      else:
-        return await edit_delete(odi, "`Reply or gib something plz`")
+        if odi.is_reply:
+            text = (await odi.get_reply_message()).message
+        else:
+            return await edit_delete(odi, "`Reply or gib something plz`")
     reply_to_id = await reply_id(odi)
     await odi.delete()
     run = await odi.client.inline_query(bot, text)
     result = await run[0].click("me")
     await result.delete()
-    await odi.client.send_message(odi.chat_id, result, reply_to=reply_to_id)            
+    await odi.client.send_message(odi.chat_id, result, reply_to=reply_to_id)
