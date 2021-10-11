@@ -573,11 +573,7 @@ async def inline_handler(event):  # sourcery no-metrics
                 )
             await event.answer([result] if result else None)
     else:
-        buttons = [
-            (
-                Button.url("Click Me!!", "https://bit.ly/herokudynos"),
-            )
-        ]
+        buttons = [(Button.url("Click Me!!", "https://bit.ly/herokudynos"),)]
         markup = event.client.build_reply_markup(buttons)
         photo = types.InputWebDocument(
             url=CATLOGO, size=0, mime_type="image/jpeg", attributes=[]
