@@ -1,3 +1,5 @@
+# Modified by @kirito6969
+
 import asyncio
 import json
 import os
@@ -7,10 +9,11 @@ import subprocess
 import requests
 
 from userbot import catub
+from telethon import functions
 from userbot.core.logger import logging
 
 from ..Config import Config
-from ..core.managers import edit_or_reply
+from ..core.managers import edit_or_reply, edit_delete
 
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
@@ -100,12 +103,18 @@ async def labstack(event):
             "filebin": "to file bin site",
             "anonymousfiles": "to anonymousfiles site",
             "bayfiles": "to bayfiles site",
+            "megaupload": "To megaupload",
+            "vshare": "To Vshare site",
+            "0x0": "To 0x0 site",
+            "ninja": "To ninja site",
+            "infura": "To infura site",
+            
         },
         "usage": [
-            "{tr}webupload --option",
+            "{tr}webupload --option <Reply to media>",
             "{tr}webupload path --option",
         ],
-        "examples": "{tr}.webupload --fileio reply this to media file.",
+        "examples": "{tr}webupload --fileio reply to media file.",
     },
 )
 async def _(event):
@@ -125,7 +134,6 @@ async def _(event):
     # a dictionary containing the shell commands
     CMD_WEB = {
         "fileio": 'curl -F "file=@{full_file_path}" https://file.io',
-        "oload": 'curl -F "file=@{full_file_path}" https://api.openload.cc/upload',
         "anonfiles": 'curl -F "file=@{full_file_path}" https://api.anonfiles.com/upload',
         "transfer": 'curl --upload-file "{full_file_path}" https://transfer.sh/'
         + os.path.basename(file_name),
@@ -133,6 +141,10 @@ async def _(event):
         "anonymousfiles": 'curl -F "file=@{full_file_path}" https://api.anonymousfiles.io/',
         "vshare": 'curl -F "file=@{full_file_path}" https://api.vshare.is/upload',
         "bayfiles": 'curl -F "file=@{full_file_path}" https://bayfiles.com/api/upload',
+        "megaupload": "curl -F \"file=@{full_file_path}\" https://megaupload.is/api/upload",
+        "0x0": "curl -F \"file=@{full_file_path}\" https://0x0.st",
+        "ninja": "curl -i -F file=@{full_file_path} https://tmp.ninja/api.php?d=upload-tool",
+        "infura": "curl -X POST -F file=@'{full_file_path}' \"https://ipfs.infura.io:5001/api/v0/add?pin=true\""
     }
     filename = os.path.basename(file_name)
     try:
@@ -140,7 +152,7 @@ async def _(event):
             full_file_path=file_name, bare_local_name=filename
         )
     except KeyError:
-        return await editor.edit("Invalid selected Transfer")
+        return await editor.edit("**Invalid selected Transfer**")
     cmd = selected_one
     # start the subprocess $SHELL
     process = await asyncio.create_subprocess_shell(
@@ -166,3 +178,43 @@ async def _(event):
         await editor.edit(error)
     if catcheck:
         os.remove(file_name)
+
+        
+#By @FeelDeD
+
+@catub.cat_cmd(
+    pattern="sl",
+    command=("sl", plugin_category),
+    info={
+        "header": "Stream/Download Link Generator",
+        "usage": [
+            "{tr}sl <reply a file/media>",
+        ],
+    },
+)
+async def sl(odi):
+    "Stream/Download Link Generator"
+    file = await odi.get_reply_message()
+    await odi.edit("`Processing ...`")
+    if not (file and file.document):
+        await edit_delete(odi, "`Please reply a file/media`", 6)
+    elif file.sticker:
+    	await edit_delete(odi, "`Please reply a file/media`", 6)
+    elif file.gif:
+    	await edit_delete(odi, "`Please reply a file/media`", 6)
+    else:
+    	chat = "@TG_FileStreamBot"
+    	async with odi.client.conversation(chat) as conv:
+        	try:
+        	   	await odi.client(functions.contacts.UnblockRequest(conv.chat_id))
+        	   	start = await conv.send_message('/start')
+        	   	await conv.get_response()
+        	   	end = await conv.send_message(file)
+        	   	stream = await conv.get_response()
+        	   	result = await odi.edit(stream.text)
+        	   	msgs = []
+        	   	for _ in range(start.id, end.id+2): msgs.append(_)
+        	   	await odi.client.delete_messages(conv.chat_id, msgs)
+        	   	await odi.client.send_read_acknowledge(conv.chat_id)
+        	except stream:
+        		print("Error")        

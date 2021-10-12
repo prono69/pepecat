@@ -34,10 +34,8 @@ async def dark(odi):
     mode = odi.pattern_match.group(1)
     if mode == "d":
         factor = 0.1
-    elif mode is None:
-        factor = 0.5
     else:
-        factor = float(mode)
+        factor = 0.5
     reply_to_id = await reply_id(odi)
     # ----------------------------------------------------#
     get = await odi.get_reply_message()

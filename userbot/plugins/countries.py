@@ -86,19 +86,19 @@ async def country_(message):
     caption = f"""⚡ <b><u>Information of {name}</b></u>
 <b>
 Country Name:- {name}  {okie}
+Native Name:- {nonive}
 Alternative Spellings:- {hu}
+Population:- {waste}
+Capital:- {capital}
+Languages:- {lMAO}
+Region:- {reg}
 Country Area:- {area} square kilometers
 Borders:- {borders}
 Calling Codes:- {call}
-Country's Capital:- {capital}
 Country's currency:- {currencies}
 Demonym:- {HmM}
 Country Type:- {EsCoBaR}
 ISO Names:- {iso}
-Languages:- {lMAO}
-Native Name:- {nonive}
-population:- {waste}
-Region:- {reg}
 Sub Region:- {sub}
 Time Zones:- {tom}
 Top Level Domain:- {lanester}
