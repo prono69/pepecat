@@ -7,10 +7,9 @@ from requests import get
 from telethon.errors import ChatSendMediaForbiddenError
 
 from ..core.managers import edit_delete, edit_or_reply
-from . import catub
-from ..sql_helper.globals import gvarstatus
 from ..helpers.utils import reply_id
-
+from ..sql_helper.globals import gvarstatus
+from . import catub
 
 plugin_category = "misc"
 opn = []
@@ -164,8 +163,10 @@ async def quotefancy(e):
         await edit_or_reply(e, f"`{quote}`")
     except Exception as e:
         await edit_delete(e, f"**ERROR** - {str(e)}")
-        
-# By @FeelDed        
+
+
+# By @FeelDed
+
 
 @catub.cat_cmd(
     pattern="mdl ?(.*)",
@@ -190,9 +191,11 @@ async def mdl(odi):
         await odi.edit("`Processing ...`")
         run = await odi.client.inline_query(bot, text)
         if not run:
-        	await edit_delete(odi, "`No result found`", 5)
+            await edit_delete(odi, "`No result found`", 5)
         else:
-         	await odi.delete()
-         	result = await run[0].click("me")
-         	await odi.client.send_file(odi.chat_id, result, reply_to=reply_to_id, caption=False)
-         	await result.delete()        
+            await odi.delete()
+            result = await run[0].click("me")
+            await odi.client.send_file(
+                odi.chat_id, result, reply_to=reply_to_id, caption=False
+            )
+            await result.delete()

@@ -7,13 +7,13 @@ import re
 import subprocess
 
 import requests
+from telethon import functions
 
 from userbot import catub
-from telethon import functions
 from userbot.core.logger import logging
 
 from ..Config import Config
-from ..core.managers import edit_or_reply, edit_delete
+from ..core.managers import edit_delete, edit_or_reply
 
 plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
@@ -108,7 +108,6 @@ async def labstack(event):
             "0x0": "To 0x0 site",
             "ninja": "To ninja site",
             "infura": "To infura site",
-            
         },
         "usage": [
             "{tr}webupload --option <Reply to media>",
@@ -141,10 +140,10 @@ async def _(event):
         "anonymousfiles": 'curl -F "file=@{full_file_path}" https://api.anonymousfiles.io/',
         "vshare": 'curl -F "file=@{full_file_path}" https://api.vshare.is/upload',
         "bayfiles": 'curl -F "file=@{full_file_path}" https://bayfiles.com/api/upload',
-        "megaupload": "curl -F \"file=@{full_file_path}\" https://megaupload.is/api/upload",
-        "0x0": "curl -F \"file=@{full_file_path}\" https://0x0.st",
+        "megaupload": 'curl -F "file=@{full_file_path}" https://megaupload.is/api/upload',
+        "0x0": 'curl -F "file=@{full_file_path}" https://0x0.st',
         "ninja": "curl -i -F file=@{full_file_path} https://tmp.ninja/api.php?d=upload-tool",
-        "infura": "curl -X POST -F file=@'{full_file_path}' \"https://ipfs.infura.io:5001/api/v0/add?pin=true\""
+        "infura": "curl -X POST -F file=@'{full_file_path}' \"https://ipfs.infura.io:5001/api/v0/add?pin=true\"",
     }
     filename = os.path.basename(file_name)
     try:
@@ -179,8 +178,9 @@ async def _(event):
     if catcheck:
         os.remove(file_name)
 
-        
-#By @FeelDeD
+
+# By @FeelDeD
+
 
 @catub.cat_cmd(
     pattern="sl",
@@ -199,22 +199,23 @@ async def sl(odi):
     if not (file and file.document):
         await edit_delete(odi, "`Please reply a file/media`", 6)
     elif file.sticker:
-    	await edit_delete(odi, "`Please reply a file/media`", 6)
+        await edit_delete(odi, "`Please reply a file/media`", 6)
     elif file.gif:
-    	await edit_delete(odi, "`Please reply a file/media`", 6)
+        await edit_delete(odi, "`Please reply a file/media`", 6)
     else:
-    	chat = "@TG_FileStreamBot"
-    	async with odi.client.conversation(chat) as conv:
-        	try:
-        	   	await odi.client(functions.contacts.UnblockRequest(conv.chat_id))
-        	   	start = await conv.send_message('/start')
-        	   	await conv.get_response()
-        	   	end = await conv.send_message(file)
-        	   	stream = await conv.get_response()
-        	   	result = await odi.edit(stream.text)
-        	   	msgs = []
-        	   	for _ in range(start.id, end.id+2): msgs.append(_)
-        	   	await odi.client.delete_messages(conv.chat_id, msgs)
-        	   	await odi.client.send_read_acknowledge(conv.chat_id)
-        	except stream:
-        		print("Error")        
+        chat = "@TG_FileStreamBot"
+        async with odi.client.conversation(chat) as conv:
+            try:
+                await odi.client(functions.contacts.UnblockRequest(conv.chat_id))
+                start = await conv.send_message("/start")
+                await conv.get_response()
+                end = await conv.send_message(file)
+                stream = await conv.get_response()
+                await odi.edit(stream.text)
+                msgs = []
+                for _ in range(start.id, end.id + 2):
+                    msgs.append(_)
+                await odi.client.delete_messages(conv.chat_id, msgs)
+                await odi.client.send_read_acknowledge(conv.chat_id)
+            except stream:
+                print("Error")

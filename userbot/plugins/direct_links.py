@@ -75,7 +75,7 @@ async def direct_link_generator(event):
             reply += github(link)
         elif "androidfilehost.com" in link:
             reply += androidfilehost(link)
-        elif 'anonfiles.com' in link:
+        elif "anonfiles.com" in link:
             reply += anonfiles(link)
         elif "1drv.ms" in link:
             reply += onedrive(link)
@@ -356,19 +356,24 @@ def androidfilehost(url: str) -> str:
 
 
 def anonfiles(url: str) -> str:
-    reply = ''
+    reply = ""
     html_s = requests.get(url).content
     soup = BeautifulSoup(html_s, "html.parser")
     _url = soup.find("a", attrs={"class": "btn-primary"})["href"]
     name = _url.rsplit("/", 1)[1]
     dl_url = _url.replace(" ", "%20")
-    reply += f'[{name}]({dl_url})\n'
+    reply += f"[{name}]({dl_url})\n"
     return reply
+
 
 def onedrive(link: str) -> str:
     link_without_query = urllib.parse.urlparse(link)._replace(query=None).geturl()
-    direct_link_encoded = str(standard_b64encode(bytes(link_without_query, "utf-8")), "utf-8")
-    direct_link1 = f"https://api.onedrive.com/v1.0/shares/u!{direct_link_encoded}/root/content"
+    direct_link_encoded = str(
+        standard_b64encode(bytes(link_without_query, "utf-8")), "utf-8"
+    )
+    direct_link1 = (
+        f"https://api.onedrive.com/v1.0/shares/u!{direct_link_encoded}/root/content"
+    )
     resp = requests.head(direct_link1)
     if resp.status_code != 302:
         return "`Error: Unauthorized link, the link may be private`"
