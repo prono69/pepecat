@@ -1,10 +1,8 @@
 # Made by @o_s_h_o_r_a_j
 # Change credit and you gay.
 
-from telethon import functions
 
 from ..core.managers import edit_delete
-from ..helpers.functions import deEmojify, hide_inlinebot
 from ..helpers.utils import reply_id
 from . import catub
 

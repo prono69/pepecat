@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 
 from ShazamAPI import Shazam
-from telethon import types
+from telethon import functions, types
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from validators.url import url
@@ -16,11 +16,17 @@ from youtubesearchpython import Video
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.functions import name_dl, song_dl, video_dl, yt_search, deEmojify, hide_inlinebot
+from ..helpers.functions import (
+    deEmojify,
+    hide_inlinebot,
+    name_dl,
+    song_dl,
+    video_dl,
+    yt_search,
+)
 from ..helpers.tools import media_type
 from ..helpers.utils import _catutils, reply_id
 from . import catub, hmention
-from telethon import functions
 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
@@ -372,8 +378,7 @@ async def dzd(event):
             await catevent.edit("**Error:** `unblock` @DeezLoadBot `and retry!`")
             return
 
-            
-            
+
 @catub.cat_cmd(
     pattern="isong ?(.*)",
     command=("isong", plugin_category),
@@ -488,4 +493,3 @@ async def nope(event):
             lol = "bruh"
     await hide_inlinebot(event.client, bot, lol, event.chat_id, reply_to_id)
     await event.delete()
-            
