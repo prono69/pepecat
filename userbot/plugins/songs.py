@@ -232,9 +232,7 @@ async def shazamcmd(event):
         track = next(recognize_generator)[1]["track"]
     except Exception as e:
         LOGS.error(e)
-        return await edit_delete(
-            catevent, f"**Can't find any Songs.**"
-        )
+        return await edit_delete(catevent, f"**Can't find any Songs.**")
 
     image = track["images"]["background"]
     song = track["share"]["subject"]
