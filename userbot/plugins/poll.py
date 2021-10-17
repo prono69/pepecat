@@ -9,7 +9,7 @@ from userbot import catub
 from ..core.managers import edit_or_reply
 from . import Build_Poll, reply_id
 
-plugin_category = "extra"
+plugin_category = "tools"
 
 
 @catub.cat_cmd(

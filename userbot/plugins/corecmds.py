@@ -53,7 +53,7 @@ async def install(event):
                     event, "Errors! This plugin is already installed/pre-installed.", 10
                 )
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n`{e}`", 10)
+            await edit_delete(event, f"**Error :**\n`{e}`", 10)
             os.remove(downloaded_file_name)
 
 
@@ -78,9 +78,9 @@ async def load(event):
         load_module(shortname)
         await edit_delete(event, f"`Successfully loaded {shortname}`", 10)
     except Exception as e:
-        await edit_or_reply(
+        await edit_delete(
             event,
-            f"Could not load {shortname} because of the following error.\n{e}",
+            f"Could not load {shortname} because of the following error.\n{e}", 10
         )
 
 
@@ -133,11 +133,16 @@ async def send(event):
 async def unload(event):
     "To unload a plugin temporarily."
     shortname = event.pattern_match.group(1)
+    path = Path(f"userbot/plugins/{shortname}.py")
+    if not os.path.exists(path):
+        return await edit_delete(
+            event, f"**There's no such Plugin**"
+        )
     try:
         remove_plugin(shortname)
-        await edit_or_reply(event, f"Unloaded {shortname} successfully")
+        await edit_delete(event, f"**Uɴʟᴏᴀᴅᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**", 10)
     except Exception as e:
-        await edit_or_reply(event, f"Successfully unload {shortname}\n{e}")
+        await edit_delete(event, f"Error with {shortname}: \n`{e}`", 10)
 
 
 @catub.cat_cmd(
@@ -168,6 +173,41 @@ async def unload(event):
         CMD_HELP.pop(shortname)
     try:
         remove_plugin(shortname)
-        await edit_or_reply(event, f"{shortname} is Uninstalled successfully")
+        await edit_delete(event, f"{shortname} is Uninstalled successfully", 10)
     except Exception as e:
-        await edit_or_reply(event, f"Successfully uninstalled {shortname}\n{e}")
+        await edit_delete(event, f"Error bruh :\n`{e}`", 10)
+
+
+@catub.cat_cmd(
+    pattern="getad ([\s\S]*)",
+    command=("getad", plugin_category),
+    info={
+        "header": "To install a plugin from github raw link.",
+        "description": "Install plugin from github raw link. ",
+        "usage": "{tr}getad <raw link>",
+    },
+)
+async def get_the_addons(event):
+    link = event.pattern_match.group(1)
+    xx = await edit_or_reply(event, "`Processing...`")
+    msg = "`Give raw link or Die!`"
+    if link is None:
+        return await edit_delete(xx, msg)
+    split_link = link.split("/")
+    if "raw" not in link:
+        return await edit_delete(xx, msg)
+    name = split_link[(len(split_link) - 1)]
+    plug = requests.get(link).text
+    fil = f"userbot/plugins/{name}"
+    with open(fil, "w", encoding="utf-8") as pepe:
+        pepe.write(plug)
+    await xx.edit("Packed. Now loading the plugin..")
+    shortname = name.split(".")[0]
+    try:
+        load_module(shortname)
+        await edit_delete(xx, "**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{}`".format(shortname), 10)
+    except Exception as e:
+        await edit_delete(
+            xx,
+            "Error with {shortname}\n`{e}`"
+        )

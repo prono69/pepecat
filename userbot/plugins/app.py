@@ -7,7 +7,7 @@ Fetch App Details from Playstore.
 import bs4
 import requests
 
-from . import ALIVE_NAME, catub, edit_or_reply
+from . import ALIVE_NAME, catub, edit_or_reply, edit_delete, reply_id
 
 plugin_category = "utils"
 
@@ -88,3 +88,58 @@ async def app_search(event):
         await event.edit("No result found in search. Please enter **Valid app name**")
     except Exception as err:
         await event.edit("Exception Occured:- " + str(err))
+
+        
+@catub.cat_cmd(
+    pattern="iapp(?:\s|$)([\s\S]*)",
+    command=("iapp", plugin_category),
+    info={
+        "header": "To search any app in playstore via inline.",
+        "description": "Searches the app in the playstore and provides the link to the app in playstore and fetches app details via inline.",
+        "usage": "{tr}iapp <name>",
+    },
+)
+async def app_search(event):
+    "To search any app in playstore via inline."
+    app_name = event.pattern_match.group(1)
+    if not app_name:
+        await edit_delete(event, f"**Usage:** `{tr}iapp <name>`", 10)
+        return
+    reply_to_id = await reply_id(event)
+    APPBOT = "@nedzbot"
+    cozyneko = "app" + app_name
+    event = await edit_or_reply(event, "`Searching!..`")
+    try:
+        score = await event.client.inline_query(APPBOT, cozyneko)
+        await score[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
+        await event.delete()
+    except Exception as err:
+        await event.edit("Exception Occured:- " + str(err))
+        
+        
+@catub.cat_cmd(
+    pattern="sapp ?(.*)",
+    command=("sapp", plugin_category),
+    info={
+        "header": "App dLink plugin",
+        "usage": [
+            "{tr}sapp <app name>",
+        ],
+    },
+)
+async def app(event):
+    if event.fwd_from:
+        return
+    await event.edit("`Processing ...`")
+    bot = "apkdl_bot"
+    text = event.pattern_match.group(1)
+    reply_to_id = await reply_id(event)
+    if not text:
+        return await edit_delete(
+            event, "Give a app name"
+        )
+    run = await event.client.inline_query(bot, text)
+    result = await run[0].click(Config.PRIVATE_GROUP_BOT_API_ID)
+    await result.delete()
+    await event.client.send_message(event.chat_id, result, reply_to=reply_to_id)
+    await event.delete()        

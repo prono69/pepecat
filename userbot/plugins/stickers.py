@@ -1,3 +1,5 @@
+# Added sticker downloader by @kirito6969
+
 import asyncio
 import base64
 import io
@@ -779,11 +781,11 @@ async def get_pack_info(event):
 
 
 @catub.cat_cmd(
-    pattern="loda ?(.*)",
+    pattern="loda$",
     command=("loda", plugin_category),
     info={
         "header": "To download whole sticker pack in a zip file",
-        "description": "See Header",
+        "description": "Not for Noobs",
         "usage": "{tr}loda <reply to a sticker>",
     },
 )
@@ -901,11 +903,11 @@ async def cb_sticker(event):
     results = soup.find_all("div", {"class": "sticker-pack__header"})
     if not results:
         return await edit_delete(catevent, "`No results found :(.`", 5)
-    reply = f"**Sticker packs found for {split} are :**"
+    reply = f"**SᴛɪᴄᴋEʀs Aᴠᴀɪʟᴀʙʟᴇ Fᴏʀ {split} ~**\n\n"
     for pack in results:
         if pack.button:
             packtitle = (pack.find("div", "sticker-pack__title")).get_text()
             packlink = (pack.a).get("href")
             packid = (pack.button).get("data-popup")
-            reply += f"\n **• ID: **`{packid}`\n [{packtitle}]({packlink})"
+            reply += f"\n **• ID : **`{packid}`\n [{packtitle}]({packlink})"
     await catevent.edit(reply)

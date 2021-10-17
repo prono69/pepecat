@@ -160,7 +160,7 @@ PENIS_TEMPLATE = """
     pattern=r"(?:penis|dick)\s?(.)?",
     command=("dick", plugin_category),
     info={
-        "header": "NSFW 🔞\nThis is Something EPIC that horny girls wanna see for sure ! 🌚",
+        "header": "NSFW 🔞\nThis is Something EPIC that horny girls wanna see for sure! 🌚",
         "usage": "{tr}dick",
         "examples": "{tr}dick",
     },
@@ -224,7 +224,7 @@ async def loli(event):
 
 
 @catub.cat_cmd(
-    pattern="xxshort",
+    pattern="xxshort$",
     command=("xxshort", plugin_category),
     info={
         "header": "NSFW",
@@ -253,7 +253,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="xxlong",
+    pattern="xxlong$",
     command=("xxlong", plugin_category),
     info={
         "header": "NSFW",
@@ -282,7 +282,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="xpic",
+    pattern="xpic$",
     command=("xpic", plugin_category),
     info={
         "header": "NSFW",
@@ -311,7 +311,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="xnxx",
+    pattern="xnxx$",
     command=("xnxx", plugin_category),
     info={
         "header": "NSFW",
@@ -340,7 +340,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="picx",
+    pattern="picx$",
     command=("picx", plugin_category),
     info={
         "header": "NSFW",
@@ -369,7 +369,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="les",
+    pattern="les$",
     command=("les", plugin_category),
     info={
         "header": "NSFW",
@@ -398,7 +398,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="los",
+    pattern="los$",
     command=("los", plugin_category),
     info={
         "header": "NSFW",

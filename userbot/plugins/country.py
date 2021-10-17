@@ -83,7 +83,7 @@ async def country_(message):
     for targaryen in GOT:
         lanester += targaryen + ",   "
     wiki = a.get("wiki")
-    caption = f"""⚡ <b><u>Information of {name}</b></u>
+    caption = f"""<b>✨ Information of {name}</b>
 <b>
 Country Name:- {name}  {okie}
 Native Name:- {nonive}
@@ -105,6 +105,6 @@ Top Level Domain:- {lanester}
 
 Wikipedia:-</b> <code>{wiki}</code>
 
-⚡ <u><b>Information Gathered By PepeCat.</b></u>
+<b>✨ Information Gathered By PepeCat.</b>
 """
-    await edit_or_reply(message, caption, parse_mode="html")
+    await edit_or_reply(message, caption, parse_mode="html", link_preview=False)

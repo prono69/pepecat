@@ -3,7 +3,7 @@ import zipfile
 from random import choice
 from textwrap import wrap
 from uuid import uuid4
-
+import aiohttp
 import requests
 
 from ..utils.extdl import install_pip
@@ -278,3 +278,30 @@ async def waifutxt(text, chat_id, reply_to_id, bot):
     if cat:
         await bot.send_file(int(chat_id), cat, reply_to=reply_to_id)
         await cat.delete()
+
+        
+async def async_searcher(
+    url,
+    post=None,
+    headers=None,
+    params=None,
+    json=None,
+    data=None,
+    ssl=None,
+    re_json: bool = False,
+    re_content: bool = False,
+    real: bool = False,
+):
+    async with aiohttp.ClientSession(headers=headers) as client:
+        if post:
+            data = await client.post(url, json=json, data=data, ssl=ssl)
+        else:
+            data = await client.get(url, params=params, ssl=ssl)
+        if re_json:
+            return await data.json()
+        if re_content:
+            return await data.read()
+        if real:
+            return data
+        return await data.text()
+        

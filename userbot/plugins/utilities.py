@@ -1,21 +1,42 @@
+# By @kirito6969
+# Some things are kanged from Ultroid
+
 import asyncio
 import random
 from datetime import timedelta
-
+import calendar
+import time
+from datetime import datetime as dt
 from telethon import functions
 from telethon.errors import FloodWaitError
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from userbot import catub
-
-from ..core.managers import edit_delete, edit_or_reply
-from . import mention
+from bs4 import BeautifulSoup as bs
+import requests
+from . import mention, edit_delete, edit_or_reply, catub
+from ..helpers.functions import async_searcher
 
 plugin_category = "utils"
-
-chr = Config.COMMAND_HAND_LER
 GBOT = "@HowGayBot"
-FBOT = "@FsInChatBot"
+_copied_msg = {}
+
+
+@catub.cat_cmd(
+    pattern="date$",
+    command=("date", plugin_category),
+    info={
+        "header": "To know current Date and Time",
+        "usage": "{tr}date",
+    },
+)
+async def date(event):
+    m = dt.now().month
+    y = dt.now().year
+    d = dt.now().strftime("Date - %B %d, %Y\nTime- %H:%M:%S")
+    k = calendar.month(y, m)
+    ultroid = await edit_or_reply(event, f"`{k}\n\n{d}`")
+
+
 
 # t.me/realnub and t.me/lal_bakthan
 @catub.cat_cmd(
@@ -35,7 +56,7 @@ async def _(event):
     try:
         total = event.pattern_match.group(1)
         if not total:
-            await edit_delete(event, f"**Usage:** `{chr}timer <seconds>`", 10)
+            await edit_delete(event, f"**Usage:** `{tr}timer <seconds>`", 10)
             return
         t = int(total)
         pluto = await edit_or_reply(event, "**Starting...**")
@@ -59,8 +80,8 @@ async def _(event):
     pattern="gey(?:\s|$)([\s\S]*)",
     command=("gey", plugin_category),
     info={
-        "header": "try yourself.",
-        "description": "try yourself.",
+        "header": "Try yourself!",
+        "description": "Try yourself!",
         "usage": "{tr}gey <name>.",
     },
 )
@@ -79,32 +100,6 @@ async def app_search(event):
         await event.edit(str(err))
 
 
-@catub.cat_cmd(
-    pattern="iapp(?:\s|$)([\s\S]*)",
-    command=("iapp", plugin_category),
-    info={
-        "header": "To search any app in playstore via inline.",
-        "description": "Searches the app in the playstore and provides the link to the app in playstore and fetches app details via inline.",
-        "usage": "{tr}iapp <name>",
-    },
-)
-async def app_search(event):
-    "To search any app in playstore via inline."
-    app_name = event.pattern_match.group(1)
-    if not app_name:
-        await edit_delete(event, f"**Usage:** `{chr}iapp <name>`", 10)
-        return
-    reply_to_id = await reply_id(event)
-    APPBOT = "@nedzbot"
-    cozyneko = "app" + app_name
-    event = await edit_or_reply(event, "`Searching!..`")
-    try:
-        score = await event.client.inline_query(APPBOT, cozyneko)
-        await score[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
-        await event.delete()
-    except Exception as err:
-        await event.edit("Exception Occured:- " + str(err))
-
 
 @catub.cat_cmd(
     pattern="cid(?:\s|$)([\s\S]*)",
@@ -119,7 +114,7 @@ async def _(event):
     "To search a phone number in Truecaller"
     args = event.pattern_match.group(1)
     if not args:
-        await edit_or_reply(event, f"**Usage:** `{chr}cid <number>`")
+        await edit_or_reply(event, f"**Usage:** `{tr}cid <number>`")
         return
     pluto = await edit_or_reply(event, "**__Fetching details...__**")
     chat = "@RespawnRobot"
@@ -137,7 +132,7 @@ async def _(event):
             await event.client(functions.contacts.UnblockRequest(chat))
             await edit_delete(
                 pluto,
-                f"__**An error occurred. Please try again!\n☞**__ `{chr}cid {args}`",
+                f"__**An error occurred. Please try again!\n☞**__ `{tr}cid {args}`",
                 10,
             )
             return
@@ -153,7 +148,7 @@ async def _(event):
         "usage": ["{tr}mcq <options>", "{tr}mcq a,b,c,d", "{tr}mcq cat,dog,life,death"],
     },
 )
-async def Gay(event):
+async def mcq(event):
     "Chooses a random item in the given options, give a comma ',' to add multiple option"
     osho = event.pattern_match.group(1)
     if not osho:
@@ -162,4 +157,199 @@ async def Gay(event):
     await event.edit(f"**Input:** `{osho}`\n**Random:** `{random.choice(options)}`")
 
 
-# t.me/realnub
+@catub.cat_cmd(
+    pattern="eod(?:\s|$)([\s\S]*)",
+    command=("eod", plugin_category),
+    info={
+        "header": "Get Events of the day.",
+        "description": "Get Events of the day.",
+        "usage": "{tr}eod\n{tr}eod <dd/mm>",
+    },
+)
+async def diela(e):
+    match = e.pattern_match.group(1)
+    m = await edit_or_reply(e, "`Processing...`")
+    li = "https://daysoftheyear.com"
+    te = "🎊 **Events of the Day**\n\n"
+    if match:
+        date = match.split("/")[0]
+        month = match.split("/")[1]
+        li += "/days/2021/" + month + "/" + date
+        te = "• **Events for {}/2021**\n\n".format(match)
+    else:
+        da = datetime.today().strftime("%F").split("-")
+        li += "/days/2021/" + da[1] + "/" + da[2]
+    ct = requests.get(li).content
+    bt = bs(ct, "html.parser", from_encoding="utf-8")
+    ml = bt.find_all("a", "js-link-target", href=re.compile("daysoftheyear.com/days"))
+    for eve in ml[:5]:
+        te += "• " + f'[{eve.text}]({eve["href"]})\n'
+    await m.edit(te, link_preview=False)
+
+
+@catub.cat_cmd(
+    pattern="cpy$",
+    command=("cpy", plugin_category),
+    info={
+        "header": "Copy the replied message, with formatting. Expires in 24hrs.",
+        "usage": "{tr}cpy <reply to a message>",
+    },
+)
+async def copp(event):
+    msg = await event.get_reply_message()
+    if not msg:
+        return await edit_delete(event, f"Use `{tr}cpy` as reply to a message!", 5)
+    _copied_msg["CLIPBOARD"] = msg
+    await edit_delete(event, f"Copied. Use `{tr}pst` to paste!", 10)
+
+
+
+@catub.cat_cmd(
+    pattern="pst$",
+    command=("pst", plugin_category),
+    info={
+        "header": "Paste the copied message, with formatting.",
+        "usage": "{tr}pst",
+    },
+)
+async def colgate(event):
+    await toothpaste(event)
+
+
+async def toothpaste(event):
+    try:
+        await event.respond(_copied_msg["CLIPBOARD"])
+        try:
+            await event.delete()
+        except BaseException:
+            pass
+    except KeyError:
+        return await edit_delete(
+            event,
+            f"Nothing was copied! Use `{tr}cpy` as reply to a message first!",
+        )
+    except Exception as ex:
+        return await edit_delete(event, str(ex), 5)
+    
+        
+@catub.cat_cmd(
+    pattern="dob(?:\s|$)([\s\S]*)",
+    command=("dob", plugin_category),
+    info={
+        "header": "Put in dd/mm/yy Format only.",
+        "usage": "{tr}dob <dd/mm/yy>",
+        "examples": "{tr}dob 01/01/1999"
+    },
+)
+async def hbd(event):
+    if not event.pattern_match.group(1):
+        return await edit_delete(event, "`Put input in dd/mm/yyyy format`")
+    if event.reply_to_msg_id:
+        kk = await event.get_reply_message()
+        nam = await event.client.get_entity(kk.from_id)
+        name = nam.first_name
+    else:
+        name = catub.me.first_name
+    zn = pytz.timezone("Asia/Kolkata")
+    abhi = dt.now(zn)
+    n = event.text
+    q = n[5:]
+    kk = q.split("/")
+    p = kk[0]
+    r = kk[1]
+    s = kk[2]
+    day = int(p)
+    month = r
+    paida = q
+    try:
+        jn = dt.strptime(paida, "%d/%m/%Y")
+    except BaseException:
+        return await edit_delete(event, "`Put input in dd/mm/yyyy format`")
+    jnm = zn.localize(jn)
+    zinda = abhi - jnm
+    barsh = (zinda.total_seconds()) / (365.242 * 24 * 3600)
+    saal = int(barsh)
+    mash = (barsh - saal) * 12
+    mahina = int(mash)
+    divas = (mash - mahina) * (365.242 / 12)
+    din = int(divas)
+    samay = (divas - din) * 24
+    ghanta = int(samay)
+    pehl = (samay - ghanta) * 60
+    mi = int(pehl)
+    sec = (pehl - mi) * 60
+    slive = int(sec)
+    y = int(s) + int(saal) + 1
+    m = int(r)
+    brth = dt(y, m, day)
+    cm = dt(abhi.year, brth.month, brth.day)
+    ish = (cm - abhi.today()).days + 1
+    dan = ish
+    if dan == 0:
+        hp = "`Happy BirthDay To U🎉🎊`"
+    elif dan < 0:
+        okk = 365 + ish
+        hp = f"{okk} Days Left 🥳"
+    elif dan > 0:
+        hp = f"{ish} Days Left 🥳"
+    if month == "12":
+        sign = "Sagittarius" if (day < 22) else "Capricorn"
+    elif month == "01":
+        sign = "Capricorn" if (day < 20) else "Aquarius"
+    elif month == "02":
+        sign = "Aquarius" if (day < 19) else "Pisces"
+    elif month == "03":
+        sign = "Pisces" if (day < 21) else "Aries"
+    elif month == "04":
+        sign = "Aries" if (day < 20) else "Taurus"
+    elif month == "05":
+        sign = "Taurus" if (day < 21) else "Gemini"
+    elif month == "06":
+        sign = "Gemini" if (day < 21) else "Cancer"
+    elif month == "07":
+        sign = "Cancer" if (day < 23) else "Leo"
+    elif month == "08":
+        sign = "Leo" if (day < 23) else "Virgo"
+    elif month == "09":
+        sign = "Virgo" if (day < 23) else "Libra"
+    elif month == "10":
+        sign = "Libra" if (day < 23) else "Scorpion"
+    elif month == "11":
+        sign = "Scorpio" if (day < 22) else "Sagittarius"
+    sign = f"{sign}"
+    params = (("sign", sign), ("today", day))
+    json = await async_searcher(
+        "https://aztro.sameerkumar.website/", post=True, params=params, re_json=True
+    )
+    dd = json.get("current_date")
+    ds = json.get("description")
+    lt = json.get("lucky_time")
+    md = json.get("mood")
+    cl = json.get("color")
+    ln = json.get("lucky_number")
+    await event.delete()
+    await event.client.send_message(
+        event.chat_id,
+        f"""
+    Name -: {name}
+
+D.O.B -:  {paida}
+
+Lived -:  {saal}yr, {mahina}m, {din}d, {ghanta}hr, {mi}min, {slive}sec
+
+Birthday -: {hp}
+
+Zodiac -: {sign}
+
+**Horoscope On {dd} -**
+
+`{ds}`
+
+    Lucky Time :-        {lt}
+    Lucky Number :-   {ln}
+    Lucky Color :-        {cl}
+    Mood :-                   {md}
+    """,
+        reply_to=event.reply_to_msg_id,
+    )
+        

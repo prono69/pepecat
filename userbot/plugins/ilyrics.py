@@ -135,7 +135,7 @@ async def lisong(event):
     info={
         "header": "Searches and uploads the meme voice.",
         "usage": "{tr}mev <input>",
-        "examples": "{tr}mev bruh",
+        "examples": "{tr}mev Hello motherfucker",
     },
 )
 async def nope(event):
