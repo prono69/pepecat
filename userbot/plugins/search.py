@@ -5,6 +5,7 @@ from . import catub, edit_delete, edit_or_reply
 
 plugin_category = "tools"
 
+
 @catub.cat_cmd(
     pattern="search( -r|) ?(.*)",
     command=("search", plugin_category),

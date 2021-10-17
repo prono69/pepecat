@@ -3,11 +3,14 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # Modified for cat
 
-from PIL import Image
-from . import eor, eod, catub
 import os
 
+from PIL import Image
+
+from . import catub, eod, eor
+
 plugin_category = "tools"
+
 
 @catub.cat_cmd(
     pattern="size$",
@@ -47,9 +50,7 @@ async def size(e):
         return await eod(e, "`Reply to image.`")
     sz = e.pattern_match.group(1)
     if not sz:
-        return await eod(
-            f"Give Some Size To Resize, Like `{tr}resize 720 1080` ", 5
-        )
+        return await eod(f"Give Some Size To Resize, Like `{tr}resize 720 1080` ", 5)
     k = await eor(e, "`Processing...`")
     if hasattr(r.media, "document"):
         img = await e.client.download_media(r, thumb=-1)
@@ -57,9 +58,7 @@ async def size(e):
         img = await r.download_media()
     sz = sz.split()
     if len(sz) != 2:
-        return await eod(
-            k, f"Give Some Size To Resize, Like `{tr}resize 720 1080` ", 5
-        )
+        return await eod(k, f"Give Some Size To Resize, Like `{tr}resize 720 1080` ", 5)
     x, y = int(sz[0]), int(sz[1])
     im = Image.open(img)
     ok = im.resize((x, y))

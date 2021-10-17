@@ -2,19 +2,19 @@
 # Some things are kanged from Ultroid
 
 import asyncio
-import random
-from datetime import timedelta
 import calendar
-import time
+import random
 from datetime import datetime as dt
+from datetime import timedelta
+
+import requests
+from bs4 import BeautifulSoup as bs
 from telethon import functions
 from telethon.errors import FloodWaitError
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from bs4 import BeautifulSoup as bs
-import requests
-from . import mention, edit_delete, edit_or_reply, catub
 from ..helpers.functions import async_searcher
+from . import catub, edit_delete, edit_or_reply, mention
 
 plugin_category = "utils"
 GBOT = "@HowGayBot"
@@ -35,7 +35,6 @@ async def date(event):
     d = dt.now().strftime("Date - %B %d, %Y\nTime- %H:%M:%S")
     k = calendar.month(y, m)
     ultroid = await edit_or_reply(event, f"`{k}\n\n{d}`")
-
 
 
 # t.me/realnub and t.me/lal_bakthan
@@ -98,7 +97,6 @@ async def app_search(event):
         await event.delete()
     except Exception as err:
         await event.edit(str(err))
-
 
 
 @catub.cat_cmd(
@@ -203,7 +201,6 @@ async def copp(event):
     await edit_delete(event, f"Copied. Use `{tr}pst` to paste!", 10)
 
 
-
 @catub.cat_cmd(
     pattern="pst$",
     command=("pst", plugin_category),
@@ -230,15 +227,15 @@ async def toothpaste(event):
         )
     except Exception as ex:
         return await edit_delete(event, str(ex), 5)
-    
-        
+
+
 @catub.cat_cmd(
     pattern="dob(?:\s|$)([\s\S]*)",
     command=("dob", plugin_category),
     info={
         "header": "Put in dd/mm/yy Format only.",
         "usage": "{tr}dob <dd/mm/yy>",
-        "examples": "{tr}dob 01/01/1999"
+        "examples": "{tr}dob 01/01/1999",
     },
 )
 async def hbd(event):
@@ -352,4 +349,3 @@ Zodiac -: {sign}
     """,
         reply_to=event.reply_to_msg_id,
     )
-        

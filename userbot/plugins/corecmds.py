@@ -80,7 +80,8 @@ async def load(event):
     except Exception as e:
         await edit_delete(
             event,
-            f"Could not load {shortname} because of the following error.\n{e}", 10
+            f"Could not load {shortname} because of the following error.\n{e}",
+            10,
         )
 
 
@@ -135,9 +136,7 @@ async def unload(event):
     shortname = event.pattern_match.group(1)
     path = Path(f"userbot/plugins/{shortname}.py")
     if not os.path.exists(path):
-        return await edit_delete(
-            event, f"**There's no such Plugin**"
-        )
+        return await edit_delete(event, f"**There's no such Plugin**")
     try:
         remove_plugin(shortname)
         await edit_delete(event, f"**Uɴʟᴏᴀᴅᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**", 10)
@@ -206,8 +205,5 @@ async def get_the_addons(event):
     try:
         load_module(shortname)
         await edit_delete(xx, "**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{}`".format(shortname), 10)
-    except Exception as e:
-        await edit_delete(
-            xx,
-            "Error with {shortname}\n`{e}`"
-        )
+    except Exception:
+        await edit_delete(xx, "Error with {shortname}\n`{e}`")

@@ -433,7 +433,7 @@ async def doge(event):
         if files and os.path.exists(files):
             os.remove(files)
 
-            
+
 # by Yato
 @catub.cat_cmd(
     pattern="(|h)penguin(?:\s|$)([\s\S]*)",
@@ -658,4 +658,3 @@ async def app(odi):
     result = await run[0].click("me")
     await result.delete()
     await odi.client.send_message(odi.chat_id, result, reply_to=reply_to_id)
-            

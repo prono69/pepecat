@@ -7,7 +7,7 @@ Fetch App Details from Playstore.
 import bs4
 import requests
 
-from . import ALIVE_NAME, catub, edit_or_reply, edit_delete, reply_id
+from . import ALIVE_NAME, catub, edit_delete, edit_or_reply, reply_id
 
 plugin_category = "utils"
 
@@ -89,7 +89,7 @@ async def app_search(event):
     except Exception as err:
         await event.edit("Exception Occured:- " + str(err))
 
-        
+
 @catub.cat_cmd(
     pattern="iapp(?:\s|$)([\s\S]*)",
     command=("iapp", plugin_category),
@@ -115,8 +115,8 @@ async def app_search(event):
         await event.delete()
     except Exception as err:
         await event.edit("Exception Occured:- " + str(err))
-        
-        
+
+
 @catub.cat_cmd(
     pattern="sapp ?(.*)",
     command=("sapp", plugin_category),
@@ -135,11 +135,9 @@ async def app(event):
     text = event.pattern_match.group(1)
     reply_to_id = await reply_id(event)
     if not text:
-        return await edit_delete(
-            event, "Give a app name"
-        )
+        return await edit_delete(event, "Give a app name")
     run = await event.client.inline_query(bot, text)
     result = await run[0].click(Config.PRIVATE_GROUP_BOT_API_ID)
     await result.delete()
     await event.client.send_message(event.chat_id, result, reply_to=reply_to_id)
-    await event.delete()        
+    await event.delete()
