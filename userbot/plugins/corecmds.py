@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 from pathlib import Path
+import requests
 
 from ..Config import Config
 from ..utils import load_module, remove_plugin
@@ -44,7 +45,7 @@ async def install(event):
                 load_module(shortname.replace(".py", ""))
                 await edit_delete(
                     event,
-                    f"Installed Plugin `{os.path.basename(downloaded_file_name)}`",
+                    f"IɴsᴛAʟʟᴇᴅ Pʟᴜɢɪɴ `{os.path.basename(downloaded_file_name)}`",
                     10,
                 )
             else:

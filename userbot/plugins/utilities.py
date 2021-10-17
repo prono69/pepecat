@@ -4,6 +4,7 @@
 import asyncio
 import calendar
 import random
+import pytz
 from datetime import datetime as dt
 from datetime import timedelta
 
@@ -175,7 +176,7 @@ async def diela(e):
         li += "/days/2021/" + month + "/" + date
         te = "• **Events for {}/2021**\n\n".format(match)
     else:
-        da = datetime.today().strftime("%F").split("-")
+        da = dt.today().strftime("%F").split("-")
         li += "/days/2021/" + da[1] + "/" + da[2]
     ct = requests.get(li).content
     bt = bs(ct, "html.parser", from_encoding="utf-8")

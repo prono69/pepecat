@@ -199,12 +199,12 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="shazam$",
-    command=("shazam", plugin_category),
+    pattern="wsong$",
+    command=("wsong", plugin_category),
     info={
         "header": "To reverse search song.",
         "description": "Reverse search audio file using shazam api",
-        "usage": "{tr}shazam <reply to voice/audio>",
+        "usage": "{tr}wsong <reply to voice/audio>",
     },
 )
 async def shazamcmd(event):
@@ -233,13 +233,13 @@ async def shazamcmd(event):
     except Exception as e:
         LOGS.error(e)
         return await edit_delete(
-            catevent, f"**Error while reverse searching song:**\n__{e}__"
+            catevent, f"**Can't find any Songs.**"
         )
 
     image = track["images"]["background"]
     song = track["share"]["subject"]
     await event.client.send_file(
-        event.chat_id, image, caption=f"**Song:** `{song}`", reply_to=reply
+        event.chat_id, image, caption=f"**➥ Song :** `{song}`", reply_to=reply
     )
     await catevent.delete()
 
