@@ -384,10 +384,7 @@ async def dzd(event):
     command=("isong", plugin_category),
     info={
         "header": "Kinda inline music downloader",
-        "usage": [
-            "{tr}isong <song name>",
-            "{tr}isong <reply>"
-        ],
+        "usage": ["{tr}isong <song name>", "{tr}isong <reply>"],
     },
 )
 async def music(event):
@@ -396,18 +393,19 @@ async def music(event):
         return
     music = event.pattern_match.group(1)
     if not music:
-      if event.is_reply:
-        music = (await event.get_reply_message()).text
-      else:
-        await edit_delete(event, "`Give a song name u Dumb`")
-        return
+        if event.is_reply:
+            music = (await event.get_reply_message()).text
+        else:
+            await edit_delete(event, "`Give a song name u Dumb`")
+            return
     bot = "@deezermusicbot"
     reply_to_id = await reply_id(event)
     try:
-      await hide_inlinebot(event.client, bot, music, event.chat_id, reply_to_id)
+        await hide_inlinebot(event.client, bot, music, event.chat_id, reply_to_id)
     except IndexError:
-      await edit_delete(event, "`Bish, Go and Die`")
+        await edit_delete(event, "`Bish, Go and Die`")
     await event.delete()
+
 
 # By @FeelDeD
 
@@ -440,22 +438,25 @@ async def wave(odi):
         async with odi.client.conversation(chat) as conv:
             try:
                 await odi.client(functions.contacts.UnblockRequest(conv.chat_id))
-                start = await conv.send_message('/start')
+                start = await conv.send_message("/start")
                 await conv.get_response()
                 end = await conv.send_message(link)
                 music = await conv.get_response()
                 if not music.audio:
-            	    await odi.edit(f"`No result found for {song}`")
+                    await odi.edit(f"`No result found for {song}`")
                 else:
-            	    result = await odi.client.send_file(odi.chat_id, music, reply_to=reply_to_id, caption=False)
-            	    await odi.delete()
+                    result = await odi.client.send_file(
+                        odi.chat_id, music, reply_to=reply_to_id, caption=False
+                    )
+                    await odi.delete()
                 msgs = []
-                for _ in range(start.id, end.id+2): msgs.append(_)
+                for _ in range(start.id, end.id + 2):
+                    msgs.append(_)
                 await odi.client.delete_messages(conv.chat_id, msgs)
                 await odi.client.send_read_acknowledge(conv.chat_id)
             except result:
-        	    await odi.reply("`Something went Wrong`")
-        	    
+                await odi.reply("`Something went Wrong`")
+
 
 @catub.cat_cmd(
     pattern="lits?(.*)",
@@ -504,16 +505,13 @@ async def nope(event):
     await hide_inlinebot(event.client, bot, lol, event.chat_id, reply_to_id)
     await event.delete()
 
-    
+
 @catub.cat_cmd(
     pattern="ssong",
     command=("ssong", plugin_category),
     info={
         "header": "It will gib u Spotify link.",
-        "usage": [
-            "{tr}ssong <song name>",
-            "{tr}ssong <reply>"
-        ],
+        "usage": ["{tr}ssong <song name>", "{tr}ssong <reply>"],
     },
 )
 async def music(event):
@@ -523,29 +521,31 @@ async def music(event):
     reply = await event.get_reply_message()
     name = song or reply.text
     if not song and not reply:
-      await edit_delete(event, "`Give a song name B~Baka`")
-      return
-    bot = "@songdl_bot"  
+        await edit_delete(event, "`Give a song name B~Baka`")
+        return
+    bot = "@songdl_bot"
     reply_to_id = await reply_id(event)
     run = await event.client.inline_query(bot, name)
     try:
-      result = await run[0].click("me")
-      await result.delete()
-      await event.client.send_message(event.chat_id, f"**✘ Name:** __{name}__\n**✘ Site:** __Spotify__\n**✘ Link:** __{result.text}__", link_preview=True, reply_to=reply_to_id)
+        result = await run[0].click("me")
+        await result.delete()
+        await event.client.send_message(
+            event.chat_id,
+            f"**✘ Name:** __{name}__\n**✘ Site:** __Spotify__\n**✘ Link:** __{result.text}__",
+            link_preview=True,
+            reply_to=reply_to_id,
+        )
     except IndexError:
-      await edit_delete(event, "`Bish, Go and Die!`")
-    await event.delete()  
-    
-    
+        await edit_delete(event, "`Bish, Go and Die!`")
+    await event.delete()
+
+
 @catub.cat_cmd(
     pattern="dsong",
     command=("dsong", plugin_category),
     info={
         "header": "It will gib u Deezer link.",
-        "usage": [
-            "{tr}dsong <song name>",
-            "{tr}dsong <reply>"
-        ],
+        "usage": ["{tr}dsong <song name>", "{tr}dsong <reply>"],
     },
 )
 async def music(event):
@@ -555,16 +555,20 @@ async def music(event):
     reply = await event.get_reply_message()
     name = song or reply.text
     if not song and not reply:
-      await edit_delete(event, "`Give a song name.`")
-      return
+        await edit_delete(event, "`Give a song name.`")
+        return
     bot = "@deezload2bot"
     reply_to_id = await reply_id(event)
     run = await event.client.inline_query(bot, name)
     try:
-      result = await run[0].click("me")
-      await result.delete()
-      await event.client.send_message(event.chat_id, f"**✘ Name:** __{name}__\n**✘ Site:** __Deezer__\n**✘ Link:** __{result.text}__", link_preview=True, reply_to=reply_to_id)
+        result = await run[0].click("me")
+        await result.delete()
+        await event.client.send_message(
+            event.chat_id,
+            f"**✘ Name:** __{name}__\n**✘ Site:** __Deezer__\n**✘ Link:** __{result.text}__",
+            link_preview=True,
+            reply_to=reply_to_id,
+        )
     except IndexError:
-      await edit_delete(event, "`Bish, Go and Die!`")
-    await event.delete()  
-        
+        await edit_delete(event, "`Bish, Go and Die!`")
+    await event.delete()
