@@ -46,7 +46,7 @@ async def install(event):
                 load_module(shortname.replace(".py", ""))
                 await edit_delete(
                     event,
-                    f"IɴsᴛAʟʟᴇᴅ Pʟᴜɢɪɴ `{os.path.basename(downloaded_file_name)}`",
+                    f"**Iɴsᴛᴀʟʟᴇᴅ Pʟᴜɢɪɴ** `{os.path.basename(downloaded_file_name)}`",
                     10,
                 )
             else:

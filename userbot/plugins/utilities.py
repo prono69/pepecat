@@ -21,7 +21,7 @@ from . import catub, edit_delete, edit_or_reply, mention
 plugin_category = "utils"
 GBOT = "@HowGayBot"
 _copied_msg = {}
-
+tr = Config.COMMAND_HAND_LER
 
 @catub.cat_cmd(
     pattern="date$",
