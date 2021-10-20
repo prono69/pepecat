@@ -1,17 +1,20 @@
 # by @mrconfused (@sandy1709)
+import base64
 import io
 import os
+import random
+import string
 
 from PIL import Image, ImageFilter, ImageOps
+from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
 from userbot import catub
 
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers import asciiart, cat_meeme, cat_meme, media_type
+from ..helpers import asciiart, media_type
 from ..helpers.functions import (
     add_frame,
     convert_toimage,
-    convert_tosticker,
     crop,
     dotify,
     flip_image,
@@ -21,14 +24,6 @@ from ..helpers.functions import (
     solarize,
 )
 from ..helpers.utils import _cattools, reply_id
-
-import asyncio
-import base64
-import random
-import string
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
-from ..sql_helper.globals import addgvar, gvarstatus
-
 
 plugin_category = "tools"
 
@@ -132,6 +127,7 @@ async def memes(event):
     for files in (outputfile, meme_file):
         if files and os.path.exists(files):
             os.remove(files)
+
 
 @catub.cat_cmd(
     pattern="imirror(s)? ?(-)?(l|r|u|b)?$",
@@ -408,7 +404,7 @@ async def pic_gifcmd(event):
         if os.path.exists(i):
             os.remove(i)
 
-            
+
 @catub.cat_cmd(
     pattern="frame ?([\s\S]*)",
     command=("frame", plugin_category),
@@ -473,8 +469,8 @@ async def memes(event):
     for files in (outputfile, meme_file):
         if files and os.path.exists(files):
             os.remove(files)
-            
-            
+
+
 @catub.cat_cmd(
     pattern="zoom ?([\s\S]*)",
     command=("zoom", plugin_category),
@@ -527,7 +523,6 @@ async def memes(event):
     for files in (outputfile, meme_file):
         if files and os.path.exists(files):
             os.remove(files)
-
 
 
 @catub.cat_cmd(
@@ -623,7 +618,6 @@ async def memes(event):
             os.remove(files)
 
 
-
 @catub.cat_cmd(
     pattern="flip$",
     command=("flip", plugin_category),
@@ -714,8 +708,8 @@ async def memes(event):
     for files in (outputfile, meme_file):
         if files and os.path.exists(files):
             os.remove(files)
-            
-            
+
+
 @catub.cat_cmd(
     pattern="pframe(f|-f)?$",
     command=("pframe", plugin_category),
@@ -792,4 +786,3 @@ async def maccmd(event):  # sourcery no-metrics
     await catevent.delete()
     if os.path.exists(output):
         os.remove(output)
-            

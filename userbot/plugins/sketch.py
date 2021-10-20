@@ -2,13 +2,15 @@
 
 import asyncio
 import os
+
 import cv2
-from PIL import Image
-from . import catub
 import requests
-from ..core.managers import edit_or_reply, edit_delete
+
+from ..core.managers import edit_delete, edit_or_reply
+from . import catub
 
 plugin_category = "extra"
+
 
 @catub.cat_cmd(
     pattern="sketch$",
@@ -55,7 +57,7 @@ async def sketch(e):
     await xx.delete()
     os.remove(file)
     os.remove("ultroid.png")
-    
+
 
 @catub.cat_cmd(
     pattern="toon$",
@@ -224,10 +226,8 @@ async def ultd(event):
     os.remove("ult.png")
     os.remove("ult.jpg")
     os.remove(ultt)
-        
-        
-        
-        
+
+
 @catub.cat_cmd(
     pattern="icolor$",
     command=("icolor", plugin_category),

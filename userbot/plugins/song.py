@@ -513,6 +513,7 @@ async def nope(event):
 
 # @TheLoneEssence (Lee Kaze) Pro AF
 
+
 @catub.cat_cmd(
     pattern="ssong ?(.*)",
     command=("ssong", plugin_category),
@@ -533,18 +534,22 @@ async def music(event):
         return
     music = None
     argument = event.pattern_match.group(1)
-    try: flag = event.pattern_match.group(1).split()[0]
-    except IndexError: flag = ""
+    try:
+        flag = event.pattern_match.group(1).split()[0]
+    except IndexError:
+        flag = ""
 
     if "-d" in flag:
-      music = event.pattern_match.group(1)[3:]
-      if not music and event.reply_to_msg_id:
-        music = (await event.get_reply_message()).text or None
-    elif argument: music = argument
+        music = event.pattern_match.group(1)[3:]
+        if not music and event.reply_to_msg_id:
+            music = (await event.get_reply_message()).text or None
+    elif argument:
+        music = argument
     elif event.reply_to_msg_id:
         music = (await event.get_reply_message()).text or None
 
-    if not music: return await edit_delete(event, "`Give a song name B~Baka`")
+    if not music:
+        return await edit_delete(event, "`Give a song name B~Baka`")
 
     bot = "@deezload2bot" if "-d" in flag else "@songdl_bot"
     sike = "Deezer" if "-d" in flag else "Spotify"
@@ -552,19 +557,24 @@ async def music(event):
     run = await event.client.inline_query(bot, music)
 
     try:
-      result = await run[0].click("me")
-      await result.delete()
+        result = await run[0].click("me")
+        await result.delete()
     except IndexError:
-      await edit_delete(event, "`Bish, Go and Die!`")
-      return
+        await edit_delete(event, "`Bish, Go and Die!`")
+        return
 
     if not (result.text).startswith("https://"):
-      await event.client.send_message(event.chat_id,
-          f"**✘ Name:** __{music}__\n**✘ Site:** __{sike}__\n**✘ Link:** __SOME ERROR OCCURED__",
-          reply_to=reply_to_id)
+        await event.client.send_message(
+            event.chat_id,
+            f"**✘ Name:** __{music}__\n**✘ Site:** __{sike}__\n**✘ Link:** __SOME ERROR OCCURED__",
+            reply_to=reply_to_id,
+        )
     else:
-      await event.client.send_message(event.chat_id,
-          f"**✘ Name:** __{music}__\n**✘ Site:** __{sike}__\n**✘ Link:** __{result.text}__", link_preview=True,
-          reply_to=reply_to_id)
+        await event.client.send_message(
+            event.chat_id,
+            f"**✘ Name:** __{music}__\n**✘ Site:** __{sike}__\n**✘ Link:** __{result.text}__",
+            link_preview=True,
+            reply_to=reply_to_id,
+        )
 
     await event.delete()

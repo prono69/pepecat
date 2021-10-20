@@ -579,7 +579,9 @@ async def fast_purger(event):  # sourcery no-metrics
     await sleep(5)
     await hi.delete()
 
+
 # Don't kang this plz
+
 
 @catub.cat_cmd(
     pattern="(s(?:elf)?)?y(?:eet)?p(?:urge)?",
@@ -615,5 +617,6 @@ async def yeetpurge(e):
     async for m in e.client.iter_messages(e.chat_id, **kw):
         messages.append(m)
     await e.client.delete_messages(e.chat_id, messages)
-    
+
+
 # Maa ki chut kang mat karna

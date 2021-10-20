@@ -357,6 +357,7 @@ Zodiac -: {sign}
         reply_to=event.reply_to_msg_id,
     )
 
+
 @catub.cat_cmd(
     pattern="apod$",
     command=("apod", plugin_category),

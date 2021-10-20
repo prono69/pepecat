@@ -317,6 +317,7 @@ async def _(event):
 # By Mine is Zarox https://t.me/IrisZarox
 # Plugin Paste :)
 
+
 @catub.cat_cmd(
     pattern="(d|p|s|n)?(pain|nekobin)(?:\s|$)([\S\s]*)",
     command=("pain", plugin_category),
@@ -340,11 +341,11 @@ async def why_odi_is_pro(zarox):
     "To paste plugin to a paste bin."
     input_str = zarox.pattern_match.group(3)
     if not input_str:
-    	await edit_delete(zarox, "`Bitch, Are you comedy me ?`")
+        await edit_delete(zarox, "`Bitch, Are you comedy me ?`")
     elif not os.path.exists(f"userbot/plugins/{input_str}.py"):
-    	await edit_delete(zarox, "No such plugin installed in your userbot")
+        await edit_delete(zarox, "No such plugin installed in your userbot")
     else:
-    	pass
+        pass
     catevent = await edit_or_reply(zarox, "`Pasting plugin to paste bin....`")
     if zarox.pattern_match.group(2) == "nekobin":
         pastetype = "n"
@@ -372,6 +373,7 @@ async def why_odi_is_pro(zarox):
     except Exception as e:
         await edit_delete(catevent, f"**Error while pasting plugin:**\n`{e}`")
 
+
 @catub.cat_cmd(
     pattern="dango(?:\s|$)([\s\S]*)",
     command=("dango", plugin_category),
@@ -380,7 +382,9 @@ async def why_odi_is_pro(zarox):
         "flags": {
             "f": "Use this flag to send it as file rather than image",
         },
-        "usage": ["{tr}dango <reply>",],
+        "usage": [
+            "{tr}dango <reply>",
+        ],
     },
 )
 async def sadness(zarox):
@@ -395,11 +399,11 @@ async def sadness(zarox):
     except IndexError:
         extension = None
     if not input_str:
-    	await edit_delete(zarox, "`Bitch, Are you comedy me ?`")
+        await edit_delete(zarox, "`Bitch, Are you comedy me ?`")
     elif not os.path.exists(f"userbot/plugins/{input_str}.py"):
-    	await edit_delete(zarox, "No such plugin installed in your userbot")
+        await edit_delete(zarox, "No such plugin installed in your userbot")
     else:
-    	pass
+        pass
     catevent = await edit_or_reply(zarox, "`Pasting the plugin on image`")
     plugin = f"userbot/plugins/{input_str}.py"
     with open(plugin, "r") as f:
