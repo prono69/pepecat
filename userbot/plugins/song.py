@@ -1,6 +1,8 @@
 # by  @sandy1709 ( https://t.me/mrconfused  )
-
 # songs finder for catuserbot
+
+# Modified by @kirito6969
+
 import asyncio
 import base64
 import io
@@ -57,7 +59,7 @@ SONGBOT_BLOCKED_STRING = "<code>Please unblock @songdl_bot and try again</code>"
     },
 )
 async def _(event):
-    "To search songs"
+    "To search songs from youtube"
     reply_to_id = await reply_id(event)
     reply = await event.get_reply_message()
     if event.pattern_match.group(2):
@@ -141,7 +143,7 @@ async def delete_messages(event, chat, from_message):
     },
 )
 async def _(event):
-    "To search video songs"
+    "To search video songs from youtube"
     reply_to_id = await reply_id(event)
     reply = await event.get_reply_message()
     if event.pattern_match.group(1):
@@ -260,7 +262,7 @@ async def shazamcmd(event):
     },
 )
 async def _(event):
-    "To search songs"
+    "To search songs by bot"
     song = event.pattern_match.group(1)
     chat = "@songdl_bot"
     reply_id_ = await reply_id(event)
@@ -350,6 +352,7 @@ async def _(event):
     },
 )
 async def dzd(event):
+    "To download song via Deezload2bot"
     link = event.pattern_match.group(1)
     reply_message = await event.get_reply_message()
     reply_to_id = await reply_id(event)
@@ -383,7 +386,7 @@ async def dzd(event):
     pattern="isong ?(.*)",
     command=("isong", plugin_category),
     info={
-        "header": "Kinda inline music downloader",
+        "header": "Inline music downloader by @FeelDeD",
         "usage": ["{tr}isong <song name>", "{tr}isong <reply>"],
     },
 )
@@ -417,15 +420,16 @@ async def music(event):
         "header": "Spotify/Deezer Downloader",
         "usage": [
             "{tr}sdl <song link>",
+            "{tr}sdl <reply to a Spotify/Deezer link>",
         ],
     },
 )
 async def wave(odi):
-    "Song Downloader"
+    "Song Downloader via Bot"
     song = "".join(odi.text.split(maxsplit=1)[1:])
     songr = await odi.get_reply_message()
     reply_to_id = await reply_id(odi)
-    link = song or songr.media.webpage.url
+    link = song or songr.text
     if not link:
         await edit_delete(odi, "`Give me a song link`")
     elif not link:
@@ -493,6 +497,7 @@ async def lisong(event):
     },
 )
 async def nope(event):
+    "Meme voice by bot"
     mafia = event.pattern_match.group(1)
     lol = deEmojify(mafia)
     bot = "@myinstantsbot"
@@ -506,69 +511,60 @@ async def nope(event):
     await event.delete()
 
 
+# @TheLoneEssence (Lee Kaze) Pro AF
+
 @catub.cat_cmd(
-    pattern="ssong",
+    pattern="ssong ?(.*)",
     command=("ssong", plugin_category),
     info={
-        "header": "It will gib u Spotify link.",
-        "usage": ["{tr}ssong <song name>", "{tr}ssong <reply>"],
+        "header": "It will send you Spotify/Deezer link of your given query.",
+        "flags": {"-d": "For Deezer Link"},
+        "usage": [
+            "{tr}ssong <song name>",
+            "{tr}ssong <reply>",
+            "{tr}ssong -d <song name>",
+            "{tr}ssong -d <reply>",
+        ],
     },
 )
 async def music(event):
+    "Generate Spotify/Deezer link from song names"
     if event.fwd_from:
         return
-    song = "".join(odi.text.split(maxsplit=1)[1:])
-    reply = await event.get_reply_message()
-    name = song or reply.text
-    if not song and not reply:
-        await edit_delete(event, "`Give a song name B~Baka`")
-        return
-    bot = "@songdl_bot"
-    reply_to_id = await reply_id(event)
-    run = await event.client.inline_query(bot, name)
-    try:
-        result = await run[0].click("me")
-        await result.delete()
-        await event.client.send_message(
-            event.chat_id,
-            f"**✘ Name:** __{name}__\n**✘ Site:** __Spotify__\n**✘ Link:** __{result.text}__",
-            link_preview=True,
-            reply_to=reply_to_id,
-        )
-    except IndexError:
-        await edit_delete(event, "`Bish, Go and Die!`")
-    await event.delete()
+    music = None
+    argument = event.pattern_match.group(1)
+    try: flag = event.pattern_match.group(1).split()[0]
+    except IndexError: flag = ""
 
+    if "-d" in flag:
+      music = event.pattern_match.group(1)[3:]
+      if not music and event.reply_to_msg_id:
+        music = (await event.get_reply_message()).text or None
+    elif argument: music = argument
+    elif event.reply_to_msg_id:
+        music = (await event.get_reply_message()).text or None
 
-@catub.cat_cmd(
-    pattern="dsong",
-    command=("dsong", plugin_category),
-    info={
-        "header": "It will gib u Deezer link.",
-        "usage": ["{tr}dsong <song name>", "{tr}dsong <reply>"],
-    },
-)
-async def music(event):
-    if event.fwd_from:
-        return
-    song = "".join(odi.text.split(maxsplit=1)[1:])
-    reply = await event.get_reply_message()
-    name = song or reply.text
-    if not song and not reply:
-        await edit_delete(event, "`Give a song name.`")
-        return
-    bot = "@deezload2bot"
+    if not music: return await edit_delete(event, "`Give a song name B~Baka`")
+
+    bot = "@deezload2bot" if "-d" in flag else "@songdl_bot"
+    sike = "Deezer" if "-d" in flag else "Spotify"
     reply_to_id = await reply_id(event)
-    run = await event.client.inline_query(bot, name)
+    run = await event.client.inline_query(bot, music)
+
     try:
-        result = await run[0].click("me")
-        await result.delete()
-        await event.client.send_message(
-            event.chat_id,
-            f"**✘ Name:** __{name}__\n**✘ Site:** __Deezer__\n**✘ Link:** __{result.text}__",
-            link_preview=True,
-            reply_to=reply_to_id,
-        )
+      result = await run[0].click("me")
+      await result.delete()
     except IndexError:
-        await edit_delete(event, "`Bish, Go and Die!`")
+      await edit_delete(event, "`Bish, Go and Die!`")
+      return
+
+    if not (result.text).startswith("https://"):
+      await event.client.send_message(event.chat_id,
+          f"**✘ Name:** __{music}__\n**✘ Site:** __{sike}__\n**✘ Link:** __SOME ERROR OCCURED__",
+          reply_to=reply_to_id)
+    else:
+      await event.client.send_message(event.chat_id,
+          f"**✘ Name:** __{music}__\n**✘ Site:** __{sike}__\n**✘ Link:** __{result.text}__", link_preview=True,
+          reply_to=reply_to_id)
+
     await event.delete()

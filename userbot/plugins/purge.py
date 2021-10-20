@@ -579,21 +579,23 @@ async def fast_purger(event):  # sourcery no-metrics
     await sleep(5)
     await hi.delete()
 
+# Don't kang this plz
 
 @catub.cat_cmd(
     pattern="(s(?:elf)?)?y(?:eet)?p(?:urge)?",
-    command=("yp or syp", plugin_category),
+    command=("yp", plugin_category),
     info={
-        "header": "Oy for Pros.",
+        "header": "Onlyy for Pros.",
         "description": "Nothing",
-        "usage": "{tr}yp LMAO",
+        "usage": "{tr}yp",
     },
 )
 async def yeetpurge(e):
+    "Noobs plz stay away"
     global _YEETPURGES
     selfonly = 1 if e.pattern_match.group(1) else 0
     if not e.is_reply:
-        await edit_or_reply(e, "err \\\nNo reply")
+        await edit_delete(e, "Err \\\nNo reply")
         return
     if e.sender_id not in _YEETPURGES[selfonly]:
         _YEETPURGES[selfonly][e.sender_id] = {}
@@ -613,4 +615,5 @@ async def yeetpurge(e):
     async for m in e.client.iter_messages(e.chat_id, **kw):
         messages.append(m)
     await e.client.delete_messages(e.chat_id, messages)
-    # Maa ki chut kang mat karna
+    
+# Maa ki chut kang mat karna

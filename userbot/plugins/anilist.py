@@ -62,6 +62,7 @@ plugin_category = "extra"
     },
 )
 async def anime_quote(event):
+    "Get random anime quotes"
     data = requests.get("https://animechan.vercel.app/api/random").json()
     anime = data["anime"]
     character = data["character"]
@@ -676,6 +677,7 @@ async def whatanime(event):
     },
 )
 async def manga(event):
+    "Search Manga"
     query = event.pattern_match.group(1)
     await edit_or_reply(event, "`Searching Manga...`")
     if not query:
@@ -734,6 +736,7 @@ async def manga(event):
     },
 )
 async def get_anime(message):
+    "Anime Search in Different Template"
     try:
         query = message.pattern_match.group(1)
     except IndexError:

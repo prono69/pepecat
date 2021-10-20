@@ -168,6 +168,7 @@ async def mcq(event):
     },
 )
 async def diela(e):
+    "Events of the Day"
     match = e.pattern_match.group(1)
     m = await edit_or_reply(e, "`Processing...`")
     li = "https://daysoftheyear.com"
@@ -197,6 +198,7 @@ async def diela(e):
     },
 )
 async def copp(event):
+    "Copy"
     msg = await event.get_reply_message()
     if not msg:
         return await edit_delete(event, f"Use `{tr}cpy` as reply to a message!", 5)
@@ -213,6 +215,7 @@ async def copp(event):
     },
 )
 async def colgate(event):
+    "Paste"
     await toothpaste(event)
 
 
@@ -242,6 +245,7 @@ async def toothpaste(event):
     },
 )
 async def hbd(event):
+    "Details about ur DOB"
     if not event.pattern_match.group(1):
         return await edit_delete(event, "`Put input in dd/mm/yyyy format`")
     if event.reply_to_msg_id:
@@ -352,3 +356,33 @@ Zodiac -: {sign}
     """,
         reply_to=event.reply_to_msg_id,
     )
+
+@catub.cat_cmd(
+    pattern="apod$",
+    command=("apod", plugin_category),
+    info={
+        "header": "Get Astronomy Picture of Day by NASA",
+        "usage": "{tr}apod",
+    },
+)
+async def aposj(e):
+    "Astronomy picture of the Day"
+    link = "https://apod.nasa.gov/apod/"
+    C = requests.get(link).content
+    m = bs(C, "html.parser", from_encoding="utf-8")
+    try:
+        try:
+            img = m.find_all("img")[0]["src"]
+            img = link + img
+        except IndexError:
+            img = None
+        expla = m.find_all("p")[2].text.replace("\n", " ")
+        expla = expla.split("     ")[0]
+        if len(expla) > 3000:
+            expla = expla[:3000] + "..."
+        expla = "__" + expla + "__"
+        await e.reply(expla, file=img)
+        if e.out:
+            await e.delete()
+    except Exception as E:
+        return await edit_delete(e, str(E))

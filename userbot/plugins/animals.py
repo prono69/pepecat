@@ -1,6 +1,6 @@
 # By @kirito6969
-import re
 
+import re
 from . import AioHttp, catub, eod, eor
 
 plugin_category = "fun"
@@ -68,6 +68,7 @@ async def prep_animal_image(animal_data):
     },
 )
 async def animal_image(message):
+    "Picture of an Animal of your Choice"
     lol = message.pattern_match.group(1)
     await eor(message, f"`Finding a cute {lol}...`")
     if not lol:
@@ -95,6 +96,7 @@ async def animal_image(message):
     },
 )
 async def fact(message):
+    "Facts of an Animal of your choice"
     cmd = message.pattern_match.group(1)
     if not cmd:
         await eod(message, "```Not enough params provided```", 5)

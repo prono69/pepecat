@@ -1,12 +1,7 @@
-# Ultroid - UserBot
-# Copyright (C) 2021 TeamUltroid
-# This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# Modified for cat
+# Ported from Ultroid Userbot by @kirito6969 for pepecat
 
 import os
-
 from PIL import Image
-
 from . import catub, eod, eor
 
 plugin_category = "tools"

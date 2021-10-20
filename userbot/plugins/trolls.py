@@ -160,7 +160,7 @@ async def catbot(event):
     else:
         return await edit_or_reply(
             event,
-            "**Syntax :** reply to image or sticker with `.phub (username);(text in comment)`",
+            "**Syntax :** Reply to image or sticker with `.phub (username);(text in comment)`",
         )
     replied = await event.get_reply_message()
     catid = await reply_id(event)
@@ -176,10 +176,10 @@ async def catbot(event):
     if size > 5242880:
         os.remove(download_location)
         return await output[0].edit(
-            "the replied file size is not supported it must me below 5 mb"
+            "The replied file size is not supported it must me below 5 mb"
         )
 
-    await output[0].edit("generating image..")
+    await output[0].edit("`Generating image..`")
     try:
         response = upload_file(download_location)
     except exceptions.TelegraphException as exc:
