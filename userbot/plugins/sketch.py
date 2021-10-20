@@ -2,9 +2,9 @@
 
 import asyncio
 import os
-import numpy as np
 
 import cv2
+import numpy as np
 import requests
 
 from ..core.managers import edit_delete, edit_or_reply
