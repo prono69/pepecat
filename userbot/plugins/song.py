@@ -357,7 +357,7 @@ async def dzd(event):
     reply_message = await event.get_reply_message()
     reply_to_id = await reply_id(event)
     if not link and not reply_message:
-        catevent = await eod(
+        catevent = await edit_delete(
             event, "**I need a link to download something pro. (._.)**"
         )
     else:
@@ -534,6 +534,7 @@ async def music(event):
         return
     music = None
     argument = event.pattern_match.group(1)
+    await edit_or_reply(event, "`Semding song link, waimt....`")
     try:
         flag = event.pattern_match.group(1).split()[0]
     except IndexError:

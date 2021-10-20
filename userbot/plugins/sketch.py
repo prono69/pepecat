@@ -2,6 +2,7 @@
 
 import asyncio
 import os
+import numpy as np
 
 import cv2
 import requests
