@@ -528,6 +528,8 @@ async def memes(event):
         if files and os.path.exists(files):
             os.remove(files)
 
+
+
 @catub.cat_cmd(
     pattern="invert$",
     command=("invert", plugin_category),
@@ -537,7 +539,7 @@ async def memes(event):
     },
 )
 async def memes(event):
-	  "Invert colours of given image or sticker"
+    "Invert Images"
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
         await edit_or_reply(event, "`Reply to supported Media...`")
