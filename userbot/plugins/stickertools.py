@@ -70,7 +70,7 @@ async def ultdround(event):
 
 
 @catub.cat_cmd(
-    pattern="tgs ?(.*)",
+    pattern="tgs$",
     command=("tgs", plugin_category),
     info={
         "header": "Destory a sticker",

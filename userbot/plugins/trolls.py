@@ -4,6 +4,7 @@
 import os
 
 from telegraph import exceptions, upload_file
+from ..helpers.utils import get_user_from_event
 
 from userbot import catub
 
@@ -13,6 +14,11 @@ from . import convert_toimage, deEmojify, phcomment, threats, trap, trash
 
 plugin_category = "fun"
 
+async def purge():
+    try:
+        os.system("rm *.png *.webp")
+    except OSError:
+        pass
 
 @catub.cat_cmd(
     pattern="trash$",
@@ -55,8 +61,8 @@ async def catbot(event):
 
 
 @catub.cat_cmd(
-    pattern="threats$",
-    command=("threats", plugin_category),
+    pattern="threat$",
+    command=("threat", plugin_category),
     info={
         "header": "Reply to image/sticker to get meme on that image.",
         "usage": "{tr}threats",
@@ -148,45 +154,53 @@ async def catbot(event):
     info={
         "header": "Reply to image/sticker to get meme on that image.",
         "description": "pornhub comment creator",
-        "usage": "{tr}phub (username);(text in comment)",
+        "usage": "{tr}phub <reply> <message>",
     },
 )
-async def catbot(event):
-    "image meme creator."
-    input_str = event.pattern_match.group(1)
-    input_str = deEmojify(input_str)
-    if ";" in input_str:
-        username, text = input_str.split(";")
-    else:
-        return await edit_or_reply(
-            event,
-            "**Syntax :** Reply to image or sticker with `.phub (username);(text in comment)`",
-        )
-    replied = await event.get_reply_message()
-    catid = await reply_id(event)
-    if not replied:
-        return await edit_or_reply(event, "reply to a supported media file")
-    output = await _cattools.media_to_pic(event, replied)
-    if output[1] is None:
-        return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
-        )
-    download_location = convert_toimage(output[1])
-    size = os.stat(download_location).st_size
-    if size > 5242880:
-        os.remove(download_location)
-        return await output[0].edit(
-            "The replied file size is not supported it must me below 5 mb"
-        )
-
-    await output[0].edit("`Generating image..`")
+async def phcomment(event):
+    "Punhab comment maker"
     try:
-        response = upload_file(download_location)
-    except exceptions.TelegraphException as exc:
-        os.remove(download_location)
-        return await output[0].edit(f"**Error: **\n`{exc}`")
-    cat = f"https://telegra.ph{response[0]}"
-    cat = await phcomment(cat, text, username)
-    await output[0].delete()
-    os.remove(download_location)
-    await event.client.send_file(event.chat_id, cat, reply_to=catid)
+        k = await edit_or_reply(event, "`Processing..`")
+        text = event.pattern_match.group(1)
+        reply = await event.get_reply_message()
+        reply_to = await reply_id(event)
+        if reply:
+            user = await get_user_from_event(event)
+            if user.last_name:
+                name = user.first_name + " " + user.last_name
+            else:
+                name = user.first_name
+            text = text if text else str(reply.message)
+        elif text:
+            user = await catub.get_me()
+            if user.last_name:
+                name = user.first_name + " " + user.last_name
+            else:
+                name = user.first_name
+            text = text
+        else:
+            return await edit_delete(event, "`Give text bitch`")
+        try:
+            photo = await event.client.download_profile_photo(
+                user.id,
+                str(user.id) + ".png",
+                download_big=False,
+            )
+            uplded = upload_image(photo)
+        except BaseException:
+            uplded = "https://telegra.ph/file/7d110cd944d54f72bcc84.jpg"
+    except BaseException as e:
+        await purge()
+        return await edit_delete(event, f"`Error: {e}`")
+    img = await phcomment(uplded, text, name)
+    try:
+        await event.client.send_file(
+            event.chat_id,
+            img,
+            reply_to=reply_to,
+        )
+    except BaseException:
+        await purge()
+        return await edit_delete(event, "`Reply message has no text!`")
+    await event.delete()
+    await purge()
