@@ -4,21 +4,22 @@
 import os
 
 from telegraph import exceptions, upload_file
-from ..helpers.utils import get_user_from_event
 
 from userbot import catub
 
 from ..core.managers import edit_or_reply
-from ..helpers.utils import _cattools, reply_id
+from ..helpers.utils import _cattools, get_user_from_event, reply_id
 from . import convert_toimage, deEmojify, phcomment, threats, trap, trash
 
 plugin_category = "fun"
+
 
 async def purge():
     try:
         os.system("rm *.png *.webp")
     except OSError:
         pass
+
 
 @catub.cat_cmd(
     pattern="trash$",
@@ -160,7 +161,7 @@ async def catbot(event):
 async def phcomment(event):
     "Punhab comment maker"
     try:
-        k = await edit_or_reply(event, "`Processing..`")
+        await edit_or_reply(event, "`Processing..`")
         text = event.pattern_match.group(1)
         reply = await event.get_reply_message()
         reply_to = await reply_id(event)
