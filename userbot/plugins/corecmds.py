@@ -113,7 +113,7 @@ async def send(event):
         f"<a href= {repo_link}/raw/{repo_branch}/userbot/plugins/{input_str}.py>Raw</a>"
     )
     if os.path.exists(the_plugin_file):
-        start = datetime.now()
+        datetime.now()
         caat = await event.client.send_file(
             event.chat_id,
             the_plugin_file,
@@ -128,7 +128,7 @@ async def send(event):
 〣 Uploaded by {hmention}</b>""",
         )
         await event.delete()
-        
+
     else:
         await edit_or_reply(event, "**404: File Not Found**")
 

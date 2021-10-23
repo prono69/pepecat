@@ -81,7 +81,6 @@ async def _(event):
         await catevent.edit(caption)
 
 
-
 @catub.cat_cmd(
     pattern="mping$",
     command=("mping", plugin_category),

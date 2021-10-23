@@ -1,14 +1,12 @@
-from telethon.utils import pack_bot_file_id
+import html
+
+from telethon.tl.types import User
+from telethon.utils import get_display_name, pack_bot_file_id
 
 from userbot import catub
 from userbot.core.logger import logging
 
 from ..core.managers import edit_delete, edit_or_reply
-
-import html
-from telethon.tl.types import User
-from telethon.utils import get_display_name
-
 
 plugin_category = "utils"
 
