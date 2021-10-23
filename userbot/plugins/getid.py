@@ -1,3 +1,5 @@
+# Modified by @kirito6969
+
 import html
 
 from telethon.tl.types import User
@@ -95,14 +97,14 @@ async def get_id(e):
         text += f"'s ID: <code>{id}</code>"
         await edit_or_reply(e, text, parse_mode="HTML")
         return
-    text = f"**👥 ChatID** [<code>{e.chat_id}</code>]\n"
-    text += f"**💬 MessageID** [<code>{e.id}</code>]\n"
-    text += f'**🙋‍♂️ YourID** [<code>{e.sender_id}</code>, <a href="tg://user?id={e.sender_id}">Link</a>]\n'
+    text = f"<b>👥 Chat ID:</b> <code>{e.chat_id}</code>\n"
+    text += f"<b>💬 Message ID:</b> <code>{e.id}</code>\n"
+    text += f'<b>🙋‍♂️ Your ID:</b> <code>{e.sender_id}</code> • <a href="tg://user?id={e.sender_id}">Link</a>\n'
     if e.is_reply:
         text += "\n"
         r = await e.get_reply_message()
-        text += f"**RepliedMessageID** [<code>{r.id}</code>]\n"
-        text += f'**RepliedSenderID** [<code>{r.sender_id}</code>, <a href="tg://user?id={r.sender_id}">Link</a>]\n'
-        if getattr(r.fwd_from, "sender_id", None):
-            text += f'RepliedForwardSenderID[<code>{r.fwd_from.sender_id}</code>, <a href="tg://user?id={r.fwd_from.sender_id}">Link</a>]\n'
+        text += f"<b>RepliedMessage ID:</b> <code>{r.id}</code>\n"
+        text += f'<b>RepliedSender ID:</b> <code>{r.sender_id}</code> • <a href="tg://user?id={r.sender_id}">Link</a>\n'
+        if getattr(r.fwd_from, "from_id", None):
+            text += f'<b>RepliedForward SenderID:</b> <code>-100{r.fwd_from.from_id.channel_id}</code> • <a href="tg://user?id=-100{r.fwd_from.from_id.channel_id}">Link</a>\n'
     await edit_or_reply(e, text, parse_mode="HTML")

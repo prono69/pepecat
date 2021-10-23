@@ -15,6 +15,7 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from validators.url import url
 from youtubesearchpython import Video
+from urlextract import URLExtract
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
@@ -355,6 +356,9 @@ async def dzd(event):
     "To download song via Deezload2bot"
     link = event.pattern_match.group(1)
     reply_message = await event.get_reply_message()
+    pro = link or reply_message.text
+    extractor = URLExtract()
+    plink = extractor.find_urls(pro)
     reply_to_id = await reply_id(event)
     if not link and not reply_message:
         catevent = await edit_delete(
@@ -365,7 +369,7 @@ async def dzd(event):
     chat = "@deezload2bot"
     async with event.client.conversation(chat) as conv:
         try:
-            msg = await conv.send_message(link or reply_message)
+            msg = await conv.send_message(plink)
             details = await conv.get_response()
             song = await conv.get_response()
             """ - don't spam notif - """
