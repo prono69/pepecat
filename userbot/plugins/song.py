@@ -13,9 +13,9 @@ from ShazamAPI import Shazam
 from telethon import functions, types
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
+from urlextract import URLExtract
 from validators.url import url
 from youtubesearchpython import Video
-from urlextract import URLExtract
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
