@@ -1,4 +1,5 @@
 aiofiles
+akinator.py
 aiohttp
 apscheduler
 cairosvg
@@ -63,7 +64,7 @@ regex
 requests
 search-engine-parser
 selenium
-setuptools
+setuptools==47.1.1
 ShazamAPI
 spamwatch
 speedtest-cli

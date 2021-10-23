@@ -43,6 +43,7 @@ vlist = [
     "PM_PIC",
     "PM_TEXT",
     "PING_PICS",
+    "PING_TEMPLATE",
     "PM_BLOCK",
     "PUBLIC_CHANNEL_ID",
     "MAX_FLOOD_IN_PMS",

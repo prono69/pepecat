@@ -573,7 +573,7 @@ async def music(event):
     else:
         await event.client.send_message(
             event.chat_id,
-            f"**✘ Name:** __{music}__\n**✘ Site:** __{sike}__\n**✘ Link:** __{result.text}__",
+            f"**✘ Name:** __{music.title()}__\n**✘ Site:** __{sike}__\n**✘ Link:** __{result.text}__",
             link_preview=True,
             reply_to=reply_to_id,
         )

@@ -435,11 +435,11 @@ async def get(event):
 
 
 @catub.cat_cmd(
-    pattern="ftoi$",
-    command=("ftoi", plugin_category),
+    pattern="z$",
+    command=("z", plugin_category),
     info={
         "header": "Reply this command to a image file to convert it to image",
-        "usage": "{tr}ftoi",
+        "usage": "{tr}z",
     },
 )
 async def on_file_to_photo(event):

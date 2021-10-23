@@ -48,7 +48,7 @@ async def very(event):
             cn = requests.get(subreddit_api)
             r = cn.json()
         except ValueError:
-            return await edit_delete(event, "Value error!.")
+            return await edit_delete(event, "`Value error!`")
         try:
             postlink = r["postLink"]
             title = r["title"]
@@ -89,7 +89,7 @@ async def very(event):
             await event.delete()
             break
         except WebpageCurlFailedError:
-            await edit_or_reply(event, f"**Value error!!..Link is :** {media_url}")
+            await edit_or_reply(event, f"**Value error!! Link is :** {media_url}")
             await asyncio.sleep(3)
             await edit_or_reply(
                 event,
@@ -128,7 +128,7 @@ async def bad(event):
         sub_r = "60fpsporn"
     count = int(count)
     if count > 30:
-        return await edit_delete(event, "**Value error!.. Count value 1 to 30**")
+        return await edit_delete(event, "**Value error! Count value 1 to 30**")
     await edit_or_reply(event, "**Just hold a sec u horny kid...**")
     if await age_verification(event, reply_to):
         return
@@ -416,7 +416,7 @@ async def wants_ur_noods(event):
             await asyncio.sleep(2)
         except WebpageCurlFailedError:
             await event.client.send_message(
-                event.chat_id, f"**Value error!!..Link is :** {m}"
+                event.chat_id, f"**Value error!! Link is :** {m}"
             )
         i += 1
         if i == len(plink):

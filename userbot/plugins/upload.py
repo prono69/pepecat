@@ -121,7 +121,7 @@ async def upload(path, event, udir_event, catflag=None):  # sourcery no-metrics
         await event.client.send_file(
             event.chat_id,
             file=media,
-            caption=f"**File Name : **`{fname}`",
+            caption=f"**• File Name : **`{fname}`",
             reply_to=reply_to_id,
         )
 
@@ -149,11 +149,11 @@ async def uploadir(event):
     flag = event.pattern_match.group(1)
     flag = bool(flag)
     if not os.path.exists(path):
-        return await edit_or_reply(
+        return await edit_delete(
             event,
-            f"`there is no such directory/file with the name {path} to upload`",
+            f"`There is no such directory/file with the name {path} to upload`",
         )
-    udir_event = await edit_or_reply(event, "Uploading....")
+    udir_event = await edit_or_reply(event, "`Uploading....`")
     if os.path.isdir(path):
         await edit_or_reply(udir_event, f"`Gathering file details in directory {path}`")
         UPLOAD_.uploaded = 0
