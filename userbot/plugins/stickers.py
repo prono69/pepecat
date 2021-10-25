@@ -807,10 +807,10 @@ async def _(event):
         is_a_s = is_it_animated_sticker(reply_message)
         file_ext_ns_ion = "webp"
         file_caption = "`Now Pay me 69$`"
-        a = await edit_or_reply(event, "`Hold on! Doing mejik")
+        a = await edit_or_reply(event, "`Hold on! Doing mejik`")
         if is_a_s:
             file_ext_ns_ion = "tgs"
-            file_caption = "Forward the ZIP file to @AnimatedStickersRoBot to get lottIE JSON containing the vector information."
+            file_caption = "Forward the ZIP file to @AnimatedStickersRoBot to get lottie JSON containing the vector information."
         sticker_set = await bot(GetStickerSetRequest(sticker_attrib.stickerset))
         pack_file = os.path.join(
             Config.TMP_DOWNLOAD_DIRECTORY, sticker_set.set.short_name, "pack.txt"
@@ -879,7 +879,7 @@ async def _(event):
         await asyncio.sleep(1)
         await event.delete()
     else:
-        await edit_or_reply("**TODO :** Not Implemented")
+        await edit_or_reply("**TODO :** `Not Implemented`")
 
 
 @catub.cat_cmd(
