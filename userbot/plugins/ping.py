@@ -1,14 +1,14 @@
 import asyncio
 import os
 import random
-from datetime import datetime
 import re
+from datetime import datetime
 
 from telethon.events import CallbackQuery
 
 from ..core.managers import edit_or_reply
 from ..sql_helper.globals import gvarstatus
-from . import catub, hmention, mention, reply_id, BOTLOG_CHATID
+from . import BOTLOG_CHATID, catub, hmention, mention, reply_id
 
 plugin_category = "tools"
 
@@ -126,7 +126,7 @@ async def _(event):
             allow_cache=True,
         )
 
-        
+
 # Inline Ping by t.me/i_osho
 
 
@@ -157,4 +157,3 @@ async def ping(event):
     ms = str((end - start).microseconds / 1000)
     ping_data = f"「 𝗣𝗶𝗻𝗴 」 {ms}ms"
     await event.answer(ping_data, cache_time=0, alert=True)
-        
