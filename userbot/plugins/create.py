@@ -1,13 +1,13 @@
 from telethon.tl import functions
- 
+
 from .. import catub
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..utils.tools import create_supergroup
- 
+
 plugin_category = "tools"
- 
- 
+
+
 @catub.cat_cmd(
     pattern="create (b|g|c) ([\s\S]*)",
     command=("create", plugin_category),
@@ -87,4 +87,3 @@ async def _(event):
             await edit_delete(event, f"**Error:**\n{answer[1]}")
     else:
         await edit_delete(event, "Read `.help create` to know how to use me")
- 

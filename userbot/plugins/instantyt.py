@@ -1,14 +1,15 @@
-#By Mine is Zarox (https://t.me/IrisZarox)
+# By Mine is Zarox (https://t.me/IrisZarox)
 import asyncio
 from datetime import datetime
-from time import time
 
-from . import hmention
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+
 from userbot import catub
+
 from ..helpers.utils import reply_id
 
 plugin_category = "misc"
+
 
 @catub.cat_cmd(
     pattern="iyt(?:\s|$)([\s\S]*)",
@@ -38,7 +39,7 @@ async def _(zarox):
         await edit_or_reply(
             zarox, "` I need a valid youtube link to download it's Video/Shorts...`"
         )
-        return 
+        return
     else:
         start = datetime.now()
         catevent = await edit_or_reply(zarox, "**Downloading.....**")
@@ -57,9 +58,9 @@ async def _(zarox):
         end = datetime.now()
         ms = (end - start).seconds
         if "short" in mine:
-        	link = f"**➥Youtube short:**"
+            link = f"**➥Youtube short:**"
         else:
-        	link = f"**➥Youtube video:**"
+            link = f"**➥Youtube video:**"
         caption = f"**➥ Video uploaded in {ms} seconds.**\n{link} [Link]({mine})"
         cat = await zarox.client.send_file(
             zarox.chat_id,
@@ -68,5 +69,11 @@ async def _(zarox):
             reply_to=reply_to_id,
         )
     await zarox.client.delete_messages(
-        conv.chat_id, [msg_start.id, response.id, msg.id, video.id,]
+        conv.chat_id,
+        [
+            msg_start.id,
+            response.id,
+            msg.id,
+            video.id,
+        ],
     )

@@ -18,8 +18,8 @@ from userbot import catub
 
 from ..Config import Config
 from ..core.logger import logging
-from . import BOTLOG, BOTLOG_CHATID, DEFAULT_BIO, reply_id
 from ..helpers.functions import deEmojify, hide_inlinebot
+from . import BOTLOG, BOTLOG_CHATID, DEFAULT_BIO, reply_id
 
 LOGS = logging.getLogger(__name__)
 plugin_category = "extra"
@@ -263,7 +263,6 @@ async def lastlog(lstlog):
         await lstlog.edit(LFM_LOG_ERR)
 
 
-        
 @catub.cat_cmd(
     pattern="now$",
     command=("now", plugin_category),
@@ -285,8 +284,8 @@ async def current(event):
         reply_to=reply_to_id,
     )
     await event.delete()
-    
-    
+
+
 @catub.cat_cmd(
     pattern="inow$",
     command=("inow", plugin_category),
@@ -304,5 +303,3 @@ async def nowimg(event):
     text = deEmojify(text)
     await event.delete()
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
-    
-        
