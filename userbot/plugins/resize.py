@@ -19,6 +19,7 @@ plugin_category = "tools"
     },
 )
 async def size(e):
+    "Get Size of an Image"
     r = await e.get_reply_message()
     if not (r and r.media):
         return await eod(e, "`Reply to image.`")
@@ -29,7 +30,7 @@ async def size(e):
         img = await r.download_media()
     im = Image.open(img)
     x, y = im.size
-    await k.edit(f"Dimension Of This Image Is\n`{x} x {y}`")
+    await k.edit(f"Dimension Of This Image is\n`{x} x {y}`")
     os.remove(img)
 
 
@@ -42,6 +43,7 @@ async def size(e):
     },
 )
 async def size(e):
+    "Resize an Image"
     r = await e.get_reply_message()
     if not (r and r.media):
         return await eod(e, "`Reply to image.`")

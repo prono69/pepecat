@@ -1,13 +1,13 @@
 from telethon.tl import functions
-
+ 
 from .. import catub
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..utils.tools import create_supergroup
-
+ 
 plugin_category = "tools"
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="create (b|g|c) ([\s\S]*)",
     command=("create", plugin_category),
@@ -28,9 +28,9 @@ async def _(event):
     type_of_group = event.pattern_match.group(1)
     group_name = event.pattern_match.group(2)
     if type_of_group == "c":
-        descript = "This is a Test Channel created using catuserbot"
+        descript = "This is a Test Channel created using pepecat"
     else:
-        descript = "This is a Test Group created using catuserbot"
+        descript = "This is a Test Group created using pepecat"
     if type_of_group == "g":
         try:
             result = await event.client(
@@ -48,7 +48,8 @@ async def _(event):
                 )
             )
             await edit_or_reply(
-                event, f"Group `{group_name}` created successfully. Join {result.link}"
+                event,
+                f"Group [{group_name}]({result.link[8:]}) created successfully.",
             )
         except Exception as e:
             await edit_delete(event, f"**Error:**\n{str(e)}")
@@ -69,7 +70,7 @@ async def _(event):
             )
             await edit_or_reply(
                 event,
-                f"Channel `{group_name}` created successfully. Join {result.link}",
+                f"Channel [{group_name}]({result.link[8:]}) created successfully.",
             )
         except Exception as e:
             await edit_delete(event, f"**Error:**\n{e}")
@@ -80,48 +81,10 @@ async def _(event):
         if answer[0] != "error":
             await edit_or_reply(
                 event,
-                f"Mega group `{group_name}` created successfully. Join {answer[0].link}",
+                f"Mega group [{group_name}]({result.link[8:]}) created successfully.",
             )
         else:
             await edit_delete(event, f"**Error:**\n{answer[1]}")
     else:
         await edit_delete(event, "Read `.help create` to know how to use me")
-
-
-@catub.cat_cmd(
-    pattern="shift (.*)",
-    command=("shift", plugin_category),
-    info={
-        "header": "BEWARE DANGER AHEAD",
-        "description": "To copy all messages/files from a channel/group to your channel/group",
-        "usage": "{tr}shift <id of source group/channel> | <id of destination group/channel>",
-        "examples": "{tr}shift -100|-100",
-    },
-)
-async def _(e):
-    x = e.pattern_match.group(1)
-    z = await edit_or_reply(e, "`processing..`")
-    a, b = x.split("|")
-    try:
-        c = int(a)
-    except Exception:
-        try:
-            c = (await bot.get_entity(a)).id
-        except Exception:
-            await z.edit("invalid Channel given")
-            return
-    try:
-        d = int(b)
-    except Exception:
-        try:
-            d = (await bot.get_entity(b)).id
-        except Exception:
-            await z.edit("invalid Channel given")
-            return
-    async for msg in bot.iter_messages(int(c), reverse=True):
-        try:
-            await asyncio.sleep(1.5)
-            await bot.send_message(int(d), msg)
-        except BaseException:
-            pass
-    await z.edit("Done")
+ 

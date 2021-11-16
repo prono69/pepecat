@@ -199,3 +199,35 @@ async def mdl(odi):
                 odi.chat_id, result, reply_to=reply_to_id, caption=False
             )
             await result.delete()
+
+            
+            
+#By t.me/feelded
+
+@catub.cat_cmd(
+    pattern="embed ?(.*)",
+    command=("embed", plugin_category),
+    info={
+        "header": "Easily find and embed company logos",
+        "examples": "{tr}embed spotify.com",
+        "usage": [
+            "{tr}embed <site link>",
+        ],
+    },
+)
+async def embed(odi):
+    "Embed company logos"
+    try:
+       reply_to_id = await reply_id(odi)
+       link = odi.pattern_match.group(1)
+       if not link:
+          await edit_delete(odi, "`Give a company site link`", 6)
+       elif "http" in link:
+          await edit_delete(odi, "`Use true structure(Without https://)`\n`.embed python.com` ", 10)
+       else:
+          await odi.edit("`Processing ...`")
+          up = await odi.client.send_file(odi.chat_id, f"http://logo.clearbit.com/{link}", reply_to=reply_to_id, caption=f"**Query:** {link}")
+          await odi.delete()
+    except Exception as e:
+       await edit_delete(odi, "`No result found`\n`Try another link with true structure`")
+            

@@ -37,7 +37,6 @@ async def dark(odi):
     else:
         factor = 0.5
     reply_to_id = await reply_id(odi)
-    # ----------------------------------------------------#
     get = await odi.get_reply_message()
     if not get:
         return await edit_delete(odi, "`Please reply a photo/sticker`", 5)
@@ -47,7 +46,6 @@ async def dark(odi):
         return await edit_delete(odi, "`Please reply a photo/sticker`", 5)
     else:
         name = "Dark.webp"
-    # ------------------------------------#
     if get.photo or get.sticker:
         dl = await odi.client.download_media(get)
         img = Image.open(dl)

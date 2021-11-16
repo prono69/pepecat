@@ -381,7 +381,7 @@ async def wants_ur_noods(event):
             )
             if not os.path.isdir("./xvdo"):
                 os.mkdir("./xvdo")
-            xvdo = SmartDL(m, "./xvdo/porn.mp4", progress_bar=False)
+            xvdo = SmartDL(m, "./xvdo/porn.mp4", progress_bar=True)
             xvdo.start(blocking=False)
             xvdo.wait("finished")
             media_url = "./xvdo/porn.mp4"

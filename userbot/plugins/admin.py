@@ -165,7 +165,7 @@ async def promote(event):
         await event.client(EditAdminRequest(event.chat_id, user.id, new_rights, rank))
     except BadRequestError:
         return await catevent.edit(NO_PERM)
-    await catevent.edit("`Promoted Successfully! Now gib Party`")
+    await edit_delete(event, "`Promoted Successfully! Now gib Party`", 7)
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,

@@ -130,7 +130,7 @@ async def send(event):
         await event.delete()
 
     else:
-        await edit_or_reply(event, "**404: File Not Found**")
+        await edit_delete(event, "**404: File Not Found**")
 
 
 @catub.cat_cmd(

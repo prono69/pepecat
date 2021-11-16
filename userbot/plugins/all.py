@@ -126,20 +126,23 @@ async def current(event):
     if event.fwd_from:
         return
     if event.sender.id != 986755683:
-        await edit_delete(event, "`Why u kanged dis... MF`", 30)
+        await edit_delete(event, "`Currently you can't use this :)`", 30)
         return
     reply_to_id = await reply_id(event)
-
+    await event.get_reply_message()
     chat_ = await event.client.get_entity(event.chat.id)
     chat_info_ = await event.client(GetFullChannelRequest(channel=chat_))
     members = chat_info_.full_chat.participants_count
 
     input_ = event.pattern_match.group(1)
     if input_:
-        if input_ > "100":
+        if input_.isalpha():
+            await edit_delete(event, "`Braaah`", 15)
+            return
+        if int(input_) > 100:
             await edit_delete(event, "`You can't tag more than 100 user/msg`", 15)
             return
-        if input_ <= "0":
+        if int(input_) <= 0:
             await edit_delete(event, "`BRAH!! seriously`", 15)
             return
         else:
@@ -154,10 +157,24 @@ async def current(event):
     await event.delete()
 
     async for user in event.client.iter_participants(event.chat.id, limit=members):
-        msg.append((f"<a href = tg://user?id={user.id}>⁪⁬⁮⁮⁮⁮</a>"))
-        tagged += 1
-        if extra:
-            if tagged == members % permsg:
+        is_bot = user.bot
+        if not is_bot:
+            msg.append((f"<a href = tg://user?id={user.id}>⁪⁬⁮⁮⁮⁮</a>"))
+            tagged += 1
+            if extra:
+                if tagged == members % permsg:
+                    send = "⁪⁬⁮⁮⁮⁮".join(msg)
+                    await event.client.send_message(
+                        event.chat.id,
+                        f"{choice(emoji)} {send}",
+                        reply_to=reply_to_id,
+                        parse_mode="html",
+                    )
+                    await asyncio.sleep(0.5)
+                    msg.clear()
+                    tagged = 0
+                    extra = False
+            elif tagged == permsg:
                 send = "⁪⁬⁮⁮⁮⁮".join(msg)
                 await event.client.send_message(
                     event.chat.id,
@@ -168,15 +185,3 @@ async def current(event):
                 await asyncio.sleep(0.5)
                 msg.clear()
                 tagged = 0
-                extra = False
-        elif tagged == permsg:
-            send = "⁪⁬⁮⁮⁮⁮".join(msg)
-            await event.client.send_message(
-                event.chat.id,
-                f"{choice(emoji)} {send}",
-                reply_to=reply_to_id,
-                parse_mode="html",
-            )
-            await asyncio.sleep(0.5)
-            msg.clear()
-            tagged = 0

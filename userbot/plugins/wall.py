@@ -116,3 +116,37 @@ async def noods(event):
         LOGS.info(str(e))
     for i in piclist:
         os.remove(i)
+
+        
+        
+#By @FeelDeD
+
+@catub.cat_cmd(
+    pattern="iwall ?(.*)",
+    command=("iwall", plugin_category),
+    info={
+        "header": "Inline Wallpaper",
+        "usage": [
+            "{tr}iwall <query>",
+        ],
+    },
+)
+async def iwall(odi):
+    "i wall"
+    if odi.fwd_from: 
+        return
+    bot = "AniFluidbot"
+    text = odi.pattern_match.group(1)
+    reply_to_id = await reply_id(odi)
+    if not text:
+        await edit_delete(odi, "`Give me a text`")
+    else:
+        await odi.edit("`Processing ...`")
+        run = await odi.client.inline_query(bot, f".wall {text}")
+        if not run:
+        	await edit_delete(odi, f"`No result found for {text}`")
+        else:
+        	result = await run[random.choice(range(0, 5))].click("me")
+        	await odi.client.send_file(odi.chat_id, result, reply_to=reply_to_id, caption=f"**Query:** `{text}`")
+        	await odi.delete()
+        	await result.delete()        

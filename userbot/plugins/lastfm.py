@@ -18,7 +18,8 @@ from userbot import catub
 
 from ..Config import Config
 from ..core.logger import logging
-from . import BOTLOG, BOTLOG_CHATID, DEFAULT_BIO
+from . import BOTLOG, BOTLOG_CHATID, DEFAULT_BIO, reply_id
+from ..helpers.functions import deEmojify, hide_inlinebot
 
 LOGS = logging.getLogger(__name__)
 plugin_category = "extra"
@@ -260,3 +261,48 @@ async def lastlog(lstlog):
         await lstlog.edit(LFM_LOG_DISABLED)
     else:
         await lstlog.edit(LFM_LOG_ERR)
+
+
+        
+@catub.cat_cmd(
+    pattern="now$",
+    command=("now", plugin_category),
+    info={
+        "header": "Sends the song via @nowplaybot",
+        "description": "Sends the currently listening song (on spotify) to Telegram. Authorize with @nowplaybot for the command to work.",
+        "usage": "{tr}now",
+    },
+)
+async def current(event):
+    "Sends Muzik via @nowplaybot"
+    reply_to_id = await reply_id(event)
+    if event.fwd_from:
+        return
+    bot = "@nowplaybot"
+    results = await event.client.inline_query(bot, "current link")
+    await results[0].click(
+        event.chat_id,
+        reply_to=reply_to_id,
+    )
+    await event.delete()
+    
+    
+@catub.cat_cmd(
+    pattern="inow$",
+    command=("inow", plugin_category),
+    info={
+        "header": "Show your current listening song in the form of a cool image.",
+        "usage": "{tr}inow",
+        "note": "For working of this command, you need to authorize @SpotiPieBot.",
+    },
+)
+async def nowimg(event):
+    "Show your current listening song."
+    text = " "
+    reply_to_id = await reply_id(event)
+    bot_name = "@Spotipiebot"
+    text = deEmojify(text)
+    await event.delete()
+    await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
+    
+        
