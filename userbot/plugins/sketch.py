@@ -69,7 +69,7 @@ async def sketch(e):
     },
 )
 async def ultd(event):
-    "To make it toon."
+    "To make it toon type."
     ureply = await event.get_reply_message()
     xx = await edit_or_reply(event, "`...`")
     if not (ureply and (ureply.media)):
@@ -135,7 +135,7 @@ async def ultd(event):
     },
 )
 async def ultd(event):
-    "To make it look Danger."
+    "To make it look Dangerous."
     ureply = await event.get_reply_message()
     xx = await edit_or_reply(event, "`...`")
     if not (ureply and (ureply.media)):
@@ -238,6 +238,7 @@ async def ultd(event):
     },
 )
 async def _(event):
+    "Make it colorful"
     reply = await event.get_reply_message()
     if not reply.media:
         return await edit_delete(event, "`Reply To a Black nd White Image`")

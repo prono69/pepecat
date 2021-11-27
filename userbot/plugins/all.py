@@ -149,7 +149,10 @@ async def current(event):
             permsg = int(input_)
     else:
         permsg = 100
-    if members % permsg != 0:
+    if members < 101:
+        ALL = True
+        extra = None
+    elif members % permsg != 0:
         extra = True
     else:
         extra = False
@@ -161,7 +164,19 @@ async def current(event):
         if not is_bot:
             msg.append((f"<a href = tg://user?id={user.id}>⁪⁬⁮⁮⁮⁮</a>"))
             tagged += 1
-            if extra:
+            if ALL and tagged == members:
+                send = "⁪⁬⁮⁮⁮⁮".join(msg)
+                await event.client.send_message(
+                    event.chat.id,
+                    f"{choice(emoji)} {send}",
+                    reply_to=reply_to_id,
+                    parse_mode="html",
+                )
+                await asyncio.sleep(0.5)
+                msg.clear()
+                tagged = 0
+                extra = False
+            elif extra:
                 if tagged == members % permsg:
                     send = "⁪⁬⁮⁮⁮⁮".join(msg)
                     await event.client.send_message(

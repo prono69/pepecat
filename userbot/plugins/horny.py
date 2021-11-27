@@ -102,7 +102,7 @@ async def danbooru(message):
     },
 )
 async def boobs(e):
-    "Search boobs"
+    "Search beautiful boobs"
     reply_to = await reply_id(e)
     if await age_verification(e, reply_to):
         return
@@ -166,6 +166,7 @@ PENIS_TEMPLATE = """
     },
 )
 async def emoji_penis(e):
+    "Good diks"
     emoji = e.pattern_match.group(1)
     o = await edit_or_reply(e, "`Dickifying...`")
     message = PENIS_TEMPLATE
@@ -188,6 +189,7 @@ async def emoji_penis(e):
     },
 )
 async def loli(event):
+    "FBI moment"
     match = event.pattern_match.group(1)
     word = event.pattern_match.group(2)
     reply_to = await reply_id(event)
@@ -233,6 +235,7 @@ async def loli(event):
     },
 )
 async def _(event):
+    "Short pawn videos"
     if event.fwd_from:
         return
     reply_to_id = await reply_id(event)
@@ -262,6 +265,7 @@ async def _(event):
     },
 )
 async def _(event):
+    "Long pawn videos"
     if event.fwd_from:
         return
     reply_to_id = await reply_id(event)
@@ -291,6 +295,7 @@ async def _(event):
     },
 )
 async def _(event):
+    "Pawn pics"
     if event.fwd_from:
         return
     reply_to_id = await reply_id(event)
@@ -320,6 +325,7 @@ async def _(event):
     },
 )
 async def _(event):
+    "Just pawn things"
     if event.fwd_from:
         return
     reply_to_id = await reply_id(event)
@@ -349,6 +355,7 @@ async def _(event):
     },
 )
 async def _(event):
+    "Pawn pics"
     if event.fwd_from:
         return
     reply_to_id = await reply_id(event)
@@ -378,6 +385,7 @@ async def _(event):
     },
 )
 async def _(event):
+    "Just pawn things"
     if event.fwd_from:
         return
     reply_to_id = await reply_id(event)
@@ -407,6 +415,7 @@ async def _(event):
     },
 )
 async def _(event):
+    "just pawn things"
     if event.fwd_from:
         return
     reply_to_id = await reply_id(event)
