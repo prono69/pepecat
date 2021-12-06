@@ -7,9 +7,8 @@ from requests import get
 from telethon.errors import ChatSendMediaForbiddenError
 
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.utils import reply_id
+from ..helpers.utils import _catutils, reply_id
 from ..sql_helper.globals import gvarstatus
-from ..helpers.utils import _catutils
 from . import catub
 
 plugin_category = "misc"
@@ -240,9 +239,10 @@ async def embed(odi):
         await edit_delete(
             odi, "`No result found`\n`Try another link with true structure`"
         )
-        
-        
-#By @FeelDeD
+
+
+# By @FeelDeD
+
 
 @catub.cat_cmd(
     pattern="pip(.*)",
@@ -258,8 +258,7 @@ async def embed(odi):
 async def movie(event):
     "Run pip"
     await event.edit("`Processing ...`")
-    code = event.pattern_match.group(1) 
-    cmd = (f"pip {code}")
+    code = event.pattern_match.group(1)
+    cmd = f"pip {code}"
     run = (await _catutils.runcmd(cmd))[0]
-    await event.edit(f"<b>Results:</b>\n\n<code>{run}</code>", parse_mode="html")        
-        
+    await event.edit(f"<b>Results:</b>\n\n<code>{run}</code>", parse_mode="html")
