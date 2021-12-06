@@ -154,8 +154,10 @@ async def current(event):
         extra = None
     elif members % permsg != 0:
         extra = True
+        ALL = None
     else:
         extra = False
+        ALL = None
     tagged = 0
     await event.delete()
 

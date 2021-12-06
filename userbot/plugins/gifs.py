@@ -1,14 +1,19 @@
 # Created by @Jisan7509
 
+import base64
 import random
 
 import requests
+from telethon import functions, types
+from telethon.errors.rpcerrorlist import UserNotParticipantError
+from telethon.tl.functions.channels import GetFullChannelRequest
+from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import _catutils, reply_id
 from . import catub
 
-plugin_category = "Extra"
+plugin_category = "extra"
 
 
 @catub.cat_cmd(
@@ -51,3 +56,45 @@ async def some(event):
         )
         await _catutils.unsavegif(event, nood)
     await catevent.delete()
+
+
+@catub.cat_cmd(
+    pattern="kis(?:\s|$)([\s\S]*)",
+    command=("kis", plugin_category),
+    info={
+        "header": "Sends random kiss",
+        "usage": [
+            "{tr}kis",
+            "{tr}kis <1-20>",
+        ],
+    },
+)
+async def some(event):
+    """Its useless for single like you. Get a lover first"""
+    inpt = event.pattern_match.group(1)
+    reply_to_id = await reply_id(event)
+    count = 1 if not inpt else int(inpt)
+    if count < 0 and count > 20:
+        await edit_delete(event, "`Give value in range 1-20`")
+    chat = "@lov2kiss"
+    catevent = await edit_or_reply(event, "`Wait babe...`😘")
+    maxmsg = await event.client.get_messages(chat)
+    start = random.randint(31, maxmsg.total)
+    start = min(start, maxmsg.total - 40)
+    end = start + 41
+    kiss = []
+    async for x in event.client.iter_messages(
+        chat, min_id=start, max_id=end, reverse=True
+    ):
+        try:
+            if x.media and x.media.document.mime_type == "video/mp4":
+                link = f"{res.split('j')[0]}{chat}/{x.id}"
+                kiss.append(link)
+        except AttributeError:
+            pass
+    kisss = random.sample(kiss, count)
+    for i in kisss:
+        nood = await event.client.send_file(event.chat_id, i, reply_to=reply_to_id)
+        await _catutils.unsavegif(event, nood)
+    await catevent.delete()
+ 
