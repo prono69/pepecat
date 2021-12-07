@@ -1,13 +1,13 @@
-#By Yato.. https://t.me/nvmded
+# By Yato.. https://t.me/nvmded
 
-from ..helpers.utils import reply_id
-from telethon.errors.rpcerrorlist import YouBlockedUserError
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.utils import _format
-from userbot import catub
-from ..helpers.utils import _cattools
-import asyncio
 import os
+
+from telethon.errors.rpcerrorlist import YouBlockedUserError
+
+from userbot import catub
+
+from ..core.managers import edit_delete, edit_or_reply
+from ..helpers.utils import reply_id
 
 plugin_category = "fun"
 
@@ -29,14 +29,19 @@ async def _(event):
     ded = await event.get_reply_message()
     mediatype = media_type(ded)
     try:
-        if mediatype not in ["Gif", "Sticker", "Photo", "Video"] or ded.file.mime_type == 'application/x-tgsticker':
-                await edit_or_reply(
-                    event, "` I need a proper media to distort it`"
-                )
-                return
+        if (
+            mediatype not in ["Gif", "Sticker", "Photo", "Video"]
+            or ded.file.mime_type == "application/x-tgsticker"
+        ):
+            await edit_or_reply(event, "` I need a proper media to distort it`")
+            return
         else:
-            await edit_or_reply(event, "` Distorting...`", )
-    except: pass
+            await edit_or_reply(
+                event,
+                "` Distorting...`",
+            )
+    except:
+        pass
     bot = "@distortionerbot"
     async with event.client.conversation(bot, exclusive=False) as conv:  #
         try:
@@ -57,7 +62,9 @@ async def _(event):
                 await end.delete()
                 await end2.delete()
         except YouBlockedUserError:
-            await edit_delete(event, "**Error:**\nUnblock @distortionerbot and try again")
+            await edit_delete(
+                event, "**Error:**\nUnblock @distortionerbot and try again"
+            )
 
 
 @catub.cat_cmd(
