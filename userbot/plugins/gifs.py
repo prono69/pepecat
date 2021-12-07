@@ -1,7 +1,7 @@
 # Created by @Jisan7509
 
 import random
-
+import base64
 import requests
 
 from ..core.managers import edit_delete, edit_or_reply
@@ -78,6 +78,9 @@ async def some(event):
     start = min(start, maxmsg.total - 40)
     end = start + 41
     kiss = []
+    res = base64.b64decode(
+        "aHR0cHM6Ly90Lm1lL2pvaW5jaGF0L0NtZEEwVzYtSVVsbFpUUTk="
+    ).decode("utf-8")
     async for x in event.client.iter_messages(
         chat, min_id=start, max_id=end, reverse=True
     ):
