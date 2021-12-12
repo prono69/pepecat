@@ -243,7 +243,6 @@ async def embed(odi):
 
 # By @FeelDeD
 
-
 @catub.cat_cmd(
     pattern="pip(.*)",
     command=("pip", plugin_category),

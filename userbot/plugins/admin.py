@@ -570,7 +570,7 @@ async def pin(event):
         return await edit_delete(event, NO_PERM, 5)
     except Exception as e:
         return await edit_delete(event, f"`{e}`", 5)
-    await edit_delete(event, "`Pinned Successfully!`", 3)
+    await edit_delete(event, f"**Pinned Successfully!**\n**LOUD:** `{is_silent}`", 5)
     if BOTLOG and not event.is_private:
         await event.client.send_message(
             BOTLOG_CHATID,

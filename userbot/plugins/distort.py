@@ -1,6 +1,7 @@
 # By Yato.. https://t.me/nvmded
 
 import os
+from random import choice
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
@@ -9,7 +10,7 @@ from userbot import catub
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import reply_id
 
-plugin_category = "fun"
+plugin_category = "extra"
 
 
 @catub.cat_cmd(
@@ -85,7 +86,8 @@ async def kill_mp3(event):
     reply = await event.get_reply_message()
     reply_to_id = await reply_id(event)
     try:
-        if reply.file.mime_type != "audio/mpeg":
+        type_ = reply.file.mime_type
+        if "audio" not in type_:
             await edit_delete(event, "`Reply to a audio file brah!!`")
     except:
         await edit_delete(event, "`Reply to a audio file brah!!`")

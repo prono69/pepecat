@@ -879,7 +879,7 @@ async def _(event):
         await asyncio.sleep(1)
         await event.delete()
     else:
-        await edit_or_reply("**TODO :** `Not Implemented`")
+        await edit_delete(event, "**TODO :** `Not Implemented`")
 
 
 @catub.cat_cmd(
