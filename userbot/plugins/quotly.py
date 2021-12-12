@@ -132,7 +132,9 @@ async def q_pic(event):  # sourcery no-metrics
         output.name = "CatUserbot.png"
         img.save(output, "PNG")
     output.seek(0)
-    await event.client.send_file(event.chat_id, output, caption="It's a scam", reply_to=reply_to)
+    await event.client.send_file(
+        event.chat_id, output, caption="It's a scam", reply_to=reply_to
+    )
     await catevent.delete()
     for i in [pfp]:
         if os.path.lexists(i):
@@ -171,7 +173,9 @@ async def stickerchat(catquotes):
     outfi = os.path.join("./temp", "sticker.png")
     catmsg.save(outfi)
     endfi = convert_tosticker(outfi)
-    await catquotes.client.send_file(catquotes.chat_id, endfi, caption="Don't kang bitch", reply_to=reply)
+    await catquotes.client.send_file(
+        catquotes.chat_id, endfi, caption="Don't kang bitch", reply_to=reply
+    )
     await catevent.delete()
     os.remove(endfi)
 
@@ -208,7 +212,9 @@ async def stickerchat(catquotes):
     outfi = os.path.join("./temp", "sticker.png")
     catmsg.save(outfi)
     endfi = convert_tosticker(outfi)
-    await catquotes.client.send_file(catquotes.chat_id, endfi, caption="Pepecat", reply_to=reply)
+    await catquotes.client.send_file(
+        catquotes.chat_id, endfi, caption="Pepecat", reply_to=reply
+    )
     await catevent.delete()
     os.remove(endfi)
 
@@ -270,5 +276,8 @@ async def _(event):
         await event.client.send_read_acknowledge(conv.chat_id)
         await catevent.delete()
         await event.client.send_message(
-            event.chat_id, response.message, caption="Quotly by Pepecat", reply_to=reply_to
+            event.chat_id,
+            response.message,
+            caption="Quotly by Pepecat",
+            reply_to=reply_to,
         )
