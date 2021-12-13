@@ -87,7 +87,7 @@ async def some(event):
     ):
         try:
             if x.media and x.media.document.mime_type == "video/mp4":
-                link = f"{res.split('j')[0]}{chat}/{x.id}"
+                link = f"https://t.me/lov2kiss/{x.id}"
                 kiss.append(link)
         except AttributeError:
             pass

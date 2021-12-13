@@ -93,7 +93,7 @@ async def _(event):
     else:
         evaluation = "Success"
     final_output = (
-        f"**•  Eval : **\n```{cmd}``` \n\n**•  Result : **\n```{evaluation}``` \n"
+        f"__►__ **Eval : **\n```{cmd}``` \n\n__►__ **Result : **\n```{evaluation}``` \n"
     )
     await edit_or_reply(
         catevent,

@@ -407,11 +407,11 @@ async def music(event):
             return
     bot = "@DeezerMusicBot"
     reply_to_id = await reply_id(event)
-    await event.delete()
     try:
         await hide_inlinebot(event.client, bot, music, event.chat_id, reply_to_id)
     except IndexError:
         await edit_delete(event, "`Song not Found`")
+    await event.delete()    
 
 
 # By @FeelDeD
