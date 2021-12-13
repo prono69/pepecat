@@ -411,7 +411,7 @@ async def music(event):
         await hide_inlinebot(event.client, bot, music, event.chat_id, reply_to_id)
     except IndexError:
         await edit_delete(event, "`Song not Found`")
-    await event.delete()    
+    await event.delete()
 
 
 # By @FeelDeD
