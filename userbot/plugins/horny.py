@@ -221,7 +221,7 @@ async def loli(event):
     lol = f"<b>{caption}</b>\n<b>✘ Title:</b> <i>{title}</i>\n<b>✘ Adult:</b> <i>{adult}</i>\n<b>✘ Tags:</b> <i>{tags}</i>"
     await event.delete()
     await event.client.send_file(
-        event.chat_id, file=pic, caption=lol, parse_mode="html"
+        event.chat_id, file=pic, caption=lol, parse_mode="html", reply_to=reply_to
     )
 
 
