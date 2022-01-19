@@ -85,16 +85,17 @@ async def _(event):
     command=("bmen", plugin_category),
     info={
         "header": "Mention like BGram.",
-        "usage": "{tr}bmen",
+        "usage": "{tr}bmen <message link>",
     },
 )
 async def _bgram(event):
     texts = event.text.split(maxsplit=1)
     reply_to_id = await reply_id(event)
     if len(texts) == 2:
-        await eor(
-            event,
-            f"[>> {texts[1].rsplit('/', maxsplit=1)[1]}]" f"({texts[1]})",
+        await event.client.send_message(
+            event.chat_id,
+            f"[>> {texts[1].rsplit('/', maxsplit=1)[1]}]"
+            f"({texts[1]})",
             link_preview=False,
             reply_to=reply_to_id,
         )
