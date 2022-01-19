@@ -3,7 +3,7 @@ from telethon.tl.types import ChannelParticipantsAdmins
 from userbot import catub
 
 from ..helpers.utils import get_user_from_event, reply_id
-from . import eod, eor
+from . import eod
 
 plugin_category = "extra"
 
@@ -94,8 +94,7 @@ async def _bgram(event):
     if len(texts) == 2:
         await event.client.send_message(
             event.chat_id,
-            f"[>> {texts[1].rsplit('/', maxsplit=1)[1]}]"
-            f"({texts[1]})",
+            f"[>> {texts[1].rsplit('/', maxsplit=1)[1]}]" f"({texts[1]})",
             link_preview=False,
             reply_to=reply_to_id,
         )
