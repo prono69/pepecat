@@ -1,8 +1,9 @@
 from telethon.tl.types import ChannelParticipantsAdmins
 
 from userbot import catub
-from . import eor, eod
+
 from ..helpers.utils import get_user_from_event, reply_id
+from . import eod, eor
 
 plugin_category = "extra"
 
@@ -78,7 +79,7 @@ async def _(event):
         reply_to=reply_to_id,
     )
 
-    
+
 @catub.cat_cmd(
     pattern="bmen",
     command=("bmen", plugin_category),
@@ -88,13 +89,14 @@ async def _(event):
     },
 )
 async def _bgram(event):
-	texts = event.text.split(maxsplit=1)
-	reply_to_id = await reply_id(event)
-	if len(texts) == 2:
-		await eor(event, f"[>> {texts[1].rsplit('/', maxsplit=1)[1]}]" f"({texts[1]})", link_preview=False, reply_to=reply_to_id)
-	else:
-		await eod(event, "**Use Correct Format!**")
-		
-		
-		
-	
+    texts = event.text.split(maxsplit=1)
+    reply_to_id = await reply_id(event)
+    if len(texts) == 2:
+        await eor(
+            event,
+            f"[>> {texts[1].rsplit('/', maxsplit=1)[1]}]" f"({texts[1]})",
+            link_preview=False,
+            reply_to=reply_to_id,
+        )
+    else:
+        await eod(event, "**Use Correct Format!**")
