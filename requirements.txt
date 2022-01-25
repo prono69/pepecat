@@ -78,6 +78,7 @@ urlextract
 validators
 vcsi
 wand
+webpage2telegraph==2021.7.14
 scipy
 wordcloud
 wget
