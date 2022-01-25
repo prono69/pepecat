@@ -290,7 +290,7 @@ async def _(event):  # sourcery no-metrics
 )
 async def _e(event):
     "Telegram Message link Downloader"
-    sm_ = await eor(event, "__Downloading...__")
+    sm_ = await edit_or_reply(event, "__Downloading...__")
     reply = await event.get_reply_message()
     input = event.pattern_match.group(1)
     if not input and reply and reply.text:
