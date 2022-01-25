@@ -9,6 +9,7 @@ import time
 from datetime import datetime
 
 from pySmartDL import SmartDL
+from telethon.errors import ChannelPrivateError
 from telethon.tl import types
 from telethon.utils import get_extension
 
@@ -18,8 +19,6 @@ from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import humanbytes, progress
 from ..helpers.utils import _format, get_c_m_message
-from telethon.errors import ChannelPrivateError
-
 
 plugin_category = "misc"
 
@@ -276,7 +275,7 @@ async def _(event):  # sourcery no-metrics
         f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded to :- **  `{os.path.relpath(file_name,os.getcwd())}`\n   "
     )
 
-    
+
 @catub.cat_cmd(
     pattern="dlc ?(.*)",
     command=("dlc", plugin_category),
@@ -316,5 +315,8 @@ async def _e(event):
     )
     end = datetime.now()
     ms = (end - start).seconds
-    await sm_.edit("**• Downloaded to :-** `{}`\n**• Time Taken :-** `{} seconds`".format(downloaded_file_name, ms))
-    
+    await sm_.edit(
+        "**• Downloaded to :-** `{}`\n**• Time Taken :-** `{} seconds`".format(
+            downloaded_file_name, ms
+        )
+    )
