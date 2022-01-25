@@ -12,10 +12,12 @@
 import asyncio
 import os
 from datetime import datetime
-from telethon.errors import ChannelPrivateError
 from time import time
-from . import catub, eor, eod
+
 from helpers.utils import get_c_m_message
+from telethon.errors import ChannelPrivateError
+
+from . import catub, eor
 
 
 @catub.cat_cmd(
@@ -40,10 +42,7 @@ async def _e(evt):
     reply = await evt.get_reply_message()
     _c, m_ = get_c_m_message(reply.raw_text)
     try:
-        _ok_m_ = await evt.client.get_messages(
-            entity=_c,
-            ids=m_
-        )
+        _ok_m_ = await evt.client.get_messages(entity=_c, ids=m_)
     except ChannelPrivateError:
         await sm_.edit("LINK_MARKUP_ID_INVALID")
         return
@@ -55,7 +54,7 @@ async def _e(evt):
         Config.TMP_DOWNLOAD_DIRECTORY,
         progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
             slitu.progress(d, t, sm_, c_time, "trying to download")
-        )
+        ),
     )
     end = datetime.now()
     ms = (end - start).seconds

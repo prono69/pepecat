@@ -4,6 +4,7 @@ import random
 import string
 from datetime import datetime
 
+import webpage2telegraph
 from PIL import Image
 from telegraph import Telegraph, exceptions, upload_file
 from telethon.utils import get_display_name
@@ -12,8 +13,7 @@ from userbot import catub
 
 from ..Config import Config
 from ..core.logger import logging
-import webpage2telegraph
-from ..core.managers import edit_or_reply, edit_delete
+from ..core.managers import edit_delete, edit_or_reply
 from . import BOTLOG, BOTLOG_CHATID
 
 LOGS = logging.getLogger(__name__)
@@ -40,7 +40,7 @@ def resize_image(image):
         "options": {
             "m or media": "To get telegraph link of replied sticker/image/video/gif.",
             "t or text": "To get telegraph link of replied text you can use custom title.",
-            "u or url": "To get telegraph link of replied url"
+            "u or url": "To get telegraph link of replied url",
         },
         "usage": [
             "{tr}tgm",
@@ -61,7 +61,8 @@ async def _(event):
         )
     optional_title = event.pattern_match.group(5)
     if not event.reply_to_msg_id:
-        return await edit_delete(event,
+        return await edit_delete(
+            event,
             "`Reply to a message to get a permanent telegra.ph link.`",
         )
 
@@ -127,14 +128,18 @@ async def _(event):
             link_preview=True,
         )
     elif input_str in ["url", "u"]:
-            input_url = r_message.text
-            telegraph_url = webpage2telegraph.transfer(input_url)
-            if telegraph_url is None:
-                await edit_delete(event, "**Transferring failed.**")
-                return
-            end = datetime.now()
-            ms = (end - start).seconds
-            await catevent.edit("Transferred to https://{}\nIn {} seconds.".format(telegraph_url, ms), link_preview=True)
+        input_url = r_message.text
+        telegraph_url = webpage2telegraph.transfer(input_url)
+        if telegraph_url is None:
+            await edit_delete(event, "**Transferring failed.**")
+            return
+        end = datetime.now()
+        ms = (end - start).seconds
+        await catevent.edit(
+            "Transferred to https://{}\nIn {} seconds.".format(telegraph_url, ms),
+            link_preview=True,
+        )
     else:
-        await edit_delete(event, "`Reply to a message to get a permanent telegra.ph link.`")
-     
+        await edit_delete(
+            event, "`Reply to a message to get a permanent telegra.ph link.`"
+        )
