@@ -1,5 +1,5 @@
 import os
-from typing import Optional
+from typing import List, Tuple, Union, Optional
 
 from moviepy.editor import VideoFileClip
 from PIL import Image

@@ -9,6 +9,8 @@ import requests
 
 from . import ALIVE_NAME, catub, edit_delete, edit_or_reply, reply_id
 
+chr = Config.COMMAND_HAND_LER
+
 plugin_category = "utils"
 
 
@@ -91,7 +93,7 @@ async def app_search(event):
 
 
 @catub.cat_cmd(
-    pattern="iapp(?:\s|$)([\s\S]*)",
+    pattern="iapp ?(.*)",
     command=("iapp", plugin_category),
     info={
         "header": "To search any app in playstore via inline.",
@@ -103,11 +105,11 @@ async def app_search(event):
     "To search any app in playstore via inline."
     app_name = event.pattern_match.group(1)
     if not app_name:
-        await edit_delete(event, f"**Usage:** `{tr}iapp <name>`", 10)
+        await edit_delete(event, f"**Usage:** `{chr}iapp <name>`", 10)
         return
     reply_to_id = await reply_id(event)
     APPBOT = "@nedzbot"
-    cozyneko = "app" + app_name
+    cozyneko = "app " + app_name
     event = await edit_or_reply(event, "`Searching!..`")
     try:
         score = await event.client.inline_query(APPBOT, cozyneko)

@@ -2,12 +2,6 @@
 #  -*- coding: utf-8 -*-
 #  UniBorg Telegram UseRBot
 #  Copyright (C) 2021 @UniBorg
-#
-# This code is licensed under
-# the "you can't use this for anything - public or private,
-# unless you kill yourself" license
-#
-# വിവരണം അടിച്ചുമാറ്റിക്കൊണ്ട് പോകുന്നവർ ക്രെഡിറ്റ് വെച്ചാൽ സന്തോഷമേ ഉള്ളു..!
 
 import asyncio
 import os
@@ -28,23 +22,23 @@ from . import catub, eor
         "description": "Will download the link to server .",
         "note": "Useful for protected content",
         "usage": [
-            "{tr}download <reply>",
-            "{tr}dl <reply>",
-            "{tr}download custom name<reply>",
+            "{tr}dlc <reply>",
         ],
     },
 )
-async def _e(evt):
-    sm_ = await eor(evt, "...")
-    if not evt.reply_to_msg_id:
-        await sm_.edit("NO_REPLY_MSG_FOUND")
-        return
-    reply = await evt.get_reply_message()
-    _c, m_ = get_c_m_message(reply.raw_text)
+async def _e(event):
+    sm_ = await eor(event, "...")
+    reply = await event.get_reply_message()
+    input = event.pattern_match.group(1)
+    if not input and reply and reply.text:
+        input = reply
+    elif not input:
+        return await eod(event, "__Gib Telegram Message Link__")
+    _c, m_ = get_c_m_message(input.raw_text)
     try:
-        _ok_m_ = await evt.client.get_messages(entity=_c, ids=m_)
+        _ok_m_ = await event.client.get_messages(entity=_c, ids=m_)
     except ChannelPrivateError:
-        await sm_.edit("LINK_MARKUP_ID_INVALID")
+        await sm_.edit("Channel is private or ID is invalid.")
         return
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
