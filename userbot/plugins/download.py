@@ -17,7 +17,9 @@ from userbot import catub
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import humanbytes, progress
-from ..helpers.utils import _format
+from ..helpers.utils import _format, get_c_m_message
+from telethon.errors import ChannelPrivateError
+
 
 plugin_category = "misc"
 
@@ -273,3 +275,46 @@ async def _(event):  # sourcery no-metrics
     await mone.edit(
         f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded to :- **  `{os.path.relpath(file_name,os.getcwd())}`\n   "
     )
+
+    
+@catub.cat_cmd(
+    pattern="dlc ?(.*)",
+    command=("dlc", plugin_category),
+    info={
+        "header": "To download from telegram link",
+        "description": "It will download from telegram message link.",
+        "note": "Useful for protected content",
+        "usage": [
+            "{tr}dlc <reply>",
+        ],
+    },
+)
+async def _e(event):
+    "Telegram Message link Downloader"
+    sm_ = await eor(event, "__Downloading...__")
+    reply = await event.get_reply_message()
+    input = event.pattern_match.group(1)
+    if not input and reply and reply.text:
+        input = reply.text
+    elif not input:
+        return await edit_delete(event, "__Gib Telegram Message Link__")
+    _c, m_ = get_c_m_message(input)
+    try:
+        _ok_m_ = await event.client.get_messages(entity=_c, ids=m_)
+    except ChannelPrivateError:
+        await edit_delete(event, "**Channel is private or ID is invalid.**")
+        return
+    if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
+        os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
+    c_time = time.time()
+    start = datetime.now()
+    downloaded_file_name = await _ok_m_.download_media(
+        Config.TMP_DOWNLOAD_DIRECTORY,
+        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            progress(d, t, sm_, c_time, "trying to download")
+        ),
+    )
+    end = datetime.now()
+    ms = (end - start).seconds
+    await sm_.edit("**• Downloaded to :-** `{}`\n**• Time Taken :-** `{} seconds`".format(downloaded_file_name, ms))
+    
