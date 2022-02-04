@@ -8,6 +8,7 @@
 
 import os
 import random
+
 import nekos
 import requests
 from PIL import Image
@@ -58,15 +59,12 @@ SFW = [
     "waifu",
     "wave",
     "wink",
-    "yeet"]
-    
-    
-NSFW = [
-    "blowjob",
-    "neko",
-    "trap",
-    "waifu"]
-    
+    "yeet",
+]
+
+
+NSFW = ["blowjob", "neko", "trap", "waifu"]
+
 neko_help = "**🔞NSFW** :  "
 for i in NSFW:
     neko_help += f"`{i.lower()}`   "
@@ -246,7 +244,6 @@ async def waifu(event):
     os.remove("temp.webp")
     await event.delete()
 
-    
 
 @catub.cat_cmd(
     pattern="ne ?(.*)",
@@ -263,11 +260,11 @@ async def _(event):
     reply_to = await reply_id(event)
     choose = event.pattern_match.group(1)
     if choose == "":
-    	choose = random.choice(SFW)
+        choose = random.choice(SFW)
     if choose in NSFW:
-    	type = "nsfw"
+        type = "nsfw"
     else:
-    	type = "sfw"	
+        type = "sfw"
     if choose not in neko_help:
         return await edit_delete(
             event, "**Wrong Category!!**\nDo `.help -c ne` for Category list (*_*)`"
@@ -285,22 +282,31 @@ async def _(event):
     except:
         pass
     await catevent.delete()
-    
-    
-ISFW = [
-    'maid',
-    'waifu']
 
-INSFW = ["ass","ero","hentai","maid","milf","oppai","oral","paizuri","selfies","uniform","ecchi"]
-    
-    
+
+ISFW = ["maid", "waifu"]
+
+INSFW = [
+    "ass",
+    "ero",
+    "hentai",
+    "maid",
+    "milf",
+    "oppai",
+    "oral",
+    "paizuri",
+    "selfies",
+    "uniform",
+    "ecchi",
+]
+
+
 waifu_help = "**🔞NSFW** :  "
 for i in INSFW:
     waifu_help += f"`{i.lower()}`   "
 waifu_help += "\n\n**😇SFW** :  "
 for m in ISFW:
     waifu_help += f"`{m.lower()}`   "
-
 
 
 @catub.cat_cmd(
@@ -318,11 +324,11 @@ async def _(event):
     reply_to = await reply_id(event)
     choose = event.pattern_match.group(1)
     if choose == "":
-    	choose = random.choice(ISFW)
+        choose = random.choice(ISFW)
     if choose in INSFW:
-    	type = "nsfw"
+        type = "nsfw"
     else:
-    	type = "sfw"	
+        type = "sfw"
     if choose not in waifu_help:
         return await edit_delete(
             event, "**Wrong Category!!**\nDo `.help -c nm` for Category list (*_*)`"
@@ -340,4 +346,3 @@ async def _(event):
     except:
         pass
     await catevent.delete()
-        

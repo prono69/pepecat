@@ -10,6 +10,7 @@ from . import *
 plugin_category = "tools"
 thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
+
 @catub.cat_cmd(
     pattern="exec(?:\s|$)([\s\S]*)",
     command=("exec", plugin_category),
@@ -49,7 +50,6 @@ async def _(event):
             "Terminal command " + cmd + " was executed sucessfully.",
         )
 
-        
 
 @catub.cat_cmd(
     pattern="eval(?:\s|$)([\s\S]*)",
@@ -104,7 +104,7 @@ async def _(event):
             )
         return await catevent.delete()
     await edit_or_reply(event, final_output)
-    
+
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -128,7 +128,7 @@ async def aexec(code, smessatatus):
         message, event, reply, r, message.client, p, message.chat_id
     )
 
-    
+
 def _parse_eval(value):
     if value is None:
         return
@@ -144,4 +144,3 @@ def _parse_eval(value):
             pass
     # is to_dict is also Good option to format?
     return str(value)
-    
