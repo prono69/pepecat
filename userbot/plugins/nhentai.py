@@ -41,7 +41,7 @@ async def _(event):
     except BaseException as n_e:
         if "404" in str(n_e):
             return await edit_delete(
-                event, f"No doujin found for `{code}`. You shouldn't use nhentai :-("
+                event, f"No doujin found for `{code}`. **No Horni!**"
             )
         return await edit_delete(event, f"**ERROR :** `{n_e}`")
     msg = ""

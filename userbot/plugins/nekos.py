@@ -1,4 +1,5 @@
 # #LazyAF_Geng
+# By @kirito6969 for pepecat
 
 """NEKOS MODULE FOR PEPEBOT
 \nPlugin Made by [NIKITA](https://t.me/kirito6969)
@@ -6,7 +7,7 @@
 """
 
 import os
-
+import random
 import nekos
 import requests
 from PIL import Image
@@ -26,6 +27,54 @@ from . import (
 plugin_category = "fun"
 
 
+SFW = [
+    "awoo",
+    "blush",
+    "bully",
+    "bite",
+    "bonk",
+    "cringe",
+    "cry",
+    "cuddle",
+    "dance",
+    "glomp",
+    "handhold",
+    "happy",
+    "highfive",
+    "hug",
+    "kick",
+    "kill",
+    "kiss",
+    "lick",
+    "megumin",
+    "neko",
+    "nom",
+    "pat",
+    "poke",
+    "shinobu",
+    "slap",
+    "smile",
+    "smug",
+    "waifu",
+    "wave",
+    "wink",
+    "yeet"]
+    
+    
+NSFW = [
+    "blowjob",
+    "neko",
+    "trap",
+    "waifu"]
+    
+neko_help = "**🔞NSFW** :  "
+for i in NSFW:
+    neko_help += f"`{i.lower()}`   "
+neko_help += "\n\n**😇SFW** :  "
+for m in SFW:
+    neko_help += f"`{m.lower()}`   "
+
+
 @catub.cat_cmd(
     pattern="nn ?(.*)",
     command=("nn", plugin_category),
@@ -42,7 +91,7 @@ async def _(event):
     choose = event.pattern_match.group(1)
     if choose not in useless.hemtai:
         return await edit_delete(
-            event, "**Wrong Category!!** Do `.help -c nn` for Category list (*_*)`"
+            event, "**Wrong Category!!**\nDo `.help -c nn` for Category list (*_*)`"
         )
     if await age_verification(event, reply_to):
         return
@@ -196,3 +245,99 @@ async def waifu(event):
     )
     os.remove("temp.webp")
     await event.delete()
+
+    
+
+@catub.cat_cmd(
+    pattern="ne ?(.*)",
+    command=("ne", plugin_category),
+    info={
+        "header": "Contains NSFW \nSearch images from waifu.pics",
+        "usage": "{tr}ne <argument from choice>",
+        "examples": "{tr}ne cry",
+        "options": neko_help,
+    },
+)
+async def _(event):
+    "Search images from waifu.pics"
+    reply_to = await reply_id(event)
+    choose = event.pattern_match.group(1)
+    if choose == "":
+    	choose = random.choice(SFW)
+    if choose in NSFW:
+    	type = "nsfw"
+    else:
+    	type = "sfw"	
+    if choose not in neko_help:
+        return await edit_delete(
+            event, "**Wrong Category!!**\nDo `.help -c ne` for Category list (*_*)`"
+        )
+    if await age_verification(event, reply_to):
+        return
+    catevent = await edit_or_reply(event, "`Processing...`")
+    resp = requests.get(f"https://api.waifu.pics/{type}/{choose}").json()
+    target = resp.get("url")
+    nohorny = await event.client.send_file(
+        event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
+    )
+    try:
+        await _catutils.unsavegif(event, nohorny)
+    except:
+        pass
+    await catevent.delete()
+    
+    
+ISFW = [
+    'maid',
+    'waifu']
+
+INSFW = ["ass","ero","hentai","maid","milf","oppai","oral","paizuri","selfies","uniform","ecchi"]
+    
+    
+waifu_help = "**🔞NSFW** :  "
+for i in INSFW:
+    waifu_help += f"`{i.lower()}`   "
+waifu_help += "\n\n**😇SFW** :  "
+for m in ISFW:
+    waifu_help += f"`{m.lower()}`   "
+
+
+
+@catub.cat_cmd(
+    pattern="nm ?(.*)",
+    command=("nm", plugin_category),
+    info={
+        "header": "Contains NSFW \nSearch images from waifu.im",
+        "usage": "{tr}nm <argument from choice>",
+        "examples": "{tr}nm waifu",
+        "options": waifu_help,
+    },
+)
+async def _(event):
+    "Search images from waifu.im"
+    reply_to = await reply_id(event)
+    choose = event.pattern_match.group(1)
+    if choose == "":
+    	choose = random.choice(ISFW)
+    if choose in INSFW:
+    	type = "nsfw"
+    else:
+    	type = "sfw"	
+    if choose not in waifu_help:
+        return await edit_delete(
+            event, "**Wrong Category!!**\nDo `.help -c nm` for Category list (*_*)`"
+        )
+    if await age_verification(event, reply_to):
+        return
+    catevent = await edit_or_reply(event, "`Processing...`")
+    resp = requests.get(f"https://api.waifu.im/{type}/{choose}").json()
+    target = resp["images"][0]["url"]
+    nohorny = await event.client.send_file(
+        event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
+    )
+    try:
+        await _catutils.unsavegif(event, nohorny)
+    except:
+        pass
+    await catevent.delete()
+        

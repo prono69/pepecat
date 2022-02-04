@@ -26,12 +26,12 @@ REDDIT_REGEX = r"(?:^|\s+)(\/?r\/\S+)"
 
 
 @catub.cat_cmd(
-    pattern="reddit(?:\s|$)([\s\S]*)",
-    command=("reddit", plugin_category),
+    pattern="re(?:\s|$)([\s\S]*)",
+    command=("re", plugin_category),
     info={
-        "header": "get a random reddit post.",
-        "usage": "{tr}reddit <subreddit>",
-        "examples": "{tr}reddit dankmemes",
+        "header": "Get a random reddit post.",
+        "usage": "{tr}re <subreddit>",
+        "examples": "{tr}re dankmemes",
     },
 )
 async def reddit_fetch(event):

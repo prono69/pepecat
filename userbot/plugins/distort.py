@@ -14,12 +14,12 @@ plugin_category = "extra"
 
 
 @catub.cat_cmd(
-    pattern="distort($)",
-    command=("distort", plugin_category),
+    pattern="dis$",
+    command=("dis", plugin_category),
     info={
         "header": "To distort the replied media",
         "usage": [
-            "{tr}distort <in reply to a media>",
+            "{tr}dis <in reply to a media>",
         ],
     },
 )
@@ -50,18 +50,21 @@ async def _(event):
             end = await conv.get_response()
             if media_type(end) in ["Sticker", "Photo"]:
                 to_send = end
-                await event.client.send_file(chat, file=to_send, reply_to=reply_to_id)
+                pepecat = await event.client.send_file(chat, file=to_send, reply_to=reply_to_id)
                 await event.delete()
                 await start.delete()
                 await end.delete()
             else:
                 end2 = await conv.get_response()
                 to_send = end2
-                await event.client.send_file(chat, file=to_send, reply_to=reply_to_id)
+                pepecat = await event.client.send_file(chat, file=to_send, reply_to=reply_to_id)
                 await event.delete()
                 await start.delete()
                 await end.delete()
                 await end2.delete()
+            out = media_type(end2)
+            if out in ["Gif", "Video", "Sticker"]:
+                await _catutils.unsavegif(event, pepecat)    
         except YouBlockedUserError:
             await edit_delete(
                 event, "**Error:**\nUnblock @distortionerbot and try again"
