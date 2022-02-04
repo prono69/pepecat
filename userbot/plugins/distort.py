@@ -66,7 +66,7 @@ async def _(event):
                 await start.delete()
                 await end.delete()
                 await end2.delete()
-            out = media_type(end2)
+            out = media_type(ded)
             if out in ["Gif", "Video", "Sticker"]:
                 await _catutils.unsavegif(event, pepecat)
         except YouBlockedUserError:

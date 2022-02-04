@@ -137,7 +137,7 @@ def _parse_eval(value):
             return value.stringify()
         except TypeError:
             pass
-    elif isinstance(value, dict, list):
+    elif isinstance(value, dict):
         try:
             return json_parser(value, indent=4)
         except BaseException:
