@@ -74,12 +74,12 @@ for m in SFW:
 
 
 @catub.cat_cmd(
-    pattern="nn ?(.*)",
-    command=("nn", plugin_category),
+    pattern="ne ?(.*)",
+    command=("ne", plugin_category),
     info={
         "header": "Contains NSFW \nSearch images from nekos",
-        "usage": "{tr}nn <argument from choice>",
-        "examples": "{tr}nn neko",
+        "usage": "{tr}ne <argument from choice>",
+        "examples": "{tr}ne neko",
         "options": useless.nsfw(useless.hemtai),
     },
 )
@@ -246,12 +246,12 @@ async def waifu(event):
 
 
 @catub.cat_cmd(
-    pattern="ne ?(.*)",
-    command=("ne", plugin_category),
+    pattern="nn ?(.*)",
+    command=("nn", plugin_category),
     info={
         "header": "Contains NSFW \nSearch images from waifu.pics",
-        "usage": "{tr}ne <argument from choice>",
-        "examples": "{tr}ne cry",
+        "usage": "{tr}nn <argument from choice>",
+        "examples": "{tr}nn cry",
         "options": neko_help,
     },
 )

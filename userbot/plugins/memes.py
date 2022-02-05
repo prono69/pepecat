@@ -487,3 +487,32 @@ async def gbun(event):
     else:
         mention = "`Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By Admin...\nReason: Potential spammer. `"
         await catevent.edit(mention)
+
+        
+# By @kirito6969 for pepecat
+
+@catub.cat_cmd(
+    pattern="yo ?(.*)",
+    command=("yo", plugin_category),
+    info={
+        "header": "Yo Momma Jokes",
+        "description": "It will fetch random YoMomma jokes from the api :)",
+        "usage": "{tr}yo \n{tr}yo <1-978>",
+    },
+)
+async def yomomma(message):
+    "Yo Momma"
+    word = message.pattern_match.group(1)
+    url = None
+    if not word:
+    	url = "https://yomomma-api.herokuapp.com/jokes"
+    else:
+    	url = f"https://yomomma-api.herokuapp.com/jokes/{word}"
+    try:
+        mom = requests.get(url).json()
+        momma = mom.get("joke")
+    except Exception as e:
+        return await edit_delete(message, f"**{e}**", 5)
+    # await message.delete()
+    await edit_or_reply(message, f"`{momma}`")
+                
