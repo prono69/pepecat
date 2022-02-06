@@ -8,6 +8,7 @@ import aiohttp
 import requests
 
 from ..utils.extdl import install_pip
+from ..utils.utils import runcmd
 
 try:
     from imdb import IMDb
@@ -76,7 +77,23 @@ async def age_verification(event, reply_to_id):
     await event.delete()
     return True
 
-
+async def animator(media, mainevent, textevent):
+    # //Hope u dunt kang :/ @Jisan7509
+    h = media.file.height
+    w = media.file.width
+    w, h = (-1, 512) if h > w else (512, -1)
+    if not os.path.isdir(Config.TEMP_DIR):
+        os.makedirs(Config.TEMP_DIR)
+    PepeCat = await mainevent.client.download_media(media, Config.TEMP_DIR)
+    await textevent.edit("__🎞Converting into Animated sticker..__")
+    await runcmd(
+        f"ffmpeg -ss 00:00:00 -to 00:00:02.900 -i {PepeCat} -vf scale={w}:{h} -c:v libvpx-vp9 -crf 30 -b:v 560k -maxrate 560k -bufsize 256k -an animate.webm"
+    )  # pain
+    os.remove(PepeCat)
+    sticker = "animate.webm"
+    return sticker
+    
+    
 def reddit_thumb_link(preview, thumb=None):
     for i in preview:
         if "width=216" in i:
