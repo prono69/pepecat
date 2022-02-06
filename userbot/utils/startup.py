@@ -163,7 +163,9 @@ async def load_plugins(folder):
                                 shortname.replace(".py", ""),
                                 plugin_path=f"userbot/{folder}",
                             )
-                            LOGS.info(f"• Installing Official Plugins || Count : {len(files)} •")
+                            LOGS.info(
+                                f"• Installing Official Plugins || Count : {len(files)} •"
+                            )
                             break
                         except ModuleNotFoundError as e:
                             install_pip(e.name)
