@@ -163,6 +163,7 @@ async def load_plugins(folder):
                                 shortname.replace(".py", ""),
                                 plugin_path=f"userbot/{folder}",
                             )
+                            LOGS.info(f"• Installing Official Plugins || Count : {len(files)} •")
                             break
                         except ModuleNotFoundError as e:
                             install_pip(e.name)
@@ -173,7 +174,7 @@ async def load_plugins(folder):
                     os.remove(Path(f"userbot/{folder}/{shortname}.py"))
             except Exception as e:
                 os.remove(Path(f"userbot/{folder}/{shortname}.py"))
-                LOGS.info(f"unable to load {shortname} because of error {e}")
+                LOGS.info(f"Pepecat - {shortname} - ERROR - {e}")
 
 
 async def verifyLoggerGroup():
