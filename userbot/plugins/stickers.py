@@ -77,7 +77,7 @@ def pack_name(userid, pack, is_anim, is_video):
     if is_anim:
         return f"bang_bros_{pack}_anim"
     elif is_video:
-    	return f"pepecat_{userid}_{pack}_vid"
+        return f"pepecat_{userid}_{pack}_vid"
     return f"bang_bros_{pack}"
 
 
@@ -117,7 +117,7 @@ def zipdir(path, ziph):
             ziph.write(os.path.join(root, file))
             os.remove(os.path.join(root, file))
 
-            
+
 def pack_nick(username, pack, is_anim, is_video):
     if gvarstatus("CUSTOM_STICKER_PACKNAME"):
         if is_anim:
@@ -131,9 +131,9 @@ def pack_nick(username, pack, is_anim, is_video):
     elif is_video:
         return f"@{username}'s Secret Layer Vol.{pack} (Video)"
     else:
-        return f"@{username}'s Secret Layer Vol.{pack}"            
-  
-        
+        return f"@{username}'s Secret Layer Vol.{pack}"
+
+
 async def delpack(catevent, conv, cmd, args, packname):
     try:
         await conv.send_message(cmd)
@@ -149,7 +149,7 @@ async def delpack(catevent, conv, cmd, args, packname):
     await conv.send_message("Yes, I am totally sure.")
     await conv.get_response()
     await args.client.send_read_acknowledge(conv.chat_id)
-        
+
 
 async def resize_photo(photo):
     """Resize the given photo to 512x512"""
@@ -692,7 +692,7 @@ async def pussycat(args):
             f"cat_{user.id}"
     else:
         name = user.username
-    userid = user.id
+    user.id
     if message and message.media:
         if "video/mp4" in message.media.document.mime_type:
             catevent = await edit_or_reply(args, "__⌛ Downloading..__")
@@ -748,9 +748,9 @@ async def pussycat(args):
         reply_to=message,
     )
     if os.path.exists(sticker):
-        os.remove(sticker)    
-    
-    
+        os.remove(sticker)
+
+
 @catub.cat_cmd(
     pattern="gridpack(?:\s|$)([\s\S]*)",
     command=("gridpack", plugin_category),

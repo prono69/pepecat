@@ -77,6 +77,7 @@ async def age_verification(event, reply_to_id):
     await event.delete()
     return True
 
+
 async def animator(media, mainevent, textevent):
     # //Hope u dunt kang :/ @Jisan7509
     h = media.file.height
@@ -92,8 +93,8 @@ async def animator(media, mainevent, textevent):
     os.remove(PepeCat)
     sticker = "animate.webm"
     return sticker
-    
-    
+
+
 def reddit_thumb_link(preview, thumb=None):
     for i in preview:
         if "width=216" in i:
