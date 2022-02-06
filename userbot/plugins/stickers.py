@@ -287,7 +287,7 @@ async def add_to_pack(
                 emoji,
                 packname,
                 is_anim,
-                is_video
+                is_video,
                 stfile,
                 otherpack=True,
                 pkang=pkang,
