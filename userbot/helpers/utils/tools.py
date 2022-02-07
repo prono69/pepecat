@@ -97,13 +97,13 @@ def get_c_m_message(message_link: str) -> Tuple[Union[str, int], int]:
         # private link
         if p_m_link[3] == "c":
             # for supergroups / channels
-            chat_id, message_id = int(f'-100{p_m_link[4]}'), int(p_m_link[5])
+            chat_id, message_id = int(f"-100{p_m_link[4]}"), int(p_m_link[5])
         elif p_m_link[4] == "UniBorg":
             # for basic groups / private chats
             chat_id, message_id = int(p_m_link[4]), int(p_m_link[5])
     elif len(p_m_link) == 5:
         # public link
-        chat_id, message_id = str(f'@{p_m_link[3]}'), int(p_m_link[4])
+        chat_id, message_id = str(f"@{p_m_link[3]}"), int(p_m_link[4])
     return chat_id, message_id
 
 

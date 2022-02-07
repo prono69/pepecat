@@ -38,7 +38,7 @@ async def downakd(e):
         num = 5
     xd = await edit_or_reply(e, "`Processing...`")
     match = match.replace(" ", "+")
-    link = f'https://www.deviantart.com/search?q={match}'
+    link = f"https://www.deviantart.com/search?q={match}"
     ct = requests.get(link).content
     st = bs(ct, "html.parser", from_encoding="utf-8")
     res = st.find_all("img", loading="lazy", src=re.compile("https://images-wixmp"))[

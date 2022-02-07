@@ -35,7 +35,7 @@ async def yt_search(cat):
     try:
         cat = urllib.parse.quote(cat)
         html = urllib.request.urlopen(
-            f'https://www.youtube.com/results?search_query={cat}'
+            f"https://www.youtube.com/results?search_query={cat}"
         )
 
         user_data = re.findall(r"watch\?v=(\S{11})", html.read().decode())
@@ -43,7 +43,7 @@ async def yt_search(cat):
         k = 0
         for i in user_data:
             if user_data:
-                video_link.append(f'https://www.youtube.com/watch?v={user_data[k]}')
+                video_link.append(f"https://www.youtube.com/watch?v={user_data[k]}")
             k += 1
             if k > 3:
                 break
@@ -128,7 +128,7 @@ def get_choice_by_id(choice_id, media_type: str):
         disp_str = str(choice_id)
         if media_type == "v":
             # mp4 video quality + best compatible audio
-            choice_str = f'{disp_str}+(258/256/140/bestaudio[ext=m4a])/best'
+            choice_str = f"{disp_str}+(258/256/140/bestaudio[ext=m4a])/best"
         else:  # Audio
             choice_str = disp_str
     return choice_str, disp_str
@@ -223,7 +223,7 @@ def download_button(vid: str, body: bool = False):  # sourcery no-metrics
         fr_size = video.get("filesize")
         if video.get("ext") == "mp4":
             for frmt_ in qual_list:
-                if fr_note in (frmt_, f'{frmt_}60'):
+                if fr_note in (frmt_, f"{frmt_}60"):
                     qual_dict[frmt_][fr_id] = fr_size
         if video.get("acodec") != "none":
             bitrrate = int(video.get("abr", 0))

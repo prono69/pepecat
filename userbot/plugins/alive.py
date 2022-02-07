@@ -47,7 +47,7 @@ async def amireallyalive(event):
     _, check_sgnirts = check_data_base_heal_th()
     EMOJI = gvarstatus("ALIVE_EMOJI") or "〣 "
     # ================================================
-    api_url = 'https://animechan.vercel.app/api/random'
+    api_url = "https://animechan.vercel.app/api/random"
     try:
         response = requests.get(api_url).json()
     except Exception:

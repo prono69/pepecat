@@ -39,7 +39,7 @@ def weird_division(n, d):
         "examples": "{tr}chatfs @catuserbot_support",
     },
 )
-async def _(event):    # sourcery no-metrics
+async def _(event):  # sourcery no-metrics
     "Shows you the complete media/file summary of the that group"
     entity = event.chat_id
     if input_str := event.pattern_match.group(1):

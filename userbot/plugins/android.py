@@ -24,7 +24,7 @@ async def kakashi(event):
     magisk_repo = "https://raw.githubusercontent.com/topjohnwu/magisk-files/"
     magisk_dict = {
         "⦁ **Stable**": magisk_repo + "master/stable.json",
-        "⦁ **Beta**": f'{magisk_repo}master/beta.json',
+        "⦁ **Beta**": f"{magisk_repo}master/beta.json",
         "⦁ **Canary**": magisk_repo + "master/canary.json",
     }
 
@@ -110,8 +110,7 @@ async def codename_info(event):
     if results := [
         i
         for i in devices
-        if i["name"].lower() == device.lower()
-        or i["model"].lower() == device.lower()
+        if i["name"].lower() == device.lower() or i["model"].lower() == device.lower()
     ]:
         reply = f"**Search results for {brand} {device}**:\n\n"
         if len(results) > 8:

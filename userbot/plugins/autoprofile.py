@@ -245,7 +245,7 @@ async def autobio_loop():
 async def animeprofilepic(collection_images):
     rnd = random.randint(0, len(collection_images) - 1)
     pack = collection_images[rnd]
-    pc = requests.get(f'http://getwallpapers.com/collection/{pack}').text
+    pc = requests.get(f"http://getwallpapers.com/collection/{pack}").text
     f = re.compile(r"/\w+/full.+.jpg")
     f = f.findall(pc)
     fy = "http://getwallpapers.com" + random.choice(f)

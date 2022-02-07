@@ -87,7 +87,7 @@ oldvars = {
         ],
     },
 )
-async def bad(event):    # sourcery no-metrics
+async def bad(event):  # sourcery no-metrics
     "To manage vars in database"
     cmd = event.pattern_match.group(1).lower()
     vname = event.pattern_match.group(2)
@@ -141,7 +141,7 @@ async def bad(event):    # sourcery no-metrics
                 except AttributeError:
                     return await event.edit("`Error while making link`")
                 except exceptions.TelegraphException as exc:
-                    return await event.edit(f'**Error** : `{exc}`')
+                    return await event.edit(f"**Error** : `{exc}`")
         except AttributeError:
             vinfo = reply.text
             # ==============================================================================
