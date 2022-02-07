@@ -149,12 +149,12 @@ async def load_plugins(folder):
     path = f"userbot/{folder}/*.py"
     files = glob.glob(path)
     files.sort()
+    LOGS.info(f"• Installing Official Plugins || Count : {len(files)} •")
     for name in files:
         with open(name) as f:
             path1 = Path(f.name)
             shortname = path1.stem
             try:
-            	LOGS.info(f"• Installing Official Plugins || Count : {len(files)} •")
                 if shortname.replace(".py", "") not in Config.NO_LOAD:
                     flag = True
                     check = 0
