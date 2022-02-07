@@ -64,7 +64,7 @@ async def zip_file(event):
     end = datetime.now()
     ms = (end - start).seconds
     await mone.edit(
-        f"Zipped the path `{input_str}` into `{filepath+'.zip'}` in __{ms}__ Seconds"
+        f'Zipped the path `{input_str}` into `{filepath}.zip` in __{ms}__ Seconds'
     )
 
 
@@ -121,10 +121,9 @@ async def tar_file(event):
         ],
     },
 )
-async def zip_file(event):  # sourcery no-metrics
+async def zip_file(event):    # sourcery no-metrics
     "To unpack the zip file"
-    input_str = event.pattern_match.group(1)
-    if input_str:
+    if input_str := event.pattern_match.group(1):
         path = Path(input_str)
         if os.path.exists(path):
             start = datetime.now()
@@ -205,10 +204,9 @@ async def zip_file(event):  # sourcery no-metrics
         ],
     },
 )
-async def untar_file(event):  # sourcery no-metrics
+async def untar_file(event):    # sourcery no-metrics
     "To unpack the tar file"
-    input_str = event.pattern_match.group(1)
-    if input_str:
+    if input_str := event.pattern_match.group(1):
         path = Path(input_str)
         if os.path.exists(path):
             start = datetime.now()

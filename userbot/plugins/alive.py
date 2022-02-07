@@ -47,7 +47,7 @@ async def amireallyalive(event):
     _, check_sgnirts = check_data_base_heal_th()
     EMOJI = gvarstatus("ALIVE_EMOJI") or "〣 "
     # ================================================
-    api_url = f"https://animechan.vercel.app/api/random"
+    api_url = 'https://animechan.vercel.app/api/random'
     try:
         response = requests.get(api_url).json()
     except Exception:
@@ -73,7 +73,7 @@ async def amireallyalive(event):
         ping=ms,
     )
     if CAT_IMG:
-        CAT = [x for x in CAT_IMG.split()]
+        CAT = list(CAT_IMG.split())
         PIC = random.choice(CAT)
         try:
             await event.client.send_file(

@@ -134,8 +134,7 @@ async def current(event):
     chat_info_ = await event.client(GetFullChannelRequest(channel=chat_))
     members = chat_info_.full_chat.participants_count
 
-    input_ = event.pattern_match.group(1)
-    if input_:
+    if input_ := event.pattern_match.group(1):
         if input_.isalpha():
             await edit_delete(event, "`Braaah`", 15)
             return
@@ -166,7 +165,13 @@ async def current(event):
         if not is_bot:
             msg.append((f"<a href = tg://user?id={user.id}>⁪⁬⁮⁮⁮⁮</a>"))
             tagged += 1
-            if ALL and tagged == members:
+            if (
+                (not ALL or tagged != members)
+                and extra
+                and tagged == members % permsg
+                or ALL
+                and tagged == members
+            ):
                 send = "⁪⁬⁮⁮⁮⁮".join(msg)
                 await event.client.send_message(
                     event.chat.id,
@@ -178,20 +183,7 @@ async def current(event):
                 msg.clear()
                 tagged = 0
                 extra = False
-            elif extra:
-                if tagged == members % permsg:
-                    send = "⁪⁬⁮⁮⁮⁮".join(msg)
-                    await event.client.send_message(
-                        event.chat.id,
-                        f"{choice(emoji)} {send}",
-                        reply_to=reply_to_id,
-                        parse_mode="html",
-                    )
-                    await asyncio.sleep(0.5)
-                    msg.clear()
-                    tagged = 0
-                    extra = False
-            elif tagged == permsg:
+            elif not extra and tagged == permsg:
                 send = "⁪⁬⁮⁮⁮⁮".join(msg)
                 await event.client.send_message(
                     event.chat.id,

@@ -102,7 +102,7 @@ async def mean(event):
         else:
             await xx.edit(x)
     except Exception as e:
-        await xx.edit(f"No synonym found!!\n{str(e)}")
+        await xx.edit(f'No synonym found!!\n{e}')
 
 
 @catub.cat_cmd(
@@ -139,4 +139,4 @@ async def mean(event):
         else:
             await xx.edit(x)
     except Exception as e:
-        await xx.edit(f"No antonym found!!\n{str(e)}")
+        await xx.edit(f'No antonym found!!\n{e}')

@@ -89,13 +89,13 @@ async def gsearch(q_event):
     try:
         page = page[0]
         page = page.replace("-p", "")
-        match = match.replace("-p" + page, "")
+        match = match.replace(f'-p{page}', "")
     except IndexError:
         page = 1
     try:
         lim = lim[0]
         lim = lim.replace("-l", "")
-        match = match.replace("-l" + lim, "")
+        match = match.replace(f'-l{lim}', "")
         lim = int(lim)
         if lim <= 0:
             lim = int(5)
@@ -138,7 +138,7 @@ async def gsearch(q_event):
     if BOTLOG:
         await q_event.client.send_message(
             BOTLOG_CHATID,
-            "Google Search query `" + match + "` was executed successfully",
+            f'Google Search query `{match}` was executed successfully',
         )
 
 
@@ -259,7 +259,7 @@ async def _(img):
             return await catevent.edit("`Unable to perform reverse search.`")
         fetchUrl = response.headers["Location"]
         os.remove(name)
-        match = await ParseSauce(fetchUrl + "&preferences?hl=en&fg=1#languages")
+        match = await ParseSauce(f'{fetchUrl}&preferences?hl=en&fg=1#languages')
         guess = match["best_guess"]
         imgspage = match["similar_images"]
         if guess and imgspage:
@@ -310,7 +310,7 @@ async def google_search(event):
             event,
             "__Plox your search query exceeds 200 characters or you search query is empty.__",
         )
-    query = "#12" + input_str
+    query = f'#12{input_str}'
     results = await event.client.inline_query("@StickerizerBot", query)
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     await event.delete()

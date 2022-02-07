@@ -148,7 +148,7 @@ async def unload(event):
     shortname = event.pattern_match.group(1)
     path = Path(f"userbot/plugins/{shortname}.py")
     if not os.path.exists(path):
-        return await edit_delete(event, f"**There's no such Plugin**")
+        return await edit_delete(event, "**There's no such Plugin**")
     try:
         remove_plugin(shortname)
         await edit_delete(event, f"**Uɴʟᴏᴀᴅᴇᴅ** `{shortname}` **Sᴜᴄᴄᴇssғᴜʟʟʏ.**", 10)

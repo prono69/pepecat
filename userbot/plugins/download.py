@@ -45,7 +45,7 @@ async def _get_file_name(path: pathlib.Path, full: bool = True) -> str:
         ],
     },
 )
-async def _(event):  # sourcery no-metrics
+async def _(event):    # sourcery no-metrics
     "To download the replied telegram file"
     mone = await edit_or_reply(event, "`Downloading....`")
     input_str = event.pattern_match.group(3)
@@ -145,10 +145,11 @@ async def _(event):  # sourcery no-metrics
             percentage = downloader.get_progress() * 100
             dspeed = downloader.get_speed()
             progress_str = "`{0}{1} {2}`%".format(
-                "".join("▰" for i in range(math.floor(percentage / 5))),
-                "".join("▱" for i in range(20 - math.floor(percentage / 5))),
+                "".join("▰" for _ in range(math.floor(percentage / 5))),
+                "".join("▱" for _ in range(20 - math.floor(percentage / 5))),
                 round(percentage, 2),
             )
+
             estimated_total_time = downloader.get_eta(human=True)
             current_message = f"Downloading the file\
                                 \n\n**URL : **`{url}`\
@@ -293,10 +294,11 @@ async def _e(event):
     sm_ = await edit_or_reply(event, "__Downloading...__")
     reply = await event.get_reply_message()
     input = event.pattern_match.group(1)
-    if not input and reply and reply.text:
-        input = reply.text
-    elif not input:
-        return await edit_delete(event, "__Gib Telegram Message Link__")
+    if not input:
+        if reply and reply.text:
+            input = reply.text
+        else:
+            return await edit_delete(event, "__Gib Telegram Message Link__")
     _c, m_ = get_c_m_message(input)
     try:
         _ok_m_ = await event.client.get_messages(entity=_c, ids=m_)

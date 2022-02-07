@@ -117,8 +117,9 @@ async def kill_mp3(event):
     await event.client.send_file(
         event.chat_id,
         file=ded_file,
-        caption=f"**| Successfully Destroyed |**",
+        caption='**| Successfully Destroyed |**',
         reply_to=reply_to_id,
     )
+
     await event.delete()
     os.system("rm -rf destiny")

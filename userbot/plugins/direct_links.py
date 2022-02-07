@@ -269,7 +269,6 @@ def sourceforge(url: str) -> str:
 
 def osdn(url: str) -> str:
     """OSDN direct links generator"""
-    osdn_link = "https://osdn.net"
     try:
         link = re.findall(r"\bhttps?://.*osdn\.net\S+", url)[0]
     except IndexError:
@@ -277,7 +276,7 @@ def osdn(url: str) -> str:
         return reply
     page = BeautifulSoup(requests.get(link, allow_redirects=True).content, "lxml")
     info = page.find("a", {"class": "mirror_link"})
-    link = urllib.parse.unquote(osdn_link + info["href"])
+    link = urllib.parse.unquote(f'https://osdn.net{info["href"]}')
     reply = f"Mirrors for __{link.split('/')[-1]}__\n"
     mirrors = page.find("form", {"id": "mirror-select-form"}).findAll("tr")
     for data in mirrors[1:]:

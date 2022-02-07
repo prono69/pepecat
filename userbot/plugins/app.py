@@ -109,7 +109,7 @@ async def app_search(event):
         return
     reply_to_id = await reply_id(event)
     APPBOT = "@nedzbot"
-    cozyneko = "app " + app_name
+    cozyneko = f'app {app_name}'
     event = await edit_or_reply(event, "`Searching!..`")
     try:
         score = await event.client.inline_query(APPBOT, cozyneko)

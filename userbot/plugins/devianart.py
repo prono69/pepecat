@@ -38,7 +38,7 @@ async def downakd(e):
         num = 5
     xd = await edit_or_reply(e, "`Processing...`")
     match = match.replace(" ", "+")
-    link = "https://www.deviantart.com/search?q=" + match
+    link = f'https://www.deviantart.com/search?q={match}'
     ct = requests.get(link).content
     st = bs(ct, "html.parser", from_encoding="utf-8")
     res = st.find_all("img", loading="lazy", src=re.compile("https://images-wixmp"))[
@@ -52,7 +52,7 @@ async def downakd(e):
         img = await download_file(on["src"], f"downloads/{match}-{num}.jpg")
         num += 1
         out.append(img)
-    if len(out) == 0:
+    if not out:
         return await xd.edit("`No Results Found!`")
     await e.client.send_file(
         e.chat_id, out, caption=f"Uploaded {len(res)} Images\n", album=True

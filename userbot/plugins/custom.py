@@ -87,7 +87,7 @@ oldvars = {
         ],
     },
 )
-async def bad(event):  # sourcery no-metrics
+async def bad(event):    # sourcery no-metrics
     "To manage vars in database"
     cmd = event.pattern_match.group(1).lower()
     vname = event.pattern_match.group(2)
@@ -117,7 +117,7 @@ async def bad(event):  # sourcery no-metrics
                     vinfo = f"https://t.me/{username}/{msg_id}"
                 else:
                     channel_id = gvarstatus("PUBLIC_CHANNEL_ID")
-                    if channel_id == None:
+                    if channel_id is None:
                         return await edit_delete(
                             event,
                             "Add `PUBLIC_CHANNEL_ID` in dv for auto link gen to work`",
@@ -125,9 +125,10 @@ async def bad(event):  # sourcery no-metrics
                     chat = await event.client.get_entity(int(channel_id))
                     sent = await event.client.send_file(chat.id, reply.media)
                     vinfo = f"https://t.me/{chat.username}/{sent.id}"
-            elif (type(reply.media) == types.MessageMediaDocument) or (
-                type(reply.media) == types.MessageMediaPhoto
-            ):
+            elif type(reply.media) in [
+                types.MessageMediaDocument,
+                types.MessageMediaPhoto,
+            ]:
                 await event.edit("`Creating link...`")
                 downloaded_file_name = await event.client.download_media(
                     reply, Config.TEMP_DIR
@@ -140,7 +141,7 @@ async def bad(event):  # sourcery no-metrics
                 except AttributeError:
                     return await event.edit("`Error while making link`")
                 except exceptions.TelegraphException as exc:
-                    return await event.edit(f"**Error** : `{str(exc)}`")
+                    return await event.edit(f'**Error** : `{exc}`')
         except AttributeError:
             vinfo = reply.text
             # ==============================================================================

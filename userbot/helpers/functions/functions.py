@@ -91,8 +91,7 @@ async def animator(media, mainevent, textevent):
         f"ffmpeg -ss 00:00:00 -to 00:00:02.900 -i {PepeCat} -vf scale={w}:{h} -c:v libvpx-vp9 -crf 30 -b:v 560k -maxrate 560k -bufsize 256k -an animate.webm"
     )  # pain
     os.remove(PepeCat)
-    sticker = "animate.webm"
-    return sticker
+    return "animate.webm"
 
 
 def reddit_thumb_link(preview, thumb=None):
@@ -242,10 +241,7 @@ async def unzip(downloaded_file_name):
 async def covidindia(state):
     url = "https://www.mohfw.gov.in/data/datanew.json"
     req = requests.get(url).json()
-    for i in states:
-        if i == state:
-            return req[states.index(i)]
-    return None
+    return next((req[states.index(i)] for i in states if i == state), None)
 
 
 async def hide_inlinebot(borg, bot_name, text, chat_id, reply_to_id, c_lick=0):

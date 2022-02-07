@@ -140,14 +140,16 @@ async def progress(
         progress_str = "`{0}` | `[{1}{2}] {3}%`".format(
             status,
             "".join(
-                Config.FINISHED_PROGRESS_STR for i in range(math.floor(percentage / 5))
+                Config.FINISHED_PROGRESS_STR
+                for i in range(math.floor(percentage / 5))
             ),
             "".join(
                 Config.UNFINISHED_PROGRESS_STR
-                for i in range(20 - math.floor(percentage / 5))
+                for _ in range(20 - math.floor(percentage / 5))
             ),
             round(percentage, 2),
         )
+
         tmp = (
             f"{progress_str}\n"
             f"`{humanbytes(current)} of {humanbytes(total)}"
