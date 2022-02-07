@@ -154,6 +154,7 @@ async def load_plugins(folder):
             path1 = Path(f.name)
             shortname = path1.stem
             try:
+            	LOGS.info(f"• Installing Official Plugins || Count : {len(files)} •")
                 if shortname.replace(".py", "") not in Config.NO_LOAD:
                     flag = True
                     check = 0
@@ -162,9 +163,6 @@ async def load_plugins(folder):
                             load_module(
                                 shortname.replace(".py", ""),
                                 plugin_path=f"userbot/{folder}",
-                            )
-                            LOGS.info(
-                                f"• Installing Official Plugins || Count : {len(files)} •"
                             )
                             break
                         except ModuleNotFoundError as e:
