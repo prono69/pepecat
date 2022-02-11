@@ -121,15 +121,15 @@ def zipdir(path, ziph):
 def pack_nick(username, pack, is_anim, is_video):
     if gvarstatus("CUSTOM_STICKER_PACKNAME"):
         if is_anim:
-            return f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} Vol.{pack} (Animated)"
+            return f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} Vol.{pack} • [Animated]"
         elif is_video:
-            return f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} Vol. {pack} (Video)"
+            return f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} Vol.{pack} • [Video]"
         return f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} Vol.{pack}"
 
     if is_anim:
-        return f"@{username}'s Secret Layer Vol.{pack} Animated"
+        return f"@{username}'s Secret Layer Vol.{pack} • [Animated]"
     elif is_video:
-        return f"@{username}'s Secret Layer Vol.{pack} (Video)"
+        return f"@{username}'s Limitless Vol.{pack} • [Video]"
     else:
         return f"@{username}'s Secret Layer Vol.{pack}"
 
@@ -540,7 +540,7 @@ async def pack_kang(event):  # sourcery no-metrics
             GetStickerSetRequest(
                 InputStickerSetID(
                     id=stickerset_attr.stickerset.id,
-                    access_hash=stickerset_attr.stickerset.access_hash,
+                    access_hash=stickerset_attr.stickerset.access_hash, hash=0
                 )
             )
         )
@@ -553,7 +553,7 @@ async def pack_kang(event):  # sourcery no-metrics
     reqd_sticker_set = await event.client(
         functions.messages.GetStickerSetRequest(
             stickerset=types.InputStickerSetShortName(
-                short_name=f"{get_stickerset.set.short_name}"
+                short_name=f"{get_stickerset.set.short_name}", hash=0
             )
         )
     )
@@ -894,7 +894,7 @@ async def get_pack_info(event):
         GetStickerSetRequest(
             InputStickerSetID(
                 id=stickerset_attr.stickerset.id,
-                access_hash=stickerset_attr.stickerset.access_hash,
+                access_hash=stickerset_attr.stickerset.access_hash, hash=0
             )
         )
     )

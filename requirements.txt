@@ -57,6 +57,8 @@ python-barcode
 python-dotenv
 pytz
 pokedex.py
+pornhub_api
+pornhubapi
 qrcode
 quotefancy
 randomstuff.py
