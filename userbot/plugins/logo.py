@@ -504,9 +504,10 @@ async def get_font_file(client, channel_id):
     font_file_message = random.choice(font_file_message_s)
     return await client.download_media(font_file_message)
 
-    
+
 # By @deepaiims
-    
+
+
 @catub.cat_cmd(
     pattern="ilogo ?(.*)",
     command=("ilogo", plugin_category),
@@ -584,4 +585,4 @@ async def get_font_file(client, channel_id):
         entity=channel_id, filter=InputMessagesFilterDocument, limit=None
     )
     font_file_message = random.choice(font_file_message_s)
-    return await client.download_media(font_file_message)    
+    return await client.download_media(font_file_message)

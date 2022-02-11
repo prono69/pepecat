@@ -540,7 +540,8 @@ async def pack_kang(event):  # sourcery no-metrics
             GetStickerSetRequest(
                 InputStickerSetID(
                     id=stickerset_attr.stickerset.id,
-                    access_hash=stickerset_attr.stickerset.access_hash, hash=0
+                    access_hash=stickerset_attr.stickerset.access_hash,
+                    hash=0,
                 )
             )
         )
@@ -894,7 +895,8 @@ async def get_pack_info(event):
         GetStickerSetRequest(
             InputStickerSetID(
                 id=stickerset_attr.stickerset.id,
-                access_hash=stickerset_attr.stickerset.access_hash, hash=0
+                access_hash=stickerset_attr.stickerset.access_hash,
+                hash=0,
             )
         )
     )
