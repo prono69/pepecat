@@ -34,7 +34,7 @@
 ---
 
 <details>
-<summary><b><i>Must Read This</i> </b>è</summary>
+<summary><b><i>Must Read This</i></b></summary>
 
 * This bot contains some strong NSFW modules.
 * Make sure you are at least 18 years old.
@@ -67,7 +67,7 @@ No personal support will be provided / We won't spoon feed you.
 If you need help ask in our support group 
 and we or our friends will try to help you.
 
-Thanks for using our bot üò∫
+Thanks for using our bot 
 ```
 
 ## Credits

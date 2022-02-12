@@ -15,18 +15,10 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from urlextract import URLExtract
 from validators.url import url
-from youtubesearchpython import Video
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.functions import (
-    deEmojify,
-    hide_inlinebot,
-    name_dl,
-    song_dl,
-    video_dl,
-    yt_search,
-)
+from ..helpers.functions import deEmojify, hide_inlinebot, name_dl, song_dl, video_dl, yt_data, yt_search
 from ..helpers.tools import media_type
 from ..helpers.utils import _catutils, reply_id
 from . import catub, hmention
@@ -107,7 +99,7 @@ async def _(event):
         catthumb = Path(f"{catname}.webp")
     elif not os.path.exists(catthumb):
         catthumb = None
-    ytdata = Video.get(video_link)
+    ytdata = await yt_data(video_link)
     await event.client.send_file(
         event.chat_id,
         song_file,
@@ -191,7 +183,7 @@ async def _(event):
         catthumb = Path(f"{catname}.webp")
     elif not os.path.exists(catthumb):
         catthumb = None
-    ytdata = Video.get(video_link)
+    ytdata = await yt_data(video_link)
     await event.client.send_file(
         event.chat_id,
         vsong_file,
@@ -416,7 +408,6 @@ async def music(event):
 
 # By @FeelDeD
 
-
 @catub.cat_cmd(
     pattern="sdl",
     command=("sdl", plugin_category),
@@ -517,7 +508,6 @@ async def nope(event):
 
 # @TheLoneEssence (Lee Kaze) Pro AF
 
-
 @catub.cat_cmd(
     pattern="ssong ?(.*)",
     command=("ssong", plugin_category),
@@ -583,3 +573,46 @@ async def music(event):
         )
 
     await event.delete()
+
+    
+#By t.me://feelded
+
+@catub.cat_cmd(
+    pattern="isdl",
+    command=("isdl", plugin_category),
+    info={
+        "header": "Spotify/Deezer Downloader",
+        "usage": [
+            "{tr}isdl <song name>",
+        ],
+    },
+)
+async def wave(odi):
+    "Inline Song Downloader"
+    song = "".join(odi.text.split(maxsplit=1)[1:])
+    reply_to_id = await reply_id(odi)
+    if not song:
+        await edit_delete(odi, "`Give me a song name`", 6)
+    else:
+        await odi.edit("`Downloading ...`")
+        chat = "@DeezerMusicBot"
+        inline = "@Deezload2Bot"
+        async with odi.client.conversation(chat) as conv:
+            try:
+                await odi.client(functions.contacts.UnblockRequest(conv.chat_id))
+                run = await odi.client.inline_query(inline, song)
+                start = await conv.send_message('/start')
+                await conv.get_response()
+                end = await run[0].click(conv.chat_id)
+                music = await conv.get_response()
+                if not music.audio:
+            	    await odi.edit(f"`No result found for {song}`")
+                else:
+            	    result = await odi.client.send_file(odi.chat_id, music, reply_to=reply_to_id, caption=False)
+            	    await odi.delete()
+                msgs = []
+                for _ in range(start.id, end.id+2): msgs.append(_)
+                await odi.client.delete_messages(conv.chat_id, msgs)
+                await odi.client.send_read_acknowledge(conv.chat_id)
+            except Exception as e:
+        	    await edit_delete(odi, f"`No result found for {song}`", 6)    

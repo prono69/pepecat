@@ -11,7 +11,6 @@ import string
 import urllib.request
 import zipfile
 from collections import defaultdict
-
 import cloudscraper
 import emoji as catemoji
 from bs4 import BeautifulSoup as bs
@@ -39,7 +38,7 @@ from ..sql_helper.globals import gvarstatus
 
 plugin_category = "fun"
 
-# modified and developed by @mrconfused
+# modified and developed by @mrconfused , @jisan7509
 
 
 combot_stickers_url = "https://combot.org/telegram/stickers?q="
@@ -125,7 +124,6 @@ def pack_nick(username, pack, is_anim, is_video):
         elif is_video:
             return f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} Vol.{pack} • [Video]"
         return f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} Vol.{pack}"
-
     if is_anim:
         return f"@{username}'s Secret Layer Vol.{pack} • [Animated]"
     elif is_video:
@@ -367,13 +365,26 @@ async def kang(args):  # sourcery no-metrics
             await args.client.download_media(
                 message.media.document, "AnimatedSticker.tgs"
             )
-
             attributes = message.media.document.attributes
             for attribute in attributes:
                 if isinstance(attribute, DocumentAttributeSticker):
                     emoji = attribute.alt
             emojibypass = True
             is_anim = True
+            photo = 1
+        elif message.media.document.mime_type in ["video/mp4", "video/webm"]:
+            if message.media.document.mime_type == "video/webm":
+                catevent = await edit_or_reply(args, f"`{random.choice(KANGING_STR)}`")
+                sticker = await args.client.download_media(
+                    message.media.document, "animate.webm"
+                )
+            else:
+                catevent = await edit_or_reply(args, "__⌛ Downloading..__")
+                sticker = await animator(message, args, catevent)
+                await edit_or_reply(catevent, f"`{random.choice(KANGING_STR)}`")
+            is_video = True
+            emoji = "😂"
+            emojibypass = True
             photo = 1
         elif message.media.document.mime_type in ["video/mp4", "video/webm"]:
             if message.media.document.mime_type == "video/webm":
@@ -415,8 +426,8 @@ async def kang(args):  # sourcery no-metrics
                 emoji = splat[0]
             else:
                 pack = splat[0]
-        packnick = pack_nick(username, pack, is_anim, is_video)
         packname = pack_name(userid, pack, is_anim, is_video)
+        packnick = pack_nick(username, pack, is_anim, is_video)
         cmd = "/newpack"
         stfile = io.BytesIO()
         if is_video:
@@ -632,8 +643,8 @@ async def pack_kang(event):  # sourcery no-metrics
                         cmd,
                         event,
                         pack,
-                        is_video,
                         packnick,
+                        is_video,
                         emoji,
                         packname,
                         is_anim,
@@ -650,11 +661,11 @@ async def pack_kang(event):  # sourcery no-metrics
                         pack,
                         userid,
                         username,
-                        is_anim,
                         is_video,
+                        is_anim,
+                        stfile,
                         emoji,
                         cmd,
-                        stfile,
                         pkang=True,
                     )
             if catpackname is None:
@@ -685,15 +696,7 @@ async def pussycat(args):
     "To kang a sticker."  # scam :('  Dom't kamg :/@Jisan7509
     message = await args.get_reply_message()
     user = await args.client.get_me()
-    if not user.username:
-        try:
-            user.first_name.encode("utf-8").decode("ascii")
-            user.first_name
-        except UnicodeDecodeError:
-            f"cat_{user.id}"
-    else:
-        name = user.username
-    user.id
+    userid = user.id
     if message and message.media:
         if "video/mp4" in message.media.document.mime_type:
             catevent = await edit_or_reply(args, "__⌛ Downloading..__")
@@ -706,7 +709,7 @@ async def pussycat(args):
         await edit_delete(args, "`I can't convert that...`")
         return
     cmd = "/newvideo"
-    packname = f"BadCat_{name}_temp_pack"
+    packname = f"Cat_{userid}_temp_pack"
     response = urllib.request.urlopen(
         urllib.request.Request(f"http://t.me/addstickers/{packname}")
     )
@@ -731,7 +734,7 @@ async def pussycat(args):
             "/newvideo",
             args,
             1,
-            "BadCat",
+            "Cat",
             True,
             "😂",
             packname,
