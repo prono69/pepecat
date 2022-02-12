@@ -68,7 +68,7 @@ async def inline_id_handler(event: events.InlineQuery.Event):
         lul_m = (f"[𝙋𝙤𝙧𝙣𝙃𝙪𝙗 𝙎𝙚𝙖𝙧𝙘𝙝] \n**Sᴇᴀʀᴄʜ Qᴜᴇʀʏ :** __{input_str}__ \n**Vɪᴅᴇᴏ Tɪᴛʟᴇ :** __{vid['name']}__ __({duration})__ \n**Rᴀᴛɪɴɢ :** `{rate}` \n**Vɪᴅᴇᴏ Lɪɴᴋ :** {vid['url']}")
         results.append(
                 await event.builder.article(
-                	title=vid['name']
+                	title=vid['name'],
                     text=lul_m,
                     buttons=[
                         Button.switch_inline(
