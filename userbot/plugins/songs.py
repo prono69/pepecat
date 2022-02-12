@@ -18,7 +18,15 @@ from validators.url import url
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.functions import deEmojify, hide_inlinebot, name_dl, song_dl, video_dl, yt_data, yt_search
+from ..helpers.functions import (
+    deEmojify,
+    hide_inlinebot,
+    name_dl,
+    song_dl,
+    video_dl,
+    yt_data,
+    yt_search,
+)
 from ..helpers.tools import media_type
 from ..helpers.utils import _catutils, reply_id
 from . import catub, hmention
@@ -408,6 +416,7 @@ async def music(event):
 
 # By @FeelDeD
 
+
 @catub.cat_cmd(
     pattern="sdl",
     command=("sdl", plugin_category),
@@ -508,6 +517,7 @@ async def nope(event):
 
 # @TheLoneEssence (Lee Kaze) Pro AF
 
+
 @catub.cat_cmd(
     pattern="ssong ?(.*)",
     command=("ssong", plugin_category),
@@ -574,8 +584,9 @@ async def music(event):
 
     await event.delete()
 
-    
-#By t.me://feelded
+
+# By t.me://feelded
+
 
 @catub.cat_cmd(
     pattern="isdl",
@@ -601,18 +612,21 @@ async def wave(odi):
             try:
                 await odi.client(functions.contacts.UnblockRequest(conv.chat_id))
                 run = await odi.client.inline_query(inline, song)
-                start = await conv.send_message('/start')
+                start = await conv.send_message("/start")
                 await conv.get_response()
                 end = await run[0].click(conv.chat_id)
                 music = await conv.get_response()
                 if not music.audio:
-            	    await odi.edit(f"`No result found for {song}`")
+                    await odi.edit(f"`No result found for {song}`")
                 else:
-            	    result = await odi.client.send_file(odi.chat_id, music, reply_to=reply_to_id, caption=False)
-            	    await odi.delete()
+                    result = await odi.client.send_file(
+                        odi.chat_id, music, reply_to=reply_to_id, caption=False
+                    )
+                    await odi.delete()
                 msgs = []
-                for _ in range(start.id, end.id+2): msgs.append(_)
+                for _ in range(start.id, end.id + 2):
+                    msgs.append(_)
                 await odi.client.delete_messages(conv.chat_id, msgs)
                 await odi.client.send_read_acknowledge(conv.chat_id)
-            except Exception as e:
-        	    await edit_delete(odi, f"`No result found for {song}`", 6)    
+            except Exception:
+                await edit_delete(odi, f"`No result found for {song}`", 6)

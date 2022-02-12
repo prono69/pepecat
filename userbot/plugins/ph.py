@@ -1,7 +1,7 @@
 # Inline PornHub Search by @kirito6969 for PepeCat
 
-from pornhub_api import PornhubApi
 import pornhub
+from pornhub_api import PornhubApi
 from telethon import Button, events
 
 from userbot import catub
@@ -42,8 +42,8 @@ async def inline_id_handler(event: events.InlineQuery.Event):
         else:
             pass
     await event.answer(results)
-    
-    
+
+
 @catub.tgbot.on(events.InlineQuery(pattern=r"ps(.*)"))
 @check_owner
 async def inline_id_handler(event: events.InlineQuery.Event):
@@ -60,15 +60,14 @@ async def inline_id_handler(event: events.InlineQuery.Event):
     input_str = event.pattern_match.group(1)
     data = pornhub.PornHub(input_str)
     ok = 1
-    oik = ""
     for vid in data.getVideos(30):
-      if ok <= 5:
-        duration = vid['duration']
-        rate = vid['rating']
-        lul_m = (f"[𝙋𝙤𝙧𝙣𝙃𝙪𝙗 𝙎𝙚𝙖𝙧𝙘𝙝] \n**Sᴇᴀʀᴄʜ Qᴜᴇʀʏ :** __{input_str}__ \n**Vɪᴅᴇᴏ Tɪᴛʟᴇ :** __{vid['name']}__ __({duration})__ \n**Rᴀᴛɪɴɢ :** `{rate}` \n**Vɪᴅᴇᴏ Lɪɴᴋ :** {vid['url']}")
-        results.append(
+        if ok <= 5:
+            duration = vid["duration"]
+            rate = vid["rating"]
+            lul_m = f"[𝙋𝙤𝙧𝙣𝙃𝙪𝙗 𝙎𝙚𝙖𝙧𝙘𝙝] \n**Sᴇᴀʀᴄʜ Qᴜᴇʀʏ :** __{input_str}__ \n**Vɪᴅᴇᴏ Tɪᴛʟᴇ :** __{vid['name']}__ __({duration})__ \n**Rᴀᴛɪɴɢ :** `{rate}` \n**Vɪᴅᴇᴏ Lɪɴᴋ :** {vid['url']}"
+            results.append(
                 await event.builder.article(
-                	title=vid['name'],
+                    title=vid["name"],
                     text=lul_m,
                     buttons=[
                         Button.switch_inline(
@@ -77,7 +76,6 @@ async def inline_id_handler(event: events.InlineQuery.Event):
                     ],
                 )
             )
-      else:
-        pass
+        else:
+            pass
     await event.answer(results)
-    
