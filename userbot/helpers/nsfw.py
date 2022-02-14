@@ -117,7 +117,7 @@ def nsfw(catagory):
     catagory.sort(key=str.casefold)
     horny = "**Catagory :** "
     for i in catagory:
-        horny += f" `{i.lower()}` •"
+        horny += f" `{i.lower()}` ✘"
     return horny
 
 
