@@ -35,7 +35,7 @@ async def _(event):
 async def _(event):
     "animation command"
     event = await edit_or_reply(event, "lmao")
-    deq = deque(list("😂🤣😂🤣😂🤣"))
+    deq = deque(list("🤣😝🤣😝🤣😝"))
     for _ in range(48):
         await asyncio.sleep(0.2)
         await event.edit("".join(deq))
@@ -53,7 +53,7 @@ async def _(event):
 async def _(event):
     "animation command"
     event = await edit_or_reply(event, "nathappy")
-    deq = deque(list("😁☹️😁☹️😁☹️😁"))
+    deq = deque(list("🥰😖🥰😖🥰😖"))
     for _ in range(48):
         await asyncio.sleep(0.2)
         await event.edit("".join(deq))
