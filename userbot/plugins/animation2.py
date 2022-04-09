@@ -16,7 +16,7 @@ plugin_category = "fun"
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "think")
+    event = await edit_or_reply(event, "Think")
     deq = deque(list("🤔🧐🤔🧐🤔🧐"))
     for _ in range(48):
         await asyncio.sleep(0.2)
@@ -34,7 +34,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "lmao")
+    event = await edit_or_reply(event, "Lmao")
     deq = deque(list("🤣😝🤣😝🤣😝"))
     for _ in range(48):
         await asyncio.sleep(0.2)
@@ -52,7 +52,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "nathappy")
+    event = await edit_or_reply(event, "Nothappy")
     deq = deque(list("🥰😖🥰😖🥰😖"))
     for _ in range(48):
         await asyncio.sleep(0.2)
@@ -70,7 +70,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "clock")
+    event = await edit_or_reply(event, "Clock")
     deq = deque(list("🕙🕘🕗🕖🕕🕔🕓🕒🕑🕐🕛"))
     for _ in range(48):
         await asyncio.sleep(0.2)
@@ -88,7 +88,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "muah")
+    event = await edit_or_reply(event, "Muah")
     deq = deque(list("😗😙😚😚😘"))
     for _ in range(48):
         await asyncio.sleep(0.2)
@@ -106,7 +106,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "heart")
+    event = await edit_or_reply(event, "Heart")
     deq = deque(list("❤️🧡💛💚💙💜🖤"))
     for _ in range(48):
         await asyncio.sleep(0.2)
@@ -124,7 +124,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "gym")
+    event = await edit_or_reply(event, "Gym")
     deq = deque(list("🏃‍🏋‍🤸‍🏃‍🏋‍🤸‍🏃‍🏋‍🤸‍"))
     for _ in range(48):
         await asyncio.sleep(0.2)
@@ -142,7 +142,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "earth")
+    event = await edit_or_reply(event, "Earth")
     deq = deque(list("🌏🌍🌎🌎🌍🌏🌍🌎"))
     for _ in range(48):
         await asyncio.sleep(0.2)
@@ -160,7 +160,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "moon")
+    event = await edit_or_reply(event, "Moon")
     deq = deque(list("🌗🌘🌑🌒🌓🌔🌕🌖"))
     for _ in range(48):
         await asyncio.sleep(0.2)
@@ -181,7 +181,7 @@ async def _(event):
     event = await edit_or_reply(event, "smoon")
     animation_interval = 0.2
     animation_ttl = range(101)
-    await event.edit("smoon..")
+    await event.edit("Smoon...")
     animation_chars = [
         "🌗🌗🌗🌗🌗\n🌓🌓🌓🌓🌓\n🌗🌗🌗🌗🌗\n🌓🌓🌓🌓🌓\n🌗🌗🌗🌗🌗",
         "🌘🌘🌘🌘🌘\n🌔🌔🌔🌔🌔\n🌘🌘🌘🌘🌘\n🌔🌔🌔🌔🌔\n🌘🌘🌘🌘🌘",
@@ -210,7 +210,7 @@ async def _(event):
     event = await edit_or_reply(event, "tmoon")
     animation_interval = 0.2
     animation_ttl = range(96)
-    await event.edit("tmoon..")
+    await event.edit("Tmoon...")
     animation_chars = [
         "🌗",
         "🌘",
