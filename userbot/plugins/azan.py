@@ -14,8 +14,8 @@ plugin_category = "extra"
     pattern="azan(?:\s|$)([\s\S]*)",
     command=("azan", plugin_category),
     info={
-        "header": "Shows you the Islamic prayer times of the given city name.",
-        "note": "you can set default city by using {tr}setcity command.",
+        "header": "Shows you the islamic prayer times of the given city name",
+        "note": "you can set default city by using {tr} setcity command",
         "usage": "{tr}azan <city name>",
         "examples": "{tr}azan hyderabad",
     },
