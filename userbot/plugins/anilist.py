@@ -73,13 +73,13 @@ async def anime_quote(event):
     pattern="aluser(?:\s|$)([\s\S]*)",
     command=("aluser", plugin_category),
     info={
-        "header": "Search User profiles in anilist.",
+        "header": "Search user profiles in anilist",
         "usage": "{tr}aluser <username>",
-        "examples": "{tr}aluser Infinity20998",
+        "examples": "{tr}aluser infinity20998",
     },
 )
 async def anilist_usersearch(event):
-    "Search user profiles of Anilist."
+    "Search user profiles of anilist."
     search_query = event.pattern_match.group(1)
     reply_to = await reply_id(event)
     reply = await event.get_reply_message()
@@ -87,7 +87,7 @@ async def anilist_usersearch(event):
         if reply and reply.text:
             search_query = reply.text
         else:
-            return await edit_delete(event, "__Whom should i search.__")
+            return await edit_delete(event, "__Whom should I search__")
     catevent = await edit_or_reply(event, "`Searching user profile in anilist...`")
     searchresult = await anilist_user(search_query)
     if len(searchresult) == 1:
@@ -112,24 +112,24 @@ async def anilist_usersearch(event):
     pattern="mal(?:\s|$)([\s\S]*)",
     command=("mal", plugin_category),
     info={
-        "header": "Search profiles of MAL.",
+        "header": "Search profiles of mal.",
         "usage": "{tr}mal <username>",
-        "examples": "{tr}mal Infinity20998",
+        "examples": "{tr}mal infinity20998",
     },
 )
 async def user(event):
-    "Search profiles of MAL."
+    "Search profiles of mal"
     search_query = event.pattern_match.group(1)
     replyto = await reply_id(event)
     reply = await event.get_reply_message()
     if not search_query and reply and reply.text:
         search_query = reply.text
     elif not search_query:
-        return await edit_delete(event, "__Whom should i search.__")
+        return await edit_delete(event, "__Whom should I search__")
     try:
         user = jikan.user(search_query)
     except APIException:
-        return await edit_delete(event, "__No User found with given username__", 5)
+        return await edit_delete(event, "__No user found with given username__", 5)
     date_format = "%Y-%m-%d"
     img = user["image_url"] or "https://telegra.ph//file/9b4205e1b1cc68a4ffd5e.jpg"
     try:
@@ -179,7 +179,7 @@ async def user(event):
     pattern="airing(?:\s|$)([\s\S]*)",
     command=("airing", plugin_category),
     info={
-        "header": "Shows you the time left for the new episode of current running anime show.",
+        "header": "Shows you the time left for the new episode of current running anime show",
         "usage": "{tr}airing",
         "examples": "{tr}airing one piece",
     },
@@ -188,13 +188,13 @@ async def anilist(event):
     "Get airing date & time of any anime"
     search = event.pattern_match.group(1)
     if not search:
-        return await edit_delete(event, "__which anime results should i fetch__")
+        return await edit_delete(event, "__Which anime results should I fetch__")
     variables = {"search": search}
     response = requests.post(
         anilistapiurl, json={"query": airing_query, "variables": variables}
     ).json()["data"]["Media"]
     if response is None:
-        return await edit_delete(event, "__Unable to find the anime.__")
+        return await edit_delete(event, "__Unable to find the anime__")
     ms_g = f"**Name**: **{response['title']['romaji']}**(`{response['title']['native']}`)\n**ID**: `{response['id']}`"
     if response["nextAiringEpisode"]:
         airing_time = response["nextAiringEpisode"]["timeUntilAiring"]
@@ -210,7 +210,7 @@ async def anilist(event):
     pattern="anime(?:\s|$)([\s\S]*)",
     command=("anime", plugin_category),
     info={
-        "header": "Shows you the details of the anime.",
+        "header": "Shows you the details of the anime",
         "description": "Fectchs anime information from anilist",
         "usage": "{tr}anime <name of anime>",
         "examples": "{tr}anime fairy tail",
@@ -221,7 +221,7 @@ async def anilist(event):
     input_str = event.pattern_match.group(1)
     if not input_str:
         return await edit_delete(
-            event, "__What should i search ? Gib me Something to Search__"
+            event, "__What should I search ? Give me something to search__"
         )
     event = await edit_or_reply(event, "`Searching...`")
     result = await callAPI(input_str)
@@ -233,8 +233,8 @@ async def anilist(event):
     pattern="manga(?:\s|$)([\s\S]*)",
     command=("manga", plugin_category),
     info={
-        "header": "Searches for manga.",
-        "usage": "{tr}manga <manga name",
+        "header": "Searches for manga",
+        "usage": "{tr}manga <manga name>",
         "examples": "{tr}manga fairy tail",
     },
 )
@@ -248,7 +248,7 @@ async def get_manga(event):
             input_str = reply.text
         else:
             return await edit_delete(
-                event, "__What should i search ? Gib me Something to Search__"
+                event, "__What should I search ? Give me something to search__"
             )
     catevent = await edit_or_reply(event, "`Searching Manga..`")
     jikan = jikanpy.jikan.Jikan()
@@ -265,7 +265,7 @@ async def get_manga(event):
     pattern="fillers(?:\s|$)([\s\S]*)",
     command=("fillers", plugin_category),
     info={
-        "header": "To get list of filler episodes.",
+        "header": "To get list of filler episodes",
         "flags": {
             "-n": "If more than one name have same common word then to select required anime"
         },
@@ -347,8 +347,8 @@ async def get_anime(event):
     pattern="sanime(?:\s|$)([\s\S]*)",
     command=("sanime", plugin_category),
     info={
-        "header": "Searches for anime.",
-        "usage": "{tr}sanime <anime name",
+        "header": "Searches for anime",
+        "usage": "{tr}sanime <anime name>",
         "examples": "{tr}sanime black clover",
     },
 )
@@ -362,9 +362,9 @@ async def get_anime(event):
             input_str = reply.text
         else:
             return await edit_delete(
-                event, "__What should i search ? Gib me Something to Search__"
+                event, "__What should I search ? Give me something to search__"
             )
-    catevent = await edit_or_reply(event, "`Searching Anime..`")
+    catevent = await edit_or_reply(event, "`Searching anime..`")
     jikan = jikanpy.jikan.Jikan()
     search_result = jikan.search("anime", input_str)
     first_mal_id = search_result["results"][0]["mal_id"]
@@ -398,7 +398,7 @@ async def get_anime(event):
     pattern="char(?:\s|$)([\s\S]*)",
     command=("char", plugin_category),
     info={
-        "header": "Shows you character infomation.",
+        "header": "Shows you character infomation",
         "usage": "{tr}char <char name>",
         "examples": "{tr}char erza scarlet",
     },
@@ -413,13 +413,13 @@ async def character(event):
             search_query = reply.text
         else:
             return await edit_delete(
-                event, "__What should i search ? Gib me Something to Search__"
+                event, "__What should I search ? Give me something to search__"
             )
     catevent = await edit_or_reply(event, "`Searching Character...`")
     try:
         search_result = jikan.search("character", search_query)
     except APIException:
-        return await edit_delete(catevent, "`Character not found.`")
+        return await edit_delete(catevent, "`Character not found`")
     first_mal_id = search_result["results"][0]["mal_id"]
     character = jikan.character(first_mal_id)
     caption = f"[{character['name']}]({character['url']})"
@@ -440,7 +440,7 @@ async def character(event):
     for entity in character:
         if character[entity] is None:
             character[entity] = "Unknown"
-    caption += f"\n🔰**Extracted Character Data**🔰\n\n{about_string}"
+    caption += f"\n**Extracted Character Data**\n\n{about_string}"
     caption += f" [Read More]({mal_url})..."
     await catevent.delete()
     await event.client.send_file(
@@ -455,7 +455,7 @@ async def character(event):
     pattern="a(kaizoku|kayo|indi)(?: |$)([\S\s]*)",
     command=("akaizoku", plugin_category),
     info={
-        "header": "Shows you anime download link.",
+        "header": "Shows you anime download link",
         "usage": [
             "{tr}akaizoku <anime name>",
             "{tr}akayo <anime name>",
@@ -464,7 +464,7 @@ async def character(event):
         "examples": [
             "{tr}akaizoku one piece",
             "{tr}akayo tokyo revengers",
-            "{tr}aindi Spirited Away",
+            "{tr}aindi spirited away",
         ],
     },
 )
@@ -538,7 +538,7 @@ async def anime_download(event):  # sourcery no-metrics
     },
 )
 async def upcoming(event):
-    "Shows you Upcoming anime's."
+    "Shows you upcoming anime's"
     rep = "<b>Upcoming anime</b>\n"
     later = jikan.season_later()
     anime = later.get("anime")
@@ -555,8 +555,8 @@ async def upcoming(event):
     pattern="aschedule(?: |$)([\S\s]*)",
     command=("aschedule", plugin_category),
     info={
-        "header": "Shows you animes to be aired on that day.",
-        "description": "To get list of animes to be aired on that day use can also use 0 for monday , 1 for tuesday.... 6 for sunday.",
+        "header": "Shows you animes to be aired on that day",
+        "description": "To get list of animes to be aired on that day use can also use 0 for monday , 1 for tuesday... 6 for sunday",
         "usage": "{tr}aschedule <weekdays/[0-6]>",
         "example": ["{tr}aschedule sunday", "{tr}aschedule 5"],
     },
@@ -580,7 +580,7 @@ async def aschedule_fetch(event):
     pattern="w(hat)?anime$",
     command=("whatanime", plugin_category),
     info={
-        "header": "Reverse search of anime.",
+        "header": "Reverse search of anime",
         "usage": [
             "{tr}whatanime reply to photo/gif/video",
             "{tr}wanime reply to photo/gif/video",
@@ -592,18 +592,18 @@ async def whatanime(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edit_delete(
-            event, "__reply to media to reverse search that anime__."
+            event, "__Reply to media to reverse search that anime__"
         )
     mediatype = media_type(reply)
     if mediatype not in ["Photo", "Video", "Gif", "Sticker"]:
         return await edit_delete(
             event,
-            f"__Reply to proper media that is expecting photo/video/gif/sticker. not {mediatype}__.",
+            f"__Reply to proper media that is expecting photo / video / gif / sticker not {mediatype}__",
         )
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
+            output[0], "__Unable to extract image from the replied message__"
         )
     file = memory_file("anime.jpg", output[1])
     try:
@@ -626,7 +626,7 @@ async def whatanime(event):
             return await edit_delete(output[0], f"**Error:**\n__{error}__")
         js0 = resp0["result"]
         if not js0:
-            return await output[0].edit("`No results found.`")
+            return await output[0].edit("`No results found`")
         js0 = js0[0]
         text = (
             f'**Titile Romaji : **`{html.escape(js0["anilist"]["title"]["romaji"])}`\n'
