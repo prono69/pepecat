@@ -22,7 +22,7 @@ async def _(event):
     animation_ttl = range(8)
     event = await edit_or_reply(event, f"**Ready commando** {ALIVE_NAME}...")
     animation_chars = [
-        "Ｆｉｉｉｉｉｒｅ",
+        "𝐅𝐢𝐫𝐞",
         f"__**Commando**__{ALIVE_NAME}          \n\n_/﹋\_\n (҂`_´)\n <,︻╦╤─ ҉ - \n _/﹋\_\n",
         f"__**Commando**__{ALIVE_NAME}          \n\n_/﹋\_\n (҂`_´)\n  <,︻╦╤─ ҉ - -\n _/﹋\_\n",
         f"__**Commando**__{ALIVE_NAME}          \n\n_/﹋\_\n (҂`_´)\n <,︻╦╤─ ҉ - - -\n _/﹋\_\n",
