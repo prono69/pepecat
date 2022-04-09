@@ -19,15 +19,15 @@ async def _(event):
     animation_ttl = range(9)
     event = await edit_or_reply(event, "unnoob")
     animation_chars = [
-        "EvErYbOdY",
-        "iZ",
-        "BiGGeSt",
-        "NoOoB",
-        "uNtiL",
-        "YoU",
-        "aRriVe",
-        "😈",
-        "EvErYbOdY iZ BiGGeSt NoOoB uNtiL YoU aRriVe 😈",
+        "𝐄𝐯𝐞𝐫𝐲𝐨𝐧𝐞",
+        "𝐢𝐬",
+        "𝐛𝐢𝐠𝐠𝐞𝐬𝐭",
+        "𝐧𝐨𝐨𝐛",
+        "𝐮𝐧𝐭𝐢𝐥",
+        "𝐲𝐨𝐮",
+        "𝐚𝐫𝐫𝐢𝐯𝐞",
+        "😎",
+        "𝐄𝐯𝐞𝐫𝐲𝐨𝐧𝐞 𝐢𝐬 𝐛𝐢𝐠𝐠𝐞𝐬𝐭 𝐧𝐨𝐨𝐛 𝐮𝐧𝐭𝐢𝐥 𝐲𝐨𝐮 𝐚𝐫𝐫𝐢𝐯𝐞 😎",
     ]
     for i in animation_ttl:
         await event.edit(animation_chars[i % 9])
@@ -48,15 +48,15 @@ async def _(event):
     animation_ttl = range(9)
     event = await edit_or_reply(event, "menoob")
     animation_chars = [
-        "EvErYbOdY",
-        "iZ",
-        "BiGGeSt",
-        "NoOoB",
-        "uNtiL",
-        "i",
-        "aRriVe",
-        "😈",
-        "EvErYbOdY iZ BiGGeSt NoOoB uNtiL i aRriVe 😈",
+        "𝐄𝐯𝐞𝐫𝐲𝐨𝐧𝐞",
+        "𝐢𝐬",
+        "𝐛𝐢𝐠𝐠𝐞𝐬𝐭",
+        "𝐧𝐨𝐨𝐛",
+        "𝐮𝐧𝐭𝐢𝐥",
+        "𝐈",
+        "𝐚𝐫𝐫𝐢𝐯𝐞",
+        "😎",
+        "𝐄𝐯𝐞𝐫𝐲𝐨𝐧𝐞 𝐢𝐬 𝐛𝐢𝐠𝐠𝐞𝐬𝐭 𝐧𝐨𝐨𝐛 𝐮𝐧𝐭𝐢𝐥 𝐈 𝐚𝐫𝐫𝐢𝐯𝐞 😎",
     ]
     for i in animation_ttl:
         await event.edit(animation_chars[i % 9])
@@ -77,14 +77,14 @@ async def _(event):
     animation_ttl = range(8)
     event = await edit_or_reply(event, "upro")
     animation_chars = [
-        "EvErYbOdY",
-        "iZ",
-        "PeRu",
-        "uNtiL",
-        "YoU",
-        "aRriVe",
-        "😈",
-        "EvErYbOdY iZ PeRu uNtiL YoU aRriVe 😈",
+        "𝐄𝐯𝐞𝐫𝐲𝐨𝐧𝐞",
+        "𝐢𝐬",
+        "𝐩𝐫𝐨",
+        "𝐮𝐧𝐭𝐢𝐥",
+        "𝐲𝐨𝐮",
+        "𝐚𝐫𝐫𝐢𝐯𝐞",
+        "😎",
+        "𝐄𝐯𝐞𝐫𝐲𝐨𝐧𝐞 𝐢𝐬 𝐩𝐫𝐨 𝐮𝐧𝐭𝐢𝐥 𝐲𝐨𝐮 𝐚𝐫𝐫𝐢𝐯𝐞 😎",
     ]
     for i in animation_ttl:
         await event.edit(animation_chars[i % 8])
@@ -105,14 +105,14 @@ async def _(event):
     animation_ttl = range(8)
     event = await edit_or_reply(event, "mepro")
     animation_chars = [
-        "EvErYbOdY",
-        "iZ",
-        "PeRu",
-        "uNtiL",
-        "i",
-        "aRriVe",
-        "😈",
-        "EvErYbOdY iZ PeRu uNtiL i aRriVe 😈",
+        "𝐄𝐯𝐞𝐫𝐲𝐨𝐧𝐞",
+        "𝐢𝐬",
+        "𝐩𝐫𝐨",
+        "𝐮𝐧𝐭𝐢𝐥",
+        "𝐈",
+        "𝐚𝐫𝐫𝐢𝐯𝐞",
+        "😎",
+        "𝐄𝐯𝐞𝐫𝐲𝐨𝐧𝐞 𝐢𝐬 𝐩𝐫𝐨 𝐮𝐧𝐭𝐢𝐥 𝐈 𝐚𝐫𝐫𝐢𝐯𝐞 😎",
     ]
     for i in animation_ttl:
         await event.edit(animation_chars[i % 8])
@@ -133,17 +133,17 @@ async def _(event):
     animation_ttl = range(11)
     event = await edit_or_reply(event, "quickheal")
     animation_chars = [
-        "`Downloading File..`",
-        "`File Downloaded....`",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 84%\n█████████████████████▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 100%\n█████████████████████████ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nTask: 01 of 01 Files Scanned...\n\nResult: No Virus Found...`",
+        "`Downloading file..`",
+        "`File downloaded...`",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 84%\n█████████████████████▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 100%\n█████████████████████████ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nTask : 01 of 01 Files scanned...\n\nResult : No virus found...`",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
@@ -164,17 +164,17 @@ async def _(event):
     animation_ttl = range(11)
     event = await edit_or_reply(event, "sqh")
     animation_chars = [
-        "`Downloading File..`",
-        "`File Downloaded....`",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 84%\n█████████████████████▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 100%\n█████████████████████████ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nTask: 01 of 01 Files Scanned...\n\nResult: No Virus Found...`",
+        "`Downloading file..`",
+        "`File downloaded...`",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 84%\n█████████████████████▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 100%\n█████████████████████████ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nTask : 01 of 01 Files scanned...\n\nResult : No virus found...`",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
@@ -195,17 +195,17 @@ async def _(event):
     animation_ttl = range(11)
     event = await edit_or_reply(event, "vquickheal")
     animation_chars = [
-        "`Downloading File..`",
-        "`File Downloaded....`",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 84%\n█████████████████████▒▒▒▒ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nFile Scanned... 100%\n█████████████████████████ `",
-        "`Quick Heal Total Security Checkup\n\n\nSubscription: Pru User\nValid Until: 31/12/2099\n\nTask: 01 of 01 Files Scanned...\n\nResult:⚠️Virus Found⚠️\nMore Info: Torzan, Spyware, Adware`",
+        "`Downloading file..`",
+        "`File downloaded....`",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 4%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 8%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 20%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 36%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 84%\n█████████████████████▒▒▒▒ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nFile scanned... 100%\n█████████████████████████ `",
+        "`Quick heal total security checkup\n\n\nSubscription : Pro user\nValid until : 31/12/2099\n\nTask : 01 of 01 Files scanned...\n\nResult : Virus found\nMore Info : Torzan , Spyware , Adware`",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
@@ -226,17 +226,17 @@ async def _(event):
     animation_ttl = range(11)
     event = await edit_or_reply(event, "macos")
     animation_chars = [
-        "`Connecting To Hackintosh...`",
-        "`Initiating Hackintosh Login.`",
-        "`Loading Hackintosh... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Loading Hackintosh... 3%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Loading Hackintosh... 9%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Loading Hackintosh... 23%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Loading Hackintosh... 39%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Loading Hackintosh... 69%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
-        "`Loading Hackintosh... 89%\n█████████████████████▒▒▒▒ `",
-        "`Loading Hackintosh... 100%\n█████████████████████████ `",
-        "`Welcome...\n\nStock OS: Symbian OS\nCurrent OS: Hackintosh`\n\n**My PC Specs:**\n\n **CPU:** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics:** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM:** __32GB DDR4 (2,666MHz)__\n\n**Screen:** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage:** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports:** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity:** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera:** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size:** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
+        "`Connecting to hackintosh...`",
+        "`Initiating hackintosh login`",
+        "`Loading hackintosh... 0%\n▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading hackintosh... 3%\n█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading hackintosh... 9%\n██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading hackintosh... 23%\n█████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading hackintosh... 39%\n█████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading hackintosh... 69%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
+        "`Loading hackintosh... 89%\n█████████████████████▒▒▒▒ `",
+        "`Loading hackintosh... 100%\n█████████████████████████ `",
+        "`Welcome...\n\nStock OS : Symbian OS\nCurrent OS : hackintosh`\n\n**My PC Specs :**\n\n **CPU :** __2.9GHz Intel Core i9-8950HK (hexa-core, 12MB cache, up to 4.8GHz)__\n\n**Graphics :** __Nvidia GeForce GTX 1080 OC (8GB GDDR5X)__\n\n**RAM :** __32GB DDR4 (2,666MHz)__\n\n**Screen :** __17.3-inch, QHD (2,560 x 1,440) 120Hz G-Sync__\n\n**Storage :** __512GB PCIe SSD, 1TB HDD (7,200 rpm)__\n\n**Ports :** __2 x USB 3.0, 1 x USB-C 3.0, 1 x USB-C (Thunderbolt 3), HDMI, mini DisplayPort, Ethernet, headphone jack, microphone jack__\n\n**Connectivity :** __Killer 1550 802.11ac Wi-Fi, Bluetooth 5.0__\n\n**Camera :** __Alienware FHD camera, Tobii IR Eye-tracking with Windows Hello__\n\n**Size :** __16.7 x 13.1 x 1.18 inches (42.4 x 33.2 x 2.99cm; W x D x H)__",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
