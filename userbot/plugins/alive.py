@@ -29,7 +29,7 @@ plugin_category = "utils"
     command=("alive", plugin_category),
     info={
         "header": "To check bot's alive status",
-        "options": "To show media in this cmd you need to set ALIVE_PIC with media link, get this by replying the media by .tgm",
+        "options": "To show media in this command you need to set ALIVE_PIC with media link , get this by replying the media by .tgm",
         "usage": [
             "{tr}alive",
         ],
@@ -70,7 +70,7 @@ async def amireallyalive(event):
         except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError):
             return await edit_or_reply(
                 catevent,
-                f"**Media Value Error!!**\n__Change the link by __`.setdv`\n\n**__Can't get media from this link :-**__ `{PIC}`",
+                f"**Media value error**\nChange the link by `.setdv`\n\n**Can't get media from this link :-**__ `{PIC}`",
             )
     else:
         await edit_or_reply(
@@ -93,7 +93,7 @@ temp = """{ALIVE_TEXT}
     command=("ialive", plugin_category),
     info={
         "header": "To check bot's alive status via inline mode",
-        "options": "To show media in this cmd you need to set ALIVE_PIC with media link, get this by replying the media by .tgm",
+        "options": "To show media in this command you need to set ALIVE_PIC with media link , get this by replying the media by .tgm",
         "usage": [
             "{tr}ialive",
         ],
