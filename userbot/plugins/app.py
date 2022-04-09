@@ -22,9 +22,9 @@ plugin_category = "utils"
     },
 )
 async def app_search(event):
-    "To search any app in playstore."
+    "To search any app in playstore"
     app_name = event.pattern_match.group(1)
-    event = await edit_or_reply(event, "`Searching!..`")
+    event = await edit_or_reply(event, "`Searching ... !`")
     try:
         remove_space = app_name.split(" ")
         final_name = "+".join(remove_space)
@@ -71,20 +71,20 @@ async def app_search(event):
             + "</a>"
         )
         app_details += "\n<code>Rating :</code> " + app_rating.replace(
-            "Rated ", "⭐ "
-        ).replace(" out of ", "/").replace(" stars", "", 1).replace(
-            " stars", "⭐ "
+            "Rated ", "⭐"
+        ).replace(" out of ", "/").replace("Stars", "", 1).replace(
+            "Stars", "⭐"
         ).replace(
             "five", "5"
         )
         app_details += (
             "\n<code>Features :</code> <a href='"
             + app_link
-            + "'>View in Play Store</a>"
+            + "'>View in play store</a>"
         )
-        app_details += f"\n\n===> {ALIVE_NAME} <==="
+        app_details += f"\n\n====> {ALIVE_NAME} <===="
         await event.edit(app_details, link_preview=True, parse_mode="HTML")
     except IndexError:
-        await event.edit("No result found in search. Please enter **Valid app name**")
+        await event.edit("No result found in search , please enter **valid app name**")
     except Exception as err:
-        await event.edit("Exception Occured:- " + str(err))
+        await event.edit("Exception occured :- " + str(err))
