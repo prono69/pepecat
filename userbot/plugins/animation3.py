@@ -335,7 +335,7 @@ async def _(event):
     "animation command"
     animation_interval = 0.1
     animation_ttl = range(80)
-    event = await edit_or_reply(event, "solarsystem")
+    event = await edit_or_reply(event, "Solar system")
     animation_chars = [
         "`◼️◼️◼️◼️◼️\n◼️◼️◼️◼️☀\n◼️◼️🌎◼️◼️\n🌕◼️◼️◼️◼️\n◼️◼️◼️◼️◼️`",
         "`◼️◼️◼️◼️◼️\n🌕◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️☀\n◼️◼️◼️◼️◼️`",
