@@ -31,7 +31,7 @@ def zipdir(dirName):
     pattern="zip(?:\s|$)([\s\S]*)",
     command=("zip", plugin_category),
     info={
-        "header": "To compress the file/folders",
+        "header": "To compress the files and folders",
         "description": "Will create a zip file for the given file path or folder path",
         "usage": [
             "{tr}zip <file/folder path>",
@@ -52,7 +52,7 @@ async def zip_file(event):
         )
     if os.path.isfile(Path(input_str)):
         return await edit_delete(event, "`File compressing is not implemented yet`")
-    mone = await edit_or_reply(event, "`Zipping in progress....`")
+    mone = await edit_or_reply(event, "`Zipping in progress.. .. .. ..`")
     filePaths = zipdir(input_str)
     filepath = os.path.join(
         Config.TMP_DOWNLOAD_DIRECTORY, os.path.basename(Path(input_str))
@@ -64,7 +64,7 @@ async def zip_file(event):
     end = datetime.now()
     ms = (end - start).seconds
     await mone.edit(
-        f"Zipped the path `{input_str}` into `{filepath+'.zip'}` in __{ms}__ Seconds"
+        f"Zipped the path `{input_str}` into `{filepath+'.zip'}` in __{ms}__ seconds"
     )
 
 
@@ -72,7 +72,7 @@ async def zip_file(event):
     pattern="tar(?:\s|$)([\s\S]*)",
     command=("tar", plugin_category),
     info={
-        "header": "To compress the file/folders to tar file",
+        "header": "To compress the files and folders to tar file",
         "description": "Will create a tar file for the given file path or folder path",
         "usage": [
             "{tr}tar <file/folder path>",
@@ -92,7 +92,7 @@ async def tar_file(event):
         )
     if os.path.isfile(Path(input_str)):
         return await edit_delete(event, "`File compressing is not implemented yet`")
-    mone = await edit_or_reply(event, "`Tar creation in progress....`")
+    mone = await edit_or_reply(event, "`Tar creation in progress.. .. .. ..`")
     start = datetime.now()
     filePaths = zipdir(input_str)
     filepath = os.path.join(
@@ -106,7 +106,7 @@ async def tar_file(event):
     end = datetime.now()
     ms = (end - start).seconds
     await mone.edit(
-        f"Created a tar file for the given path {input_str} as `{destination}` in __{ms}__ Seconds"
+        f"Created a tar file for the given path {input_str} as `{destination}` in __{ms}__ seconds"
     )
 
 
@@ -130,10 +130,10 @@ async def zip_file(event):  # sourcery no-metrics
             start = datetime.now()
             if not zipfile.is_zipfile(path):
                 return await edit_delete(
-                    event, f"`The Given path {path} is not zip file to unpack`"
+                    event, f"`The given path {path} is not zip file to unpack`"
                 )
 
-            mone = await edit_or_reply(event, "`Unpacking....`")
+            mone = await edit_or_reply(event, "`Unpacking.. .. .. ..`")
             destination = os.path.join(
                 Config.TMP_DOWNLOAD_DIRECTORY,
                 os.path.splitext(os.path.basename(path))[0],
@@ -143,7 +143,7 @@ async def zip_file(event):  # sourcery no-metrics
             end = datetime.now()
             ms = (end - start).seconds
             await mone.edit(
-                f"unzipped and stored to `{destination}` \n**Time Taken :** `{ms} seconds`"
+                f"Unzipped and stored to `{destination}` \n**Time taken :** `{ms} seconds`"
             )
         else:
             await edit_delete(event, f"I can't find that path `{input_str}`", 10)
@@ -156,7 +156,7 @@ async def zip_file(event):  # sourcery no-metrics
                 event,
                 "`The replied file is not a zip file recheck the replied message`",
             )
-        mone = await edit_or_reply(event, "`Unpacking....`")
+        mone = await edit_or_reply(event, "`Unpacking.. .. .. ..`")
         for attr in getattr(reply.document, "attributes", []):
             if isinstance(attr, types.DocumentAttributeFilename):
                 filename = attr.file_name
@@ -168,12 +168,12 @@ async def zip_file(event):  # sourcery no-metrics
                 location=reply.document,
                 out=dl,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to download")
+                    progress(d, t, mone, c_time, "Trying to download")
                 ),
             )
             dl.close()
         except Exception as e:
-            return await edit_delete(mone, f"**Error:**\n__{e}__")
+            return await edit_delete(mone, f"**Error :**\n__{e}__")
         await mone.edit("`Download finished Unpacking now`")
         destination = os.path.join(
             Config.TMP_DOWNLOAD_DIRECTORY,
@@ -184,7 +184,7 @@ async def zip_file(event):  # sourcery no-metrics
         end = datetime.now()
         ms = (end - start).seconds
         await mone.edit(
-            f"unzipped and stored to `{destination}` \n**Time Taken :** `{ms} seconds`"
+            f"Unzipped and stored to `{destination}` \n**Time taken :** `{ms} seconds`"
         )
         os.remove(filename)
     else:
@@ -214,10 +214,10 @@ async def untar_file(event):  # sourcery no-metrics
             start = datetime.now()
             if not is_tarfile(path):
                 return await edit_delete(
-                    event, f"`The Given path {path} is not tar file to unpack`"
+                    event, f"`The given path {path} is not tar file to unpack`"
                 )
 
-            mone = await edit_or_reply(event, "`Unpacking....`")
+            mone = await edit_or_reply(event, "`Unpacking.. .. .. ..`")
             destination = os.path.join(
                 Config.TMP_DOWNLOAD_DIRECTORY, (os.path.basename(path).split("."))[0]
             )
@@ -230,7 +230,7 @@ async def untar_file(event):  # sourcery no-metrics
             end = datetime.now()
             ms = (end - start).seconds
             await mone.edit(
-                f"**Time Taken :** `{ms} seconds`\
+                f"**Time taken :** `{ms} seconds`\
                 \nUnpacked the input path `{input_str}` and stored to `{destination}`"
             )
         else:
@@ -250,17 +250,17 @@ async def untar_file(event):  # sourcery no-metrics
                 location=reply.document,
                 out=dl,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to download")
+                    progress(d, t, mone, c_time, "Trying to download")
                 ),
             )
             dl.close()
         except Exception as e:
-            return await edit_delete(mone, f"**Error:**\n__{e}__")
+            return await edit_delete(mone, f"**Error :**\n__{e}__")
         if not is_tarfile(filename):
             return await edit_delete(
                 mone, "`The replied file is not tar file to unpack it recheck it`"
             )
-        await mone.edit("`Download finished Unpacking now`")
+        await mone.edit("`Download finished unpacking now`")
         destination = os.path.join(
             Config.TMP_DOWNLOAD_DIRECTORY, (os.path.basename(filename).split("."))[0]
         )
@@ -274,7 +274,7 @@ async def untar_file(event):  # sourcery no-metrics
         end = datetime.now()
         ms = (end - start).seconds
         await mone.edit(
-            f"**Time Taken :** `{ms} seconds`\
+            f"**Time taken :** `{ms} seconds`\
                 \nUnpacked the replied file and stored to `{destination}`"
         )
         os.remove(filename)
