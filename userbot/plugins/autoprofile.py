@@ -73,7 +73,7 @@ async def autopicloop():
         if BOTLOG:
             return await catub.send_message(
                 BOTLOG_CHATID,
-                "**Error**\n`For functing of autopic you need to set DEFAULT_PIC var in Heroku vars`",
+                "**Error**\n`For functing of autopic you need to set DEFAULT_PIC var in heroku vars`",
             )
         return
     if gvarstatus("autopic") is not None:
@@ -90,7 +90,7 @@ async def autopicloop():
         shutil.copy(autopic_path, autophoto_path)
         im = Image.open(autophoto_path)
         file_test = im.rotate(counter, expand=False).save(autophoto_path, "PNG")
-        current_time = datetime.now().strftime("  Time: %H:%M \n  Date: %d.%m.%y ")
+        current_time = datetime.now().strftime("  Time : %H:%M \n  Date : %d.%m.%y ")
         img = Image.open(autophoto_path)
         drawn_text = ImageDraw.Draw(img)
         fnt = ImageFont.truetype(FONT_FILE_TO_USE, 30)
@@ -112,7 +112,7 @@ async def custompfploop():
     i = 0
     while CUSTOMPICSTART:
         if len(get_collection_list("CUSTOM_PFP_LINKS")) == 0:
-            LOGS.error("No custom pfp images to set.")
+            LOGS.error("No custom pfp images to set")
             return
         pic = random.choice(list(get_collection_list("CUSTOM_PFP_LINKS")))
         urllib.request.urlretrieve(pic, "donottouch.jpg")
@@ -176,7 +176,7 @@ async def bloom_pfploop():
         if BOTLOG:
             return await catub.send_message(
                 BOTLOG_CHATID,
-                "**Error**\n`For functing of bloom you need to set DEFAULT_PIC var in Heroku vars`",
+                "**Error**\n`For functing of bloom you need to set DEFAULT_PIC var in heroku vars`",
             )
         return
     while BLOOMSTART:
@@ -196,7 +196,7 @@ async def bloom_pfploop():
         image = Image.open(autophoto_path)
         image.paste((R, G, B), [0, 0, image.size[0], image.size[1]])
         image.save(autophoto_path)
-        current_time = datetime.now().strftime("\n Time: %H:%M:%S \n \n Date: %d/%m/%y")
+        current_time = datetime.now().strftime("\n Time : %H:%M:%S \n \n Date : %d/%m/%y")
         img = Image.open(autophoto_path)
         drawn_text = ImageDraw.Draw(img)
         fnt = ImageFont.truetype(FONT_FILE_TO_USE, 60)
@@ -292,8 +292,8 @@ async def autopfp_start():
     command=("batmanpfp", plugin_category),
     info={
         "header": "Changes profile pic with random batman pics every 1 minute",
-        "description": "Changes your profile pic every 1 minute with random batman pics.\
-        If you like to change the time then set CHANGE_TIME var in Heroku with time (in seconds) between each change of profilepic.",
+        "description": "Changes your profile pic every 1 minute with random batman pics\
+        If you like to change the time then set CHANGE_TIME var in heroku with time ( in seconds ) between each change of profilepic",
         "note": "To stop this do '.end batmanpfp'",
         "usage": "{tr}batmanpfp",
     },
@@ -302,9 +302,9 @@ async def _(event):
     "To set random batman profile pics"
     if gvarstatus("autopfp_strings") is not None:
         pfp_string = gvarstatus("autopfp_strings")[:-8]
-        return await edit_delete(event, f"`{pfp_string} is already running.`")
+        return await edit_delete(event, f"`{pfp_string} is already running`")
     addgvar("autopfp_strings", "batmanpfp_strings")
-    await event.edit("`Starting batman Profile Pic.`")
+    await event.edit("`Starting batman profile pic`")
     await autopfp_start()
 
 
@@ -313,8 +313,8 @@ async def _(event):
     command=("thorpfp", plugin_category),
     info={
         "header": "Changes profile pic with random thor pics every 1 minute",
-        "description": "Changes your profile pic every 1 minute with random thor pics.\
-        If you like to change the time then set CHANGE_TIME var in Heroku with time(in seconds) between each change of profilepic.",
+        "description": "Changes your profile pic every 1 minute with random thor pics\
+        If you like to change the time then set CHANGE_TIME var in heroku with time ( in seconds ) between each change of profilepic",
         "note": "To stop this do '.end thorpfp'",
         "usage": "{tr}thorpfp",
     },
@@ -323,9 +323,9 @@ async def _(event):
     "To set random thor profile pics"
     if gvarstatus("autopfp_strings") is not None:
         pfp_string = gvarstatus("autopfp_strings")[:-8]
-        return await edit_delete(event, f"`{pfp_string} is already running.`")
+        return await edit_delete(event, f"`{pfp_string} is already running`")
     addgvar("autopfp_strings", "thorpfp_strings")
-    await event.edit("`Starting thor Profile Pic.`")
+    await event.edit("`Starting thor profile pic`")
     await autopfp_start()
 
 
@@ -335,10 +335,10 @@ async def _(event):
     info={
         "header": "Changes profile pic every 1 minute with the custom pic with time",
         "description": "If you like to change the time interval for every new pic change \
-            then set CHANGE_TIME var in Heroku with time(in seconds) between each change of profilepic.",
-        "options": "you can give integer input with cmd like 40,55,75 ..etc.\
+            then set CHANGE_TIME var in Heroku with time(in seconds) between each change of profilepic",
+        "options": "you can give integer input with cmd like 40,55,75 etc\
              So that your profile pic will rotate with that specific angle",
-        "note": "For functioning of this cmd you need to set DEFAULT_PIC var in heroku. \
+        "note": "For functioning of this command you need to set DEFAULT_PIC var in heroku \
             To stop this do '.end autopic'",
         "usage": [
             "{tr}autopic",
@@ -351,7 +351,7 @@ async def _(event):
     if Config.DEFAULT_PIC is None:
         return await edit_delete(
             event,
-            "**Error**\nFor functing of autopic you need to set DEFAULT_PIC var in Heroku vars",
+            "**Error**\nFor functing of autopic you need to set DEFAULT_PIC var in heroku vars",
             parse_mode=_format.parse_pre,
         )
     downloader = SmartDL(Config.DEFAULT_PIC, autopic_path, progress_bar=False)
@@ -371,7 +371,7 @@ async def _(event):
     addgvar("autopic", True)
     if input_str:
         addgvar("autopic_counter", input_str)
-    await edit_delete(event, "`Autopic has been started by my Master`")
+    await edit_delete(event, "`Autopic has been started by my master`")
     await autopicloop()
 
 
@@ -380,7 +380,7 @@ async def _(event):
     command=("digitalpfp", plugin_category),
     info={
         "header": "Updates your profile pic every 1 minute with time on it",
-        "description": "Deletes old profile pic and Update profile pic with new image with time on it.\
+        "description": "Deletes old profile pic and update profile pic with new image with time on it\
              You can change this image by setting DIGITAL_PIC var in heroku with telegraph image link",
         "note": "To stop this do '.end digitalpfp'",
         "usage": "{tr}digitalpfp",
@@ -395,7 +395,7 @@ async def _(event):
     if gvarstatus("digitalpic") is not None and gvarstatus("digitalpic") == "true":
         return await edit_delete(event, "`Digitalpic is already enabled`")
     addgvar("digitalpic", True)
-    await edit_delete(event, "`digitalpfp has been started by my Master`")
+    await edit_delete(event, "`digitalpfp has been started by my master`")
     await digitalpicloop()
 
 
@@ -405,8 +405,8 @@ async def _(event):
     info={
         "header": "Changes profile pic every 1 minute with the random colour pic with time on it",
         "description": "If you like to change the time interval for every new pic chnage \
-            then set CHANGE_TIME var in Heroku with time(in seconds) between each change of profilepic.",
-        "note": "For functioning of this cmd you need to set DEFAULT_PIC var in heroku. \
+            then set CHANGE_TIME var in Heroku with time(in seconds) between each change of profilepic",
+        "note": "For functioning of this command you need to set DEFAULT_PIC var in heroku \
             To stop this do '.end bloom'",
         "usage": "{tr}bloom",
     },
@@ -416,7 +416,7 @@ async def _(event):
     if Config.DEFAULT_PIC is None:
         return await edit_delete(
             event,
-            "**Error**\nFor functing of bloom you need to set DEFAULT_PIC var in Heroku vars",
+            "**Error**\nFor functing of bloom you need to set DEFAULT_PIC var in heroku vars",
             parse_mode=_format.parse_pre,
         )
     downloader = SmartDL(Config.DEFAULT_PIC, autopic_path, progress_bar=True)
@@ -426,7 +426,7 @@ async def _(event):
     if gvarstatus("bloom") is not None and gvarstatus("bloom") == "true":
         return await edit_delete(event, "`Bloom is already enabled`")
     addgvar("bloom", True)
-    await edit_delete(event, "`Bloom has been started by my Master`")
+    await edit_delete(event, "`Bloom has been started by my master`")
     await bloom_pfploop()
 
 
@@ -434,8 +434,8 @@ async def _(event):
     pattern="c(ustom)?pfp(?: |$)([\s\S]*)",
     command=("custompfp", plugin_category),
     info={
-        "header": "Set Your Custom pfps",
-        "description": "Set links of pic to use them as auto profile. You can use cpfp or custompp as command",
+        "header": "Set your custom pfps",
+        "description": "Set links of pic to use them as auto profile , you can use cpfp or custompp as command",
         "flags": {
             "a": "To add links for custom pfp",
             "r": "To remove links for custom pfp",
@@ -464,15 +464,15 @@ async def useless(event):  # sourcery no-metrics
         if not list_link:
             return await edit_delete(event, "**ಠ∀ಠ  There no links for custom pfp...**")
         addgvar("CUSTOM_PFP", True)
-        await edit_delete(event, "`Starting custom pfp....`")
+        await edit_delete(event, "`Starting custom pfp.. .. .. ..`")
         await custompfploop()
         return
     if flag == "l":
         if not list_link:
             return await edit_delete(
-                event, "**ಠ∀ಠ  There no links set for custom pfp...**"
+                event, "**There are no links set for custom pfp...**"
             )
-        links = "**Available links for custom pfp are here:-**\n\n"
+        links = "**Available links for custom pfp are here :-**\n\n"
         for i, each in enumerate(list_link, start=1):
             links += f"**{i}.**  {each}\n"
         await edit_delete(event, links, 60)
@@ -492,13 +492,13 @@ async def useless(event):  # sourcery no-metrics
         input_str = reply.text
     if not input_str:
         return await edit_delete(
-            event, "**ಠ∀ಠ  Reply to valid link or give valid link url as input...**"
+            event, "**Reply to valid link or give valid link url as input...**"
         )
     extractor = URLExtract()
     plink = extractor.find_urls(input_str)
     if len(plink) == 0:
         return await edit_delete(
-            event, "**ಠ∀ಠ  Reply to valid link or give valid link url as input...**"
+            event, "**Reply to valid link or give valid link url as input...**"
         )
     if flag == "a":
         for i in plink:
@@ -521,7 +521,7 @@ async def useless(event):  # sourcery no-metrics
     command=("autoname", plugin_category),
     info={
         "header": "Changes your name with time",
-        "description": "Updates your profile name along with time. Set AUTONAME var in heroku with your profile name,",
+        "description": "Updates your profile name along with time ! Set AUTONAME var in heroku with your profile name,",
         "note": "To stop this do '.end autoname'",
         "usage": "{tr}autoname",
     },
@@ -531,7 +531,7 @@ async def _(event):
     if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
         return await edit_delete(event, "`Autoname is already enabled`")
     addgvar("autoname", True)
-    await edit_delete(event, "`AutoName has been started by my Master `")
+    await edit_delete(event, "`Autoname has been started by my master `")
     await autoname_loop()
 
 
@@ -540,7 +540,7 @@ async def _(event):
     command=("autobio", plugin_category),
     info={
         "header": "Changes your bio with time",
-        "description": "Updates your profile bio along with time. Set DEFAULT_BIO var in heroku with your fav bio,",
+        "description": "Updates your profile bio along with time ! Set DEFAULT_BIO var in heroku with your fav bio,",
         "note": "To stop this do '.end autobio'",
         "usage": "{tr}autobio",
     },
@@ -550,7 +550,7 @@ async def _(event):
     if gvarstatus("autobio") is not None and gvarstatus("autobio") == "true":
         return await edit_delete(event, "`Autobio is already enabled`")
     addgvar("autobio", True)
-    await edit_delete(event, "`Autobio has been started by my Master `")
+    await edit_delete(event, "`Autobio has been started by my master `")
     await autobio_loop()
 
 
@@ -559,7 +559,7 @@ async def _(event):
     command=("end", plugin_category),
     info={
         "header": "To stop the functions of autoprofile",
-        "description": "If you want to stop autoprofile functions then use this cmd.",
+        "description": "If you want to stop autoprofile functions then use this command",
         "options": {
             "autopic": "To stop autopic",
             "digitalpfp": "To stop difitalpfp",
@@ -652,7 +652,7 @@ async def _(event):  # sourcery no-metrics
     if input_str == "spam":
         if gvarstatus("spamwork") is not None and gvarstatus("spamwork") == "true":
             delgvar("spamwork")
-            return await edit_delete(event, "`Spam cmd has been stopped now`")
+            return await edit_delete(event, "`Spam command has been stopped now`")
         return await edit_delete(event, "`You haven't started spam`")
     END_CMDS = [
         "autopic",
@@ -667,7 +667,7 @@ async def _(event):  # sourcery no-metrics
     if input_str not in END_CMDS:
         await edit_delete(
             event,
-            f"{input_str} is invalid end command.Mention clearly what should i end.",
+            f"{input_str} is invalid end command ! Mention clearly what should I end",
             parse_mode=_format.parse_pre,
         )
 
