@@ -16,7 +16,7 @@ plugin_category = "fun"
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "`stars.....`")
+    event = await edit_or_reply(event, "`Stars...`")
     deq = deque(list("🦋✨🦋✨🦋✨🦋✨"))
     for _ in range(48):
         await asyncio.sleep(0.3)
@@ -34,7 +34,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "`boxs...`")
+    event = await edit_or_reply(event, "`Boxs...`")
     deq = deque(list("🟥🟧🟨🟩🟦🟪🟫⬛⬜"))
     for _ in range(999):
         await asyncio.sleep(0.3)
@@ -52,7 +52,7 @@ async def _(event):
 )
 async def _(event):
     "animation command"
-    event = await edit_or_reply(event, "`Raining.......`")
+    event = await edit_or_reply(event, "`Raining...`")
     deq = deque(list("🌬☁️🌩🌨🌧🌦🌥⛅🌤"))
     for _ in range(48):
         await asyncio.sleep(0.3)
@@ -74,18 +74,18 @@ async def _(event):
     animation_ttl = range(12)
     event = await edit_or_reply(event, "`Deploying...`")
     animation_chars = [
-        "**Heroku Connecting To Latest Github Build **",
+        "**Heroku connecting to latest github build **",
         f"**Build started by user** {mention}",
         f"**Deploy** `535a74f0` **by user** {mention}",
-        "**Restarting Heroku Server...**",
+        "**Restarting heroku server...**",
         "**State changed from up to starting**",
-        "**Stopping all processes with SIGTERM**",
+        "**Stopping all processes with sigterm**",
         "**Process exited with** `status 143`",
         "**Starting process with command** `python3 -m userbot`",
         "**State changed from starting to up**",
-        "__INFO:Userbot:Logged in as 557667062__",
-        "__INFO:Userbot:Successfully loaded all plugins__",
-        "**Build Succeeded**",
+        "INFO : Userbot : Logged in as 557667062",
+        "INFO : Userbot : Successfully loaded all plugins",
+        "**Build succeeded**",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
@@ -102,7 +102,7 @@ async def _(event):
     },
 )
 async def _(event):
-    "Animation Command"
+    "Animation command"
     try:
         obj = event.pattern_match.group(1)
         if len(obj) != 3:
@@ -217,7 +217,7 @@ async def _(event):
         "🤯",
         "💔",
         "❤",
-        "I Love You❤",
+        "I love you ❤",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
@@ -277,7 +277,7 @@ async def _(event):
         "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
         "🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴",
         "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
-        f"{mention} **Police iz Here**",
+        f"{mention} **Police is here**",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
@@ -296,9 +296,9 @@ async def _(event):
     "animation command"
     animation_interval = 1
     animation_ttl = range(19)
-    event = await edit_or_reply(event, "jio network boosting...")
+    event = await edit_or_reply(event, "Jio network boosting...")
     animation_chars = [
-        "`Connecting To JIO NETWORK ....`",
+        "`Connecting to jio network...`",
         "`█ ▇ ▆ ▅ ▄ ▂ ▁`",
         "`▒ ▇ ▆ ▅ ▄ ▂ ▁`",
         "`▒ ▒ ▆ ▅ ▄ ▂ ▁`",
@@ -307,7 +307,7 @@ async def _(event):
         "`▒ ▒ ▒ ▒ ▒ ▂ ▁`",
         "`▒ ▒ ▒ ▒ ▒ ▒ ▁`",
         "`▒ ▒ ▒ ▒ ▒ ▒ ▒`",
-        "*Optimising JIO NETWORK...*",
+        "*Optimising jio network...*",
         "`▒ ▒ ▒ ▒ ▒ ▒ ▒`",
         "`▁ ▒ ▒ ▒ ▒ ▒ ▒`",
         "`▁ ▂ ▒ ▒ ▒ ▒ ▒`",
@@ -316,7 +316,7 @@ async def _(event):
         "`▁ ▂ ▄ ▅ ▆ ▒ ▒`",
         "`▁ ▂ ▄ ▅ ▆ ▇ ▒`",
         "`▁ ▂ ▄ ▅ ▆ ▇ █`",
-        "**JIO NETWORK Boosted....**",
+        "**Jio network boosted...**",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
