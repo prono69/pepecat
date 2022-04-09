@@ -10,7 +10,7 @@ plugin_category = "fun"
     pattern="stupid$",
     command=("stupid", plugin_category),
     info={
-        "header": "throwing brain in dustbin animation",
+        "header": "Throwing brain in dustbin animation",
         "usage": "{tr}stupid",
     },
 )
@@ -20,20 +20,20 @@ async def _(event):
     animation_ttl = range(14)
     event = await edit_or_reply(event, "`Throw your brain in dustbin`")
     animation_chars = [
-        "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n🧠         <(^_^ <)🗑",
-        "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n🧠       <(^_^ <)  🗑",
-        "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n🧠     <(^_^ <)    🗑",
-        "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n🧠   <(^_^ <)      🗑",
-        "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n🧠 <(^_^ <)        🗑",
-        "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n🧠<(^_^ <)         🗑",
-        "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n(> ^_^)>🧠         🗑",
-        "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n  (> ^_^)>🧠       🗑",
-        "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n    (> ^_^)>🧠     🗑",
-        "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n      (> ^_^)>🧠   🗑",
-        "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n        (> ^_^)>🧠 🗑",
-        "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n          (> ^_^)>🧠🗑",
-        "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n           (> ^_^)>🗑",
-        "YOᑌᖇ ᗷᖇᗩIᑎ ➡️ 🧠\n\n           <(^_^ <)🗑",
+        "Your brain ➡️ 🧠\n\n🧠         <(^_^ <)🗑",
+        "Your brain ➡️ 🧠\n\n🧠       <(^_^ <)  🗑",
+        "Your brain ➡️ 🧠\n\n🧠     <(^_^ <)    🗑",
+        "Your brain ➡️ 🧠\n\n🧠   <(^_^ <)      🗑",
+        "Your brain ➡️ 🧠\n\n🧠 <(^_^ <)        🗑",
+        "Your brain ➡️ 🧠\n\n🧠<(^_^ <)         🗑",
+        "Your brain ➡️ 🧠\n\n(> ^_^)>🧠         🗑",
+        "Your brain ➡️ 🧠\n\n  (> ^_^)>🧠       🗑",
+        "Your brain ➡️ 🧠\n\n    (> ^_^)>🧠     🗑",
+        "Your brain ➡️ 🧠\n\n      (> ^_^)>🧠   🗑",
+        "Your brain ➡️ 🧠\n\n        (> ^_^)>🧠 🗑",
+        "Your brain ➡️ 🧠\n\n          (> ^_^)>🧠🗑",
+        "Your brain ➡️ 🧠\n\n           (> ^_^)>🗑",
+        "Your brain ➡️ 🧠\n\n           <(^_^ <)🗑",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
@@ -69,7 +69,7 @@ async def _(event):
     await asyncio.sleep(0.5)
     await event.edit("▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n▪️▪️▪️▪️ \n😵😵😵😵 \n")
     await asyncio.sleep(0.5)
-    await event.edit("`RIP PLOXXX......`")
+    await event.edit("`Rip plox...`")
     await asyncio.sleep(2)
 
 
@@ -85,26 +85,26 @@ async def _(event):
     "animation command"
     animation_interval = 3
     animation_ttl = range(18)
-    event = await edit_or_reply(event, "Calling Pavel Durov (ceo of telegram)......")
+    event = await edit_or_reply(event, "Calling pavel durov (ceo of telegram)...")
     animation_chars = [
-        "`Connecting To Telegram Headquarters...`",
-        "`Call Connected.`",
-        "`Telegram: Hello This is Telegram HQ. Who is this?`",
-        f"`Me: Yo this is` {ALIVE_NAME} ,`Please Connect me to my lil bro, Pavel Durov `",
-        "`User Authorised.`",
-        "`Calling Pavel Durov `  `At +916969696969`",
-        "`Private  Call Connected...`",
-        "`Me: Hello Sir, Please Ban This Telegram Account.`",
-        "`Pavel Durov : May I Know Who is This?`",
-        f"`Me: Yo Brah, I Am` {ALIVE_NAME} ",
-        "`Pavel Durov : OMG!!! Long time no see, Wassup cat...\nI'll Make Sure That Guy Account Will Get Blocked Within 24Hrs.`",
-        "`Me: Thanks, See You Later Brah.`",
-        "`Pavel Durov : Please Don't Thank Brah, Telegram Is Our's. Just Gimme A Call When You Become Free.`",
-        "`Me: Is There Any Issue/Emergency???`",
-        "`Pavel Durov : Yes Sur, There is A Bug in Telegram v69.6.9.\nI Am Not Able To Fix It. If Possible, Please Help Fix The Bug.`",
-        "`Me: Send Me The App On My Telegram Account, I Will Fix The Bug & Send You.`",
-        "`Pavel Durov : Sure Sur \nTC Bye Bye :)`",
-        "`Private Call Disconnected.`",
+        "`Connecting to telegram headquarters...`",
+        "`Call connected`",
+        "`Telegram : Hello this is telegram HQ ! Who is this ?`",
+        f"`Me: Yo this is` {ALIVE_NAME} ,`Please connect me to my lil bro , pavel durov `",
+        "`User authorised`",
+        "`Calling pavel durov `  `At +916969696969`",
+        "`Private call connected...`",
+        "`Me : Hello sir , please ban this telegram account`",
+        "`Pavel Durov : May I know who is this ?`",
+        f"`Me : Yo bruh , I am` {ALIVE_NAME} ",
+        "`Pavel Durov : Oh god ! Long time no see , what's up cat...\nI'll make sure that guy account will get blocked within 24 hrs`",
+        "`Me : Thanks , see you later bruh`",
+        "`Pavel Durov : Please don't thank bruh , telegram is our's , Just Give me a call when you become free`",
+        "`Me : Is there any issue / emergency ?`",
+        "`Pavel Durov : Yes ma'am , there is a bug in telegram v69.6.9.\nI am unable to fix it ! If possible , please help to fix the bug`",
+        "`Me : Send me the app on my telegram account , I will fix the bug & send you`",
+        "`Pavel Durov : Sure ma'am \nTake care bye bye (:`",
+        "`Private call disconnected`",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
@@ -136,7 +136,7 @@ async def _(event):
         "------------------>",
         "------>;(^。^)ノ",
         "(￣ー￣) DEAD",
-        "`Targeted user killed by Headshot 😈.😈.😈.😈.😈.😈.😈......`\n '#Sad_Reacts_Online'\n",
+        "`Targeted user killed by headshot 😈.😈.😈.😈.😈.😈.😈...`\n '#Sad_reacts_online'\n",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
@@ -158,10 +158,10 @@ async def _(event):
     event = await edit_or_reply(event, "wtf")
     animation_chars = [
         "What",
-        "What The",
-        "What The F",
-        "What The F Brah",
-        "What The F Brah[ㅤㅤㅤㅤㅤㅤ\u2063](https://telegra.ph/file/f3b760e4a99340d331f9b.jpg)",
+        "What the",
+        "What the fuck",
+        "What the fuck bro",
+        "What the fuck bro[\u2063](https://telegra.ph/file/f3b760e4a99340d331f9b.jpg)",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
@@ -172,7 +172,7 @@ async def _(event):
     pattern="ding$",
     command=("ding", plugin_category),
     info={
-        "header": "throwing brain in dustbin animation.",
+        "header": "Throwing brain in dustbin animation",
         "usage": "{tr}ding",
     },
 )
@@ -190,7 +190,7 @@ async def _(event):
         "⬜⬜⬛⬜⬜\n⬜⬜⬛⬜⬜\n⬜⬜🔴⬜⬜",
         "⬜⬜⬛⬜⬜\n⬜⬛⬜⬜⬜\n🔴⬜⬜⬜⬜",
     ]
-    event = await edit_or_reply(event, "ding..dong..ding..dong ...")
+    event = await edit_or_reply(event, "Ding..dong..ding..dong..")
     await asyncio.sleep(2)
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
@@ -201,7 +201,7 @@ async def _(event):
     pattern="hypno$",
     command=("hypno", plugin_category),
     info={
-        "header": "Fun animation try yourself to see.",
+        "header": "Fun animation try yourself to see",
         "usage": "{tr}hypno",
     },
 )
@@ -254,51 +254,51 @@ async def _(event):
     pattern="gangasta$",
     command=("gangasta", plugin_category),
     info={
-        "header": "Fun animation try yourself to see.",
+        "header": "Fun animation try yourself to see",
         "usage": "{tr}gangasta",
     },
 )
 async def _(event):
     "animation command"
     event = await edit_or_reply(event, "gangasta")
-    await event.edit("EVERyBOdy")
+    await event.edit("ᴇᴠᴇʀʏʙᴏᴅʏ")
     await asyncio.sleep(0.3)
-    await event.edit("iZ")
+    await event.edit("ɪꜱ")
     await asyncio.sleep(0.2)
-    await event.edit("GangSTur")
+    await event.edit("ɢᴀɴɢꜱᴛᴇʀ")
     await asyncio.sleep(0.5)
-    await event.edit("UNtIL ")
+    await event.edit("ᴜɴᴛɪʟ")
     await asyncio.sleep(0.2)
-    await event.edit("I")
+    await event.edit("ɪ")
     await asyncio.sleep(0.3)
-    await event.edit("ArRivE")
+    await event.edit("ᴀʀʀɪᴠᴇ")
     await asyncio.sleep(0.3)
-    await event.edit("🔥🔥🔥")
+    await event.edit("🔥")
     await asyncio.sleep(0.3)
-    await event.edit("EVERyBOdy iZ GangSTur UNtIL I ArRivE 🔥🔥🔥")
+    await event.edit("ᴇᴠᴇʀʏʙᴏᴅʏ ɪꜱ ɢᴀɴɢꜱᴛᴇʀ ᴜɴᴛɪʟ ɪ ᴀʀʀɪᴠᴇ 🔥")
 
 
 @catub.cat_cmd(
     pattern="charging$",
     command=("charging", plugin_category),
     info={
-        "header": "Phone charging animation.",
+        "header": "Phone charging animation",
         "usage": "{tr}charging",
     },
 )
 async def _(event):
     "animation command"
     event = await edit_or_reply(event, "charging")
-    txt = "`Tesla Wireless Charging (beta) Started...\
-            \nDevice Detected: Nokia 1100\nBattery Percentage:` "
+    txt = "`Tesla wireless charging ( beta ) started...\
+            \nDevice detected : nokia 1100\nBattery percentage :` "
     k = 10
     for _ in range(10):
         await event.edit(txt + str(k))
         k += 10
         await asyncio.sleep(1)
     await event.edit(
-        "`Tesla Wireless Charging (beta) Completed...\
-        \nDevice Detected: Nokia 1100 (Space Grey Varient)\
-        \nnBattery Percentage:` [100%](https://telegra.ph/file/a45aa7450c8eefed599d9.mp4) ",
+        "`Tesla wireless charging ( beta ) completed...\
+        \nDevice detected : nokia 1100 ( Space grey varient )\
+        \nnBattery percentage :` [100%](https://telegra.ph/file/a45aa7450c8eefed599d9.mp4) ",
         link_preview=True,
     )
