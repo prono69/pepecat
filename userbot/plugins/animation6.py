@@ -17,7 +17,7 @@ async def _(event):
     "animation command"
     animation_interval = 1
     animation_ttl = range(9)
-    event = await edit_or_reply(event, "unnoob")
+    event = await edit_or_reply(event, "You noob")
     animation_chars = [
         "𝐄𝐯𝐞𝐫𝐲𝐨𝐧𝐞",
         "𝐢𝐬",
@@ -46,7 +46,7 @@ async def _(event):
     "animation command"
     animation_interval = 1
     animation_ttl = range(9)
-    event = await edit_or_reply(event, "menoob")
+    event = await edit_or_reply(event, "Me noob")
     animation_chars = [
         "𝐄𝐯𝐞𝐫𝐲𝐨𝐧𝐞",
         "𝐢𝐬",
@@ -75,7 +75,7 @@ async def _(event):
     "animation command"
     animation_interval = 1
     animation_ttl = range(8)
-    event = await edit_or_reply(event, "upro")
+    event = await edit_or_reply(event, "You pro")
     animation_chars = [
         "𝐄𝐯𝐞𝐫𝐲𝐨𝐧𝐞",
         "𝐢𝐬",
@@ -103,7 +103,7 @@ async def _(event):
     "animation command"
     animation_interval = 1
     animation_ttl = range(8)
-    event = await edit_or_reply(event, "mepro")
+    event = await edit_or_reply(event, "Me pro")
     animation_chars = [
         "𝐄𝐯𝐞𝐫𝐲𝐨𝐧𝐞",
         "𝐢𝐬",
@@ -131,7 +131,7 @@ async def _(event):
     "animation command"
     animation_interval = 5
     animation_ttl = range(11)
-    event = await edit_or_reply(event, "quickheal")
+    event = await edit_or_reply(event, "Quick heal")
     animation_chars = [
         "`Downloading file..`",
         "`File downloaded...`",
@@ -162,7 +162,7 @@ async def _(event):
     "animation command"
     animation_interval = 0.1
     animation_ttl = range(11)
-    event = await edit_or_reply(event, "sqh")
+    event = await edit_or_reply(event, "Sqh")
     animation_chars = [
         "`Downloading file..`",
         "`File downloaded...`",
@@ -193,7 +193,7 @@ async def _(event):
     "animation command"
     animation_interval = 5
     animation_ttl = range(11)
-    event = await edit_or_reply(event, "vquickheal")
+    event = await edit_or_reply(event, "V quick heal")
     animation_chars = [
         "`Downloading file..`",
         "`File downloaded....`",
@@ -224,7 +224,7 @@ async def _(event):
     "animation command"
     animation_interval = 0.5
     animation_ttl = range(11)
-    event = await edit_or_reply(event, "macos")
+    event = await edit_or_reply(event, "Macos")
     animation_chars = [
         "`Connecting to hackintosh...`",
         "`Initiating hackintosh login`",
@@ -255,7 +255,7 @@ async def _(event):
     "animation command"
     animation_interval = 0.5
     animation_ttl = range(11)
-    event = await edit_or_reply(event, "windows")
+    event = await edit_or_reply(event, "Windows")
     animation_chars = [
         "`Connecting to windows 11...`",
         "`Initiating windows 11 login`",
@@ -286,7 +286,7 @@ async def _(event):
     "animation command"
     animation_interval = 0.5
     animation_ttl = range(11)
-    event = await edit_or_reply(event, "linux")
+    event = await edit_or_reply(event, "Linux")
     animation_chars = [
         "`Connecting to linux...`",
         "`Initiating linux login`",
@@ -317,7 +317,7 @@ async def _(event):
     "animation command"
     animation_interval = 0.5
     animation_ttl = range(11)
-    event = await edit_or_reply(event, "stock")
+    event = await edit_or_reply(event, "Stock")
     animation_chars = [
         "`Connecting to symbian OS...`",
         "`Initiating symbian OS login`",
