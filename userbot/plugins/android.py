@@ -15,19 +15,19 @@ plugin_category = "extra"
     pattern="magisk$",
     command=("magisk", plugin_category),
     info={
-        "header": "To Get latest Magisk releases",
+        "header": "To get latest magisk releases",
         "usage": "{tr}magisk",
     },
 )
 async def kakashi(event):
-    "Get latest Magisk releases"
+    "Get latest magisk releases"
     magisk_repo = "https://raw.githubusercontent.com/topjohnwu/magisk-files/"
     magisk_dict = {
         "⦁ **Stable**": magisk_repo + "master/stable.json",
         "⦁ **Beta**": magisk_repo + "master/beta.json",
         "⦁ **Canary**": magisk_repo + "master/canary.json",
     }
-    releases = "**Latest Magisk Releases**\n\n"
+    releases = "**Latest magisk releases**\n\n"
     for name, release_url in magisk_dict.items():
         data = get(release_url).json()
         releases += (
@@ -41,7 +41,7 @@ async def kakashi(event):
     pattern="device(?: |$)(\S*)",
     command=("device", plugin_category),
     info={
-        "header": "To get android device name/model from its codename",
+        "header": "To get android device name / model from its codename",
         "usage": "{tr}device <codename>",
         "examples": "{tr}device whyred",
     },
@@ -81,7 +81,7 @@ async def device_info(event):
     info={
         "header": "To Search for android device codename",
         "usage": "{tr}codename <brand> <device>",
-        "examples": "{tr}codename Xiaomi Redmi Note 5 Pro",
+        "examples": "{tr}codename xiaomi redmi note 5 pro",
     },
 )
 async def codename_info(event):
@@ -106,7 +106,7 @@ async def codename_info(event):
     devices_lower = {k.lower(): v for k, v in data.items()}
     devices = devices_lower.get(brand)
     if not devices:
-        return await edit_or_reply(event, f"__I couldn't find {brand}.__")
+        return await edit_or_reply(event, f"I couldn't find {brand}")
     results = [
         i
         for i in devices
@@ -123,7 +123,7 @@ async def codename_info(event):
                 f"**Model**: {item['model']}\n\n"
             )
     else:
-        reply = f"`Couldn't find {device} codename!`\n"
+        reply = f"`Couldn't find {device} codename`\n"
     await edit_or_reply(event, reply)
 
 
@@ -131,9 +131,9 @@ async def codename_info(event):
     pattern="specs(?: |)([\S]*)(?: |)([\s\S]*)",
     command=("specs", plugin_category),
     info={
-        "header": "To Get info about android device .",
+        "header": "To Get info about android device",
         "usage": "{tr}specs",
-        "examples": "{tr}specs Xiaomi Redmi Note 5 Pro",
+        "examples": "{tr}specs xiaomi redmi note 5 pro",
     },
 )
 async def devices_specifications(event):
@@ -161,7 +161,7 @@ async def devices_specifications(event):
             i["href"] for i in all_brands if brand == i.text.strip().lower()
         ][0]
     except IndexError:
-        return await edit_delete(event, f"`{brand} is unknown brand!`")
+        return await edit_delete(event, f"`{brand} is unknown brand`")
     devices = BeautifulSoup(get(brand_page_url).content, "lxml").findAll(
         "div", {"class": "model-listing-container-80"}
     )
@@ -198,7 +198,7 @@ async def devices_specifications(event):
     pattern="twrp(?: |$)(\S*)",
     command=("twrp", plugin_category),
     info={
-        "header": "To Get latest twrp download links for android device.",
+        "header": "To get latest twrp download links for android device",
         "usage": "{tr}twrp <codename>",
         "examples": "{tr}twrp whyred",
     },
