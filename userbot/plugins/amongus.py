@@ -82,7 +82,7 @@ async def get_imposter_img(text: str) -> str:
     pattern="amongus(?:\s|$)([\s\S]*)",
     command=("amongus", plugin_category),
     info={
-        "header": "Create a Sticker based on the popular game Among Us",
+        "header": "Create a sticker based on the popular game among us",
         "flags": {
             "1": "red",
             "2": "lime",
@@ -140,7 +140,7 @@ async def sayliecmd(event):
     pattern="imposter(?:\s|$)([\s\S]*)",
     command=("imposter", plugin_category),
     info={
-        "header": "Fun images for imposter ",
+        "header": "Fun images for imposter",
         "usage": "{tr}imposter <username/userid/reply>",
     },
 )
@@ -175,8 +175,8 @@ async def procces_img(event):
     pattern="imp(|n) ([\s\S]*)",
     command=("imp", plugin_category),
     info={
-        "header": "Find imposter with stickers animation.",
-        "description": "Imp for imposter impn for not imposter",
+        "header": "Find imposter with stickers animation",
+        "description": "Imp for imposter imp for not imposter",
         "usage": ["{tr}imp <name>", "{tr}impn <name>"],
         "examples": ["{tr}imp blabla", "{tr}impn blabla"],
     },
@@ -186,7 +186,7 @@ async def _(event):
     USERNAME = f"tg://user?id={event.client.uid}"
     name = event.pattern_match.group(2)
     cmd = event.pattern_match.group(1).lower()
-    text1 = await edit_or_reply(event, "Uhmm... Something is wrong here!!")
+    text1 = await edit_or_reply(event, "Uhm ... ! Something is wrong here")
     await asyncio.sleep(2)
     await text1.delete()
     stcr1 = await event.client.send_file(
