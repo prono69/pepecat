@@ -21,9 +21,9 @@ BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>
     command=("cbutton", plugin_category),
     info={
         "header": "To create button posts",
-        "note": f"For working of this you need your bot ({Config.TG_BOT_USERNAME}) in the group/channel \
-        where you are using and Markdown is Default to html",
-        "options": "If you button to be in same row as other button then follow this <buttonurl:link:same> in 2nd button.",
+        "note": f"For working of this you need your bot ({Config.TG_BOT_USERNAME}) in the group / channel \
+        where you are using and markdown is default to html",
+        "options": "If you button to be in same row as other button then follow this <buttonurl:link:same> in second button",
         "usage": [
             "{tr}cbutton <text> [Name on button]<buttonurl:link you want to open>",
         ],
@@ -31,14 +31,14 @@ BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>
     },
 )
 async def _(event):
-    "To create button posts."
+    "To create button posts"
     reply_message = await event.get_reply_message()
     if reply_message:
         markdown_note = reply_message.text
     else:
         markdown_note = "".join(event.text.split(maxsplit=1)[1:])
     if not markdown_note:
-        return await edit_delete(event, "`what text should i use in button post`")
+        return await edit_delete(event, "`What text should I use in button post ?`")
     prev = 0
     note_data = ""
     buttons = []
@@ -88,8 +88,8 @@ async def _(event):
     command=("ibutton", plugin_category),
     info={
         "header": "To create button posts via inline",
-        "note": "Markdown is Default to html",
-        "options": "If you button to be in same row as other button then follow this <buttonurl:link:same> in 2nd button.",
+        "note": "Markdown is default to html",
+        "options": "If you button to be in same row as other button then follow this <buttonurl:link:same> in second button",
         "usage": [
             "{tr}ibutton <text> [Name on button]<buttonurl:link you want to open>",
         ],
@@ -106,7 +106,7 @@ async def _(event):
     else:
         markdown_note = "".join(event.text.split(maxsplit=1)[1:])
     if not markdown_note:
-        return await edit_delete(event, "`what text should i use in button post`")
+        return await edit_delete(event, "`What text should I use in button post ?`")
     catinput = "Inline buttons " + markdown_note
     results = await event.client.inline_query(Config.TG_BOT_USERNAME, catinput)
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
