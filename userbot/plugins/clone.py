@@ -21,7 +21,7 @@ DEFAULTUSER = str(AUTONAME) if AUTONAME else str(ALIVE_NAME)
 DEFAULTUSERBIO = (
     str(DEFAULT_BIO)
     if DEFAULT_BIO
-    else "sıɥʇ ǝpoɔǝp uǝɥʇ llıʇu∩ ˙ ǝɔɐds ǝʇɐʌıɹd ǝɯos ǝɯ ǝʌı⅁˙"
+    else "sıɥʇ ǝpoɔǝp uǝɥʇ lıʇu∩ ǝɔɐds ǝʇɐʌıɹd ǝɯos ǝɯ ǝʌı⅁"
 )
 
 
@@ -59,13 +59,13 @@ async def _(event):
     try:
         pfile = await event.client.upload_file(profile_pic)
     except Exception as e:
-        return await edit_delete(event, f"**Failed to clone due to error:**\n__{e}__")
+        return await edit_delete(event, f"**Failed to clone due to error :**\n__{e}__")
     await event.client(functions.photos.UploadProfilePhotoRequest(pfile))
-    await edit_delete(event, "**LET US BE AS ONE**")
+    await edit_delete(event, "**Let us be as one**")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"#CLONED\nsuccessfully cloned [{first_name}](tg://user?id={user_id })",
+            f"Cloned\n\nsuccessfully cloned [{first_name}](tg://user?id={user_id })",
         )
 
 
@@ -74,7 +74,7 @@ async def _(event):
     command=("revert", plugin_category),
     info={
         "header": "To revert back to your original name , bio and profile pic",
-        "note": "For proper Functioning of this command you need to set AUTONAME and DEFAULT_BIO with your profile name and bio respectively.",
+        "note": "For proper Functioning of this command you need to set AUTONAME and DEFAULT_BIO with your profile name and bio respectively",
         "usage": "{tr}revert",
     },
 )
@@ -95,5 +95,5 @@ async def _(event):
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            "#REVERT\nsuccessfully reverted back to your profile",
+            "Revert\n\nsuccessfully reverted back to your profile",
         )
