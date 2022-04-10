@@ -19,7 +19,7 @@ plugin_category = "fun"
     command=("scam", plugin_category),
     info={
         "header": "To show fake actions for a paticular period of time",
-        "description": "if time is not mentioned then it may choose random time 5 or 6 mintues for mentioning time use in seconds",
+        "description": "If time is not mentioned then it may choose random time 5 or 6 mintues for mentioning time use in seconds",
         "usage": [
             "{tr}scam <action> <time(in seconds)>",
             "{tr}scam <action>",
@@ -68,9 +68,9 @@ async def _(event):
             scam_action = str(args[0]).lower()
             scam_time = int(args[1])
         except ValueError:
-            return await edit_delete(event, "`Invalid Syntax !!`")
+            return await edit_delete(event, "`Invalid syntax`")
     else:
-        return await edit_delete(event, "`Invalid Syntax !!`")
+        return await edit_delete(event, "`Invalid syntax`")
     try:
         if scam_time > 0:
             await event.delete()
@@ -106,10 +106,10 @@ async def _(event):
     try:
         await event.client(EditAdminRequest(event.chat_id, user.id, new_rights, rank))
     except BadRequestError:
-        return await catevent.edit("__I think you don't have permission to promote__")
+        return await catevent.edit("I think you don't have permission to promote")
     except Exception as e:
         return await edit_delete(catevent, f"__{e}__", time=10)
-    await catevent.edit("`Promoted Successfully! Now gib Party`")
+    await catevent.edit("`Promoted successfully now give party`")
 
 
 @catub.cat_cmd(
@@ -117,37 +117,37 @@ async def _(event):
     command=("padmin", plugin_category),
     info={
         "header": "Fun animation for faking user promotion",
-        "description": "An animation that shows enabling all permissions to him that he is admin(fake promotion)",
+        "description": "An animation that shows enabling all permissions to him that he is admin ( fake promotion ) ",
         "usage": "{tr}padmin",
     },
     groups_only=True,
 )
 async def _(event):
-    "Fun animation for faking user promotion."
+    "Fun animation for faking user promotion"
     animation_interval = 1
     animation_ttl = range(20)
-    event = await edit_or_reply(event, "`promoting.......`")
+    event = await edit_or_reply(event, "`Promoting...`")
     animation_chars = [
-        "**Promoting User As Admin...**",
-        "**Enabling All Permissions To User...**",
-        "**(1) Send Messages: ☑️**",
-        "**(1) Send Messages: ✅**",
-        "**(2) Send Media: ☑️**",
-        "**(2) Send Media: ✅**",
-        "**(3) Send Stickers & GIFs: ☑️**",
-        "**(3) Send Stickers & GIFs: ✅**",
-        "**(4) Send Polls: ☑️**",
-        "**(4) Send Polls: ✅**",
-        "**(5) Embed Links: ☑️**",
-        "**(5) Embed Links: ✅**",
-        "**(6) Add Users: ☑️**",
-        "**(6) Add Users: ✅**",
-        "**(7) Pin Messages: ☑️**",
-        "**(7) Pin Messages: ✅**",
-        "**(8) Change Chat Info: ☑️**",
-        "**(8) Change Chat Info: ✅**",
-        "**Permission Granted Successfully**",
-        f"**pRoMooTeD SuCcEsSfUlLy bY: {ALIVE_NAME}**",
+        "**Promoting user as admin...**",
+        "**Enabling all permissions to user...**",
+        "**(1) Send messages : ☑️**",
+        "**(1) Send messages : ✅**",
+        "**(2) Send media : ☑️**",
+        "**(2) Send media : ✅**",
+        "**(3) Send stickers & gifs : ☑️**",
+        "**(3) Send stickers & gifs : ✅**",
+        "**(4) Send polls : ☑️**",
+        "**(4) Send polls : ✅**",
+        "**(5) Embed links : ☑️**",
+        "**(5) Embed links : ✅**",
+        "**(6) Add users : ☑️**",
+        "**(6) Add users : ✅**",
+        "**(7) Pin messages : ☑️**",
+        "**(7) Pin messages : ✅**",
+        "**(8) Change chat info : ☑️**",
+        "**(8) Change chat info : ✅**",
+        "**Permission granted successfully**",
+        f"**Promoted successfully by : {ALIVE_NAME}**",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
