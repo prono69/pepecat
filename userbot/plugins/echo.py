@@ -26,8 +26,8 @@ plugin_category = "fun"
     pattern="addecho$",
     command=("addecho", plugin_category),
     info={
-        "header": "To repeat messages sent by the user.",
-        "description": "Reply to user with this cmd so from then his every text and sticker messages will be repeated back to him.",
+        "header": "To repeat messages sent by the user",
+        "description": "Reply to user with this command so from then his every text and sticker messages will be repeated back to him",
         "usage": "{tr}addecho <reply>",
     },
 )
@@ -35,9 +35,9 @@ async def echo(event):
     "To echo the user messages"
     if event.reply_to_msg_id is None:
         return await edit_or_reply(
-            event, "`Reply to a User's message to echo his messages`"
+            event, "`Reply to a user's message to echo his messages`"
         )
-    catevent = await edit_or_reply(event, "`Adding Echo to user...`")
+    catevent = await edit_or_reply(event, "`Adding echo to user...`")
     user, rank = await get_user_from_event(event, catevent, nogroup=True)
     if not user:
         return
@@ -66,8 +66,8 @@ async def echo(event):
     pattern="rmecho$",
     command=("rmecho", plugin_category),
     info={
-        "header": "To stop repeating paticular user messages.",
-        "description": "Reply to user with this cmd to stop repeating his messages back.",
+        "header": "To stop repeating paticular user messages",
+        "description": "Reply to user with this command to stop repeating his messages back",
         "usage": "{tr}rmecho <reply>",
     },
 )
@@ -75,7 +75,7 @@ async def echo(event):
     "To stop echoing the user messages"
     if event.reply_to_msg_id is None:
         return await edit_or_reply(
-            event, "Reply to a User's message to echo his messages"
+            event, "Reply to a user's message to echo his messages"
         )
     reply_msg = await event.get_reply_message()
     user_id = reply_msg.sender_id
@@ -84,7 +84,7 @@ async def echo(event):
         try:
             remove_echo(chat_id, user_id)
         except Exception as e:
-            await edit_delete(catevent, f"**Error:**\n`{e}`")
+            await edit_delete(catevent, f"**Error :**\n`{e}`")
         else:
             await edit_or_reply(event, "Echo has been stopped for the user")
     else:
@@ -95,8 +95,8 @@ async def echo(event):
     pattern="delecho( -a)?",
     command=("delecho", plugin_category),
     info={
-        "header": "To delete echo in this chat.",
-        "description": "To stop echoing users messages of all enabled users in the paticular chat or all chats.",
+        "header": "To delete echo in this chat",
+        "description": "To stop echoing users messages of all enabled users in the paticular chat or all chats",
         "flags": {"a": "To stop in all chats"},
         "usage": [
             "{tr}delecho",
@@ -111,26 +111,26 @@ async def echo(event):
         lecho = get_all_echos()
         if len(lecho) == 0:
             return await edit_delete(
-                event, "You havent enabled echo atleast for one user in any chat."
+                event, "You havent enabled echo atleast for one user in any chat"
             )
         try:
             remove_all_echos()
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n`{str(e)}`", 10)
+            await edit_delete(event, f"**Error :**\n`{str(e)}`", 10)
         else:
             await edit_or_reply(
-                event, "Deleted echo for all enabled users in all chats."
+                event, "Deleted echo for all enabled users in all chats"
             )
     else:
         lecho = get_echos(event.chat_id)
         if len(lecho) == 0:
             return await edit_delete(
-                event, "You havent enabled echo atleast for one user in this chat."
+                event, "You havent enabled echo atleast for one user in this chat"
             )
         try:
             remove_echos(event.chat_id)
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n`{e}`", 10)
+            await edit_delete(event, f"**Error :**\n`{e}`", 10)
         else:
             await edit_or_reply(
                 event, "Deleted echo for all enabled users in this chat"
@@ -152,10 +152,10 @@ async def echo(event):
     },
 )
 async def echo(event):  # sourcery no-metrics
-    "To list all users on who you enabled echoing."
+    "To list all users on who you enabled echoing"
     input_str = event.pattern_match.group(1)
     private_chats = ""
-    output_str = "**Echo enabled users:**\n\n"
+    output_str = "**Echo enabled users :**\n\n"
     if input_str:
         lsts = get_all_echos()
         group_chats = ""
@@ -177,9 +177,9 @@ async def echo(event):  # sourcery no-metrics
                 group_chats += f"☞ [{echos.user_name}](tg://user?id={echos.user_id}) in chat {echos.chat_name} of chat id `{echos.chat_id}`\n"
 
         if private_chats != "":
-            output_str += "**Private Chats**\n" + private_chats + "\n\n"
+            output_str += "**Private chats**\n" + private_chats + "\n\n"
         if group_chats != "":
-            output_str += "**Group Chats**\n" + group_chats
+            output_str += "**Group chats**\n" + group_chats
     else:
         lsts = get_echos(event.chat_id)
         if len(lsts) <= 0:
@@ -196,7 +196,7 @@ async def echo(event):  # sourcery no-metrics
                 private_chats += (
                     f"☞ [{echos.user_name}](tg://user?id={echos.user_id})\n"
                 )
-        output_str = "**Echo enabled users in this chat are:**\n" + private_chats
+        output_str = "**Echo enabled users in this chat are :**\n" + private_chats
 
     await edit_or_reply(event, output_str)
 
