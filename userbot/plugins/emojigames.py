@@ -19,8 +19,8 @@ BOWL_E_MOJI = "🎳"
     pattern=f"({DART_E_MOJI}|dart) ([1-6])$",
     command=("dart", plugin_category),
     info={
-        "header": "To get specific dart animation.",
-        "description": "will send and delete the dart emoji animation until the selected outcome comes.",
+        "header": "To get specific dart animation",
+        "description": "Will send and delete the dart emoji animation until the selected outcome comes",
         "usage": [
             "{tr}dart [1-6]",
             "{tr}🎯 [1-6]",
@@ -58,8 +58,8 @@ async def _(event):
     pattern=f"({DICE_E_MOJI}|dice) ([1-6])$",
     command=("dice", plugin_category),
     info={
-        "header": "To get specific dice animation.",
-        "description": "will send and delete the dice emoji animation until the selected outcome comes.",
+        "header": "To get specific dice animation",
+        "description": "Will send and delete the dice emoji animation until the selected outcome comes",
         "usage": [
             "{tr}dice [1-6]",
             "{tr}🎲 [1-6]",
@@ -97,8 +97,8 @@ async def _(event):
     pattern=f"({BALL_E_MOJI}|bb) ([1-5])$",
     command=("bb", plugin_category),
     info={
-        "header": "To get specific basket ball animation.",
-        "description": "will send and delete the basket ball emoji animation until the selected outcome comes.",
+        "header": "To get specific basket ball animation",
+        "description": "Will send and delete the basket ball emoji animation until the selected outcome comes",
         "usage": [
             "{tr}bb [1-5]",
             "{tr}🏀 [1-5]",
@@ -136,8 +136,8 @@ async def _(event):
     pattern=f"({FOOT_E_MOJI}|fb) ([1-5])$",
     command=("fb", plugin_category),
     info={
-        "header": "To get specific football animation.",
-        "description": "will send and delete the football emoji animation until the selected outcome comes.",
+        "header": "To get specific football animation",
+        "description": "Will send and delete the football emoji animation until the selected outcome comes",
         "usage": [
             "{tr}fb [1-5]",
             "{tr}⚽️ [1-5]",
@@ -175,8 +175,8 @@ async def _(event):
     pattern=f"({SLOT_E_MOJI}|jp) ([0-9]+)$",
     command=("jp", plugin_category),
     info={
-        "header": "To get specific jackpot animation.",
-        "description": "will send and delete the jackpot emoji animation until the selected outcome comes.",
+        "header": "To get specific jackpot animation",
+        "description": "Will send and delete the jackpot emoji animation until the selected outcome comes",
         "usage": [
             "{tr}jp [1-64]",
             "{tr}🎰 [1-64]",
@@ -216,8 +216,8 @@ async def _(event):
     pattern=f"({BOWL_E_MOJI}|bowl) ([1-6])$",
     command=("bowl", plugin_category),
     info={
-        "header": "To get specific bowling animation.",
-        "description": "will send and delete the bowling emoji animation until the selected outcome comes.",
+        "header": "To get specific bowling animation",
+        "description": "Will send and delete the bowling emoji animation until the selected outcome comes",
         "usage": [
             "{tr}bowl [1-6]",
             "{tr}🎳 [1-6]",
