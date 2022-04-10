@@ -20,8 +20,8 @@ LOGS = logging.getLogger(__name__)
     pattern="msgto(?:\s|$)([\s\S]*)",
     command=("msgto", plugin_category),
     info={
-        "header": "To message to person or to a chat.",
-        "description": "Suppose you want to message directly to a person/chat from a paticular chat. Then simply reply to a person with this cmd and text or to a text with cmd and username/userid/chatid,",
+        "header": "To message to person or to a chat",
+        "description": "Suppose you want to message directly to a person or chat from a paticular chat then simply reply to a person with this command and text or to a text with command and username / userid / chatid,",
         "usage": [
             "{tr}msgto <username/userid/chatid/chatusername> reply to message",
             "{tr}msgto <username/userid/chatid/chatusername> <text>",
@@ -30,33 +30,33 @@ LOGS = logging.getLogger(__name__)
     },
 )
 async def catbroadcast_add(event):
-    "To message to person or to a chat."
+    "To message to person or to a chat"
     user, reason = await get_user_from_event(event)
     reply = await event.get_reply_message()
     if not user:
         return
     if not reason and not reply:
         return await edit_delete(
-            event, "__What should i send to the person. reply to msg or give text__"
+            event, "What should I send to the person ? Reply to message or give text"
         )
     if reply and reason and user.id != reply.sender_id:
         if BOTLOG:
             msg = await event.client.send_message(BOTLOG_CHATID, reason)
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "The replied message was failed to send to the user. Confusion between to whom it should send.",
+                "The replied message was failed to send to the user , confusion between to whom it should send",
                 reply_to=msg.id,
             )
         msglink = await event.clienr.get_msg_link(msg)
         return await edit_or_reply(
             event,
-            f"__Sorry! Confusion between users to whom should i send the person mentioned in message or to the person replied. text message was logged in [log group]({msglink}). you can resend message from there__",
+            f"Sorry ! Confusion between users to whom should I send the person mentioned in message or to the person replied , text message was logged in [log group]({msglink}) ! You can resend message from there",
         )
     if reason:
         msg = await event.client.send_message(user.id, reason)
     else:
         msg = await event.client.send_message(user.id, reply)
-    await edit_delete(event, "__Successfully sent the message.__")
+    await edit_delete(event, "Successfully sent the message")
 
 
 @catub.cat_cmd(
@@ -74,7 +74,7 @@ async def catbroadcast_add(event):
     if not catinput_str:
         return await edit_delete(
             event,
-            "In which category should i add this chat",
+            "In which category should I add this chat",
             parse_mode=_format.parse_pre,
         )
     keyword = catinput_str.lower()
@@ -88,7 +88,7 @@ async def catbroadcast_add(event):
     sql.add_to_broadcastlist(keyword, event.chat_id)
     await edit_delete(
         event,
-        f"This chat is Now added to category {keyword}",
+        f"This chat is now added to category {keyword}",
         parse_mode=_format.parse_pre,
     )
     chat = await event.get_chat()
@@ -96,7 +96,7 @@ async def catbroadcast_add(event):
         try:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"The Chat {get_display_name(await event.get_chat())} is added to category {keyword}",
+                f"The chat {get_display_name(await event.get_chat())} is added to category {keyword}",
                 parse_mode=_format.parse_pre,
             )
         except Exception:
@@ -111,18 +111,18 @@ async def catbroadcast_add(event):
     pattern="list(?:\s|$)([\s\S]*)",
     command=("list", plugin_category),
     info={
-        "header": "will show the list of all chats in the given category",
+        "header": "Will show the list of all chats in the given category",
         "usage": "{tr}list <category name>",
         "examples": "{tr}list test",
     },
 )
 async def catbroadcast_list(event):
-    "To list the all chats in the mentioned category."
+    "To list the all chats in the mentioned category"
     catinput_str = event.pattern_match.group(1)
     if not catinput_str:
         return await edit_delete(
             event,
-            "Which category Chats should i list ?\nCheck .listall",
+            "Which category chats should I list ?\n\nCheck .listall",
             parse_mode=_format.parse_pre,
         )
     keyword = catinput_str.lower()
@@ -130,7 +130,7 @@ async def catbroadcast_list(event):
     if no_of_chats == 0:
         return await edit_delete(
             event,
-            f"There is no category with name {keyword}. Check '.listall'",
+            f"There is no category with name {keyword} , check '.listall'",
             parse_mode=_format.parse_pre,
         )
     chats = sql.get_chat_broadcastlist(keyword)
@@ -144,14 +144,14 @@ async def catbroadcast_list(event):
             chatinfo = await event.client.get_entity(int(chat))
             try:
                 if chatinfo.broadcast:
-                    resultlist += f" 👉 📢 **Channel** \n  •  **Name : **{chatinfo.title} \n  •  **id : **`{int(chat)}`\n\n"
+                    resultlist += f" 👉🏻 📢 **Channel** \n  •  **Name : **{chatinfo.title} \n  •  **Id : **`{int(chat)}`\n\n"
                 else:
-                    resultlist += f" 👉 👥 **Group** \n  •  **Name : **{chatinfo.title} \n  •  **id : **`{int(chat)}`\n\n"
+                    resultlist += f" 👉🏻 👩🏻‍❤️‍👩🏻 **Group** \n  •  **Name : **{chatinfo.title} \n  •  **Id : **`{int(chat)}`\n\n"
             except AttributeError:
-                resultlist += f" 👉 👤 **User** \n  •  **Name : **{chatinfo.first_name} \n  •  **id : **`{int(chat)}`\n\n"
+                resultlist += f" 👉🏻 😶 **User** \n  •  **Name : **{chatinfo.first_name} \n  •  **Id : **`{int(chat)}`\n\n"
         except Exception:
-            errorlist += f" 👉 __This id {int(chat)} in database probably you may left the chat/channel or may be invalid id.\
-                            \nRemove this id from the database by using this command__ `.frmfrom {keyword} {int(chat)}` \n\n"
+            errorlist += f" 👉🏻 This id {int(chat)} in database probably you may left the chat / channel or may be invalid id\
+                            \n\nRemove this id from the database by using this command `.frmfrom {keyword} {int(chat)}` \n\n"
     finaloutput = resultlist + errorlist
     await edit_or_reply(catevent, finaloutput)
 
@@ -160,22 +160,22 @@ async def catbroadcast_list(event):
     pattern="listall$",
     command=("listall", plugin_category),
     info={
-        "header": "Will show the list of all category names.",
+        "header": "Will show the list of all category names",
         "usage": "{tr}listall",
     },
 )
 async def catbroadcast_list(event):
-    "To list all the category names."
+    "To list all the category names"
     if sql.num_broadcastlist_chats() == 0:
         return await edit_delete(
             event,
-            "you haven't created at least one category  check info for more help",
+            "You haven't created at least one category ! Check info for more help",
             parse_mode=_format.parse_pre,
         )
     chats = sql.get_broadcastlist_chats()
     resultext = "**Here are the list of your category's :**\n\n"
     for i in chats:
-        resultext += f" 👉 `{i}` __contains {sql.num_broadcastlist_chat(i)} chats__\n"
+        resultext += f" 🕯️ `{i}` contains {sql.num_broadcastlist_chat(i)} chats\n"
     await edit_or_reply(event, resultext)
 
 
@@ -183,18 +183,18 @@ async def catbroadcast_list(event):
     pattern="sendto(?:\s|$)([\s\S]*)",
     command=("sendto", plugin_category),
     info={
-        "header": "will send the replied message to all chats in the given category",
+        "header": "Will send the replied message to all chats in the given category",
         "usage": "{tr}sendto <category name>",
         "examples": "{tr}sendto test",
     },
 )
 async def catbroadcast_send(event):
-    "To send the message to all chats in the mentioned category."
+    "To send the message to all chats in the mentioned category"
     catinput_str = event.pattern_match.group(1)
     if not catinput_str:
         return await edit_delete(
             event,
-            "To which category should i send this message",
+            "To which category should I send this message ?",
             parse_mode=_format.parse_pre,
         )
     reply = await event.get_reply_message()
@@ -202,7 +202,7 @@ async def catbroadcast_send(event):
     if not reply:
         return await edit_delete(
             event,
-            "what should i send to to this category ?",
+            "What should I send to to this category ?",
             parse_mode=_format.parse_pre,
         )
     keyword = catinput_str.lower()
@@ -211,13 +211,13 @@ async def catbroadcast_send(event):
     if no_of_chats == 0:
         return await edit_delete(
             event,
-            f"There is no category with name {keyword}. Check '.listall'",
+            f"There is no category with name {keyword} ! Check '.listall'",
             parse_mode=_format.parse_pre,
         )
     chats = sql.get_chat_broadcastlist(keyword)
     catevent = await edit_or_reply(
         event,
-        "sending this message to all groups in the category",
+        "Sending this message to all groups in the category",
         parse_mode=_format.parse_pre,
     )
     try:
@@ -234,7 +234,7 @@ async def catbroadcast_send(event):
         except Exception as e:
             LOGS.info(str(e))
         await sleep(0.5)
-    resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}.`"
+    resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}`"
     await edit_delete(catevent, resultext)
     if BOTLOG:
         await event.client.send_message(
@@ -254,12 +254,12 @@ async def catbroadcast_send(event):
     },
 )
 async def catbroadcast_send(event):
-    "To forward the message to all chats in the mentioned category."
+    "To forward the message to all chats in the mentioned category"
     catinput_str = event.pattern_match.group(1)
     if not catinput_str:
         return await edit_delete(
             event,
-            "To which category should i send this message",
+            "To which category should I send this message ?",
             parse_mode=_format.parse_pre,
         )
     reply = await event.get_reply_message()
@@ -267,7 +267,7 @@ async def catbroadcast_send(event):
     if not reply:
         return await edit_delete(
             event,
-            "what should i send to to this category ?",
+            "What should I send to to this category ?",
             parse_mode=_format.parse_pre,
         )
     keyword = catinput_str.lower()
@@ -276,13 +276,13 @@ async def catbroadcast_send(event):
     if no_of_chats == 0:
         return await edit_delete(
             event,
-            f"There is no category with name {keyword}. Check '.listall'",
+            f"There is no category with name {keyword} ! Check '.listall'",
             parse_mode=_format.parse_pre,
         )
     chats = sql.get_chat_broadcastlist(keyword)
     catevent = await edit_or_reply(
         event,
-        "sending this message to all groups in the category",
+        "Sending this message to all groups in the category",
         parse_mode=_format.parse_pre,
     )
     try:
@@ -299,7 +299,7 @@ async def catbroadcast_send(event):
         except Exception as e:
             LOGS.info(str(e))
         await sleep(0.5)
-    resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}.`"
+    resultext = f"`The message was sent to {i} chats out of {no_of_chats} chats in category {keyword}`"
     await edit_delete(catevent, resultext)
     if BOTLOG:
         await event.client.send_message(
@@ -324,7 +324,7 @@ async def catbroadcast_remove(event):
     if not catinput_str:
         return await edit_delete(
             event,
-            "From which category should i remove this chat",
+            "From which category should I remove this chat ?",
             parse_mode=_format.parse_pre,
         )
     keyword = catinput_str.lower()
@@ -338,7 +338,7 @@ async def catbroadcast_remove(event):
     sql.rm_from_broadcastlist(keyword, event.chat_id)
     await edit_delete(
         event,
-        f"This chat is Now removed from the category {keyword}",
+        f"This chat is now removed from the category {keyword}",
         parse_mode=_format.parse_pre,
     )
     chat = await event.get_chat()
@@ -346,7 +346,7 @@ async def catbroadcast_remove(event):
         try:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"The Chat {get_display_name(await event.get_chat())} is removed from category {keyword}",
+                f"The chat {get_display_name(await event.get_chat())} is removed from category {keyword}",
                 parse_mode=_format.parse_pre,
             )
         except Exception:
@@ -361,19 +361,19 @@ async def catbroadcast_remove(event):
     pattern="frmfrom(?:\s|$)([\s\S]*)",
     command=("frmfrom", plugin_category),
     info={
-        "header": " To force remove the given chat from a category.",
-        "description": "Suppose if you are muted or group/channel is deleted you cant send message there so you can use this cmd to the chat from that category",
+        "header": " To force remove the given chat from a category",
+        "description": "Suppose if you are muted or group / channel is deleted you cant send message there so you can use this cmd to the chat from that category",
         "usage": "{tr}frmfrom <category name> <chatid>",
         "examples": "{tr}frmfrom test -100123456",
     },
 )
 async def catbroadcast_remove(event):
-    "To force remove the given chat from a category."
+    "To force remove the given chat from a category"
     catinput_str = event.pattern_match.group(1)
     if not catinput_str:
         return await edit_delete(
             event,
-            "From which category should i remove this chat",
+            "From which category should I remove this chat",
             parse_mode=_format.parse_pre,
         )
     args = catinput_str.split(" ")
@@ -415,7 +415,7 @@ async def catbroadcast_remove(event):
         try:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"The Chat {get_display_name(await event.get_chat())} is removed from category {keyword}",
+                f"The chat {get_display_name(await event.get_chat())} is removed from category {keyword}",
                 parse_mode=_format.parse_pre,
             )
         except Exception:
@@ -430,13 +430,13 @@ async def catbroadcast_remove(event):
     pattern="delc(?:\s|$)([\s\S]*)",
     command=("delc", plugin_category),
     info={
-        "header": "To Deletes the category completely from database",
+        "header": "To deletes the category completely from database",
         "usage": "{tr}delc <category name>",
         "examples": "{tr}delc test",
     },
 )
 async def catbroadcast_delete(event):
-    "To delete a category completely."
+    "To delete a category completely"
     catinput_str = event.pattern_match.group(1)
     check1 = sql.num_broadcastlist_chat(catinput_str)
     if check1 < 1:
