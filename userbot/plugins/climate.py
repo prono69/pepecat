@@ -1,4 +1,4 @@
-# CatUserbot module for getting the event of a event.
+# CatUserbot module for getting the event of a event
 
 import io
 import json
@@ -48,9 +48,9 @@ def sun(unix, ctimezone):
     pattern="climate(?:\s|$)([\s\S]*)",
     command=("climate", plugin_category),
     info={
-        "header": "To get the weather report of a city.",
-        "description": "Shows you the weather report of a city. By default it is Delhi, you can change it by {tr}setcity command.",
-        "note": "For functioning of this plugin you need to set OPEN_WEATHER_MAP_APPID var you can  get value from https://openweathermap.org/",
+        "header": "To get the weather report of a city",
+        "description": "Shows you the weather report of a city , by default it is delhi , you can change it by {tr}setcity command",
+        "note": "For functioning of this plugin you need to set OPEN_WEATHER_MAP_APPID var you can get value from https://openweathermap.org/",
         "usage": [
             "{tr}climate",
             "{tr}climate <city name>",
@@ -58,10 +58,10 @@ def sun(unix, ctimezone):
     },
 )
 async def get_weather(event):  # sourcery no-metrics
-    "To get the weather report of a city."
+    "To get the weather report of a city"
     if not Config.OPEN_WEATHER_MAP_APPID:
         return await edit_or_reply(
-            event, "`Get an API key from` https://openweathermap.org/ `first.`"
+            event, "`Get an api key from` https://openweathermap.org/ `first`"
         )
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     CITY = gvarstatus("DEFCITY") or "Delhi" if not input_str else input_str
@@ -79,7 +79,7 @@ async def get_weather(event):  # sourcery no-metrics
             try:
                 countrycode = timezone_countries[f"{country}"]
             except KeyError:
-                return await edit_or_reply(event, "`Invalid Country.`")
+                return await edit_or_reply(event, "`Invalid country`")
             CITY = newcity[0].strip() + "," + countrycode.strip()
     url = f"https://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={Config.OPEN_WEATHER_MAP_APPID}"
     async with aiohttp.ClientSession() as _session:
@@ -88,7 +88,7 @@ async def get_weather(event):  # sourcery no-metrics
             requesttext = await request.text()
     result = json.loads(requesttext)
     if requeststatus != 200:
-        return await edit_or_reply(event, "`Invalid Country.`")
+        return await edit_or_reply(event, "`Invalid country`")
     cityname = result["name"]
     curtemp = result["main"]["temp"]
     humidity = result["main"]["humidity"]
@@ -115,16 +115,16 @@ async def get_weather(event):  # sourcery no-metrics
     mph = str(wind * 2.237).split(".")
     await edit_or_reply(
         event,
-        f"🌡**Temperature:** `{celsius(curtemp)}°C | {fahrenheit(curtemp)}°F`\n"
-        + f"🥰**Human Feeling** `{celsius(feel)}°C | {fahrenheit(feel)}°F`\n"
-        + f"🥶**Min. Temp.:** `{celsius(min_temp)}°C | {fahrenheit(min_temp)}°F`\n"
-        + f"🥵**Max. Temp.:** `{celsius(max_temp)}°C | {fahrenheit(max_temp)}°F`\n"
-        + f"☁️**Humidity:** `{humidity}%`\n"
-        + f"🧧**Pressure** `{pressure} hPa`\n"
-        + f"🌬**Wind:** `{kmph[0]} kmh | {mph[0]} mph, {findir}`\n"
-        + f"⛈**Cloud:** `{cloud} %`\n"
-        + f"🌄**Sunrise:** `{sun(sunrise,ctimezone)}`\n"
-        + f"🌅**Sunset:** `{sun(sunset,ctimezone)}`\n\n\n"
+        f"🌡**Temperature :** `{celsius(curtemp)}°C | {fahrenheit(curtemp)}°F`\n"
+        + f"🥰**Human feeling :** `{celsius(feel)}°C | {fahrenheit(feel)}°F`\n"
+        + f"🥶**Min temp :** `{celsius(min_temp)}°C | {fahrenheit(min_temp)}°F`\n"
+        + f"🥵**Max temp :** `{celsius(max_temp)}°C | {fahrenheit(max_temp)}°F`\n"
+        + f"🌫️**Humidity :** `{humidity}%`\n"
+        + f"🕯️**Pressure :** `{pressure} hPa`\n"
+        + f"🍃**Wind :** `{kmph[0]} kmh | {mph[0]} mph, {findir}`\n"
+        + f"🌥️**Cloud :** `{cloud} %`\n"
+        + f"🌄**Sunrise :** `{sun(sunrise,ctimezone)}`\n"
+        + f"🌅**Sunset :** `{sun(sunset,ctimezone)}`\n\n\n"
         + f"**{desc}**\n"
         + f"`{cityname}, {fullc_n}`\n"
         + f"`{time}`\n",
@@ -135,7 +135,7 @@ async def get_weather(event):  # sourcery no-metrics
     pattern="setcity(?:\s|$)([\s\S]*)",
     command=("setcity", plugin_category),
     info={
-        "header": "To set default city for climate cmd",
+        "header": "To set default city for climate command",
         "description": "Sets your default city so you can just use .weather or .climate when ever you neededwithout typing city name each time",
         "note": "For functioning of this plugin you need to set OPEN_WEATHER_MAP_APPID var you can  get value from https://openweathermap.org/",
         "usage": [
@@ -145,10 +145,10 @@ async def get_weather(event):  # sourcery no-metrics
     },
 )
 async def set_default_city(event):
-    "To set default city for climate/weather cmd"
+    "To set default city for climate / weather command"
     if not Config.OPEN_WEATHER_MAP_APPID:
         return await edit_or_reply(
-            event, "`Get an API key from` https://openweathermap.org/ `first.`"
+            event, "`Get an api key from` https://openweathermap.org/ `first`"
         )
     input_str = event.pattern_match.group(1)
     CITY = gvarstatus("DEFCITY") or "Delhi" if not input_str else input_str
@@ -172,7 +172,7 @@ async def set_default_city(event):
     request = requests.get(url)
     result = json.loads(request.text)
     if request.status_code != 200:
-        return await edit_or_reply(event, "`Invalid country.`")
+        return await edit_or_reply(event, "`Invalid country`")
     addgvar("DEFCITY", CITY)
     cityname = result["name"]
     country = result["sys"]["country"]
@@ -184,8 +184,8 @@ async def set_default_city(event):
     pattern="weather(?:\s|$)([\s\S]*)",
     command=("weather", plugin_category),
     info={
-        "header": "To get the weather report of a city.",
-        "description": "Shows you the weather report of a city . By default it is Delhi, you can change it by {tr}setcity command.",
+        "header": "To get the weather report of a city",
+        "description": "Shows you the weather report of a city , by default it is delhi , you can change it by {tr} setcity command",
         "usage": [
             "{tr}weather",
             "{tr}weather <city name>",
@@ -205,8 +205,8 @@ async def _(event):
     pattern="wttr(?:\s|$)([\s\S]*)",
     command=("wttr", plugin_category),
     info={
-        "header": "To get the weather report of a city.",
-        "description": "Shows you the weather report of a city for next 3 days . By default it is Delhi, you can change it by {tr}setcity command.",
+        "header": "To get the weather report of a city",
+        "description": "Shows you the weather report of a city for next 3 days , by default it is delhi , you can change it by {tr} setcity command",
         "usage": [
             "{tr}wttr",
             "{tr}wttr <city name>",
@@ -214,7 +214,7 @@ async def _(event):
     },
 )
 async def _(event):
-    "weather report for next 3 days from 'wttr.in'"
+    "Weather report for next 3 days from 'wttr.in'"
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(1)
     if not input_str:
