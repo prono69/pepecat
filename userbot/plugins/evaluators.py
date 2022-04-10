@@ -14,17 +14,17 @@ plugin_category = "tools"
     pattern="exec(?:\s|$)([\s\S]*)",
     command=("exec", plugin_category),
     info={
-        "header": "To Execute terminal commands in a subprocess.",
+        "header": "To execute terminal commands in a subprocess",
         "usage": "{tr}exec <command>",
         "examples": "{tr}exec cat stringsetup.py",
     },
 )
 async def _(event):
-    "To Execute terminal commands in a subprocess."
+    "To execute terminal commands in a subprocess"
     cmd = "".join(event.message.message.split(maxsplit=1)[1:])
     if not cmd:
-        return await edit_delete(event, "`What should i execute?..`")
-    catevent = await edit_or_reply(event, "`Executing.....`")
+        return await edit_delete(event, "`What should I execute ?`")
+    catevent = await edit_or_reply(event, "`Executing...`")
     process = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
@@ -46,7 +46,7 @@ async def _(event):
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            "Terminal command " + cmd + " was executed sucessfully.",
+            "Terminal command " + cmd + " was executed sucessfully",
         )
 
 
@@ -54,22 +54,22 @@ async def _(event):
     pattern="eval(?:\s|$)([\s\S]*)",
     command=("eval", plugin_category),
     info={
-        "header": "To Execute python script/statements in a subprocess.",
+        "header": "To execute python script or statements in a subprocess",
         "usage": "{tr}eval <command>",
         "examples": "{tr}eval print('catuserbot')",
     },
 )
 async def _(event):
-    "To Execute python script/statements in a subprocess."
+    "To execute python script/statements in a subprocess"
     cmd = "".join(event.message.message.split(maxsplit=1)[1:])
     if not cmd:
-        return await edit_delete(event, "`What should i run ?..`")
+        return await edit_delete(event, "`What should I run ?`")
     cmd = (
         cmd.replace("sendmessage", "send_message")
         .replace("sendfile", "send_file")
         .replace("editmessage", "edit_message")
     )
-    catevent = await edit_or_reply(event, "`Running ...`")
+    catevent = await edit_or_reply(event, "`Running...`")
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = io.StringIO()
@@ -104,7 +104,7 @@ async def _(event):
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            "eval command " + cmd + " was executed sucessfully.",
+            "eval command " + cmd + " was executed sucessfully",
         )
 
 
