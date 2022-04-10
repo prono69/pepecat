@@ -16,20 +16,20 @@ plugin_category = "fun"
     pattern="emoji(?:\s|$)([\s\S]*)",
     command=("emoji", plugin_category),
     info={
-        "header": "Converts your text to big emoji text, with some default emojis.",
+        "header": "Converts your text to big emoji text , with some default emojis",
         "usage": "{tr}emoji <text>",
         "examples": ["{tr}emoji catuserbot"],
     },
 )
 async def itachi(event):
-    "To get emoji art text."
+    "To get emoji art text"
     args = event.pattern_match.group(1)
     get = await event.get_reply_message()
     if not args and get:
         args = get.text
     if not args:
         await edit_or_reply(
-            event, "__What am I Supposed to do with this idiot, Give me a text.__"
+            event, "What am I supposed to do with this idiot , give me a text"
         )
         return
     result = ""
@@ -47,20 +47,20 @@ async def itachi(event):
     pattern="cmoji(?:\s|$)([\s\S]*)",
     command=("cmoji", plugin_category),
     info={
-        "header": "Converts your text to big emoji text, with your custom emoji.",
+        "header": "Converts your text to big emoji text, with your custom emoji",
         "usage": "{tr}cmoji <emoji> <text>",
         "examples": ["{tr}cmoji 😺 catuserbot"],
     },
 )
 async def itachi(event):
-    "To get custom emoji art text."
+    "To get custom emoji art text"
     args = event.pattern_match.group(1)
     get = await event.get_reply_message()
     if not args and get:
         args = get.text
     if not args:
         return await edit_or_reply(
-            event, "__What am I Supposed to do with this idiot, Give me a text.__"
+            event, "What am I supposed to do with this idiot , give me a text"
         )
     try:
         emoji, arg = args.split(" ", 1)
