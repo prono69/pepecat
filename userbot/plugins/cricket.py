@@ -14,12 +14,12 @@ plugin_category = "extra"
     pattern="score$",
     command=("score", plugin_category),
     info={
-        "header": "To see the score of an ongoing match.",
+        "header": "To see the score of an ongoing match",
         "usage": "{tr}score",
     },
 )
 async def _(event):
-    "To see the score of an ongoing match."
+    "To see the score of an ongoing match"
     chat = "@cricbuzz_bot"
     reply_to_id = await reply_id(event)
     catevent = await edit_or_reply(event, "```Gathering info...```")
@@ -34,7 +34,7 @@ async def _(event):
             await catevent.edit("Unblock @cricbuzz_bot & try again")
             return
         if respond.text.startswith("I can't find that"):
-            await catevent.edit("sorry i can't find it")
+            await catevent.edit("Sorry I can't find it")
         else:
             await catevent.delete()
             await event.client.send_message(
@@ -50,9 +50,9 @@ async def _(event):
     command=("cric", plugin_category),
     info={
         "header": "To see the scoreboard or commentary of a match",
-        "description": "To check commands showed in {tr}score cmd that is for getting scoreboard or commentary.",
+        "description": "To check commands showed in {tr}cscore cmd that is for getting scoreboard or commentary",
         "usage": "{tr}cric <command showed in {tr}score>",
-        "examples": "{tr}cric /scorecard_30....",
+        "examples": "{tr}cric /scorecard_30",
     },
 )
 async def _(event):
@@ -72,7 +72,7 @@ async def _(event):
             await catevent.edit("Unblock @cricbuzz_bot & try again")
             return
         if respond.text.startswith("I can't find that"):
-            await catevent.edit("sorry i can't find it")
+            await catevent.edit("Sorry I can't find it")
         else:
             await catevent.delete()
             await event.client.send_message(
