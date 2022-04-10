@@ -19,28 +19,28 @@ plugin_category = "utils"
     pattern="ls(?:\s|$)([\s\S]*)",
     command=("ls", plugin_category),
     info={
-        "header": "To list all files and folders.",
-        "description": "Will show all files and folders if no path is given or folder path is given else will show file details(if file path os given).",
+        "header": "To list all files and folders",
+        "description": "Will show all files and folders if no path is given or folder path is given else will show file details ( if file path os given )",
         "usage": "{tr}ls <path>",
         "examples": "{tr}ls userbot",
     },
 )
 async def lst(event):  # sourcery no-metrics
-    "To list all files and folders."
+    "To list all files and folders"
     cat = "".join(event.text.split(maxsplit=1)[1:])
     path = cat or os.getcwd()
     if not os.path.exists(path):
         await edit_or_reply(
             event,
-            f"there is no such directory or file with the name `{cat}` check again",
+            f"There is no such directory or file with the name `{cat}` check again",
         )
         return
     path = Path(cat) if cat else os.getcwd()
     if os.path.isdir(path):
         if cat:
-            msg = "Folders and Files in `{}` :\n".format(path)
+            msg = "Folders and files in `{}` :\n".format(path)
         else:
-            msg = "Folders and Files in Current Directory :\n"
+            msg = "Folders and files in current directory :\n"
         lists = os.listdir(path)
         files = ""
         folders = ""
@@ -86,10 +86,10 @@ async def lst(event):  # sourcery no-metrics
         time2 = time.ctime(os.path.getmtime(path))
         time3 = time.ctime(os.path.getatime(path))
         msg += f"**Location :** `{path}`\n"
-        msg += f"**icon :** `{mode}`\n"
+        msg += f"**Icon :** `{mode}`\n"
         msg += f"**Size :** `{humanbytes(size)}`\n"
-        msg += f"**Last Modified Time:** `{time2}`\n"
-        msg += f"**Last Accessed Time:** `{time3}`"
+        msg += f"**Last modified time:** `{time2}`\n"
+        msg += f"**Last cccessed time:** `{time3}`"
     if len(msg) > Config.MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(msg)) as out_file:
             out_file.name = "ls.txt"
@@ -115,17 +115,17 @@ async def lst(event):  # sourcery no-metrics
     },
 )
 async def lst(event):
-    "To delete a file or folder."
+    "To delete a file or folder"
     cat = event.pattern_match.group(1)
     if cat:
         path = Path(cat)
     else:
-        await edit_or_reply(event, "what should i delete")
+        await edit_or_reply(event, "What should I delete ?")
         return
     if not os.path.exists(path):
         await edit_or_reply(
             event,
-            f"there is no such directory or file with the name `{cat}` check again",
+            f"There is no such directory or file with the name `{cat}` check again",
         )
         return
     catcmd = f"rm -rf {path}"
@@ -141,19 +141,19 @@ async def lst(event):
     pattern="mkdir(?:\s|$)([\s\S]*)",
     command=("mkdir", plugin_category),
     info={
-        "header": "To create a new directory.",
+        "header": "To create a new directory",
         "usage": "{tr}mkdir <topic>",
         "examples": "{tr}mkdir cat",
     },
 )
 async def _(event):
-    "To create a new directory."
+    "To create a new directory"
     pwd = os.getcwd()
     input_str = event.pattern_match.group(1)
     if not input_str:
         return await edit_delete(
             event,
-            "What should i create ?",
+            "What should I create ?",
             parse_mode=_format.parse_pre,
         )
     original = os.path.join(pwd, input_str.strip())
@@ -164,7 +164,7 @@ async def _(event):
         )
         return
     mone = await edit_or_reply(
-        event, "creating the directory ...", parse_mode=_format.parse_pre
+        event, "Creating the directory...", parse_mode=_format.parse_pre
     )
     await asyncio.sleep(2)
     try:
@@ -190,14 +190,14 @@ async def _(event):
     if not input_str:
         return await edit_delete(
             event,
-            "What and where should i move the file/folder.",
+            "What and where should I move the file or folder ?",
             parse_mode=_format.parse_pre,
         )
     loc = input_str.split(";")
     if len(loc) != 2:
         return await edit_delete(
             event,
-            "use proper syntax .cpto from ; to destination",
+            "Use proper syntax .cpto from ; to destination",
             parse_mode=_format.parse_pre,
         )
     original = os.path.join(pwd, loc[0].strip())
@@ -206,7 +206,7 @@ async def _(event):
     if not os.path.exists(original):
         await edit_delete(
             event,
-            f"there is no such directory or file with the name `{cat}` check again",
+            f"There is no such directory or file with the name `{cat}` check again",
         )
         return
     mone = await edit_or_reply(
@@ -224,7 +224,7 @@ async def _(event):
     pattern="mvto(?:\s|$)([\s\S]*)",
     command=("mvto", plugin_category),
     info={
-        "header": "To move a file from one directory to other directory.",
+        "header": "To move a file from one directory to other directory",
         "usage": "{tr}mvto frompath ; topath",
         "examples": "{tr}mvto stringsession.py ; downloads",
     },
@@ -236,14 +236,14 @@ async def _(event):
     if not input_str:
         return await edit_delete(
             event,
-            "What and where should i move the file/folder.",
+            "What and where should I move the file or folder",
             parse_mode=_format.parse_pre,
         )
     loc = input_str.split(";")
     if len(loc) != 2:
         return await edit_delete(
             event,
-            "use proper syntax .mvto from ; to destination",
+            "Use proper syntax .mvto from ; to destination",
             parse_mode=_format.parse_pre,
         )
     original = os.path.join(pwd, loc[0].strip())
@@ -252,10 +252,10 @@ async def _(event):
     if not os.path.exists(original):
         return await edit_delete(
             event,
-            f"there is no such directory or file with the name `{original}` check again",
+            f"There is no such directory or file with the name `{original}` check again",
         )
     mone = await edit_or_reply(
-        event, "Moving the file ...", parse_mode=_format.parse_pre
+        event, "Moving the file...", parse_mode=_format.parse_pre
     )
     await asyncio.sleep(2)
     try:
