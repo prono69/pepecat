@@ -1,6 +1,6 @@
 """
-Telegram Channel Media Downloader Plugin for userbot.
-usage: .geta channel_username [will  get all media from channel, tho there is limit of 3000 there to prevent API limits.]
+Telegram Channel Media Downloader Plugin for userbot
+usage: .geta channel_username [will  get all media from channel , though there is limit of 3000 there to prevent api limits]
        .getc number_of_messsages channel_username
 By: @Zero_cool7870
 """
@@ -20,7 +20,7 @@ plugin_category = "tools"
     command=("getc", plugin_category),
     info={
         "header": "To download channel media files",
-        "description": "pass username and no of latest messages to check to command \
+        "description": "Pass username and no of latest messages to check to command \
              so the bot will download media files from that latest no of messages to server ",
         "usage": "{tr}getc count channel_username",
         "examples": "{tr}getc 10 @catuserbot17",
@@ -35,7 +35,7 @@ async def get_media(event):
         os.makedirs(tempdir)
     except BaseException:
         pass
-    event = await edit_or_reply(event, "`Downloading Media From this Channel.`")
+    event = await edit_or_reply(event, "`Downloading media from this channel`")
     msgs = await event.client.get_messages(channel_username, limit=int(limit))
     i = 0
     for msg in msgs:
@@ -44,7 +44,7 @@ async def get_media(event):
             await event.client.download_media(msg, tempdir)
             i += 1
             await event.edit(
-                f"Downloading Media From this Channel.\n **DOWNLOADED : **`{i}`"
+                f"Downloading media from this channel\n **Downloaded : **`{i}`"
             )
     ps = subprocess.Popen(("ls", tempdir), stdout=subprocess.PIPE)
     output = subprocess.check_output(("wc", "-l"), stdin=ps.stdout)
@@ -63,7 +63,7 @@ async def get_media(event):
     info={
         "header": "To download channel all media files",
         "description": "pass username to command so the bot will download all media files from that latest no of messages to server ",
-        "note": "there is limit of 3000 messages for this process to prevent API limits. that is will download all media files from latest 3000 messages",
+        "note": "There is limit of 3000 messages for this process to prevent api limits , that is will download all media files from latest 3000 messages",
         "usage": "{tr}geta channel_username",
         "examples": "{tr}geta @catuserbot17",
     },
@@ -75,7 +75,7 @@ async def get_media(event):
         os.makedirs(tempdir)
     except BaseException:
         pass
-    event = await edit_or_reply(event, "`Downloading All Media From this Channel.`")
+    event = await edit_or_reply(event, "`Downloading all media from this channel`")
     msgs = await event.client.get_messages(channel_username, limit=3000)
     i = 0
     for msg in msgs:
@@ -84,7 +84,7 @@ async def get_media(event):
             await event.client.download_media(msg, tempdir)
             i += 1
             await event.edit(
-                f"Downloading Media From this Channel.\n **DOWNLOADED : **`{i}`"
+                f"Downloading media from this channel\n **Downloaded : **`{i}`"
             )
     ps = subprocess.Popen(("ls", tempdir), stdout=subprocess.PIPE)
     output = subprocess.check_output(("wc", "-l"), stdin=ps.stdout)
