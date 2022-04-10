@@ -9,13 +9,13 @@ plugin_category = "tools"
     pattern="chain$",
     command=("chain", plugin_category),
     info={
-        "header": "Reply this command to any converstion(or message) and it will find the chain length of that message",
+        "header": "Reply this command to any converstion ( or message ) and it will find the chain length of that message",
         "usage": "{tr}chain <reply>",
     },
 )
 async def _(event):
-    "To find the chain length of a message."
-    await event.edit("`Counting...`")
+    "To find the chain length of a message"
+    await event.edit("`Counting.. .. .. ..`")
     count = -1
     message = event.message
     while message:
