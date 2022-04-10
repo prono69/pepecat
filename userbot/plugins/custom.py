@@ -44,11 +44,11 @@ oldvars = {
     pattern="(set|get|del)dv(?: |$)([\s\S]*)",
     command=("dv", plugin_category),
     info={
-        "header": "Set vars in database or Check or Delete",
-        "description": "Set , Fetch or Delete values or vars directly in database without restart or heroku vars.\n\nYou can set multiple pics by giving space after links in alive, ialive, pm permit.",
+        "header": "Set vars in database or check or delete",
+        "description": "Set , fetch or delete values or vars directly in database without restart or heroku vars\n\nYou can set multiple pics by giving space after links in alive , ialive , pm permit",
         "flags": {
             "set": "To set new var in database or modify the old var",
-            "get": "To show the already existing var value.",
+            "get": "To show the already existing var value",
             "del": "To delete the existing value",
         },
         "var name": "**[list of vars]**(https://catuserbot.gitbook.io/catuserbot/data-vars-setup)",
@@ -72,7 +72,7 @@ async def bad(event):  # sourcery no-metrics
     vnlist = "".join(f"{i}. `{each}`\n" for i, each in enumerate(vlist, start=1))
     if not vname:
         return await edit_delete(
-            event, f"**📑 Give correct var name from the list :\n\n**{vnlist}", time=60
+            event, f"**Give correct var name from the list :\n\n**{vnlist}", time=60
         )
     vinfo = None
     if " " in vname:
@@ -103,12 +103,12 @@ async def bad(event):  # sourcery no-metrics
                 )
                 await event.client.send_message(BOTLOG_CHATID, vinfo, silent=True)
             await edit_delete(
-                event, f"📑 Value of **{vname}** is changed to :- `{vinfo}`", time=20
+                event, f"Value of **{vname}** is changed to :- `{vinfo}`", time=20
             )
         if cmd == "get":
             var_data = gvarstatus(vname)
             await edit_delete(
-                event, f"📑 Value of **{vname}** is  `{var_data}`", time=20
+                event, f"Value of **{vname}** is  `{var_data}`", time=20
             )
         elif cmd == "del":
             delgvar(vname)
@@ -120,12 +120,12 @@ async def bad(event):  # sourcery no-metrics
                 )
             await edit_delete(
                 event,
-                f"📑 Value of **{vname}** is now deleted & set to default.",
+                f"Value of **{vname}** is now deleted & set to default",
                 time=20,
             )
     else:
         await edit_delete(
-            event, f"**📑 Give correct var name from the list :\n\n**{vnlist}", time=60
+            event, f"**Give correct var name from the list :\n\n**{vnlist}", time=60
         )
 
 
@@ -133,12 +133,12 @@ async def bad(event):  # sourcery no-metrics
     pattern="custom (pmpermit|pmpic|pmblock|startmsg)$",
     command=("custom", plugin_category),
     info={
-        "header": "To customize your CatUserbot.",
+        "header": "To customize your cat userbot",
         "options": {
-            "pmpermit": "To customize pmpermit text. ",
-            "pmblock": "To customize pmpermit block message.",
-            "startmsg": "To customize startmsg of bot when some one started it.",
-            "pmpic": "To customize pmpermit pic. Reply to media url or text containing media.",
+            "pmpermit": "To customize pmpermit text ",
+            "pmblock": "To customize pmpermit block message",
+            "startmsg": "To customize startmsg of bot when some one started it",
+            "pmpic": "To customize pmpermit pic , reply to media url or text containing media",
         },
         "custom": {
             "{mention}": "mention user",
@@ -159,17 +159,17 @@ async def bad(event):  # sourcery no-metrics
         "usage": [
             "{tr}custom <option> reply",
         ],
-        "NOTE": "You can set,fetch or delete these by `{tr}setdv` , `{tr}getdv` & `{tr}deldv` as well.",
+        "Note": "You can set , fetch or delete these by `{tr}setdv` , `{tr}getdv` & `{tr}deldv` as well",
     },
 )
 async def custom_catuserbot(event):
-    "To customize your CatUserbot."
+    "To customize your cat userbot"
     reply = await event.get_reply_message()
     text = None
     if reply:
         text = reply.text
     if text is None:
-        return await edit_delete(event, "__Reply to custom text or url__")
+        return await edit_delete(event, "Reply to custom text or url")
     input_str = event.pattern_match.group(1)
     if input_str == "pmpermit":
         addgvar("pmpermit_txt", text)
@@ -180,10 +180,10 @@ async def custom_catuserbot(event):
     if input_str == "pmpic":
         urls = extractor.find_urls(reply.text)
         if not urls:
-            return await edit_delete(event, "`the given link is not supported`", 5)
+            return await edit_delete(event, "`The given link is not supported`", 5)
         text = " ".join(urls)
         addgvar("pmpermit_pic", text)
-    await edit_or_reply(event, f"__Your custom {input_str} has been updated__")
+    await edit_or_reply(event, f"Your custom {input_str} has been updated")
     if BOTLOG_CHATID:
         await event.client.send_message(
             BOTLOG_CHATID,
@@ -197,42 +197,42 @@ async def custom_catuserbot(event):
     pattern="delcustom (pmpermit|pmpic|pmblock|startmsg)$",
     command=("delcustom", plugin_category),
     info={
-        "header": "To delete costomization of your CatUserbot.",
+        "header": "To delete costomization of your cat userbot",
         "options": {
             "pmpermit": "To delete custom pmpermit text",
             "pmblock": "To delete custom pmpermit block message",
-            "pmpic": "To delete custom pmpermit pic.",
-            "startmsg": "To delete custom start message of bot when some one started it.",
+            "pmpic": "To delete custom pmpermit pic",
+            "startmsg": "To delete custom start message of bot when some one started it",
         },
         "usage": [
             "{tr}delcustom <option>",
         ],
-        "NOTE": "You can set,fetch or delete these by `{tr}setdv` , `{tr}getdv` & `{tr}deldv` as well.",
+        "NOTE": "You can set , fetch or delete these by `{tr}setdv` , `{tr}getdv` & `{tr}deldv` as well",
     },
 )
 async def custom_catuserbot(event):
-    "To delete costomization of your CatUserbot."
+    "To delete costomization of your cat userbot"
     input_str = event.pattern_match.group(1)
     if input_str == "pmpermit":
         if gvarstatus("pmpermit_txt") is None:
-            return await edit_delete(event, "__You haven't customzied your pmpermit.__")
+            return await edit_delete(event, "You haven't customzied your pmpermit")
         delgvar("pmpermit_txt")
     if input_str == "pmblock":
         if gvarstatus("pmblock") is None:
-            return await edit_delete(event, "__You haven't customzied your pmblock.__")
+            return await edit_delete(event, "You haven't customzied your pmblock")
         delgvar("pmblock")
     if input_str == "pmpic":
         if gvarstatus("pmpermit_pic") is None:
-            return await edit_delete(event, "__You haven't customzied your pmpic.__")
+            return await edit_delete(event, "You haven't customzied your pmpic")
         delgvar("pmpermit_pic")
     if input_str == "startmsg":
         if gvarstatus("START_TEXT") is None:
             return await edit_delete(
-                event, "__You haven't customzied your start msg in bot.__"
+                event, "You haven't customzied your start msg in bot"
             )
         delgvar("START_TEXT")
     await edit_or_reply(
-        event, f"__successfully deleted your customization of {input_str}.__"
+        event, f"Successfully deleted your customization of {input_str}"
     )
     if BOTLOG_CHATID:
         await event.client.send_message(
