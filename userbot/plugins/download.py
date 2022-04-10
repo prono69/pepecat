@@ -33,8 +33,8 @@ async def _get_file_name(path: pathlib.Path, full: bool = True) -> str:
     command=("download", plugin_category),
     info={
         "header": "To download the replied telegram file",
-        "description": "Will download the replied telegram file to server .",
-        "note": "The downloaded files will auto delete if you restart heroku.",
+        "description": "Will download the replied telegram file to server",
+        "note": "The downloaded files will auto delete if you restart heroku",
         "usage": [
             "{tr}download <reply>",
             "{tr}dl <reply>",
@@ -44,7 +44,7 @@ async def _get_file_name(path: pathlib.Path, full: bool = True) -> str:
 )
 async def _(event):  # sourcery no-metrics
     "To download the replied telegram file"
-    mone = await edit_or_reply(event, "`Downloading....`")
+    mone = await edit_or_reply(event, "`Downloading...`")
     input_str = event.pattern_match.group(3)
     name = NAME
     path = None
@@ -91,14 +91,14 @@ async def _(event):  # sourcery no-metrics
             await reply.download_media(
                 file=file_name.absolute(),
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to download")
+                    progress(d, t, mone, c_time, "Trying to download")
                 ),
             )
         elif not reply.document:
             file_name = await reply.download_media(
                 file=downloads,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to download")
+                    progress(d, t, mone, c_time, "Trying to download")
                 ),
             )
         else:
@@ -107,14 +107,14 @@ async def _(event):  # sourcery no-metrics
                 location=reply.document,
                 out=dl,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to download")
+                    progress(d, t, mone, c_time, "Trying to download")
                 ),
             )
             dl.close()
         end = datetime.now()
         ms = (end - start).seconds
         await mone.edit(
-            f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded to :- **  `{os.path.relpath(file_name,os.getcwd())}`\n   "
+            f"**•  Downloaded in {ms} seconds**\n**•  Downloaded to :- **  `{os.path.relpath(file_name,os.getcwd())}`\n   "
         )
     elif input_str:
         start = datetime.now()
@@ -149,10 +149,10 @@ async def _(event):  # sourcery no-metrics
             estimated_total_time = downloader.get_eta(human=True)
             current_message = f"Downloading the file\
                                 \n\n**URL : **`{url}`\
-                                \n**File Name :** `{file_name}`\
+                                \n**File name :** `{file_name}`\
                                 \n{progress_str}\
                                 \n`{humanbytes(downloaded)} of {humanbytes(total_length)} @ {humanbytes(dspeed)}`\
-                                \n**ETA : **`{estimated_total_time}`"
+                                \n**Eta : **`{estimated_total_time}`"
             if oldmsg != current_message and delay > 5:
                 await mone.edit(current_message)
                 delay = 0
@@ -163,12 +163,12 @@ async def _(event):  # sourcery no-metrics
         ms = (end - start).seconds
         if downloader.isSuccessful():
             await mone.edit(
-                f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded file location :- ** `{os.path.relpath(downloaded_file_name,os.getcwd())}`"
+                f"**•  Downloaded in {ms} seconds**\n**•  Downloaded file location :- ** `{os.path.relpath(downloaded_file_name,os.getcwd())}`"
             )
         else:
             await mone.edit("Incorrect URL\n {}".format(input_str))
     else:
-        await mone.edit("`Reply to a message to download to my local server.`")
+        await mone.edit("`Reply to a message to download to my local server`")
 
 
 @catub.cat_cmd(
@@ -176,8 +176,8 @@ async def _(event):  # sourcery no-metrics
     command=("dlto", plugin_category),
     info={
         "header": "To download the replied telegram file to specific directory",
-        "description": "Will download the replied telegram file to server that is your custom folder.",
-        "note": "The downloaded files will auto delete if you restart heroku.",
+        "description": "Will download the replied telegram file to server that is your custom folder",
+        "note": "The downloaded files will auto delete if you restart heroku",
         "usage": [
             "{tr}downloadto <folder path>",
             "{tr}dlto <folder path>",
@@ -190,7 +190,7 @@ async def _(event):  # sourcery no-metrics
     if not input_str:
         return await edit_delete(
             event,
-            "Where should i save this file. mention folder name",
+            "Where should I save this file ? Please mention folder name",
             parse_mode=_format.parse_pre,
         )
 
@@ -205,7 +205,7 @@ async def _(event):  # sourcery no-metrics
             parse_mode=_format.parse_pre,
         )
     mone = await edit_or_reply(
-        event, "Downloading the file ...", parse_mode=_format.parse_pre
+        event, "Downloading the file...", parse_mode=_format.parse_pre
     )
     start = datetime.now()
     for attr in getattr(reply.document, "attributes", []):
@@ -246,14 +246,14 @@ async def _(event):  # sourcery no-metrics
         await reply.download_media(
             file=file_name.absolute(),
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, mone, c_time, "trying to download")
+                progress(d, t, mone, c_time, "Trying to download")
             ),
         )
     elif not reply.document:
         file_name = await reply.download_media(
             file=location,
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, mone, c_time, "trying to download")
+                progress(d, t, mone, c_time, "Trying to download")
             ),
         )
     else:
@@ -262,12 +262,12 @@ async def _(event):  # sourcery no-metrics
             location=reply.document,
             out=dl,
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, mone, c_time, "trying to download")
+                progress(d, t, mone, c_time, "Trying to download")
             ),
         )
         dl.close()
     end = datetime.now()
     ms = (end - start).seconds
     await mone.edit(
-        f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded to :- **  `{os.path.relpath(file_name,os.getcwd())}`\n   "
+        f"**•  Downloaded in {ms} seconds**\n**•  Downloaded to :- **  `{os.path.relpath(file_name,os.getcwd())}`\n   "
     )
