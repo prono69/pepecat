@@ -61,7 +61,7 @@ async def cult_small_video(
     command=("ffmpegsave", plugin_category),
     info={
         "header": "Saves the media file in bot to trim mutliple times",
-        "description": "Will download the replied media into the bot so that you an trim it as your needs.",
+        "description": "Will download the replied media into the bot so that you an trim it as your needs",
         "usage": "{tr}ffmpegsave <reply>",
     },
 )
@@ -82,24 +82,24 @@ async def ff_mpeg_trim_cmd(event):
                     location=reply_message.document,
                     out=dl,
                     progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                        progress(d, t, catevent, c_time, "trying to download")
+                        progress(d, t, catevent, c_time, "Trying to download")
                     ),
                 )
                 dl.close()
             except Exception as e:
-                await catevent.edit(f"**Error:**\n`{e}`")
+                await catevent.edit(f"**Error :**\n`{e}`")
             else:
                 end = datetime.now()
                 ms = (end - start).seconds
                 await catevent.edit(
-                    f"Saved file to `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}` in `{ms}` seconds."
+                    f"Saved file to `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}` in `{ms}` seconds"
                 )
         else:
             await edit_delete(event, "`Reply to a any media file`")
     else:
         await edit_delete(
             event,
-            "A media file already exists in path. Please remove the media and try again!\n`.ffmpegclear`",
+            "A media file already exists in path please remove the media and try again\n`.ffmpegclear`",
         )
 
 
@@ -108,8 +108,8 @@ async def ff_mpeg_trim_cmd(event):
     command=("vtrim", plugin_category),
     info={
         "header": "Trims the saved media with specific given time internval and outputs as video if it is video",
-        "description": "Will trim the saved media with given given time interval.",
-        "note": "if you haven't mentioned time interval and just time then will send screenshot at that location.",
+        "description": "Will trim the saved media with given given time interval",
+        "note": "If you haven't mentioned time interval and just time then will send screenshot at that location",
         "usage": "{tr}vtrim <time interval>",
         "examples": "{tr}vtrim 00:00 00:10",
     },
@@ -119,10 +119,10 @@ async def ff_mpeg_trim_cmd(event):
     if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
         return await edit_delete(
             event,
-            f"a media file needs to be download, and save to the following path: `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}`",
+            f"A media file needs to be download , and save to the following path : `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}`",
         )
     reply_to_id = await reply_id(event)
-    catevent = await edit_or_reply(event, "`Triming the media......`")
+    catevent = await edit_or_reply(event, "`Triming the media...`")
     current_message_text = event.raw_text
     cmt = current_message_text.split(" ")
     start = datetime.now()
@@ -150,7 +150,7 @@ async def ff_mpeg_trim_cmd(event):
                 allow_cache=False,
                 reply_to=reply_to_id,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, catevent, c_time, "trying to upload")
+                    progress(d, t, catevent, c_time, "Trying to upload")
                 ),
             )
             os.remove(o)
@@ -175,7 +175,7 @@ async def ff_mpeg_trim_cmd(event):
                 allow_cache=False,
                 reply_to=event.message.id,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, catevent, c_time, "trying to upload")
+                    progress(d, t, catevent, c_time, "Trying to upload")
                 ),
             )
             os.remove(o)
@@ -186,7 +186,7 @@ async def ff_mpeg_trim_cmd(event):
         return
     end = datetime.now()
     ms = (end - start).seconds
-    await edit_delete(catevent, f"`Completed Process in {ms} seconds`", 3)
+    await edit_delete(catevent, f"`Completed process in {ms} seconds`", 3)
 
 
 @catub.cat_cmd(
@@ -204,10 +204,10 @@ async def ff_mpeg_trim_cmd(event):
     if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
         return await edit_delete(
             event,
-            f"a media file needs to be download, and save to the following path: `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}`",
+            f"a media file needs to be download , and save to the following path : `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}`",
         )
     reply_to_id = await reply_id(event)
-    catevent = await edit_or_reply(event, "`Triming the media...........`")
+    catevent = await edit_or_reply(event, "`Triming the media...`")
     current_message_text = event.raw_text
     cmt = current_message_text.split(" ")
     start = datetime.now()
@@ -240,7 +240,7 @@ async def ff_mpeg_trim_cmd(event):
                 allow_cache=False,
                 reply_to=reply_to_id,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, catevent, c_time, "trying to upload")
+                    progress(d, t, catevent, c_time, "Trying to upload")
                 ),
             )
             os.remove(o)
@@ -271,5 +271,5 @@ async def ff_mpeg_trim_cmd(event):
         os.remove(FF_MPEG_DOWN_LOAD_MEDIA_PATH)
         await edit_delete(
             event,
-            "`The media saved in bot for triming is deleted now . you can save now new one `",
+            "`The media saved in bot for triming is deleted now ! You can save now new one`",
         )
