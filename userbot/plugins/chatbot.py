@@ -20,13 +20,13 @@ from ..sql_helper.globals import gvarstatus
 plugin_category = "fun"
 
 tired_response = [
-    "I am little tired, Please give me some rest",
-    "Who are you to ask me questions Continuously",
-    "Leave me alone for some times",
-    "Time to Sleep, I will get back to you soon",
-    "I have a job to do, Come back later",
-    "I need to rest, leave me alone for some times",
-    "I am not feeling well, Please Come back later",
+    "Eh I am little tired , see ya later",
+    "Who the hell are you to ask me questions like this ?",
+    "Huh please stay away from me",
+    "Time to sleep , I will get back to you soon",
+    "I have a job to do , please come back later",
+    "I need to rest , please leave me alone for sometime",
+    "I am not feeling well , please come back later",
 ]
 
 
@@ -42,7 +42,7 @@ async def add_chatbot(event):
     "To enable ai for the replied person"
     if event.reply_to_msg_id is None:
         return await edit_or_reply(
-            event, "`Reply to a User's message to activate ai on `"
+            event, "`Reply to a user's message to activate ai on`"
         )
     catevent = await edit_or_reply(event, "`Adding ai to user...`")
     user, rank = await get_user_from_event(event, catevent, nogroup=True)
@@ -60,11 +60,11 @@ async def add_chatbot(event):
     user_name = user.first_name
     user_username = user.username
     if is_added(chat_id, user_id):
-        return await edit_or_reply(event, "`The user is already enabled with ai.`")
+        return await edit_or_reply(event, "`The user is already enabled with ai`")
     try:
         addai(chat_id, user_id, chat_name, user_name, user_username, chat_type)
     except Exception as e:
-        await edit_delete(catevent, f"**Error:**\n`{e}`")
+        await edit_delete(catevent, f"**Error :**\n`{e}`")
     else:
         await edit_or_reply(catevent, "Hi")
 
@@ -73,7 +73,7 @@ async def add_chatbot(event):
     pattern="rmai$",
     command=("rmai", plugin_category),
     info={
-        "header": "To stop ai for that user messages.",
+        "header": "To stop ai for that user messages",
         "usage": "{tr}rmai <reply>",
     },
 )
@@ -81,7 +81,7 @@ async def remove_chatbot(event):
     "To stop ai for that user"
     if event.reply_to_msg_id is None:
         return await edit_or_reply(
-            event, "Reply to a User's message to stop ai on him."
+            event, "Reply to a user's message to stop ai on him"
         )
     reply_msg = await event.get_reply_message()
     user_id = reply_msg.sender_id
@@ -90,7 +90,7 @@ async def remove_chatbot(event):
         try:
             remove_ai(chat_id, user_id)
         except Exception as e:
-            await edit_delete(catevent, f"**Error:**\n`{e}`")
+            await edit_delete(catevent, f"**Error :**\n`{e}`")
         else:
             await edit_or_reply(event, "Ai has been stopped for the user")
     else:
@@ -101,8 +101,8 @@ async def remove_chatbot(event):
     pattern="delai( -a)?",
     command=("delai", plugin_category),
     info={
-        "header": "To delete ai in this chat.",
-        "description": "To stop ai for all enabled users in this chat only..",
+        "header": "To delete ai in this chat",
+        "description": "To stop ai for all enabled users in this chat only",
         "flags": {"a": "To stop in all chats"},
         "usage": [
             "{tr}delai",
@@ -111,30 +111,30 @@ async def remove_chatbot(event):
     },
 )
 async def delete_chatbot(event):
-    "To delete ai in this chat."
+    "To delete ai in this chat"
     input_str = event.pattern_match.group(1)
     if input_str:
         lecho = get_all_users()
         if len(lecho) == 0:
             return await edit_delete(
-                event, "You havent enabled ai atleast for one user in any chat."
+                event, "You havent enabled ai atleast for one user in any chat"
             )
         try:
             remove_all_users()
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n`{str(e)}`", 10)
+            await edit_delete(event, f"**Error :**\n`{str(e)}`", 10)
         else:
-            await edit_or_reply(event, "Deleted ai for all enabled users in all chats.")
+            await edit_or_reply(event, "Deleted ai for all enabled users in all chats")
     else:
         lecho = get_users(event.chat_id)
         if len(lecho) == 0:
             return await edit_delete(
-                event, "You havent enabled ai atleast for one user in this chat."
+                event, "You havent enabled ai atleast for one user in this chat"
             )
         try:
             remove_users(event.chat_id)
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n`{e}`", 10)
+            await edit_delete(event, f"**Error :**\n`{e}`", 10)
         else:
             await edit_or_reply(event, "Deleted ai for all enabled users in this chat")
 
@@ -154,10 +154,10 @@ async def delete_chatbot(event):
     },
 )
 async def list_chatbot(event):  # sourcery no-metrics
-    "To list all users on who you enabled ai."
+    "To list all users on who you enabled ai"
     input_str = event.pattern_match.group(1)
     private_chats = ""
-    output_str = "**Ai enabled users:**\n\n"
+    output_str = "**Ai enabled users :**\n\n"
     if input_str:
         lsts = get_all_users()
         group_chats = ""
@@ -179,9 +179,9 @@ async def list_chatbot(event):  # sourcery no-metrics
                 group_chats += f"☞ [{echos.user_name}](tg://user?id={echos.user_id}) in chat {echos.chat_name} of chat id `{echos.chat_id}`\n"
 
         if private_chats != "":
-            output_str += "**Private Chats**\n" + private_chats + "\n\n"
+            output_str += "**Private chats**\n" + private_chats + "\n\n"
         if group_chats != "":
-            output_str += "**Group Chats**\n" + group_chats
+            output_str += "**Group chats**\n" + group_chats
     else:
         lsts = get_users(event.chat_id)
         if len(lsts) <= 0:
@@ -197,7 +197,7 @@ async def list_chatbot(event):  # sourcery no-metrics
                 private_chats += (
                     f"☞ [{echos.user_name}](tg://user?id={echos.user_id})\n"
                 )
-        output_str = "**Ai enabled users in this chat are:**\n" + private_chats
+        output_str = "**Ai enabled users in this chat are :**\n" + private_chats
     await edit_or_reply(event, output_str)
 
 
