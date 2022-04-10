@@ -11,15 +11,15 @@ plugin_category = "utils"
     pattern="calc ([\s\S]*)",
     command=("calc", plugin_category),
     info={
-        "header": "To solve basic mathematics equations.",
-        "description": "Solves the given maths equation by BODMAS rule.",
+        "header": "To solve basic mathematics equations",
+        "description": "Solves the given maths equation by bodmas rule",
         "usage": "{tr}calc 2+9",
     },
 )
 async def calculator(event):
-    "To solve basic mathematics equations."
+    "To solve basic mathematics equations"
     cmd = event.text.split(" ", maxsplit=1)[1]
-    event = await edit_or_reply(event, "Calculating ...")
+    event = await edit_or_reply(event, "Calculating.. .. .. ..")
     old_stderr = sys.stderr
     old_stdout = sys.stdout
     redirected_output = sys.stdout = io.StringIO()
