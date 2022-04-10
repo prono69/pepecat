@@ -26,7 +26,7 @@ async def on_new_message(event):
             except Exception:
                 await event.client.send_message(
                     BOTLOG_CHATID,
-                    f"I do not have DELETE permission in {get_display_name(await event.get_chat())}.\
+                    f"I do not have delete permission in {get_display_name(await event.get_chat())}\
                      So removing blacklist words from this group",
                 )
                 for word in snips:
@@ -39,8 +39,8 @@ async def on_new_message(event):
     command=("addblacklist", plugin_category),
     info={
         "header": "To add blacklist words to database",
-        "description": "The given word or words will be added to blacklist in that specific chat if any user sends then the message gets deleted.",
-        "note": "if you are adding more than one word at time via this, then remember that new word must be given in a new line that is not [hi hello]. It must be as\
+        "description": "The given word or words will be added to blacklist in that specific chat if any user sends then the message gets deleted",
+        "note": "If you are adding more than one word at time via this , then remember that new word must be given in a new line that is not [hi hello] ! It must be as\
             \n[hi \n hello]",
         "usage": "{tr}addblacklist <word(s)>",
         "examples": ["{tr}addblacklist fuck", "{tr}addblacklist fuck\nsex"],
@@ -71,7 +71,7 @@ async def _(event):
     info={
         "header": "To remove blacklist words from database",
         "description": "The given word or words will be removed from blacklist in that specific chat",
-        "note": "if you are removing more than one word at time via this, then remember that new word must be given in a new line that is not [hi hello]. It must be as\
+        "note": "If you are removing more than one word at time via this , then remember that new word must be given in a new line that is not [hi hello] ! It must be as\
             \n[hi \n hello]",
         "usage": "{tr}rmblacklist <word(s)>",
         "examples": ["{tr}rmblacklist fuck", "{tr}rmblacklist fuck\nsex"],
@@ -80,7 +80,7 @@ async def _(event):
     require_admin=True,
 )
 async def _(event):
-    "To Remove Blacklist Words from Database."
+    "To remove blacklist words from database"
     text = event.pattern_match.group(1)
     to_unblacklist = list(
         {trigger.strip() for trigger in text.split("\n") if trigger.strip()}
@@ -108,10 +108,10 @@ async def _(event):
 async def _(event):
     "To show the blacklist words in that specific chat"
     all_blacklisted = sql.get_chat_blacklist(event.chat_id)
-    OUT_STR = "Blacklists in the Current Chat:\n"
+    OUT_STR = "Blacklists in the current chat :\n"
     if len(all_blacklisted) > 0:
         for trigger in all_blacklisted:
-            OUT_STR += f"👉 {trigger} \n"
+            OUT_STR += f"✨ {trigger} \n"
     else:
-        OUT_STR = "No Blacklists found. Start saving using `.addblacklist`"
+        OUT_STR = "No blacklists found , start saving using `.addblacklist`"
     await edit_or_reply(event, OUT_STR)
