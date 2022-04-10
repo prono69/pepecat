@@ -42,7 +42,7 @@ if Config.PLUGIN_CHANNEL:
             if BOTLOG:
                 await catub.send_message(
                     BOTLOG_CHATID,
-                    f"Installed Plugin `{os.path.basename(downloaded_file_name)}` successfully.",
+                    f"Installed plugin `{os.path.basename(downloaded_file_name)}` successfully",
                 )
 
     catub.loop.create_task(install())
