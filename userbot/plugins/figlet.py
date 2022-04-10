@@ -68,7 +68,7 @@ async def figlet(event):
             font = CMD_FIG[style.strip()]
         except KeyError:
             return await edit_delete(
-                event, "**Invalid style selected** , check`.info figlet`."
+                event, "**Invalid style selected** , check`.info figlet`"
             )
         result = pyfiglet.figlet_format(deEmojify(text), font=font)
     else:
