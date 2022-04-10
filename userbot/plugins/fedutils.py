@@ -16,12 +16,12 @@ plugin_category = "admin"
 rose = "@MissRose_bot"
 
 fbanresults = [
-    "New FedBan",
-    "FedBan Reason update",
-    "has already been fbanned, with the exact same reason.",
+    "New fedban",
+    "Fedban reason update",
+    "has already been fbanned with the exact same reason",
 ]
 
-unfbanresults = ["I'll give", "Un-FedBan", "un-FedBan"]
+unfbanresults = ["I'll give", "Unfedban", "Unfedban"]
 
 
 @catub.cat_cmd(
@@ -29,29 +29,29 @@ unfbanresults = ["I'll give", "Un-FedBan", "un-FedBan"]
     command=("fban", plugin_category),
     info={
         "header": "Ban the person in your database federations",
-        "description": "Will fban the person in the all feds of given category which you stored in database.",
+        "description": "Will fban the person in the all feds of given category which you stored in database",
         "usage": "{tr}fban <userid/username/reply> <category> <reason>",
     },
 )
 async def group_fban(event):
-    "fban a person."
+    "fban a person"
     if FBAN_GROUP_ID == 0:
         return await edit_delete(
             event,
-            "__For working of this cmd you need to set FBAN_GROUP_ID in heroku vars__",
+            "For working of this command you need to set FBAN_GROUP_ID in heroku vars",
         )
     user, reason = await get_user_from_event(event)
     if not user:
         return
     if user.id == event.client.uid:
-        return await edit_delete(event, "__You can't fban yourself.__")
+        return await edit_delete(event, "You can't fban yourself")
     if not reason:
         return await edit_delete(
-            event, "__You haven't mentioned category name and reason for fban__"
+            event, "You haven't mentioned category name and reason for fban"
         )
     reasons = reason.split(" ", 1)
     fedgroup = reasons[0]
-    reason = "Not Mentioned" if len(reasons) == 1 else reasons[1]
+    reason = "Not mentioned" if len(reasons) == 1 else reasons[1]
     if get_collection("fedids") is not None:
         feds = get_collection("fedids").json
     else:
@@ -60,7 +60,7 @@ async def group_fban(event):
         fedids = feds[fedgroup]
     else:
         return await edit_delete(
-            event, f"__There is no such '{fedgroup}' named fedgroup in your database.__"
+            event, f"There is no such '{fedgroup}' named fedgroup in your database"
         )
     catevent = await edit_or_reply(
         event, f"Fbanning {_format.mentionuser(user.first_name ,user.id)}.."
@@ -79,12 +79,12 @@ async def group_fban(event):
                     conv.chat_id, message=reply, clear_mentions=True
                 )
                 if (
-                    "All new federation bans will now also remove the members from this chat."
+                    "All new federation bans will now also remove the members from this chat"
                     not in reply.text
                 ):
                     return await edit_delete(
                         catevent,
-                        "__You must be owner of the group(FBAN_GROUP_ID) to perform this action__",
+                        "You must be owner of the group (FBAN_GROUP_ID) to perform this action",
                         10,
                     )
                 await conv.send_message(f"/fban {user.id} {reason}")
@@ -102,9 +102,9 @@ async def group_fban(event):
         except Exception as e:
             errors.append(str(e))
     success_report = f"{_format.mentionuser(user.first_name ,user.id)} is succesfully banned in {success} feds of {total}\
-        \n**Reason:** __{reason}__.\n"
+        \n**Reason :** __{reason}__.\n"
     if errors != []:
-        success_report += "\n**Error:**"
+        success_report += "\n**Error :**"
         for txt in errors:
             success_report += f"\n☞ __{txt}__"
     await edit_or_reply(catevent, success_report)
@@ -114,30 +114,30 @@ async def group_fban(event):
     pattern="unfban(?:\s|$)([\s\S]*)",
     command=("unfban", plugin_category),
     info={
-        "header": "UnBan the person in your database federations",
-        "description": "Will unfban the person in the all feds of given category which you stored in database.",
+        "header": "Unban the person in your database federations",
+        "description": "Will unfban the person in the all feds of given category which you stored in database",
         "usage": "{tr}unfban <userid/username/reply> <category> <reason>",
     },
 )
 async def group_unfban(event):
-    "unfban a person."
+    "unfban a person"
     if FBAN_GROUP_ID == 0:
         return await edit_delete(
             event,
-            "__For working of this cmd you need to set FBAN_GROUP_ID in heroku vars__",
+            "For working of this command you need to set FBAN_GROUP_ID in heroku vars",
         )
     user, reason = await get_user_from_event(event)
     if not user:
         return
     if user.id == event.client.uid:
-        return await edit_delete(event, "__You can't unfban yourself.__")
+        return await edit_delete(event, "You can't unfban yourself")
     if not reason:
         return await edit_delete(
-            event, "__You haven't mentioned category name and reason for unfban__"
+            event, "You haven't mentioned category name and reason for unfban"
         )
     reasons = reason.split(" ", 1)
     fedgroup = reasons[0]
-    reason = "Not Mentioned" if len(reasons) == 1 else reasons[1]
+    reason = "Not mentioned" if len(reasons) == 1 else reasons[1]
     if get_collection("fedids") is not None:
         feds = get_collection("fedids").json
     else:
@@ -146,7 +146,7 @@ async def group_unfban(event):
         fedids = feds[fedgroup]
     else:
         return await edit_delete(
-            event, f"__There is no such '{fedgroup}' named fedgroup in your database.__"
+            event, f"There is no such '{fedgroup}' named fedgroup in your database"
         )
     catevent = await edit_or_reply(
         event, f"Unfbanning {_format.mentionuser(user.first_name ,user.id)}.."
@@ -165,12 +165,12 @@ async def group_unfban(event):
                     conv.chat_id, message=reply, clear_mentions=True
                 )
                 if (
-                    "All new federation bans will now also remove the members from this chat."
+                    "All new federation bans will now also remove the members from this chat"
                     not in reply.text
                 ):
                     return await edit_delete(
                         catevent,
-                        "__You must be owner of the group(FBAN_GROUP_ID) to perform this action__",
+                        "You must be owner of the group(FBAN_GROUP_ID) to perform this action",
                         10,
                     )
                 await conv.send_message(f"/unfban {user.id} {reason}")
@@ -188,9 +188,9 @@ async def group_unfban(event):
         except Exception as e:
             errors.append(str(e))
     success_report = f"{_format.mentionuser(user.first_name ,user.id)} is succesfully unbanned in {success} feds of {total}\
-        \n**Reason:** __{reason}__.\n"
+        \n**Reason :** __{reason}__.\n"
     if errors != []:
-        success_report += "\n**Error:**"
+        success_report += "\n**Error :**"
         for txt in errors:
             success_report += f"\n☞ __{txt}__"
     await edit_or_reply(catevent, success_report)
@@ -200,8 +200,8 @@ async def group_unfban(event):
     pattern="addfedto (\w+|-all) ([-\w]+)",
     command=("addfedto", plugin_category),
     info={
-        "header": "Add the federation to given category in database.",
-        "description": "You can add multiple federations to one category like a group of feds under one category. And you can access all thoose feds by that name.",
+        "header": "Add the federation to given category in database",
+        "description": "You can add multiple federations to one category like a group of feds under one category and you can access all thoose feds by that name",
         "flags": {
             "-all": "If you want to add all your feds to database then use this as {tr}addfedto -all <category name>"
         },
@@ -212,7 +212,7 @@ async def group_unfban(event):
     },
 )
 async def quote_search(event):  # sourcery no-metrics
-    "Add the federation to database."
+    "Add the federation to database"
     fedgroup = event.pattern_match.group(1)
     fedid = event.pattern_match.group(2)
     if get_collection("fedids") is not None:
@@ -231,7 +231,7 @@ async def quote_search(event):  # sourcery no-metrics
                 except asyncio.exceptions.TimeoutError:
                     return await edit_or_reply(
                         catevent,
-                        "__Rose bot is not responding try again later.__",
+                        "Rose bot is not responding try again later",
                     )
                 if "can only" in response.text:
                     return await edit_delete(catevent, f"__{response.text}__")
@@ -261,39 +261,39 @@ async def quote_search(event):  # sourcery no-metrics
             except YouBlockedUserError:
                 await edit_delete(
                     catevent,
-                    "**Error while fecthing myfeds:**\n__Unblock__ @MissRose_Bot __and try again!__",
+                    "**Error while fecthing my feds :**\n\n Unblock @MissRose_Bot and try again",
                     10,
                 )
             except Exception as e:
                 await edit_delete(
-                    catevent, f"**Error while fecthing myfeds:**\n__{e}__", 10
+                    catevent, f"**Error while fecthing my feds :**\n__{e}__", 10
                 )
             await event.client.send_read_acknowledge(conv.chat_id)
             conv.cancel()
         if not fedidstoadd:
             return await edit_or_reply(
                 catevent,
-                "__I have failed to fetch your feds or you are not admin of any fed.__",
+                "I have failed to fetch your feds or you are not admin of any fed",
             )
         feds[fedid] = fedidstoadd
         add_collection("fedids", feds)
         await edit_or_reply(
             catevent,
-            f"__Successfully added all your feds to database group__ **{fedid}**.",
+            f"Successfully added all your feds to database group **{fedid}**.",
         )
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 f"#ADDFEDID\
                 \n**Fed Group:** `{fedid}`\
-                \nSuccessfully added all your feds to above database category.",
+                \nSuccessfully added all your feds to above database category",
             )
         return
     if fedgroup in feds:
         fed_ids = feds[fedgroup]
         if fedid in fed_ids:
             return await edit_delete(
-                event, "__This fed is already part of this fed category.__"
+                event, "This fed is already part of this fed category"
             )
         fed_ids.append(fedid)
         feds[fedgroup] = fed_ids
@@ -301,15 +301,15 @@ async def quote_search(event):  # sourcery no-metrics
         feds[fedgroup] = [fedid]
     add_collection("fedids", feds)
     await edit_or_reply(
-        event, "__The given fed is succesfully added to fed category.__"
+        event, "The given fed is succesfully added to fed category"
     )
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
             f"#ADDFEDID\
-            \n**Fedid:** `{fedid}`\
-            \n**Fed Group:** `{fedgroup}`\
-            \nThe above fedid is sucessfully added to that fed category.",
+            \n**Fed id :** `{fedid}`\
+            \n**Fed group :** `{fedgroup}`\
+            \nThe above fedid is sucessfully added to that fed category",
         )
 
 
@@ -317,7 +317,7 @@ async def quote_search(event):  # sourcery no-metrics
     pattern="rmfedfrom (\w+|-all) ([-\w]+)",
     command=("rmfedfrom", plugin_category),
     info={
-        "header": "Remove the federation from given category in database.",
+        "header": "Remove the federation from given category in database",
         "description": "To remove given fed from the given category name",
         "flags": {
             "-all": "If you want to delete compelete category then use this flag as {tr}rmfedfrom -all <category name>"
@@ -329,7 +329,7 @@ async def quote_search(event):  # sourcery no-metrics
     },
 )
 async def quote_search(event):
-    "To remove the federation from database."
+    "To remove the federation from database"
     fedgroup = event.pattern_match.group(1)
     fedid = event.pattern_match.group(2)
     if get_collection("fedids") is not None:
@@ -339,43 +339,43 @@ async def quote_search(event):
     if fedgroup == "-all":
         if fedid not in feds:
             return await edit_delete(
-                event, "__There is no such fedgroup in your database.__"
+                event, "There is no such fedgroup in your database"
             )
         feds[fedid] = []
         add_collection("fedids", feds)
         await edit_or_reply(
-            event, f"__Succesfully removed all feds in the category {fedid}__"
+            event, f"Succesfully removed all feds in the category {fedid}"
         )
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
                 f"#REMOVEFEDID\
-            \n**Fed Group:** `{fedid}`\
-            \nDeleted this Fed category in your database.",
+            \n**Fed group :** `{fedid}`\
+            \nDeleted this fed category in your database",
             )
         return
     if fedgroup not in feds:
         return await edit_delete(
-            event, "__There is no such fedgroup in your database.__"
+            event, "There is no such fedgroup in your database"
         )
     fed_ids = feds[fedgroup]
     if fedid not in fed_ids:
         return await edit_delete(
-            event, "__This fed is not part of given fed category.__"
+            event, "This fed is not part of given fed category"
         )
     fed_ids.remove(fedid)
     feds[fedgroup] = fed_ids
     add_collection("fedids", feds)
     await edit_or_reply(
-        event, "__The given fed is succesfully removed from fed category.__"
+        event, "The given fed is succesfully removed from fed category"
     )
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
             f"#REMOVEFEDID\
-        \n**Fedid:** `{fedid}`\
-        \n**Fed Group:** `{fedgroup}`\
-        \nThe above fedid is sucessfully removed that fed category.",
+        \n**Fed id :** `{fedid}`\
+        \n**Fed group :** `{fedgroup}`\
+        \nThe above fedid is sucessfully removed that fed category",
         )
 
 
@@ -383,13 +383,13 @@ async def quote_search(event):
     pattern="listfed(s)?(?:\s|$)([\s\S]*)",
     command=("listfed", plugin_category),
     info={
-        "header": "To list all feds in your database.",
-        "description": "if you give input then will show only feds in that category else will show all feds in your database",
+        "header": "To list all feds in your database",
+        "description": "If you give input then will show only feds in that category else will show all feds in your database",
         "usage": ["{tr}listfed", "{tr}listfed <category name>"],
     },
 )
 async def quote_search(event):
-    "To list federations in database."
+    "To list federations in database"
     fedgroup = event.pattern_match.group(2)
     if get_collection("fedids") is not None:
         feds = get_collection("fedids").json
@@ -411,17 +411,17 @@ async def quote_search(event):
                 output += f"☞ `{fid}`\n"
     else:
         return await edit_delete(
-            event, "__There is no such fedgroup in your database.__"
+            event, "There is no such fedgroup in your database"
         )
     if output != "" and fedgroup:
         output = (
-            f"**The list of feds in the category** `{fedgroup}` **are:**\n" + output
+            f"**The list of feds in the category** `{fedgroup}` **are :**\n" + output
         )
     elif output != "":
         output = "**The list of all feds in your database are :**\n" + output
     else:
         output = (
-            "__There are no feds in your database try by adding them using addfedto__"
+            "There are no feds in your database try by adding them using addfedto"
         )
     await edit_or_reply(event, output)
 
@@ -430,13 +430,13 @@ async def quote_search(event):
     pattern="f(ed)?info(?:\s|$)([\s\S]*)",
     command=("fedinfo", plugin_category),
     info={
-        "header": "To get fedinfo from rose.",
+        "header": "To get fedinfo from rose",
         "description": "If no reply is given then shows you fedinfo of which you created",
         "usage": "{tr}fedinfo <fedid>",
     },
 )
 async def fetch_fedinfo(event):
-    "To fetch fedinfo."
+    "To fetch fedinfo"
     input_str = (
         event.pattern_match.group(2).strip()
         if event.pattern_match.group(2) is not None
@@ -451,12 +451,12 @@ async def fetch_fedinfo(event):
         except YouBlockedUserError:
             await edit_delete(
                 catevent,
-                "**Error while fecthing fedinfo:**\n__Unblock__ @MissRose_Bot __and try again!__",
+                "**Error while fecthing fedinfo :**\n\n Unblock @MissRose_Bot and try again",
                 10,
             )
         except Exception as e:
             await edit_delete(
-                catevent, f"**Error while fecthing fedinfo:**\n__{e}__", 10
+                catevent, f"**Error while fecthing fedinfo :**\n__{e}__", 10
             )
         await event.client.send_read_acknowledge(conv.chat_id)
         conv.cancel()
@@ -466,13 +466,13 @@ async def fetch_fedinfo(event):
     pattern="f(ed)?admins(?:\s|$)([\s\S]*)",
     command=("fadmins", plugin_category),
     info={
-        "header": "To get fed admins from rose.",
+        "header": "To get fed admins from rose",
         "description": "If no reply is given then shows you fedinfo of which you created",
         "usage": "{tr}fedadmins <fedid>",
     },
 )
 async def fetch_fedinfo(event):
-    "To fetch fed admins."
+    "To fetch fed admins"
     input_str = (
         event.pattern_match.group(2).strip()
         if event.pattern_match.group(2) is not None
@@ -491,12 +491,12 @@ async def fetch_fedinfo(event):
         except YouBlockedUserError:
             await edit_delete(
                 catevent,
-                "**Error while fecthing fedinfo:**\n__Unblock__ @MissRose_Bot __and try again!__",
+                "**Error while fecthing fedinfo :**\n\n Unblock @MissRose_Bot and try again",
                 10,
             )
         except Exception as e:
             await edit_delete(
-                catevent, f"**Error while fecthing fedinfo:**\n__{e}__", 10
+                catevent, f"**Error while fecthing fedinfo :**\n__{e}__", 10
             )
         await event.client.send_read_acknowledge(conv.chat_id)
         conv.cancel()
@@ -506,12 +506,12 @@ async def fetch_fedinfo(event):
     pattern="myfeds$",
     command=("myfeds", plugin_category),
     info={
-        "header": "To get all feds where you are admin.",
+        "header": "To get all feds where you are admin",
         "usage": "{tr}myfeds",
     },
 )
 async def myfeds_fedinfo(event):
-    "list all feds in which you are admin."
+    "List all feds in which you are admin"
     catevent = await edit_or_reply(event, "`Fetching list of feds...`")
     replyid = await reply_id(event)
     async with event.client.conversation(rose) as conv:
@@ -528,7 +528,7 @@ async def myfeds_fedinfo(event):
                 await event.client.send_file(
                     event.chat_id,
                     response,
-                    caption=f"List of feds in which {_format.mentionuser('I am' ,user.id)} admin are.",
+                    caption=f"List of feds in which {_format.mentionuser('I am' ,user.id)} admin are",
                     reply_to=replyid,
                 )
                 await catevent.delete()
@@ -537,12 +537,12 @@ async def myfeds_fedinfo(event):
         except YouBlockedUserError:
             await edit_delete(
                 catevent,
-                "**Error while fecthing myfeds:**\n__Unblock__ @MissRose_Bot __and try again!__",
+                "**Error while fecthing my feds :**\n\n Unblock @MissRose_Bot and try again",
                 10,
             )
         except Exception as e:
             await edit_delete(
-                catevent, f"**Error while fecthing myfeds:**\n__{e}__", 10
+                catevent, f"**Error while fecthing my feds :**\n__{e}__", 10
             )
         await event.client.send_read_acknowledge(conv.chat_id)
         conv.cancel()
@@ -552,18 +552,18 @@ async def myfeds_fedinfo(event):
     pattern="f(ed)?stat(?:\s|$)([\s\S]*)",
     command=("fstat", plugin_category),
     info={
-        "header": "To get fedstat data from rose.",
-        "description": "If you haven't replied to any user or mentioned any user along with command then by default you will be input else mentioned user or replied user.",
+        "header": "To get fedstat data from rose",
+        "description": "If you haven't replied to any user or mentioned any user along with command then by default you will be input else mentioned user or replied user",
         "usage": [
-            "{tr}fstat list of all federations you are banned in.",
-            "{tr}fstat <fedid> shows you info of you in the given fed."
-            "{tr}fstat <userid/username/reply> list of all federations he is banned in.",
-            "{tr}fstat <userid/username/reply> <fedid> shows you info of the that user in the given fed.",
+            "{tr}fstat list of all federations you are banned in",
+            "{tr}fstat <fedid> shows you info of you in the given fed"
+            "{tr}fstat <userid/username/reply> list of all federations he is banned in",
+            "{tr}fstat <userid/username/reply> <fedid> shows you info of the that user in the given fed",
         ],
     },
 )
 async def fstat_rose(event):
-    "To get fedstat data from rose."
+    "To get fedstat data from rose"
     catevent = await edit_or_reply(event, "`Fetching fedstat from given deatils...`")
     user, fedid = await get_user_from_event(
         event, catevent, secondgroup=True, noedits=True
@@ -582,7 +582,7 @@ async def fstat_rose(event):
                 return await edit_delete(catevent, f"__{response.text}__")
             if fedid == "":
                 response = await conv.get_edit()
-                result = f"**List of feds** {_format.mentionuser(user.first_name ,user.id)} **has been banned in are.**\n\n"
+                result = f"**List of feds** {_format.mentionuser(user.first_name ,user.id)} **has been banned in are**\n\n"
             else:
                 result = f"**Fban info about** {_format.mentionuser(user.first_name ,user.id)} **is**\n\n"
             if "Looks like" in response.message:
@@ -592,7 +592,7 @@ async def fstat_rose(event):
                 await event.client.send_file(
                     event.chat_id,
                     response,
-                    caption=f"List of feds {_format.mentionuser(user.first_name ,user.id)} has been banned in are.",
+                    caption=f"List of feds {_format.mentionuser(user.first_name ,user.id)} has been banned in are",
                     reply_to=replyid,
                 )
                 await catevent.delete()
@@ -601,12 +601,12 @@ async def fstat_rose(event):
         except YouBlockedUserError:
             await edit_delete(
                 catevent,
-                "**Error while fecthing fedstat:**\n__Unblock__ @MissRose_Bot __and try again!__",
+                "**Error while fecthing fedstat :**\n\n Unblock @MissRose_Bot and try again",
                 10,
             )
         except Exception as e:
             await edit_delete(
-                catevent, f"**Error while fecthing fedstat:**\n__{e}__", 10
+                catevent, f"**Error while fecthing fedstat :**\n__{e}__", 10
             )
         await event.client.send_read_acknowledge(conv.chat_id)
         conv.cancel()
