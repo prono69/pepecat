@@ -16,12 +16,12 @@ plugin_category = "utils"
     pattern="ud ([\s\S]*)",
     command=("ud", plugin_category),
     info={
-        "header": "To fetch meaning of the given word from urban dictionary.",
+        "header": "To fetch meaning of the given word from urban dictionary",
         "usage": "{tr}ud <word>",
     },
 )
 async def _(event):
-    "To fetch meaning of the given word from urban dictionary."
+    "To fetch meaning of the given word from urban dictionary"
     word = event.pattern_match.group(1)
     try:
         response = await AioHttp().get_json(
@@ -30,7 +30,7 @@ async def _(event):
         word = response["list"][0]["word"]
         definition = response["list"][0]["definition"]
         example = response["list"][0]["example"]
-        result = "**Text: {}**\n**Meaning:**\n`{}`\n\n**Example:**\n`{}`".format(
+        result = "**Text : {}**\n**Meaning :**\n`{}`\n\n**Example :**\n`{}`".format(
             _format.replacetext(word),
             _format.replacetext(definition),
             _format.replacetext(example),
@@ -39,7 +39,7 @@ async def _(event):
     except Exception as e:
         await edit_delete(
             event,
-            text="`The Urban Dictionary API could not be reached`",
+            text="`The urban dictionary api could not be reached`",
         )
         LOGS.info(e)
 
@@ -48,12 +48,12 @@ async def _(event):
     pattern="meaning ([\s\S]*)",
     command=("meaning", plugin_category),
     info={
-        "header": "To fetch meaning of the given word from dictionary.",
+        "header": "To fetch meaning of the given word from dictionary",
         "usage": "{tr}meaning <word>",
     },
 )
 async def _(event):
-    "To fetch meaning of the given word from dictionary."
+    "To fetch meaning of the given word from dictionary"
     word = event.pattern_match.group(1)
     dictionary = PyDictionary()
     cat = dictionary.meaning(word)
@@ -62,7 +62,7 @@ async def _(event):
         for a, b in cat.items():
             output += f"**{a}**\n"
             for i in b:
-                output += f"☞__{i}__\n"
+                output += f"__{i}__\n"
         await edit_or_reply(event, output)
     except Exception:
         await edit_or_reply(event, f"Couldn't fetch meaning of {word}")
