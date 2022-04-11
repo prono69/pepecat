@@ -54,7 +54,7 @@ async def check_media(reply_message):
             data = reply_message.photo
         elif reply_message.document:
             if (
-                DocumentAttributeFilename(file_name="AnimatedSticker.tgs")
+                DocumentAttributeFilename(file_name="Animatedsticker.tgs")
                 in reply_message.media.document.attributes
             ):
                 return False
@@ -77,7 +77,7 @@ async def check_media(reply_message):
     pattern="frybot",
     command=("frybot", plugin_category),
     info={
-        "header": "Fries the given sticker or image.",
+        "header": "Fries the given sticker or image",
         "usage": "{tr}frybot",
     },
 )
@@ -85,25 +85,25 @@ async def _(event):
     "Fries the given sticker or image"
     reply_to = await reply_id(event)
     if not event.reply_to_msg_id:
-        event = await edit_or_reply(event, "Reply to any user message.")
+        event = await edit_or_reply(event, "Reply to any user message")
         return
     reply_message = await event.get_reply_message()
     if event.is_reply:
         reply_message = await event.get_reply_message()
         data = await check_media(reply_message)
         if isinstance(data, bool):
-            event = await edit_or_reply(event, "`I can't deep fry that!`")
+            event = await edit_or_reply(event, "`I can't deep fry that`")
             return
     if not event.is_reply:
         event = await edit_or_reply(
-            event, "`Reply to an image or sticker to deep fry it!`"
+            event, "`Reply to an image or sticker to deep fry it`"
         )
         return
     chat = "@image_deepfrybot"
     if reply_message.sender.bot:
-        event = await edit_or_reply(event, "Reply to actual users message.")
+        event = await edit_or_reply(event, "Reply to actual users message")
         return
-    event = await edit_or_reply(event, "```Processing```")
+    event = await edit_or_reply(event, "```Processing...```")
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -112,12 +112,12 @@ async def _(event):
             await event.client.forward_messages(chat, reply_message)
             response = await response
         except YouBlockedUserError:
-            await event.reply("unblock @image_deepfrybot and try again")
+            await event.reply("Unblock @image_deepfrybot and try again")
             return
         await bot.send_read_acknowledge(conv.chat_id)
         if response.text.startswith("Forward"):
             await event.edit(
-                "```can you kindly disable your forward privacy settings for good?```"
+                "```Can you kindly disable your forward privacy settings for good ?```"
             )
         else:
             await event.client.send_file(
@@ -130,7 +130,7 @@ async def _(event):
     pattern="deepfry(?: |$)([1-9])?",
     command=("deepfry", plugin_category),
     info={
-        "header": "image fryer",
+        "header": "Image fryer",
         "description": "Fries the given sticker or image based on level if you dont give anything then it is default to 1",
         "usage": [
             "{tr}deepfry <1 to 9>",
@@ -139,7 +139,7 @@ async def _(event):
     },
 )
 async def deepfryer(event):
-    "image fryer"
+    "Image fryer"
     reply_to = await reply_id(event)
     input_str = event.pattern_match.group(1)
     frycount = int(input_str) if input_str else 1
@@ -147,17 +147,17 @@ async def deepfryer(event):
         reply_message = await event.get_reply_message()
         data = await check_media(reply_message)
         if isinstance(data, bool):
-            return await edit_or_reply(event, "`I can't deep fry that!`")
+            return await edit_or_reply(event, "`I can't deep fry that`")
     if not event.is_reply:
         return await edit_or_reply(
-            event, "`Reply to an image or sticker to deep fry it!`"
+            event, "`Reply to an image or sticker to deep fry it`"
         )
     # download last photo (highres) as byte array
     image = io.BytesIO()
     await event.client.download_media(data, image)
     image = Image.open(image)
     # fry the image
-    hmm = await edit_or_reply(event, "`Deep frying media…`")
+    hmm = await edit_or_reply(event, "`Deep frying media...`")
     for _ in range(frycount):
         image = await deepfry(image)
     fried_io = io.BytesIO()
