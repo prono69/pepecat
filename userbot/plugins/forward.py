@@ -35,7 +35,7 @@ async def all_groups_id(cat):
     pattern="frwd$",
     command=("frwd", plugin_category),
     info={
-        "header": "To get view counter for the message. that is will delete old message and send new message where you can see how any people saw your message",
+        "header": "To get view counter for the message that is will delete old message and send new message where you can see how any people saw your message",
         "usage": "{tr}frwd",
     },
 )
@@ -65,7 +65,7 @@ async def _(event):
     pattern="resend$",
     command=("resend", plugin_category),
     info={
-        "header": "To resend the message again. Useful to remove forword tag",
+        "header": "To resend the message again , useful to remove forword tag",
         "usage": "{tr}resend",
     },
 )
