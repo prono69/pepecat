@@ -1,4 +1,4 @@
-# ported from paperplaneExtended by avinashreddy3108 for media support
+# ported from paperplaneextended by avinashreddy3108 for media support
 import re
 
 from telethon.utils import get_display_name
@@ -82,8 +82,8 @@ async def filter_incoming_handler(event):  # sourcery no-metrics
     pattern="filter (.*)",
     command=("filter", plugin_category),
     info={
-        "header": "To save filter for the given keyword.",
-        "description": "If any user sends that filter then your bot will reply.",
+        "header": "To save filter for the given keyword",
+        "description": "If any user sends that filter then your bot will reply",
         "option": {
             "{mention}": "To mention the user",
             "{title}": "To get chat name in message",
@@ -97,7 +97,7 @@ async def filter_incoming_handler(event):  # sourcery no-metrics
             "{my_fullname}": "To use my full name",
             "{my_last}": "To use my last name",
             "{my_mention}": "To mention myself",
-            "{my_username}": "To use my username.",
+            "{my_username}": "To use my username",
         },
         "usage": "{tr}filter <keyword>",
     },
@@ -115,7 +115,7 @@ async def add_new_filter(event):
                 f"#FILTER\
             \nCHAT ID: {event.chat_id}\
             \nTRIGGER: {keyword}\
-            \n\nThe following message is saved as the filter's reply data for the chat, please do NOT delete it !!",
+            \n\nThe following message is saved as the filter's reply data for the chat , please don't delete it",
             )
             msg_o = await event.client.forward_messages(
                 entity=BOTLOG_CHATID,
@@ -127,13 +127,13 @@ async def add_new_filter(event):
         else:
             await edit_or_reply(
                 event,
-                "__Saving media as reply to the filter requires the__ `PRIVATE_GROUP_BOT_API_ID` __to be set.__",
+                "Saving media as reply to the filter requires the `PRIVATE_GROUP_BOT_API_ID` to be set",
             )
             return
     elif msg and msg.text and not string:
         string = msg.text
     elif not string:
-        return await edit_or_reply(event, "__What should i do ?__")
+        return await edit_or_reply(event, "What should I do ?")
     success = "`Filter` **{}** `{} successfully`"
     if add_filter(str(event.chat_id), keyword, string, msg_id) is True:
         return await edit_or_reply(event, success.format(keyword, "added"))
@@ -147,23 +147,23 @@ async def add_new_filter(event):
     pattern="filters$",
     command=("filters", plugin_category),
     info={
-        "header": "To list all filters in that chat.",
-        "description": "Lists all active (of your userbot) filters in a chat.",
+        "header": "To list all filters in that chat",
+        "description": "Lists all active ( of your userbot ) filters in a chat",
         "usage": "{tr}filters",
     },
 )
 async def on_snip_list(event):
-    "To list all filters in that chat."
-    OUT_STR = "There are no filters in this chat."
+    "To list all filters in that chat"
+    OUT_STR = "There are no filters in this chat"
     filters = get_filters(event.chat_id)
     for filt in filters:
-        if OUT_STR == "There are no filters in this chat.":
-            OUT_STR = "Active filters in this chat:\n"
-        OUT_STR += "👉 `{}`\n".format(filt.keyword)
+        if OUT_STR == "There are no filters in this chat":
+            OUT_STR = "Active filters in this chat :\n"
+        OUT_STR += "👉🏻 `{}`\n".format(filt.keyword)
     await edit_or_reply(
         event,
         OUT_STR,
-        caption="Available Filters in the Current Chat",
+        caption="Available filters in the current chat",
         file_name="filters.text",
     )
 
@@ -172,15 +172,15 @@ async def on_snip_list(event):
     pattern="stop ([\s\S]*)",
     command=("stop", plugin_category),
     info={
-        "header": "To delete that filter . so if user send that keyword bot will not reply",
+        "header": "To delete that filter so if user send that keyword bot will not reply",
         "usage": "{tr}stop <keyword>",
     },
 )
 async def remove_a_filter(event):
-    "Stops the specified keyword."
+    "Stops the specified keyword"
     filt = event.pattern_match.group(1)
     if not remove_filter(event.chat_id, filt):
-        await event.edit("Filter` {} `doesn't exist.".format(filt))
+        await event.edit("Filter` {} `doesn't exist".format(filt))
     else:
         await event.edit("Filter `{} `was deleted successfully".format(filt))
 
@@ -189,15 +189,15 @@ async def remove_a_filter(event):
     pattern="rmfilters$",
     command=("rmfilters", plugin_category),
     info={
-        "header": "To delete all filters in that group.",
+        "header": "To delete all filters in that group",
         "usage": "{tr}rmfilters",
     },
 )
 async def on_all_snip_delete(event):
-    "To delete all filters in that group."
+    "To delete all filters in that group"
     filters = get_filters(event.chat_id)
     if filters:
         remove_all_filters(event.chat_id)
-        await edit_or_reply(event, "filters in current chat deleted successfully")
+        await edit_or_reply(event, "Filters in current chat deleted successfully")
     else:
         await edit_or_reply(event, "There are no filters in this group")
