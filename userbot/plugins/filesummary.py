@@ -33,14 +33,14 @@ def weird_division(n, d):
     pattern="chatfs(?:\s|$)([\s\S]*)",
     command=("chatfs", plugin_category),
     info={
-        "header": "Shows you the complete media/file summary of the that group.",
+        "header": "Shows you the complete media or file summary of the that group",
         "description": "As of now limited to last 10000 in the group u used",
-        "usage": "{tr}chatfs <Username/id>",
+        "usage": "{tr}chatfs <username/id>",
         "examples": "{tr}chatfs @catuserbot_support",
     },
 )
 async def _(event):  # sourcery no-metrics
-    "Shows you the complete media/file summary of the that group"
+    "Shows you the complete media or file summary of the that group"
     entity = event.chat_id
     input_str = event.pattern_match.group(1)
     if input_str:
@@ -51,7 +51,7 @@ async def _(event):  # sourcery no-metrics
     starttime = int(time.monotonic())
     x = PrettyTable()
     totalcount = totalsize = msg_count = 0
-    x.title = "File Summary"
+    x.title = "File summary"
     x.field_names = ["Media", "Count", "File size"]
     largest = "   <b>Largest Size</b>\n"
     try:
@@ -118,7 +118,7 @@ async def _(event):  # sourcery no-metrics
         str(round((weird_division((endtime - starttime), totalcount)) * 1000, 2))
         + " ms"
     )
-    totalstring = f"<code><b>Total files : </b>       | {totalcount}\\\x1f                  \nTotal file size :    | {humanbytes(totalsize)}\\\x1f                  \nAvg. file size :     | {avghubytes}\\\x1f                  \n</code>"
+    totalstring = f"<code><b>Total files : </b>       | {totalcount}\\\x1f                  \nTotal file size :    | {humanbytes(totalsize)}\\\x1f                  \nAvg file size :     | {avghubytes}\\\x1f                  \n</code>"
 
     runtimestring = f"<code>Runtime :            | {runtime}\
                     \nRuntime per file :   | {avgruntime}\
@@ -126,7 +126,7 @@ async def _(event):  # sourcery no-metrics
     line = "<code>+--------------------+-----------+</code>\n"
     result = f"<b>Group : {link}</b>\n\n"
     result += f"<code>Total Messages: {msg_count}</code>\n"
-    result += "<b>File Summary : </b>\n"
+    result += "<b>File summary : </b>\n"
     result += f"<code>{x}</code>\n"
     result += f"{largest}"
     result += line + totalstring + line + runtimestring + line
@@ -137,14 +137,14 @@ async def _(event):  # sourcery no-metrics
     pattern="userfs(?:\s|$)([\s\S]*)",
     command=("userfs", plugin_category),
     info={
-        "header": "Shows you the complete media/file summary of the that user in that group.",
+        "header": "Shows you the complete media or file summary of the that user in that group",
         "description": "As of now limited to last 10000 messages of that person in the group u used",
         "usage": "{tr}userfs <reply/username/id>",
         "examples": "{tr}userfs @MissRose_bot",
     },
 )
 async def _(event):  # sourcery no-metrics
-    "Shows you the complete media/file summary of the that user in that group."
+    "Shows you the complete media/file summary of the that user in that group"
     reply = await event.get_reply_message()
     input_str = event.pattern_match.group(1)
     if reply and input_str:
@@ -168,7 +168,7 @@ async def _(event):  # sourcery no-metrics
     starttime = int(time.monotonic())
     x = PrettyTable()
     totalcount = totalsize = msg_count = 0
-    x.title = "File Summary"
+    x.title = "File summary"
     x.field_names = ["Media", "Count", "File size"]
     largest = "   <b>Largest Size</b>\n"
     try:
@@ -252,7 +252,7 @@ async def _(event):  # sourcery no-metrics
                     \n</code>"
     line = "<code>+--------------------+-----------+</code>\n"
     result = f"<b>Group : {link}\nUser : {_format.htmlmentionuser(userdata.first_name,userdata.id)}\n\n"
-    result += f"<code>Total Messages: {msg_count}</code>\n"
+    result += f"<code>Total messages: {msg_count}</code>\n"
     result += "<b>File Summary : </b>\n"
     result += f"<code>{x}</code>\n"
     result += f"{largest}"
