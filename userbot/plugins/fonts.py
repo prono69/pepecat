@@ -12,7 +12,7 @@ plugin_category = "extra"
     pattern="fmusical(?:\s|$)([\s\S]*)",
     command=("fmusical", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": [
             "{tr}fmusical <text>",
             "{tr}fmusical reply this command to text message",
@@ -27,7 +27,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for normalfontcharacter in string:
@@ -43,7 +43,7 @@ async def stylish_generator(event):
     pattern="ancient(?:\s|$)([\s\S]*)",
     command=("ancient", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": [
             "{tr}ancient <text>",
             "{tr}ancient reply this command to text message",
@@ -58,7 +58,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for normalfontcharacter in string:
@@ -74,7 +74,7 @@ async def stylish_generator(event):
     pattern="vapor(?:\s|$)([\s\S]*)",
     command=("vapor", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": ["{tr}vapor <text>", "{tr}vapor reply this command to text message"],
         "examples": "{tr}vapor catuserbot",
     },
@@ -89,7 +89,7 @@ async def vapor(event):
     elif textx:
         message = textx.text
     else:
-        await edit_or_reply(event, "`Ｇｉｖｅ ｓｏｍｅ ｔｅｘｔ ｆｏｒ ｖａｐｏｒ！`")
+        await edit_or_reply(event, "`𝔾𝕚𝕧𝕖 𝕤𝕠𝕞𝕖𝕥𝕙𝕚𝕟𝕘 𝕥𝕠 𝕞𝕠𝕔𝕜 !`")
         return
 
     for charac in message:
@@ -107,7 +107,7 @@ async def vapor(event):
     pattern="smallcaps(?:\s|$)([\s\S]*)",
     command=("smallcaps", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": [
             "{tr}smallcaps <text>",
             "{tr}smallcaps reply this command to text message",
@@ -122,7 +122,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
@@ -138,7 +138,7 @@ async def stylish_generator(event):
     pattern="blackbf(?:\s|$)([\s\S]*)",
     command=("blackbf", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": [
             "{tr}blackbf <text>",
             "{tr}blackbf reply this command to text message",
@@ -153,7 +153,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
@@ -169,7 +169,7 @@ async def stylish_generator(event):
     pattern="bubbles(?:\s|$)([\s\S]*)",
     command=("bubbles", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": [
             "{tr}bubbles <text>",
             "{tr}bubbles reply this command to text message",
@@ -184,7 +184,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
@@ -200,7 +200,7 @@ async def stylish_generator(event):
     pattern="tanf(?:\s|$)([\s\S]*)",
     command=("tanf", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": ["{tr}tanf <text>", "{tr}tanf reply this command to text message"],
         "examples": "{tr}tanf catuserbot",
     },
@@ -212,7 +212,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
@@ -228,7 +228,7 @@ async def stylish_generator(event):
     pattern="boxf(?:\s|$)([\s\S]*)",
     command=("boxf", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": ["{tr}boxf <text>", "{tr}boxf reply this command to text message"],
         "examples": "{tr}boxf catuserbot",
     },
@@ -240,7 +240,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
@@ -256,7 +256,7 @@ async def stylish_generator(event):
     pattern="smothtext(?:\s|$)([\s\S]*)",
     command=("smothtext", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": [
             "{tr}smothtext <text>",
             "{tr}smothtext reply this command to text message",
@@ -271,7 +271,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
@@ -287,7 +287,7 @@ async def stylish_generator(event):
     pattern="egyptf(?:\s|$)([\s\S]*)",
     command=("egyptf", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": ["{tr}egyptf <text>", "{tr}egyptf reply this command to text message"],
         "examples": "{tr}egyptf catuserbot",
     },
@@ -299,7 +299,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
@@ -315,7 +315,7 @@ async def stylish_generator(event):
     pattern="maref(?:\s|$)([\s\S]*)",
     command=("maref", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": ["{tr}maref <text>", "{tr}maref reply this command to text message"],
         "examples": "{tr}maref catuserbot",
     },
@@ -327,7 +327,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
@@ -343,7 +343,7 @@ async def stylish_generator(event):
     pattern="handcf(?:\s|$)([\s\S]*)",
     command=("handcf", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": ["{tr}handcf <text>", "{tr}handcf reply this command to text message"],
         "examples": "{tr}handcf catuserbot",
     },
@@ -355,7 +355,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
@@ -371,7 +371,7 @@ async def stylish_generator(event):
     pattern="doublef(?:\s|$)([\s\S]*)",
     command=("doublef", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": [
             "{tr}doublef <text>",
             "{tr}doublef reply this command to text message",
@@ -386,7 +386,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
@@ -402,7 +402,7 @@ async def stylish_generator(event):
     pattern="mock(?:\s|$)([\s\S]*)",
     command=("mock", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": ["{tr}mock <text>", "{tr}mock reply this command to text message"],
         "examples": "{tr}mock catuserbot",
     },
@@ -417,7 +417,7 @@ async def spongemocktext(mock):
     elif textx:
         message = textx.text
     else:
-        await edit_or_reply(mock, "`gIvE sOMEtHInG tO MoCk!`")
+        await edit_or_reply(mock, "`𝔾𝕚𝕧𝕖 𝕤𝕠𝕞𝕖𝕥𝕙𝕚𝕟𝕘 𝕥𝕠 𝕞𝕠𝕔𝕜 !`")
         return
 
     for charac in message:
@@ -434,7 +434,7 @@ async def spongemocktext(mock):
     pattern="ghostf(?:\s|$)([\s\S]*)",
     command=("ghostf", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": ["{tr}ghostf <text>", "{tr}ghostf reply this command to text message"],
         "examples": "{tr}ghostf catuserbot",
     },
@@ -446,7 +446,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
@@ -462,7 +462,7 @@ async def stylish_generator(event):
     pattern="handsf(?:\s|$)([\s\S]*)",
     command=("handsf", plugin_category),
     info={
-        "header": "Font style command.(Changes font style of the given text)",
+        "header": "Font style command ( changes font style of the given text )",
         "usage": ["{tr}handsf <text>", "{tr}handsf reply this command to text message"],
         "examples": "{tr}handsf catuserbot",
     },
@@ -474,7 +474,7 @@ async def stylish_generator(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
