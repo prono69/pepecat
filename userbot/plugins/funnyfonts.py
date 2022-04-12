@@ -13,7 +13,7 @@ plugin_category = "fun"
     pattern="str(?:\s|$)([\s\S]*)",
     command=("str", plugin_category),
     info={
-        "header": "stretches the given text",
+        "header": "Stretches the given text",
         "usage": ["{tr}str <text>", "{tr}str reply this command to text message"],
         "examples": "{tr}str catuserbot",
     },
@@ -28,7 +28,7 @@ async def stretch(stret):
     elif textx:
         message = textx.text
     else:
-        await edit_or_reply(stret, "`GiiiiiiiB sooooooomeeeeeee teeeeeeext!`")
+        await edit_or_reply(stret, "`Give some text ! 🙄`")
         return
 
     count = random.randint(3, 10)
@@ -40,13 +40,13 @@ async def stretch(stret):
     pattern="zal(?:\s|$)([\s\S]*)",
     command=("zal", plugin_category),
     info={
-        "header": "chages given text into some funny way",
+        "header": "Changes given text into some funny way",
         "usage": ["{tr}zal <text>", "{tr}zal reply this command to text message"],
         "examples": "{tr}zal catuserbot",
     },
 )
 async def zal(zgfy):
-    "chages given text into some funny way"
+    "Changes given text into some funny way"
     reply_text = []
     textx = await zgfy.get_reply_message()
     message = zgfy.pattern_match.group(1)
@@ -56,7 +56,7 @@ async def zal(zgfy):
         message = textx.text
     else:
         await edit_or_reply(
-            zgfy, "`gͫ ̆ i̛ ̺ v͇̆ ȅͅ   a̢ͦ   s̴̪ c̸̢ ä̸ rͩͣ y͖͞   t̨͚ é̠ x̢͖  t͔͛`"
+            zgfy, "`Give a scary text`"
         )
         return
 
@@ -99,11 +99,11 @@ async def copypasta(cp_e):
     elif textx:
         message = textx.text
     else:
-        await edit_or_reply(cp_e, "`😂🅱️IvE👐sOME👅text👅for✌️Me👌tO👐MAkE👀iT💞funNy!💦`")
+        await edit_or_reply(cp_e, "`Give some text to me to make it funny`")
         return
 
     reply_text = random.choice(fonts.EMOJIS)
-    # choose a random character in the message to be substituted with 🅱️
+    # choose a random character in the message to be substituted with 🎁
     b_char = random.choice(message).lower()
     for owo in message:
         if owo == " ":
@@ -112,7 +112,7 @@ async def copypasta(cp_e):
             reply_text += owo
             reply_text += random.choice(fonts.EMOJIS)
         elif owo.lower() == b_char:
-            reply_text += "🅱️"
+            reply_text += "🎁"
         else:
             reply_text += owo.upper() if bool(random.getrandbits(1)) else owo.lower()
     reply_text += random.choice(fonts.EMOJIS)
@@ -123,7 +123,7 @@ async def copypasta(cp_e):
     pattern="weeb(?:\s|$)([\s\S]*)",
     command=("weeb", plugin_category),
     info={
-        "header": "chages given text into some funny way",
+        "header": "Changes given text into some funny way",
         "usage": ["{tr}weeb <text>", "{tr}weeb reply this command to text message"],
         "examples": "{tr}weeb catuserbot",
     },
@@ -135,7 +135,7 @@ async def weebify(event):
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "`What I am Supposed to Weebify `")
+        await edit_or_reply(event, "`What I am supposed to weebify ?`")
         return
     string = "  ".join(args).lower()
     for normiecharacter in string:
@@ -149,7 +149,7 @@ async def weebify(event):
     pattern="downside(?:\s|$)([\s\S]*)",
     command=("downside", plugin_category),
     info={
-        "header": "chages given text into upside down",
+        "header": "Changes given text into upside down",
         "usage": [
             "{tr}downside <text>",
             "{tr}downside reply this command to text message",
@@ -158,13 +158,13 @@ async def weebify(event):
     },
 )
 async def stylish_generator(event):
-    "chages given text into upside down"
+    "Changes given text into upside down"
     args = event.pattern_match.group(1)
     if not args:
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for upsidecharacter in string:
@@ -180,7 +180,7 @@ async def stylish_generator(event):
     pattern="subscript(?:\s|$)([\s\S]*)",
     command=("subscript", plugin_category),
     info={
-        "header": "chages given text into subscript",
+        "header": "Changes given text into subscript",
         "usage": [
             "{tr}subscript <text>",
             "{tr}subscript reply this command to text message",
@@ -189,13 +189,13 @@ async def stylish_generator(event):
     },
 )
 async def stylish_generator(event):
-    "chages given text into subscript"
+    "Changes given text into subscript"
     args = event.pattern_match.group(1)
     if not args:
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
@@ -211,7 +211,7 @@ async def stylish_generator(event):
     pattern="superscript(?:\s|$)([\s\S]*)",
     command=("superscript", plugin_category),
     info={
-        "header": "chages given text into superscript",
+        "header": "Changes given text into superscript",
         "usage": [
             "{tr}superscript <text>",
             "{tr}superscript reply this command to text message",
@@ -220,13 +220,13 @@ async def stylish_generator(event):
     },
 )
 async def stylish_generator(event):
-    "chages given text into superscript"
+    "Changes given text into superscript"
     args = event.pattern_match.group(1)
     if not args:
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await edit_or_reply(event, "What I am Supposed to change give text")
+        await edit_or_reply(event, "What I am supposed to change give text ?")
         return
     string = "  ".join(args).lower()
     for normaltextcharacter in string:
