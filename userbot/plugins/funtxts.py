@@ -25,12 +25,12 @@ async def hmm(cat):
     pattern="why$",
     command=("why", plugin_category),
     info={
-        "header": "Sends you some random Funny questions",
+        "header": "Sends you some random funny questions",
         "usage": "{tr}why",
     },
 )
 async def hmm(cat):
-    "Some random Funny questions"
+    "Some random funny questions"
     whycat = nekos.why()
     await edit_or_reply(cat, whycat)
 
