@@ -19,7 +19,7 @@ plugin_category = "fun"
     },
 )
 async def stretch(stret):
-    "stretches the given text"
+    "Stretches the given text"
     textx = await stret.get_reply_message()
     message = stret.text
     message = stret.pattern_match.group(1)
@@ -84,13 +84,13 @@ async def zal(zgfy):
     pattern="cp(?:\s|$)([\s\S]*)",
     command=("cp", plugin_category),
     info={
-        "header": "chages given text into some funny way",
+        "header": "Changes given text into some funny way",
         "usage": ["{tr}cp <text>", "{tr}cp reply this command to text message"],
         "examples": "{tr}cp catuserbot",
     },
 )
 async def copypasta(cp_e):
-    "chages given text into some funny way"
+    "Changes given text into some funny way"
     textx = await cp_e.get_reply_message()
     message = cp_e.pattern_match.group(1)
 
