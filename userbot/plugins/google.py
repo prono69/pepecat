@@ -26,7 +26,7 @@ plugin_category = "tools"
 
 
 async def ParseSauce(googleurl):
-    """Parse/Scrape the HTML code for the info we want."""
+    """Parse or scrape the html code for the info we want"""
     source = opener.open(googleurl).read()
     soup = BeautifulSoup(source, "html.parser")
     results = {"similar_images": "", "best_guess": ""}
@@ -63,10 +63,10 @@ async def scam(results, lim):
     pattern="gs ([\s\S]*)",
     command=("gs", plugin_category),
     info={
-        "header": "Google search command.",
+        "header": "Google search command",
         "flags": {
-            "-l": "for number of search results.",
-            "-p": "for choosing which page results should be showed.",
+            "-l": "For number of search results",
+            "-p": "For choosing which page results should be showed",
         },
         "usage": [
             "{tr}gs <flags> <query>",
@@ -81,8 +81,8 @@ async def scam(results, lim):
     },
 )
 async def gsearch(q_event):
-    "Google search command."
-    catevent = await edit_or_reply(q_event, "`searching........`")
+    "Google search command"
+    catevent = await edit_or_reply(q_event, "`searching...`")
     match = q_event.pattern_match.group(1)
     page = re.findall(r"-p\d+", match)
     lim = re.findall(r"-l\d+", match)
@@ -116,7 +116,7 @@ async def gsearch(q_event):
             try:
                 gresults = await ysearch.async_search(*search_args)
             except Exception as e:
-                return await edit_delete(catevent, f"**Error:**\n`{e}`", time=10)
+                return await edit_delete(catevent, f"**Error :**\n`{e}`", time=10)
     msg = ""
     for i in range(lim):
         if i > len(gresults["links"]):
@@ -125,12 +125,12 @@ async def gsearch(q_event):
             title = gresults["titles"][i]
             link = gresults["links"][i]
             desc = gresults["descriptions"][i]
-            msg += f"👉[{title}]({link})\n`{desc}`\n\n"
+            msg += f"👉🏻 [{title}]({link})\n`{desc}`\n\n"
         except IndexError:
             break
     await edit_or_reply(
         catevent,
-        "**Search Query:**\n`" + match + "`\n\n**Results:**\n" + msg,
+        "**Search query :**\n`" + match + "`\n\n**Results :**\n" + msg,
         link_preview=False,
         aslink=True,
         linktext=f"**The search results for the query **__{match}__ **are** :",
@@ -146,17 +146,17 @@ async def gsearch(q_event):
     pattern="grs$",
     command=("grs", plugin_category),
     info={
-        "header": "Google reverse search command.",
-        "description": "reverse search replied image or sticker in google and shows results.",
+        "header": "Google reverse search command",
+        "description": "Reverse search replied image or sticker in google and shows results",
         "usage": "{tr}grs",
     },
 )
 async def _(event):
-    "Google Reverse Search"
+    "Google reverse search"
     start = datetime.now()
-    OUTPUT_STR = "Reply to an image to do Google Reverse Search"
+    OUTPUT_STR = "Reply to an image to do google reverse search"
     if event.reply_to_msg_id:
-        catevent = await edit_or_reply(event, "Pre Processing Media")
+        catevent = await edit_or_reply(event, "Pre processing media")
         previous_message = await event.get_reply_message()
         previous_message_text = previous_message.message
         BASE_URL = "http://www.google.com"
@@ -184,7 +184,7 @@ async def _(event):
             request_url = SEARCH_URL.format(BASE_URL, previous_message_text)
             google_rs_response = requests.get(request_url, allow_redirects=False)
             the_location = google_rs_response.headers.get("Location")
-        await catevent.edit("Found Google Result. Pouring some soup on it!")
+        await catevent.edit("Found google result pouring some soup on it !")
         headers = {
             "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0"
         }
@@ -201,7 +201,7 @@ async def _(event):
             img_size = img_size_div.find_all("div")
         except Exception:
             return await edit_delete(
-                catevent, "`Sorry. I am unable to find similar images`"
+                catevent, "`Sorry ! I am unable to find similar images`"
             )
         end = datetime.now()
         ms = (end - start).seconds
@@ -220,13 +220,13 @@ async def _(event):
     pattern="reverse(?:\s|$)([\s\S]*)",
     command=("reverse", plugin_category),
     info={
-        "header": "Google reverse search command.",
-        "description": "reverse search replied image or sticker in google and shows results. if count is not used then it send 1 image by default.",
+        "header": "Google reverse search command",
+        "description": "Reverse search replied image or sticker in google and shows results if count is not used then it send 1 image by default",
         "usage": "{tr}reverse <count>",
     },
 )
 async def _(img):
-    "Google Reverse Search"
+    "Google reverse search"
     reply_to = await reply_id(img)
     if os.path.isfile("okgoogle.png"):
         os.remove("okgoogle.png")
@@ -235,14 +235,14 @@ async def _(img):
         photo = io.BytesIO()
         await img.client.download_media(message, photo)
     else:
-        await edit_or_reply(img, "`Reply to photo or sticker nigger.`")
+        await edit_or_reply(img, "`Reply to photo or sticker nigger`")
         return
     if photo:
         catevent = await edit_or_reply(img, "`Processing...`")
         try:
             image = Image.open(photo)
         except OSError:
-            return await catevent.edit("`Unsupported , most likely.`")
+            return await catevent.edit("`Unsupported , most likely`")
         name = "okgoogle.png"
         image.save(name, "PNG")
         image.close()
@@ -252,20 +252,20 @@ async def _(img):
         response = requests.post(searchUrl, files=multipart, allow_redirects=False)
         if response != 400:
             await img.edit(
-                "`Image successfully uploaded to Google. Maybe.`"
-                "\n`Parsing source now. Maybe.`"
+                "`Image successfully uploaded to google maybe`"
+                "\n`Parsing source now maybe`"
             )
         else:
-            return await catevent.edit("`Unable to perform reverse search.`")
+            return await catevent.edit("`Unable to perform reverse search`")
         fetchUrl = response.headers["Location"]
         os.remove(name)
         match = await ParseSauce(fetchUrl + "&preferences?hl=en&fg=1#languages")
         guess = match["best_guess"]
         imgspage = match["similar_images"]
         if guess and imgspage:
-            await catevent.edit(f"[{guess}]({fetchUrl})\n\n`Looking for this Image...`")
+            await catevent.edit(f"[{guess}]({fetchUrl})\n\n`Looking for this image...`")
         else:
-            return await catevent.edit("`Can't find any kind similar images.`")
+            return await catevent.edit("`Can't find any kind similar images`")
         lim = img.pattern_match.group(1) or 3
         images = await scam(match, lim)
         yeet = []
@@ -290,25 +290,25 @@ async def _(img):
     command=("google", plugin_category),
     info={
         "header": "To get link for google search",
-        "description": "Will show google search link as button instead of google search results try {tr}gs for google search results.",
+        "description": "Will show google search link as button instead of google search results try {tr} gs for google search results",
         "usage": [
             "{tr}google query",
         ],
     },
 )
 async def google_search(event):
-    "Will show you google search link of the given query."
+    "Will show you google search link of the given query"
     input_str = event.pattern_match.group(1)
     reply_to_id = await reply_id(event)
     if not input_str:
         return await edit_delete(
-            event, "__What should i search? Give search query plox.__"
+            event, "What should i search? Give search query plox"
         )
     input_str = deEmojify(input_str).strip()
     if len(input_str) > 195 or len(input_str) < 1:
         return await edit_delete(
             event,
-            "__Plox your search query exceeds 200 characters or you search query is empty.__",
+            "Plox your search query exceeds 200 characters or you search query is empty",
         )
     query = "#12" + input_str
     results = await event.client.inline_query("@StickerizerBot", query)
