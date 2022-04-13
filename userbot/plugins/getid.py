@@ -14,14 +14,14 @@ LOGS = logging.getLogger(__name__)
     pattern="(get_id|id)(?:\s|$)([\s\S]*)",
     command=("id", plugin_category),
     info={
-        "header": "To get id of the group or user.",
-        "description": "if given input then shows id of that given chat/channel/user else if you reply to user then shows id of the replied user \
+        "header": "To get id of the group or user",
+        "description": "If given input then shows id of that given chat / channel / user else if you reply to user then shows id of the replied user \
     along with current chat id and if not replied to user or given input then just show id of the chat where you used the command",
         "usage": "{tr}id <reply/username>",
     },
 )
 async def _(event):
-    "To get id of the group or user."
+    "To get id of the group or user"
     input_str = event.pattern_match.group(2)
     if input_str:
         try:
@@ -48,14 +48,14 @@ async def _(event):
             bot_api_file_id = pack_bot_file_id(r_msg.media)
             await edit_or_reply(
                 event,
-                f"**Current Chat ID : **`{event.chat_id}`\n**From User ID: **`{r_msg.sender_id}`\n**Media File ID: **`{bot_api_file_id}`",
+                f"**Current chat id : **`{event.chat_id}`\n**From user id : **`{r_msg.sender_id}`\n**Media file id : **`{bot_api_file_id}`",
             )
 
         else:
             await edit_or_reply(
                 event,
-                f"**Current Chat ID : **`{event.chat_id}`\n**From User ID: **`{r_msg.sender_id}`",
+                f"**Current chat id : **`{event.chat_id}`\n**From user id : **`{r_msg.sender_id}`",
             )
 
     else:
-        await edit_or_reply(event, f"**Current Chat ID : **`{event.chat_id}`")
+        await edit_or_reply(event, f"**Current chat id : **`{event.chat_id}`")
