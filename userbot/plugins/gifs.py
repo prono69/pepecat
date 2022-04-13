@@ -34,7 +34,7 @@ async def some(event):
         inpt, count = inpt.split(";")
     if int(count) < 0 and int(count) > 20:
         await edit_delete(event, "`Give value in range 1-20`")
-    catevent = await edit_or_reply(event, "`Sending gif....`")
+    catevent = await edit_or_reply(event, "`Sending gif...`")
     res = requests.get("https://giphy.com/")
     res = res.text.split("GIPHY_FE_WEB_API_KEY =")[1].split("\n")[0]
     api_key = res[2:-1]
