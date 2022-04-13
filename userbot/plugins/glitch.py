@@ -20,23 +20,23 @@ plugin_category = "fun"
     pattern="glitch(s)?(?: |$)([1-8])?",
     command=("glitch", plugin_category),
     info={
-        "header": "Glitches the given Image.",
-        "description": "Glitches the given mediafile (gif , stickers , image, videos) to a sticker/image and glitch range is from 1 to 8.\
+        "header": "Glitches the given image",
+        "description": "Glitches the given mediafile ( gif , stickers , image, videos ) to a sticker / image and glitch range is from 1 to 8\
                     If nothing is mentioned then by default it is 2",
         "options": {
-            "glitch": "To output result as gif.",
-            "glitchs": "To output result as sticker.",
+            "glitch": "To output result as gif",
+            "glitchs": "To output result as sticker",
         },
         "usage": ["{tr}glitch <1-8>", "{tr}glitch", "{tr}glitchs", "{tr}glitchs <1-8>"],
     },
 )
 async def glitch(event):
-    "Glitches the given Image."
+    "Glitches the given image"
     cmd = event.pattern_match.group(1)
     catinput = event.pattern_match.group(2)
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edit_delete(event, "`Reply to supported media...`")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
@@ -44,7 +44,7 @@ async def glitch(event):
     glitch_file = await _cattools.media_to_pic(event, reply)
     if glitch_file[1] is None:
         return await edit_delete(
-            glitch_file[0], "__Unable to extract image from the replied message.__"
+            glitch_file[0], "Unable to extract image from the replied message"
         )
     glitcher = ImageGlitcher()
     img = Image.open(glitch_file[1])
