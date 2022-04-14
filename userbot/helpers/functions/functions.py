@@ -317,22 +317,26 @@ async def waifutxt(text, chat_id, reply_to_id, bot):
 
 
 async def async_searcher(
-    url,
-    post=None,
-    headers=None,
-    params=None,
-    json=None,
-    data=None,
+    url: str,
+    post: bool = None,
+    headers: dict = None,
+    params: dict = None,
+    json: dict = None,
+    data: dict = None,
     ssl=None,
     re_json: bool = False,
     re_content: bool = False,
     real: bool = False,
+    *args,
+    **kwargs,
 ):
     async with aiohttp.ClientSession(headers=headers) as client:
         if post:
-            data = await client.post(url, json=json, data=data, ssl=ssl)
+            data = await client.post(
+                url, json=json, data=data, ssl=ssl, *args, **kwargs
+            )
         else:
-            data = await client.get(url, params=params, ssl=ssl)
+            data = await client.get(url, params=params, ssl=ssl, *args, **kwargs)
         if re_json:
             return await data.json()
         if re_content:

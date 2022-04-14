@@ -17,6 +17,8 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from ..helpers.functions import async_searcher
 from . import catub, edit_delete, edit_or_reply, mention
+from os import remove
+from ..sql_helper.globals import gvarstatus
 
 plugin_category = "utils"
 GBOT = "@HowGayBot"
@@ -387,3 +389,41 @@ async def aposj(e):
             await e.delete()
     except Exception as E:
         return await edit_delete(e, str(E))
+
+        
+@catub.cat_cmd(
+    pattern="iw$",
+    command=("iw", plugin_category),
+    info={
+        "header": "Upload image to https://ImgWhale.xyz !",
+        "usage": "{tr}iw <reply to image>",
+        "note":"Optionally, You can add your ImgWhale API Key in `IMGWHALE_KEY` database var.",
+    },
+)
+async def imgwhale(event):
+    "Upload Image to ImgWhale.xyz"
+    msg = await edit_or_reply(event, "`Processing...`")
+    reply = await event.get_reply_message()
+    if not reply:
+        return await edit_delete(event, "`Reply to Image.`")
+    if reply.photo:
+        file = await reply.download_media()
+    elif reply.document and reply.document.thumbs:
+        file = await reply.download_media(thumb=-1)
+    else:
+        return await edit_delete(event, "`Reply to Image.`")
+    api_key = gvarstatus("IMGWHALE_KEY")
+    extra = f"?key={api_key}" if api_key else ""
+    post = await async_searcher(
+        f"https://imgwhale.xyz/new{extra}",
+        post=True,
+        data={"image": open(file, "rb")},
+        re_json=True,
+    )
+    if post.get("error"):
+        return await edit_delete(event, post["message"])
+    await msg.edit(
+        f"Successfully Uploaded to [ImgWhale](https://imgwhale.xyz/{post['fileId']})!",
+        link_preview=False,
+    )
+    remove(file)

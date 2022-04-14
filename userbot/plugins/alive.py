@@ -23,7 +23,7 @@ from ..sql_helper.globals import gvarstatus
 from . import mention
 
 plugin_category = "utils"
-
+sucks = "The stars sure are beautiful tonight | Am I frightening... woman? "  # dis is str for a reason
 
 @catub.cat_cmd(
     pattern="alive$",
@@ -53,7 +53,7 @@ async def amireallyalive(event):
     except Exception:
         response = None
     quote = response["quote"]
-    while len(quote) > 150:
+    while len(quote) > 150 and (quote not in sucks):
         res = requests.get(api_url).json()
         quote = res["quote"]
     ANIME_QUOTE = f"__{quote}__"
