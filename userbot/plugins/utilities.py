@@ -7,6 +7,7 @@ import random
 import re
 from datetime import datetime as dt
 from datetime import timedelta
+from os import remove
 
 import pytz
 import requests
@@ -16,9 +17,8 @@ from telethon.errors import FloodWaitError
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from ..helpers.functions import async_searcher
-from . import catub, edit_delete, edit_or_reply, mention
-from os import remove
 from ..sql_helper.globals import gvarstatus
+from . import catub, edit_delete, edit_or_reply, mention
 
 plugin_category = "utils"
 GBOT = "@HowGayBot"
@@ -390,14 +390,14 @@ async def aposj(e):
     except Exception as E:
         return await edit_delete(e, str(E))
 
-        
+
 @catub.cat_cmd(
     pattern="iw$",
     command=("iw", plugin_category),
     info={
         "header": "Upload image to https://ImgWhale.xyz !",
         "usage": "{tr}iw <reply to image>",
-        "note":"Optionally, You can add your ImgWhale API Key in `IMGWHALE_KEY` database var.",
+        "note": "Optionally, You can add your ImgWhale API Key in `IMGWHALE_KEY` database var.",
     },
 )
 async def imgwhale(event):

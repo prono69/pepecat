@@ -42,7 +42,7 @@ def upLink(img):
     info={
         "header": "Upscale images",
         "usage": "{tr}up <reply to image>",
-        "note":"Works better on anime pics",
+        "note": "Works better on anime pics",
     },
 )
 async def waifuu(event):

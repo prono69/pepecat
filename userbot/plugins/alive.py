@@ -25,6 +25,7 @@ from . import mention
 plugin_category = "utils"
 sucks = "The stars sure are beautiful tonight | Am I frightening... woman? "  # dis is str for a reason
 
+
 @catub.cat_cmd(
     pattern="alive$",
     command=("alive", plugin_category),
