@@ -33,8 +33,8 @@ plugin_category = "utils"
     pattern="admins(?:\s|$)([\s\S]*)",
     command=("admins", plugin_category),
     info={
-        "header": "To get list of admins.",
-        "description": "Will show you the list of admins and if you use this in group then will tag them.",
+        "header": "To get list of admins",
+        "description": "Will show you the list of admins and if you use this in group then will tag them",
         "usage": [
             "{tr}admins <username/userid>",
             "{tr}admins <in group where you need>",
@@ -43,14 +43,14 @@ plugin_category = "utils"
     },
 )
 async def _(event):
-    "To get list of admins."
-    mentions = "**Admins in this Group**: \n"
+    "To get list of admins"
+    mentions = "**Admins in this group** : \n"
     reply_message = await reply_id(event)
     input_str = event.pattern_match.group(1)
     to_write_chat = await event.get_input_chat()
     chat = None
     if input_str:
-        mentions = f"Admins in {input_str} Group: \n"
+        mentions = f"Admins in {input_str} group : \n"
         try:
             chat = await event.client.get_entity(input_str)
         except Exception as e:
@@ -58,7 +58,7 @@ async def _(event):
     else:
         chat = to_write_chat
         if not event.is_group:
-            return await edit_or_reply(event, "`Are you sure this is a group?`")
+            return await edit_or_reply(event, "`Are you sure this is a group ?`")
     try:
         async for x in event.client.iter_participants(
             chat, filter=ChannelParticipantsAdmins
@@ -87,8 +87,8 @@ async def _(event):
     pattern="bots(?:\s|$)([\s\S]*)",
     command=("bots", plugin_category),
     info={
-        "header": "To get list of bots.",
-        "description": "Will show you the list of bots.",
+        "header": "To get list of bots",
+        "description": "Will show you the list of bots",
         "usage": [
             "{tr}bots <username/userid>",
             "{tr}bots <in group where you need>",
@@ -97,8 +97,8 @@ async def _(event):
     },
 )
 async def _(event):
-    "To get list of bots."
-    mentions = "**Bots in this Group**: \n"
+    "To get list of bots"
+    mentions = "**Bots in this Group** : \n"
     input_str = event.pattern_match.group(1)
     if not input_str:
         chat = await event.get_input_chat()
@@ -129,8 +129,8 @@ async def _(event):
     pattern="users(?:\s|$)([\s\S]*)",
     command=("users", plugin_category),
     info={
-        "header": "To get list of users.",
-        "description": "Will show you the list of users.",
+        "header": "To get list of users",
+        "description": "Will show you the list of users",
         "note": "There was limitation in this you cant get more 10k users",
         "usage": [
             "{tr}users <username/userid>",
@@ -139,24 +139,24 @@ async def _(event):
     },
 )
 async def get_users(show):
-    "To get list of Users."
-    mentions = "**Users in this Group**: \n"
+    "To get list of users"
+    mentions = "**Users in this group** : \n"
     await reply_id(show)
     input_str = show.pattern_match.group(1)
     if input_str:
-        mentions = "Users in {} Group: \n".format(input_str)
+        mentions = "Users in {} group : \n".format(input_str)
         try:
             chat = await show.client.get_entity(input_str)
         except Exception as e:
             return await edit_delete(show, f"`{e}`", 10)
     elif not show.is_group:
-        return await edit_or_reply(show, "`Are you sure this is a group?`")
-    catevent = await edit_or_reply(show, "`getting users list wait...`  ")
+        return await edit_or_reply(show, "`Are you sure this is a group ?`")
+    catevent = await edit_or_reply(show, "`Getting users list wait...`  ")
     try:
         if show.pattern_match.group(1):
             async for user in show.client.iter_participants(chat.id):
                 if user.deleted:
-                    mentions += f"\nDeleted Account `{user.id}`"
+                    mentions += f"\nDeleted account `{user.id}`"
                 else:
                     mentions += (
                         f"\n[{user.first_name}](tg://user?id={user.id}) `{user.id}`"
@@ -164,7 +164,7 @@ async def get_users(show):
         else:
             async for user in show.client.iter_participants(show.chat_id):
                 if user.deleted:
-                    mentions += f"\nDeleted Account `{user.id}`"
+                    mentions += f"\nDeleted account `{user.id}`"
                 else:
                     mentions += (
                         f"\n[{user.first_name}](tg://user?id={user.id}) `{user.id}`"
@@ -178,8 +178,8 @@ async def get_users(show):
     pattern="chatinfo(?:\s|$)([\s\S]*)",
     command=("chatinfo", plugin_category),
     info={
-        "header": "To get Group details.",
-        "description": "Shows you the total information of the required chat.",
+        "header": "To get Group details",
+        "description": "Shows you the total information of the required chat",
         "usage": [
             "{tr}chatinfo <username/userid>",
             "{tr}chatinfo <in group where you need>",
@@ -202,7 +202,7 @@ async def info(event):
                 BOTLOG_CHATID, f"**Error in chatinfo : **\n`{e}`"
             )
 
-        await catevent.edit("`An unexpected error has occurred.`")
+        await catevent.edit("`An unexpected error has occurred`")
 
 
 async def get_chatinfo(event, catevent):
@@ -226,11 +226,11 @@ async def get_chatinfo(event, catevent):
         try:
             chat_info = await event.client(GetFullChannelRequest(chat))
         except ChannelInvalidError:
-            await catevent.edit("`Invalid channel/group`")
+            await catevent.edit("`Invalid channel / group`")
             return None
         except ChannelPrivateError:
             await catevent.edit(
-                "`This is a private channel/group or I am banned from there`"
+                "`This is a private channel / group or I am banned from there`"
             )
             return None
         except ChannelPublicGroupNaError:
@@ -238,7 +238,7 @@ async def get_chatinfo(event, catevent):
             return None
         except (TypeError, ValueError) as err:
             LOGS.info(err)
-            await edit_delete(catevent, "**Error:**\n__Can't fetch the chat__")
+            await edit_delete(catevent, "**Error :**\n\nCan't fetch the chat")
             return None
     return chat_info
 
@@ -387,54 +387,54 @@ async def fetch_info(chat, event):  # sourcery no-metrics
         for _ in bots_list:
             bots += 1
 
-    caption = "<b>CHAT INFO:</b>\n"
-    caption += f"ID: <code>{chat_obj_info.id}</code>\n"
+    caption = "<b>CHAT INFO :</b>\n"
+    caption += f"ID : <code>{chat_obj_info.id}</code>\n"
     if chat_title is not None:
-        caption += f"{chat_type} name: {chat_title}\n"
+        caption += f"{chat_type} Name : {chat_title}\n"
     if former_title is not None:  # Meant is the very first title
-        caption += f"Former name: {former_title}\n"
+        caption += f"Former name : {former_title}\n"
     if username is not None:
-        caption += f"{chat_type} type: Public\n"
-        caption += f"Link: {username}\n"
+        caption += f"{chat_type} Type : Public\n"
+        caption += f"Link : {username}\n"
     else:
-        caption += f"{chat_type} type: Private\n"
+        caption += f"{chat_type} Type : Private\n"
     if creator_username is not None:
-        caption += f"Creator: {creator_username}\n"
+        caption += f"Creator : {creator_username}\n"
     elif creator_valid:
         caption += (
-            f'Creator: <a href="tg://user?id={creator_id}">{creator_firstname}</a>\n'
+            f'Creator : <a href="tg://user?id={creator_id}">{creator_firstname}</a>\n'
         )
     if created is not None:
-        caption += f"Created: <code>{created.date().strftime('%b %d, %Y')} - {created.time()}</code>\n"
+        caption += f"Created : <code>{created.date().strftime('%b %d, %Y')} - {created.time()}</code>\n"
     else:
-        caption += f"Created: <code>{chat_obj_info.date.date().strftime('%b %d, %Y')} - {chat_obj_info.date.time()}</code> {warn_emoji}\n"
-    caption += f"Data Centre ID: {dc_id}\n"
+        caption += f"Created : <code>{chat_obj_info.date.date().strftime('%b %d, %Y')} - {chat_obj_info.date.time()}</code> {warn_emoji}\n"
+    caption += f"Data centre id : {dc_id}\n"
     if exp_count is not None:
         chat_level = int((1 + sqrt(1 + 7 * exp_count / 14)) / 2)
-        caption += f"{chat_type} level: <code>{chat_level}</code>\n"
+        caption += f"{chat_type} level : <code>{chat_level}</code>\n"
     if messages_viewable is not None:
-        caption += f"Viewable messages: <code>{messages_viewable}</code>\n"
+        caption += f"Viewable messages : <code>{messages_viewable}</code>\n"
     if messages_sent:
-        caption += f"Messages sent: <code>{messages_sent}</code>\n"
+        caption += f"Messages sent : <code>{messages_sent}</code>\n"
     elif messages_sent_alt:
         caption += f"Messages sent: <code>{messages_sent_alt}</code> {warn_emoji}\n"
     if members is not None:
-        caption += f"Members: <code>{members}</code>\n"
+        caption += f"Members : <code>{members}</code>\n"
     if admins is not None:
-        caption += f"Administrators: <code>{admins}</code>\n"
+        caption += f"Administrators : <code>{admins}</code>\n"
     if bots_list:
-        caption += f"Bots: <code>{bots}</code>\n"
+        caption += f"Bots : <code>{bots}</code>\n"
     if members_online:
-        caption += f"Currently online: <code>{members_online}</code>\n"
+        caption += f"Currently online : <code>{members_online}</code>\n"
     if restrcited_users is not None:
-        caption += f"Restricted users: <code>{restrcited_users}</code>\n"
+        caption += f"Restricted users : <code>{restrcited_users}</code>\n"
     if banned_users is not None:
-        caption += f"Banned users: <code>{banned_users}</code>\n"
+        caption += f"Banned users : <code>{banned_users}</code>\n"
     if group_stickers is not None:
-        caption += f'{chat_type} stickers: <a href="t.me/addstickers/{chat.full_chat.stickerset.short_name}">{group_stickers}</a>\n'
+        caption += f'{chat_type} stickers : <a href="t.me/addstickers/{chat.full_chat.stickerset.short_name}">{group_stickers}</a>\n'
     caption += "\n"
     if not broadcast:
-        caption += f"Slow mode: {slowmode}"
+        caption += f"Slow mode : {slowmode}"
         if (
             hasattr(chat_obj_info, "slowmode_enabled")
             and chat_obj_info.slowmode_enabled
@@ -442,19 +442,19 @@ async def fetch_info(chat, event):  # sourcery no-metrics
             caption += f", <code>{slowmode_time}s</code>\n\n"
         else:
             caption += "\n\n"
-        caption += f"Supergroup: {supergroup}\n\n"
+        caption += f"Supergroup : {supergroup}\n\n"
     if hasattr(chat_obj_info, "restricted"):
-        caption += f"Restricted: {restricted}\n"
+        caption += f"Restricted : {restricted}\n"
         if chat_obj_info.restricted:
-            caption += f"> Platform: {chat_obj_info.restriction_reason[0].platform}\n"
-            caption += f"> Reason: {chat_obj_info.restriction_reason[0].reason}\n"
-            caption += f"> Text: {chat_obj_info.restriction_reason[0].text}\n\n"
+            caption += f"> Platform : {chat_obj_info.restriction_reason[0].platform}\n"
+            caption += f"> Reason : {chat_obj_info.restriction_reason[0].reason}\n"
+            caption += f"> Text : {chat_obj_info.restriction_reason[0].text}\n\n"
         else:
             caption += "\n"
     if hasattr(chat_obj_info, "scam") and chat_obj_info.scam:
         caption += "Scam: <b>Yes</b>\n\n"
     if hasattr(chat_obj_info, "verified"):
-        caption += f"Verified by Telegram: {verified}\n\n"
+        caption += f"Verified by telegram : {verified}\n\n"
     if description:
-        caption += f"Description: \n<code>{description}</code>\n"
+        caption += f"Description : \n<code>{description}</code>\n"
     return caption
