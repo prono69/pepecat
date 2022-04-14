@@ -11,8 +11,8 @@ plugin_category = "extra"
 S = (
     "..... (¯`v´¯)♥️\n"
     ".......•.¸.•´\n"
-    "....¸.•´  🅷🅸\n"
-    "... (   BABYy\n"
+    "....¸.•´  нι\n"
+    "... (   вαвy\n"
     "☻/ \n"
     "/▌✿🌷✿\n"
     "/ \     \|/\n"
@@ -24,7 +24,7 @@ U = (
     "🌟   .  *       .         \n"
     "                       *   .      🛰     .        ✨      *\n"
     "  .     *   SLEEP WELL        🚀     \n"
-    "      .              . . SWEET DREAMS 🌙\n"
+    "      .                 SWEET DREAMS 🌙\n"
     ". *       🌏 GOOD NIGHT         *\n"
     "                     🌙.     *       ☄️      \n"
     "🌟   .  *       .         \n"
@@ -32,14 +32,14 @@ U = (
 )
 
 W = (
-    "G🌷o🍃o🌷D\n"
-    "M🍃o🌷r🍃N🌷i🍃N🌷g\n"
+    "G🌷o🍃o🌷d\n"
+    "M🍃o🌷r🍃n🌷i🍃n🌷g\n"
     "            \n"
     "No matter how good or \n"
-    "bad your life is,\n"
-    "wake up each morning\n"
-    "and be thankful.\n"
-    "You still have a new day.\n"
+    "bad your life is ,\n"
+    "Wake up each morning\n"
+    "and be thankful\n"
+    "You still have a new day !\n"
     "        \n"
     "🌞   \n"
     "         \n"
@@ -56,7 +56,7 @@ X = (
     ".......🦋🦋........🦋🦋\n"
     "...🦋.........🦋🦋.......🦋\n"
     "...🦋............💙..........🦋\n"
-    ".....🦋🅣🅗🅐🅝🅚🅢 🦋\n"
+    ".....🦋 𝕿𝖍𝖆𝖓𝖐 𝖞𝖔𝖚 🦋\n"
     "....... 🦋.................🦋\n"
     "..............🦋......🦋\n"
     "...................💙\n"
@@ -68,12 +68,12 @@ X = (
     pattern="baby$",
     command=("baby", plugin_category),
     info={
-        "header": "Hi Baby art",
+        "header": "Hi baby art",
         "usage": "{tr}baby",
     },
 )
 async def baby(event):
-    "Hi Baby art."
+    "Hi baby art"
     await edit_or_reply(event, S)
 
 
@@ -81,12 +81,12 @@ async def baby(event):
     pattern="hbd(?:\s|$)([\s\S]*)",
     command=("hbd", plugin_category),
     info={
-        "header": "Happy birthday art.",
+        "header": "Happy birthday art",
         "usage": "{tr}hbd <text>",
     },
 )
 async def hbd(event):
-    "Happy birthday art."
+    "Happy birthday art"
     inpt = event.pattern_match.group(1)
     text = f"**♥️{inpt}♥️**"
     if not inpt:
@@ -101,12 +101,12 @@ async def hbd(event):
     pattern="thanks$",
     command=("thanks", plugin_category),
     info={
-        "header": "Thanks art.",
+        "header": "Thanks art",
         "usage": "{tr}thanks",
     },
 )
 async def gn(event):
-    "Thanks art."
+    "Thanks art"
     await edit_or_reply(event, X)
 
 
@@ -114,12 +114,12 @@ async def gn(event):
     pattern="gm$",
     command=("gm", plugin_category),
     info={
-        "header": "Good morning random strings.",
+        "header": "Good morning random strings",
         "usage": "{tr}gm",
     },
 )
 async def morning(morning):
-    "Good morning random strings."
+    "Good morning random strings"
     txt = random.choice(catmemes.GDMORNING)
     await edit_or_reply(morning, txt)
 
@@ -128,12 +128,12 @@ async def morning(morning):
     pattern="gnoon$",
     command=("gnoon", plugin_category),
     info={
-        "header": "Good afternoon random strings.",
+        "header": "Good afternoon random strings",
         "usage": "{tr}gnoon",
     },
 )
 async def noon(noon):
-    "Good afternoon random strings."
+    "Good afternoon random strings"
     txt = random.choice(catmemes.GDNOON)
     await edit_or_reply(noon, txt)
 
@@ -142,12 +142,12 @@ async def noon(noon):
     pattern="gn$",
     command=("gn", plugin_category),
     info={
-        "header": "Good night random strings.",
+        "header": "Good night random strings",
         "usage": "{tr}gm",
     },
 )
 async def night(night):
-    "Good night random strings."
+    "Good night random strings"
     txt = random.choice(catmemes.GDNIGHT)
     await edit_or_reply(night, txt)
 
@@ -156,12 +156,12 @@ async def night(night):
     pattern="gmg$",
     command=("gmg", plugin_category),
     info={
-        "header": "Good morning art.",
+        "header": "Good morning art",
         "usage": "{tr}gmg",
     },
 )
 async def gm(event):
-    "Good morning art."
+    "Good morning art"
     await edit_or_reply(
         event,
         "｡♥｡･ﾟ♡ﾟ･｡♥｡･｡･｡･｡♥｡･｡♥｡･ﾟ♡ﾟ･\n╱╱╱╱╱╱╱╭╮╱╱╱╱╱╱╱╱╱╱╭╮\n╭━┳━┳━┳╯┃╭━━┳━┳┳┳━┳╋╋━┳┳━╮\n┃╋┃╋┃╋┃╋┃┃┃┃┃╋┃╭┫┃┃┃┃┃┃┃╋┃\n┣╮┣━┻━┻━╯╰┻┻┻━┻╯╰┻━┻┻┻━╋╮┃\n╰━╯╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╰━╯\n｡♥｡･ﾟ♡ﾟ･｡♥｡･｡･｡･｡♥｡･｡♥｡･ﾟ♡ﾟ･",
@@ -172,12 +172,12 @@ async def gm(event):
     pattern="gmg2$",
     command=("gmg2", plugin_category),
     info={
-        "header": "Good morning art.",
+        "header": "Good morning art",
         "usage": "{tr}gmg2",
     },
 )
 async def gm(event):
-    "Good morning art."
+    "Good morning art"
     await edit_or_reply(
         event,
         "♛┈⛧┈┈•༶🦋⋇⋆✦⋆⋇🦋༶•┈┈⛧┈♛\n╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨\n╔══╗────╔╗──────────╔╗\n║╔═╬═╦═╦╝║╔══╦═╦╦╦═╦╬╬═╦╦═╗\n║╚╗║╬║╬║╬║║║║║╬║╔╣║║║║║║║╬║\n╚══╩═╩═╩═╝╚╩╩╩═╩╝╚╩═╩╩╩═╬╗║\n────────────────────────╚═╝\n╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨\n♛┈⛧┈┈•༶🦋⋇⋆✦⋆⋇🦋༶•┈┈⛧┈♛･",
@@ -188,12 +188,12 @@ async def gm(event):
     pattern="gmg3$",
     command=("gmg3", plugin_category),
     info={
-        "header": "Good morning art.",
+        "header": "Good morning art",
         "usage": "{tr}gmg3",
     },
 )
 async def gm(event):
-    "Good morning art."
+    "Good morning art"
     await edit_or_reply(event, W)
 
 
@@ -201,12 +201,12 @@ async def gm(event):
     pattern="gnt$",
     command=("gnt", plugin_category),
     info={
-        "header": "Good night art.",
+        "header": "Good night art",
         "usage": "{tr}gnt",
     },
 )
 async def gn(event):
-    "Good night art."
+    "Good night art"
     await edit_or_reply(
         event,
         "｡♥｡･ﾟ♡ﾟ･｡♥｡･｡･｡･｡♥｡･\n╱╱╱╱╱╱╱╭╮╱╱╱╭╮╱╭╮╭╮\n╭━┳━┳━┳╯┃╭━┳╋╋━┫╰┫╰╮\n┃╋┃╋┃╋┃╋┃┃┃┃┃┃╋┃┃┃╭┫\n┣╮┣━┻━┻━╯╰┻━┻╋╮┣┻┻━╯\n╰━╯╱╱╱╱╱╱╱╱╱╱╰━╯\n｡♥｡･ﾟ♡ﾟ･｡♥° ♥｡･ﾟ♡ﾟ･",
@@ -217,12 +217,12 @@ async def gn(event):
     pattern="gnt2$",
     command=("gnt2", plugin_category),
     info={
-        "header": "Good night art.",
+        "header": "Good night art",
         "usage": "{tr}gnt2",
     },
 )
 async def gn(event):
-    "Good night art."
+    "Good night art"
     await edit_or_reply(
         event,
         "♛┈⛧┈┈•༶🦋⋇⋆✦⋆⋇🦋༶•┈┈⛧┈♛\n╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨\n╔══╗────╔╗╔═╦╦╗─╔╗╔╗\n║╔═╬═╦═╦╝║║║║╠╬═╣╚╣╚╗\n║╚╗║╬║╬║╬║║║║║║╬║║║╔╣\n╚══╩═╩═╩═╝╚╩═╩╬╗╠╩╩═╝\n──────────────╚═╝\n╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨╱╱✨\n♛┈⛧┈┈•༶🦋⋇⋆✦⋆⋇🦋༶•┈┈⛧┈♛･",
@@ -233,12 +233,12 @@ async def gn(event):
     pattern="gnt3$",
     command=("gnt3", plugin_category),
     info={
-        "header": "Good night art.",
+        "header": "Good night art",
         "usage": "{tr}gnt3",
     },
 )
 async def gn(event):
-    "Good night art."
+    "Good night art"
     await edit_or_reply(event, U)
 
 
@@ -249,7 +249,7 @@ async def gn(event):
     pattern="hi(?:\s|$)([\s\S]*)",
     command=("hi", plugin_category),
     info={
-        "header": "Hi text art.",
+        "header": "Hi text art",
         "usage": [
             "{tr}hi <emoji>",
             "{tr}hi",
@@ -257,7 +257,7 @@ async def gn(event):
     },
 )
 async def hi(event):
-    "Hi text art."
+    "Hi text art"
     giveVar = event.text
     cat = giveVar[4:5]
     if not cat:
@@ -272,15 +272,15 @@ async def hi(event):
     pattern="cheer$",
     command=("cheer", plugin_category),
     info={
-        "header": "Cheer text art.",
+        "header": "Cheer text art",
         "usage": "{tr}cheer",
     },
 )
 async def cheer(event):
-    "cheer text art."
+    "cheer text art"
     await edit_or_reply(
         event,
-        "💐💐😉😊💐💐\n☕ Cheer Up  🍵\n🍂 ✨ )) ✨  🍂\n🍂┃ (( * ┣┓ 🍂\n🍂┃*💗 ┣┛ 🍂 \n🍂┗━━┛  🍂🎂 For YOU  🍰\n💐💐😌😚💐💐",
+        "💐💐😉😊💐💐\n☕ Cheer up 🍵\n🍂 ✨ )) ✨  🍂\n🍂┃ (( * ┣┓ 🍂\n🍂┃*💗 ┣┛ 🍂 \n🍂┗━━┛  🍂🎂 For you 🍰\n💐💐😎😚💐💐",
     )
 
 
@@ -288,14 +288,14 @@ async def cheer(event):
     pattern="getwell$",
     command=("getwell", plugin_category),
     info={
-        "header": "Get Well art.",
+        "header": "Get well art",
         "usage": "{tr}getwell",
     },
 )
 async def getwell(event):
-    "Get Well art."
+    "Get well art"
     await edit_or_reply(
-        event, "🌹🌹🌹🌹🌹🌹🌹🌹 \n🌹😷😢😓😷😢💨🌹\n🌹💝💉🍵💊💐💝🌹\n🌹 GetBetter Soon! 🌹\n🌹🌹🌹🌹🌹🌹🌹🌹"
+        event, "🌹🌹🌹🌹🌹🌹🌹🌹 \n🌹😷🥲😓😷🥲😵🌹\n🌹💝💉🍵💊💐💝🌹\n🌹 Get well soon ! 🌹\n🌹🌹🌹🌹🌹🌹🌹🌹"
     )
 
 
@@ -303,14 +303,14 @@ async def getwell(event):
     pattern="luck$",
     command=("luck", plugin_category),
     info={
-        "header": "luck art.",
+        "header": "luck art",
         "usage": "{tr}luck",
     },
 )
 async def luck(event):
     "Luck art."
     await edit_or_reply(
-        event, "💚~🍀🍀🍀🍀🍀\n🍀╔╗╔╗╔╗╦╗✨🍀\n🍀║╦║║║║║║👍🍀\n🍀╚╝╚╝╚╝╩╝。 🍀\n🍀・・ⓁⓊⒸⓀ🍀\n🍀🍀🍀 to you💚"
+        event, "🍀🍀🍀🍀🍀🍀🍀\n🍀╔╗╔╗╔╗╦╗ 💫\n🍀║╦║║║║║║ 💫\n🍀╚╝╚╝╚╝╩╝  💫\n🍀 ⓁⓊⒸⓀ 💫\n🤞🏻🤞🏻🤞🏻🤞🏻🤞🏻🤞🏻🤞🏻"
     )
 
 
@@ -318,13 +318,13 @@ async def luck(event):
     pattern="sprinkle$",
     command=("sprinkle", plugin_category),
     info={
-        "header": "sprinkle art.",
+        "header": "Sprinkle art",
         "usage": "{tr}sprinkle",
     },
 )
 async def sprinkle(event):
-    "Sprinkle text art."
+    "Sprinkle text art"
     await edit_or_reply(
         event,
-        "✨.•*¨*.¸.•*¨*.¸¸.•*¨*• ƸӜƷ\n🌸🌺🌸🌺🌸🌺🌸🌺\n Sprinkled with love❤\n🌷🌻🌷🌻🌷🌻🌷🌻\n ¨*.¸.•*¨*. ¸.•*¨*.¸¸.•*¨`*•.✨\n🌹🍀🌹🍀🌹🍀🌹🍀",
+        "✨🌸🌺🌸🌺🌸🌺🌸🌺\n Sprinkled with love ❤\n🌷🌻🌷🌻🌷🌻🌷🌻✨",
     )
