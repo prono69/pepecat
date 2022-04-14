@@ -14,16 +14,16 @@ plugin_category = "extra"
     pattern="gps ([\s\S]*)",
     command=("gps", plugin_category),
     info={
-        "header": "To send the map of the given location.",
+        "header": "To send the map of the given location",
         "usage": "{tr}gps <place>",
         "examples": "{tr}gps Hyderabad",
     },
 )
 async def gps(event):
-    "Map of the given location."
+    "Map of the given location"
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(1)
-    catevent = await edit_or_reply(event, "`finding.....`")
+    catevent = await edit_or_reply(event, "`Finding...`")
     geolocator = Nominatim(user_agent="catuserbot")
     geoloc = geolocator.geocode(input_str)
     if geoloc:
@@ -37,4 +37,4 @@ async def gps(event):
         )
         await catevent.delete()
     else:
-        await catevent.edit("`i coudn't find it`")
+        await catevent.edit("`I coudn't find it`")
