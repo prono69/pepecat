@@ -58,7 +58,7 @@ async def ban_user(chat_id, i, rights):
     pattern="kickme$",
     command=("kickme", plugin_category),
     info={
-        "header": "To kick myself from group.",
+        "header": "To kick myself from group",
         "usage": [
             "{tr}kickme",
         ],
@@ -66,8 +66,8 @@ async def ban_user(chat_id, i, rights):
     groups_only=True,
 )
 async def kickme(leave):
-    "to leave the group."
-    await leave.edit("`Nope, no, no, I go away`")
+    "to leave the group"
+    await leave.edit("`Nope , no , no , I go away`")
     await leave.client.kick_participant(leave.chat_id, "me")
 
 
@@ -75,8 +75,8 @@ async def kickme(leave):
     pattern="kickall$",
     command=("kickall", plugin_category),
     info={
-        "header": "To kick everyone from group.",
-        "description": "To Kick all from the group except admins.",
+        "header": "To kick everyone from group",
+        "description": "To Kick all from the group except admins",
         "usage": [
             "{tr}kickall",
         ],
@@ -85,11 +85,11 @@ async def kickme(leave):
     require_admin=True,
 )
 async def _(event):
-    "To kick everyone from group."
+    "To kick everyone from group"
     result = await event.client.get_permissions(event.chat_id, event.client.uid)
     if not result.participant.admin_rights.ban_users:
         return await edit_or_reply(
-            event, "`It seems like you dont have ban users permission in this group.`"
+            event, "`It seems like you don't have ban users permission in this group`"
         )
     catevent = await edit_or_reply(event, "`Kicking...`")
     admins = await event.client.get_participants(
@@ -109,7 +109,7 @@ async def _(event):
             LOGS.info(str(e))
             await sleep(0.5)
     await catevent.edit(
-        f"`Sucessfully i have completed kickall process with {success} members kicked out of {total} members`"
+        f"`Sucessfully I have completed kickall process with {success} members kicked out of {total} members`"
     )
 
 
@@ -117,8 +117,8 @@ async def _(event):
     pattern="banall$",
     command=("banall", plugin_category),
     info={
-        "header": "To ban everyone from group.",
-        "description": "To ban all from the group except admins.",
+        "header": "To ban everyone from group",
+        "description": "To ban all from the group except admins",
         "usage": [
             "{tr}kickall",
         ],
@@ -131,9 +131,9 @@ async def _(event):
     result = await event.client.get_permissions(event.chat_id, event.client.uid)
     if not result:
         return await edit_or_reply(
-            event, "`It seems like you dont have ban users permission in this group.`"
+            event, "`It seems like you don't have ban users permission in this group`"
         )
-    catevent = await edit_or_reply(event, "`banning...`")
+    catevent = await edit_or_reply(event, "`Banning...`")
     admins = await event.client.get_participants(
         event.chat_id, filter=ChannelParticipantsAdmins
     )
@@ -161,7 +161,7 @@ async def _(event):
     pattern="unbanall$",
     command=("unbanall", plugin_category),
     info={
-        "header": "To unban all banned users from group.",
+        "header": "To unban all banned users from group",
         "usage": [
             "{tr}unbanall",
         ],
@@ -170,9 +170,9 @@ async def _(event):
     require_admin=True,
 )
 async def _(event):
-    "To unban all banned users from group."
+    "To unban all banned users from group"
     catevent = await edit_or_reply(
-        event, "__Unbanning all banned accounts in this group.__"
+        event, "Unbanning all banned accounts in this group"
     )
     succ = 0
     total = 0
@@ -188,9 +188,9 @@ async def _(event):
                 functions.channels.EditBannedRequest(event.chat_id, i, rights)
             )
         except FloodWaitError as e:
-            LOGS.warn(f"A flood wait of {e.seconds} occurred.")
+            LOGS.warn(f"A flood wait of {e.seconds} occurred")
             await catevent.edit(
-                f"__A wait of {readable_time(e.seconds)} needed again to continue the process.__"
+                f"A wait of {readable_time(e.seconds)} needed again to continue the process"
             )
             await sleep(e.seconds + 5)
         except Exception as ex:
@@ -204,12 +204,12 @@ async def _(event):
             try:
                 if succ % 10 == 0:
                     await catevent.edit(
-                        f"__Unbanning all banned accounts...,\n{succ} accounts are unbanned untill now.__"
+                        f"Unbanning all banned accounts...,\n{succ} accounts are unbanned untill now"
                     )
             except MessageNotModifiedError:
                 pass
     await catevent.edit(
-        f"**Unbanned :**__{succ}/{total} in the chat {get_display_name(await event.get_chat())}__"
+        f"**Unbanned :**{succ}/{total} in the chat {get_display_name(await event.get_chat())}"
     )
 
 
@@ -219,7 +219,7 @@ async def _(event):
     command=("zombies", plugin_category),
     info={
         "header": "To check deleted accounts and clean",
-        "description": "Searches for deleted accounts in a group. Use `.zombies clean` to remove deleted accounts from the group.",
+        "description": "Searches for deleted accounts in a group ! Use `.zombies clean` to remove deleted accounts from the group",
         "flag": {"-r": "Use this for check users from banned and restricted users"},
         "usage": [
             "{tr}zombies",
@@ -235,7 +235,7 @@ async def rm_deletedacc(show):  # sourcery no-metrics
     flag = show.pattern_match.group(1)
     con = show.pattern_match.group(2).lower()
     del_u = 0
-    del_status = "`No zombies or deleted accounts found in this group, Group is clean`"
+    del_status = "`No zombies or deleted accounts found in this group , group is clean`"
     if con != "clean":
         event = await edit_or_reply(
             show, "`Searching for ghost/deleted/zombie accounts...`"
@@ -245,8 +245,8 @@ async def rm_deletedacc(show):  # sourcery no-metrics
                 if user.deleted:
                     del_u += 1
             if del_u > 0:
-                del_status = f"__Found__ **{del_u}** __ghost/deleted/zombie account(s) in this group,\
-                            \nclean them by using__ `.zombies clean`"
+                del_status = f"Found **{del_u}** ghost / deleted / zombie account (s) in this group ,\
+                            \nclean them by using`.zombies clean`"
         else:
             catadmin = await is_admin(show.client, show.chat_id, show.client.uid)
             if not catadmin:
@@ -266,15 +266,15 @@ async def rm_deletedacc(show):  # sourcery no-metrics
                 if user.deleted:
                     del_u += 1
             if del_u > 0:
-                del_status = f"__Found__ **{del_u}** __ghost/deleted/zombie account(s) in this group who are restricted or banned,\
-                            \nclean them by using__ `.zombies -r clean`"
+                del_status = f"Found **{del_u}** ghost / deleted / zombie account (s) in this group who are restricted or banned ,\
+                            \nclean them by using `.zombies -r clean`"
         await event.edit(del_status)
         return
     chat = await show.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
     if not admin and not creator:
-        await edit_delete(show, "`I am not an admin here!`", 5)
+        await edit_delete(show, "`I am not an admin here !`", 5)
         return
     event = await edit_or_reply(
         show, "`Deleting deleted accounts...\nOh I can do that?!?!`"
@@ -293,13 +293,13 @@ async def rm_deletedacc(show):  # sourcery no-metrics
                         event, "`I don't have ban rights in this group`", 5
                     )
                 except FloodWaitError as e:
-                    LOGS.warn(f"A flood wait of {e.seconds} occurred.")
+                    LOGS.warn(f"A flood wait of {e.seconds} occurred")
                     await event.edit(
-                        f"__A wait of {readable_time(e.seconds)} needed again to continue the process. Untill Now {del_u} users are cleaned.__"
+                        f"__A wait of {readable_time(e.seconds)} needed again to continue the process ! Untill Now {del_u} users are cleaned"
                     )
                     await sleep(e.seconds + 5)
                     await event.edit(
-                        f"__Ok the wait is over .I am cleaning all deleted accounts in this group__"
+                        f"Ok the wait is over ! I am cleaning all deleted accounts in this group"
                     )
                 except UserAdminInvalidError:
                     del_a += 1
@@ -307,11 +307,11 @@ async def rm_deletedacc(show):  # sourcery no-metrics
                     LOGS.error(str(e))
         if del_u > 0:
             del_status = (
-                f"Successfully cleaned **{del_u}** deleted account(s) in the group."
+                f"Successfully cleaned **{del_u}** deleted account(s) in the group"
             )
         if del_a > 0:
-            del_status = f"Successfully cleaned **{del_u}** deleted account(s) in the group.\
-            \n**{del_a}** deleted admin accounts are not removed"
+            del_status = f"Successfully cleaned **{del_u}** deleted account(s) in the group\
+            \n**{del_a}** Deleted admin accounts are not removed"
     else:
         catadmin = await is_admin(show.client, show.chat_id, show.client.uid)
         if not catadmin:
@@ -333,11 +333,11 @@ async def rm_deletedacc(show):  # sourcery no-metrics
                 except FloodWaitError as e:
                     LOGS.warn(f"A flood wait of {e.seconds} occurred.")
                     await event.edit(
-                        f"__A wait of {readable_time(e.seconds)} needed again to continue the process. Untill Now {del_u} users are cleaned.__"
+                        f"A wait of {readable_time(e.seconds)} needed again to continue the process. Untill Now {del_u} users are cleaned"
                     )
                     await sleep(e.seconds + 5)
                     await event.edit(
-                        f"__Ok the wait is over .I am cleaning all deleted accounts in restricted or banned users list in this group__"
+                        f"Ok the wait is over ! I am cleaning all deleted accounts in restricted or banned users list in this group"
                     )
                 except Exception as e:
                     LOGS.error(str(e))
@@ -355,26 +355,26 @@ async def rm_deletedacc(show):  # sourcery no-metrics
                         event, "`I don't have ban rights in this group`", 5
                     )
                 except FloodWaitError as e:
-                    LOGS.warn(f"A flood wait of {e.seconds} occurred.")
+                    LOGS.warn(f"A flood wait of {e.seconds} occurred")
                     await event.edit(
-                        f"__A wait of {readable_time(e.seconds)} needed again to continue the process. Untill Now {del_u} users are cleaned.__"
+                        f"A wait of {readable_time(e.seconds)} needed again to continue the process ! Untill Now {del_u} users are cleaned"
                     )
                     await sleep(e.seconds + 5)
                 except Exception as e:
                     LOGS.error(str(e))
                     del_a += 1
         if del_u > 0:
-            del_status = f"`Successfully cleaned {del_u} deleted account(s) in the group who are banned or restricted.`"
+            del_status = f"`Successfully cleaned {del_u} deleted account(s) in the group who are banned or restricted`"
         if del_a > 0:
-            del_status = f"`Successfully cleaned `**{del_u}**` deleted account(s) in the group who are banned or restricted.\
-            \nFailed to kick `**{del_a}**` accounts.`"
+            del_status = f"`Successfully cleaned `**{del_u}**` deleted account(s) in the group who are banned or restricted\
+            \nFailed to kick `**{del_a}**` accounts`"
     await edit_delete(event, del_status, 15)
     if BOTLOG:
         await show.client.send_message(
             BOTLOG_CHATID,
             f"#CLEANUP\
                 \n{del_status}\
-                \nCHAT: {get_display_name(await event.get_chat())}(`{show.chat_id}`)",
+                \nCHAT : {get_display_name(await event.get_chat())}(`{show.chat_id}`)",
         )
 
 
@@ -383,7 +383,7 @@ async def rm_deletedacc(show):  # sourcery no-metrics
     command=("ikuck", plugin_category),
     info={
         "header": "To get breif summary of members in the group",
-        "description": "To get breif summary of members in the group . Need to add some features in future.",
+        "description": "To get breif summary of members in the group ! Need to add some features in future",
         "usage": [
             "{tr}ikuck",
         ],
@@ -391,12 +391,12 @@ async def rm_deletedacc(show):  # sourcery no-metrics
     groups_only=True,
 )
 async def _(event):  # sourcery no-metrics
-    "To get breif summary of members in the group.1 11"
+    "To get breif summary of members in the group 1-11"
     input_str = event.pattern_match.group(1)
     if input_str:
         chat = await event.get_chat()
         if not chat.admin_rights and not chat.creator:
-            await edit_or_reply(event, "`You aren't an admin here!`")
+            await edit_or_reply(event, "`You aren't an admin here !`")
             return False
     p = 0
     b = 0
@@ -410,7 +410,7 @@ async def _(event):  # sourcery no-metrics
     o = 0
     q = 0
     r = 0
-    et = await edit_or_reply(event, "Searching Participant Lists.")
+    et = await edit_or_reply(event, "Searching participant lists")
     async for i in event.client.iter_participants(event.chat_id):
         p += 1
         #
@@ -424,7 +424,7 @@ async def _(event):  # sourcery no-metrics
                 if status:
                     c += 1
                 else:
-                    await et.edit("I need admin priveleges to perform this action!")
+                    await et.edit("I need admin priveleges to perform this action !")
                     e.append(str(e))
                     break
         if isinstance(i.status, UserStatusLastMonth):
@@ -434,7 +434,7 @@ async def _(event):  # sourcery no-metrics
                 if status:
                     c += 1
                 else:
-                    await et.edit("I need admin priveleges to perform this action!")
+                    await et.edit("I need admin priveleges to perform this action !")
                     e.append(str(e))
                     break
         if isinstance(i.status, UserStatusLastWeek):
@@ -444,7 +444,7 @@ async def _(event):  # sourcery no-metrics
                 if status:
                     c += 1
                 else:
-                    await et.edit("I need admin priveleges to perform this action!")
+                    await et.edit("I need admin priveleges to perform this action !")
                     e.append(str(e))
                     break
         if isinstance(i.status, UserStatusOffline):
@@ -452,7 +452,7 @@ async def _(event):  # sourcery no-metrics
             if "o" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await et.edit("I need admin priveleges to perform this action!")
+                    await et.edit("I need admin priveleges to perform this action !")
                     e.append(str(e))
                     break
                 else:
@@ -462,7 +462,7 @@ async def _(event):  # sourcery no-metrics
             if "q" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await et.edit("I need admin priveleges to perform this action!")
+                    await et.edit("I need admin priveleges to perform this action !")
                     e.append(str(e))
                     break
                 else:
@@ -474,7 +474,7 @@ async def _(event):  # sourcery no-metrics
                 if status:
                     c += 1
                 else:
-                    await et.edit("I need admin priveleges to perform this action!")
+                    await et.edit("I need admin priveleges to perform this action !")
                     e.append(str(e))
                     break
         if i.bot:
@@ -482,7 +482,7 @@ async def _(event):  # sourcery no-metrics
             if "b" in input_str:
                 status, e = await ban_user(event.chat_id, i, rights)
                 if not status:
-                    await et.edit("I need admin priveleges to perform this action!")
+                    await et.edit("I need admin priveleges to perform this action !")
                     e.append(str(e))
                     break
                 else:
@@ -494,34 +494,34 @@ async def _(event):  # sourcery no-metrics
                 if status:
                     c += 1
                 else:
-                    await et.edit("I need admin priveleges to perform this action!")
+                    await et.edit("I need admin priveleges to perform this action !")
                     e.append(str(e))
         elif i.status is None:
             n += 1
     if input_str:
         required_string = """Kicked {} / {} users
-Deleted Accounts: {}
-UserStatusEmpty: {}
-UserStatusLastMonth: {}
-UserStatusLastWeek: {}
-UserStatusOffline: {}
-UserStatusOnline: {}
-UserStatusRecently: {}
-Bots: {}
-None: {}"""
+Deleted accounts : {}
+User status empty : {}
+User status last month : {}
+User status last week : {}
+User status offline : {}
+User status online : {}
+User status recently : {}
+Bots : {}
+None : {}"""
         await et.edit(required_string.format(c, p, d, y, m, w, o, q, r, b, n))
         await sleep(5)
     await et.edit(
         """Total: {} users
-Deleted Accounts: {}
-UserStatusEmpty: {}
-UserStatusLastMonth: {}
-UserStatusLastWeek: {}
-UserStatusOffline: {}
-UserStatusOnline: {}
-UserStatusRecently: {}
-Bots: {}
-None: {}""".format(
+Deleted accounts : {}
+User status empty : {}
+User status last month : {}
+User status last week : {}
+User status offline : {}
+User status online : {}
+User status recently : {}
+Bots : {}
+None : {}""".format(
             p, d, y, m, w, o, q, r, b, n
         )
     )
