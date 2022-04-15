@@ -13,12 +13,12 @@ plugin_category = "tools"
 
 hemojis = {
     "admin": "👮‍♂️",
-    "bot": "🤖",
-    "fun": "🎨",
-    "misc": "🧩",
+    "bot": "🪐",
+    "fun": "🏸",
+    "misc": "🪄",
     "tools": "🧰",
-    "utils": "🗂",
-    "extra": "➕",
+    "utils": "📦",
+    "extra": "🌻",
 }
 
 
@@ -47,15 +47,15 @@ async def cmdinfo(input_str, event, plugin=False):
         if plugin:
             await edit_delete(
                 event,
-                f"**There is no plugin or command as **`{input_str}`** in your bot.**",
+                f"**There is no plugin or command as **`{input_str}`** in your bot**",
             )
             return None
         await edit_delete(
-            event, f"**There is no command as **`{input_str}`** in your bot.**"
+            event, f"**There is no command as **`{input_str}`** in your bot**"
         )
         return None
     except Exception as e:
-        await edit_delete(event, f"**Error**\n`{e}`")
+        await edit_delete(event, f"**Error :**\n`{e}`")
         return None
     outstr = f"**Command :** `{cmdprefix}{input_str}`\n"
     plugin = get_key(input_str)
@@ -75,30 +75,30 @@ async def plugininfo(input_str, event, flag):
         outstr = await cmdinfo(input_str, event, plugin=True)
         return outstr
     except Exception as e:
-        await edit_delete(event, f"**Error**\n`{e}`")
+        await edit_delete(event, f"**Error :**\n`{e}`")
         return None
     if len(cmds) == 1 and (flag is None or (flag and flag != "-p")):
         outstr = await cmdinfo(cmds[0], event, plugin=False)
         return outstr
     outstr = f"**Plugin : **`{input_str}`\n"
-    outstr += f"**Commands Available :** `{len(cmds)}`\n"
+    outstr += f"**Commands available :** `{len(cmds)}`\n"
     category = getkey(input_str)
     if category is not None:
         outstr += f"**Category :** `{category}`\n\n"
     for cmd in sorted(cmds):
-        outstr += f"•  **cmd :** `{cmdprefix}{cmd}`\n"
+        outstr += f"•  **Command :** `{cmdprefix}{cmd}`\n"
         try:
-            outstr += f"•  **info :** `{CMD_INFO[cmd][1]}`\n\n"
+            outstr += f"•  **Info :** `{CMD_INFO[cmd][1]}`\n\n"
         except IndexError:
-            outstr += "•  **info :** `None`\n\n"
-    outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help <command name>`\
-        \n**Note : **If command name is same as plugin name then use this `{cmdprefix}help -c <command name>`."
+            outstr += "•  **Info :** `None`\n\n"
+    outstr += f"**🪴 Usage : ** `{cmdprefix}help <command name>`\
+        \n**Note : **If command name is same as plugin name then use this `{cmdprefix}help -c <command name>`"
     return outstr
 
 
 async def grpinfo():
-    outstr = "**Plugins in Catuserbot are:**\n\n"
-    outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help <plugin name>`\n\n"
+    outstr = "**Plugins in catuserbot are :**\n\n"
+    outstr += f"**🪴 Usage : ** `{cmdprefix}help <plugin name>`\n\n"
     category = ["admin", "bot", "fun", "misc", "tools", "utils", "extra"]
     for cat in category:
         plugins = GRP_INFO[cat]
@@ -110,7 +110,7 @@ async def grpinfo():
 
 
 async def cmdlist():
-    outstr = "**Total list of Commands in your Catuserbot are :**\n\n"
+    outstr = "**Total list of commands in your catuserbot are :**\n\n"
     category = ["admin", "bot", "fun", "misc", "tools", "utils", "extra"]
     for cat in category:
         plugins = GRP_INFO[cat]
@@ -121,7 +121,7 @@ async def cmdlist():
             for cmd in sorted(cmds):
                 outstr += f"  - `{cmdprefix}{cmd}`\n"
             outstr += "\n"
-    outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help -c <command name>`"
+    outstr += f"**🪴 Usage : ** `{cmdprefix}help -c <command name>`"
     return outstr
 
 
@@ -129,13 +129,13 @@ async def cmdlist():
     pattern="help ?(-c|-p|-t)? ?([\s\S]*)?",
     command=("help", plugin_category),
     info={
-        "header": "To get guide for catuserbot.",
+        "header": "To get guide for catuserbot",
         "description": "To get information or guide for the command or plugin",
-        "note": "if command name and plugin name is same then you get guide for plugin. So by using this flag you get command guide",
+        "note": "If command name and plugin name is same then you get guide for plugin ! So by using this flag you get command guide",
         "flags": {
-            "c": "To get info of command.",
-            "p": "To get info of plugin.",
-            "t": "To get all plugins in text format.",
+            "c": "To get info of command",
+            "p": "To get info of plugin",
+            "t": "To get all plugins in text format",
         },
         "usage": [
             "{tr}help (plugin/command name)",
@@ -145,7 +145,7 @@ async def cmdlist():
     },
 )
 async def _(event):
-    "To get guide for catuserbot."
+    "To get guide for catuserbot"
     flag = event.pattern_match.group(1)
     input_str = event.pattern_match.group(2)
     reply_to_id = await reply_id(event)
@@ -171,8 +171,8 @@ async def _(event):
     pattern="cmds(?:\s|$)([\s\S]*)",
     command=("cmds", plugin_category),
     info={
-        "header": "To show list of cmds.",
-        "description": "if no input is given then will show list of all commands.",
+        "header": "To show list of commands",
+        "description": "If no input is given then will show list of all commands",
         "usage": [
             "{tr}cmds for all cmds",
             "{tr}cmds <plugin name> for paticular plugin",
@@ -180,7 +180,7 @@ async def _(event):
     },
 )
 async def _(event):
-    "To get list of commands."
+    "To get list of commands"
     input_str = event.pattern_match.group(1)
     if not input_str:
         outstr = await cmdlist()
@@ -188,15 +188,15 @@ async def _(event):
         try:
             cmds = PLG_INFO[input_str]
         except KeyError:
-            return await edit_delete(event, "__Invalid plugin name recheck it.__")
+            return await edit_delete(event, "Invalid plugin name recheck it")
         except Exception as e:
-            return await edit_delete(event, f"**Error**\n`{e}`")
+            return await edit_delete(event, f"**Error :**\n`{e}`")
         outstr = f"• **{input_str.title()} has {len(cmds)} commands**\n"
         for cmd in cmds:
             outstr += f"  - `{cmdprefix}{cmd}`\n"
         outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help -c <command name>`"
     await edit_or_reply(
-        event, outstr, aslink=True, linktext="Total Commands of Catuserbot are :"
+        event, outstr, aslink=True, linktext="Total commands of catuserbot are :"
     )
 
 
@@ -204,12 +204,12 @@ async def _(event):
     pattern="s ([\s\S]*)",
     command=("s", plugin_category),
     info={
-        "header": "To search commands.",
+        "header": "To search commands",
         "examples": "{tr}s song",
     },
 )
 async def _(event):
-    "To search commands."
+    "To search commands"
     cmd = event.pattern_match.group(1)
     found = [i for i in sorted(list(CMD_INFO)) if cmd in i]
     if found:
@@ -217,7 +217,7 @@ async def _(event):
         out = f"**I found {len(found)} command(s) for: **`{cmd}`\n\n{out_str}"
         out += f"\n\n__For more info check {cmdprefix}help -c <command>__"
     else:
-        out = f"I can't find any such command `{cmd}` in CatUserbot"
+        out = f"I can't find any such command `{cmd}` in cat userbot"
     await edit_or_reply(event, out)
 
 
@@ -225,7 +225,7 @@ async def _(event):
     pattern="dc$",
     command=("dc", plugin_category),
     info={
-        "header": "To show dc of your account.",
+        "header": "To show dc of your account",
         "description": "Dc of your account and list of dc's will be showed",
         "usage": "{tr}dc",
     },
@@ -233,15 +233,15 @@ async def _(event):
 async def _(event):
     "To get dc of your bot"
     result = await event.client(functions.help.GetNearestDcRequest())
-    result = f"**Dc details of your account:**\
+    result = f"**Dc details of your account :**\
               \n**Country :** {result.country}\
-              \n**Current Dc :** {result.this_dc}\
-              \n**Nearest Dc :** {result.nearest_dc}\
-              \n\n**List Of Telegram Data Centres:**\
-              \n**DC1 : **Miami FL, USA\
-              \n**DC2 :** Amsterdam, NL\
-              \n**DC3 :** Miami FL, USA\
-              \n**DC4 :** Amsterdam, NL\
-              \n**DC5 : **Singapore, SG\
+              \n**Current dc :** {result.this_dc}\
+              \n**Nearest dc :** {result.nearest_dc}\
+              \n\n**List Of telegram data centres :**\
+              \n**DC1 : **Miami FL , USA\
+              \n**DC2 :** Amsterdam , NL\
+              \n**DC3 :** Miami FL , USA\
+              \n**DC4 :** Amsterdam , NL\
+              \n**DC5 : **Singapore , SG\
                 "
     await edit_or_reply(event, result)
