@@ -19,13 +19,13 @@ plugin_category = "fun"
     pattern="imirror(s)? ?(-)?(l|r|u|b)?$",
     command=("imirror", plugin_category),
     info={
-        "header": "gives to reflected  image of one part on other part.",
-        "description": "Additionaly use along with cmd i.e, imirrors to gib out put as sticker.",
+        "header": "Gives to reflected image of one part on other part",
+        "description": "Additionally use along with command i.e, imirrors to give out put as sticker",
         "flags": {
-            "-l": "Right half will be reflection of left half.",
-            "-r": "Left half will be reflection of right half.",
-            "-u": "bottom half will be reflection of upper half.",
-            "-b": "upper half will be reflection of bottom half.",
+            "-l": "Right half will be reflection of left half",
+            "-r": "Left half will be reflection of right half",
+            "-u": "Bottom half will be reflection of upper half",
+            "-b": "Upper half will be reflection of bottom half",
         },
         "usage": [
             "{tr}imirror <flag> - gives output as image",
@@ -38,12 +38,12 @@ plugin_category = "fun"
     },
 )
 async def imirror(event):  # sourcery no-metrics
-    "imgae refelection fun."
+    "Imgae refelection fun"
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
-        return await edit_delete(event, "__Reply to photo or sticker to make mirror.__")
-    catevent = await event.edit("__Reflecting the image....__")
+        return await edit_delete(event, "Reply to photo or sticker to make mirror")
+    catevent = await event.edit("Reflecting the image...")
     args = event.pattern_match.group(1)
     if args:
         filename = "catuserbot.webp"
@@ -55,11 +55,11 @@ async def imirror(event):  # sourcery no-metrics
         imag = await _cattools.media_to_pic(catevent, reply, noedits=True)
         if imag[1] is None:
             return await edit_delete(
-                imag[0], "__Unable to extract image from the replied message.__"
+                imag[0], "Unable to extract image from the replied message"
             )
         image = Image.open(imag[1])
     except Exception as e:
-        return await edit_delete(catevent, f"**Error in identifying image:**\n__{e}__")
+        return await edit_delete(catevent, f"**Error in identifying image :**\n{e}")
     flag = event.pattern_match.group(3) or "r"
     w, h = image.size
     if w % 2 != 0 and flag in ["r", "l"] or h % 2 != 0 and flag in ["u", "b"]:
@@ -120,28 +120,28 @@ async def irotate(event):
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
         return await edit_delete(
-            event, "__Reply to photo or sticker to rotate it with given angle.__"
+            event, "Reply to photo or sticker to rotate it with given angle"
         )
     if mediatype == "Sticker" and reply.document.mime_type == "application/i-tgsticker":
         return await edit_delete(
             event,
-            "__Reply to photo or sticker to rotate it with given angle. Animated sticker is not supported__",
+            "Reply to photo or sticker to rotate it with given angle ! Animated sticker is not supported",
         )
     args = event.pattern_match.group(1)
-    catevent = await edit_or_reply(event, "__Rotating the replied media...__")
+    catevent = await edit_or_reply(event, "Rotating the replied media...")
     imag = await _cattools.media_to_pic(catevent, reply, noedits=True)
     if imag[1] is None:
         return await edit_delete(
-            imag[0], "__Unable to extract image from the replied message.__"
+            imag[0], "Unable to extract image from the replied message"
         )
     image = Image.open(imag[1])
     try:
         image = image.rotate(int(args), expand=True)
     except Exception as e:
-        return await edit_delete(event, "**Error**\n" + str(e))
+        return await edit_delete(event, "**Error :**\n" + str(e))
     await event.delete()
     img = io.BytesIO()
-    img.name = "CatUserbot.png"
+    img.name = "Catuserbot.png"
     image.save(img, "PNG")
     img.seek(0)
     await event.client.send_file(event.chat_id, img, reply_to=reply)
@@ -152,7 +152,7 @@ async def irotate(event):
     pattern="iresize(?:\s|$)([\s\S]*)$",
     command=("iresize", plugin_category),
     info={
-        "header": "To resize the replied image/sticker",
+        "header": "To resize the replied image / sticker",
         "usage": [
             "{tr}iresize <dimension> will send square image of that dimension",
             "{tr}iresize <width> <height> will send square image of that dimension",
@@ -161,22 +161,22 @@ async def irotate(event):
     },
 )
 async def iresize(event):
-    "To resize the replied image/sticker"
+    "To resize the replied image / sticker"
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
-        return await edit_delete(event, "__Reply to photo or sticker to resize it.__")
+        return await edit_delete(event, "Reply to photo or sticker to resize it")
     if mediatype == "Sticker" and reply.document.mime_type == "application/i-tgsticker":
         return await edit_delete(
             event,
-            "__Reply to photo or sticker to resize it. Animated sticker is not supported__",
+            "Reply to photo or sticker to resize it ! Animated sticker is not supported",
         )
     args = (event.pattern_match.group(1)).split()
-    catevent = await edit_or_reply(event, "__Resizeing the replied media...__")
+    catevent = await edit_or_reply(event, "Resizeing the replied media...")
     imag = await _cattools.media_to_pic(catevent, reply, noedits=True)
     if imag[1] is None:
         return await edit_delete(
-            imag[0], "__Unable to extract image from the replied message.__"
+            imag[0], "Unable to extract image from the replied message"
         )
     image = Image.open(imag[1])
     w, h = image.size
@@ -185,23 +185,23 @@ async def iresize(event):
         try:
             nw, nh = int(args[0]), int(args[0])
         except ValueError:
-            return await edit_delete(catevent, "**Error:**\n__Invalid dimension.__")
+            return await edit_delete(catevent, "**Error :**\nInvalid dimension")
     else:
         try:
             nw = int(args[0])
         except ValueError:
-            return await edit_delete(catevent, "**Error:**\n__Invalid width.__")
+            return await edit_delete(catevent, "**Error :**\nInvalid width")
         try:
             nh = int(args[1])
         except ValueError:
-            return await edit_delete(catevent, "**Error:**\n__Invalid height.__")
+            return await edit_delete(catevent, "**Error:**\nInvalid height")
     try:
         image = image.resize((nw, nh))
     except Exception as e:
-        return await edit_delete(catevent, f"**Error:** __While resizing.\n{e}__")
+        return await edit_delete(catevent, f"**Error :** While resizing\n{e}")
     await event.delete()
     img = io.BytesIO()
-    img.name = "CatUserbot.png"
+    img.name = "Catuserbot.png"
     image.save(img, "PNG")
     img.seek(0)
     await event.client.send_file(event.chat_id, img, reply_to=reply)
@@ -212,29 +212,29 @@ async def iresize(event):
     pattern="square$",
     command=("square", plugin_category),
     info={
-        "header": "Converts replied image to square image.",
+        "header": "Converts replied image to square image",
         "usage": "{tr}square",
     },
 )
 async def square_cmd(event):
-    "Converts replied image to square image."
+    "Converts replied image to square image"
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo"]:
-        return await edit_delete(event, "__Reply to photo to make it square image.__")
-    catevent = await event.edit("__Adding borders to make it square....__")
+        return await edit_delete(event, "Reply to photo to make it square image")
+    catevent = await event.edit("Adding borders to make it square...")
     try:
         imag = await _cattools.media_to_pic(catevent, reply, noedits=True)
         if imag[1] is None:
             return await edit_delete(
-                imag[0], "__Unable to extract image from the replied message.__"
+                imag[0], "Unable to extract image from the replied message"
             )
         img = Image.open(imag[1])
     except Exception as e:
-        return await edit_delete(catevent, f"**Error in identifying image:**\n__{e}__")
+        return await edit_delete(catevent, f"**Error in identifying image :**\n{e}")
     w, h = img.size
     if w == h:
-        return await edit_delete(event, "__The replied image is already in 1:1 ratio__")
+        return await edit_delete(event, "The replied image is already in 1:1 ratio")
     _min, _max = min(w, h), max(w, h)
     bg = img.crop(((w - _min) // 2, (h - _min) // 2, (w + _min) // 2, (h + _min) // 2))
     bg = bg.filter(ImageFilter.GaussianBlur(5))
@@ -264,12 +264,12 @@ async def pic_gifcmd(event):
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
         return await edit_delete(
-            event, "__Reply to photo or sticker to make it doted image.__"
+            event, "Reply to photo or sticker to make it doted image"
         )
     if mediatype == "Sticker" and reply.document.mime_type == "application/i-tgsticker":
         return await edit_delete(
             event,
-            "__Reply to photo or sticker to make it doted image. Animated sticker is not supported__",
+            "Reply to photo or sticker to make it doted image ! Animated sticker is not supported",
         )
     args = event.pattern_match.group(1)
     if args:
@@ -277,11 +277,11 @@ async def pic_gifcmd(event):
             pix = int(args) if int(args) > 0 else 100
     else:
         pix = 100
-    catevent = await edit_or_reply(event, "__🎞Dotifying image...__")
+    catevent = await edit_or_reply(event, "Dotifying image...")
     imag = await _cattools.media_to_pic(catevent, reply, noedits=True)
     if imag[1] is None:
         return await edit_delete(
-            imag[0], "__Unable to extract image from the replied message.__"
+            imag[0], "Unable to extract image from the replied message"
         )
     result = await dotify(imag[1], pix, True)
     await event.client.send_file(event.chat_id, result, reply_to=reply)
