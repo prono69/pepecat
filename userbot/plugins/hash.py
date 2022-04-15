@@ -19,13 +19,13 @@ plugin_category = "tools"
     pattern="hash ([\s\S]*)",
     command=("hash", plugin_category),
     info={
-        "header": "Find the md5, sha1, sha256, sha512 of the string when written into a txt file.",
+        "header": "Find the md5 , sha1 , sha256 , sha512 of the string when written into a text file",
         "usage": "{tr}hash <text>",
         "examples": "{tr}hash catuserbot",
     },
 )
 async def gethash(hash_q):
-    "Find the md5, sha1, sha256, sha512 of the string when written into a txt file."
+    "Find the md5 , sha1 , sha256 , sha512 of the string when written into a text file"
     hashtxt_ = "".join(hash_q.text.split(maxsplit=1)[1:])
     with open("hashdis.txt", "w+") as hashtxt:
         hashtxt.write(hashtxt_)
@@ -56,10 +56,10 @@ async def gethash(hash_q):
     pattern="hbase (en|de) ([\s\S]*)",
     command=("hbase", plugin_category),
     info={
-        "header": "Find the base64 encoding or decoding of the given string.",
+        "header": "Find the base64 encoding or decoding of the given string",
         "flags": {
-            "en": "Use this to encode the given text.",
-            "de": "use this to decode the given text.",
+            "en": "Use this to encode the given text",
+            "de": "Use this to decode the given text",
         },
         "usage": ["{tr}hbase en <text to encode>", "{tr}hbase de <encoded text>"],
         "examples": ["{tr}hbase en Catuserbot", "{tr}hbase de Q2F0dXNlcmJvdA=="],
@@ -72,31 +72,31 @@ async def endecrypt(event):
     if event.pattern_match.group(1) == "en":
         if string:
             result = base64.b64encode(bytes(string, "utf-8")).decode("utf-8")
-            result = f"**Shhh! It's Encoded : **\n`{result}`"
+            result = f"**Shh ! It's encoded : **\n`{result}`"
         else:
             reply = await event.get_reply_message()
             if not reply:
-                return await edit_delete(event, "`What should i encode`")
+                return await edit_delete(event, "`What should I encode ?`")
             mediatype = media_type(reply)
             if mediatype is None:
                 result = base64.b64encode(bytes(reply.text, "utf-8")).decode("utf-8")
-                result = f"**Shhh! It's Encoded : **\n`{result}`"
+                result = f"**Shh ! It's encoded : **\n`{result}`"
             else:
-                catevent = await edit_or_reply(event, "`Encoding ...`")
+                catevent = await edit_or_reply(event, "`Encoding...`")
                 c_time = time.time()
                 downloaded_file_name = await event.client.download_media(
                     reply,
                     Config.TMP_DOWNLOAD_DIRECTORY,
                     progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                        progress(d, t, catevent, c_time, "trying to download")
+                        progress(d, t, catevent, c_time, "Trying to download")
                     ),
                 )
-                catevent = await edit_or_reply(event, "`Encoding ...`")
+                catevent = await edit_or_reply(event, "`Encoding...`")
                 with open(downloaded_file_name, "rb") as image_file:
                     result = base64.b64encode(image_file.read()).decode("utf-8")
                 os.remove(downloaded_file_name)
         await edit_or_reply(
-            catevent, result, file_name="encodedfile.txt", caption="It's Encoded"
+            catevent, result, file_name="encodedfile.txt", caption="It's encoded"
         )
     else:
         try:
@@ -107,4 +107,4 @@ async def endecrypt(event):
             )[2:]
             await edit_or_reply(event, "**Decoded text :**\n`" + lething[:-1] + "`")
         except Exception as e:
-            await edit_delete(event, f"**Error:**\n__{e}__")
+            await edit_delete(event, f"**Error :**\n__{e}__")
