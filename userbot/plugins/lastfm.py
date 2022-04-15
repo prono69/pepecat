@@ -42,16 +42,16 @@ else:
     lastfm = None
 
 # =================== CONSTANT ===================
-LFM_BIO_ENABLED = "```last.fm current music to bio is now enabled.```"
+LFM_BIO_ENABLED = "```last.fm current music to bio is now enabled```"
 LFM_BIO_DISABLED = (
-    "```last.fm current music to bio is now disabled. Bio reverted to default.```"
+    "```last.fm current music to bio is now disabled ! Bio reverted to default```"
 )
-LFM_BIO_RUNNING = "```last.fm current music to bio is already running.```"
-LFM_BIO_ERR = "```No option specified.```"
-LFM_LOG_ENABLED = "```last.fm logging to bot log is now enabled.```"
-LFM_LOG_DISABLED = "```last.fm logging to bot log is now disabled.```"
-LFM_LOG_ERR = "```No option specified.```"
-ERROR_MSG = "```last.fm module halted, got an unexpected error.```"
+LFM_BIO_RUNNING = "```last.fm current music to bio is already running```"
+LFM_BIO_ERR = "```No option specified```"
+LFM_LOG_ENABLED = "```last.fm logging to bot log is now enabled```"
+LFM_LOG_DISABLED = "```last.fm logging to bot log is now disabled```"
+LFM_LOG_ERR = "```No option specified```"
+ERROR_MSG = "```last.fm module halted , got an unexpected error```"
 # ================================================
 
 
@@ -143,7 +143,7 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
             except FloodWaitError as err:
                 if BOTLOG and LASTFM_.LastLog:
                     await catub.send_message(
-                        BOTLOG_CHATID, f"Error changing bio:\n{err}"
+                        BOTLOG_CHATID, f"Error changing bio :\n{err}"
                     )
         except (
             FloodWaitError,
@@ -152,7 +152,7 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
             AboutTooLongError,
         ) as err:
             if BOTLOG and LASTFM_.LastLog:
-                await catub.send_message(BOTLOG_CHATID, f"Error changing bio:\n{err}")
+                await catub.send_message(BOTLOG_CHATID, f"Error changing bio :\n{err}")
         await sleep(2)
     LASTFM_.RUNNING = False
 
@@ -162,12 +162,12 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
     command=("lastfm", plugin_category),
     info={
         "header": "To fetch scrobble data from last.fm",
-        "description": "Shows currently scrobbling track or most recent scrobbles if nothing is playing.",
+        "description": "Shows currently scrobbling track or most recent scrobbles if nothing is playing",
         "usage": "{tr}lastfm",
     },
 )
 async def last_fm(lastFM):
-    ".lastfm command, fetch scrobble data from last.fm."
+    ".lastfm command , fetch scrobble data from last.fm"
     await lastFM.edit("Processing...")
     preview = None
     playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
@@ -181,14 +181,14 @@ async def last_fm(lastFM):
         rectrack = parse.quote(f"{playing}")
         rectrack = sub("^", "https://open.spotify.com/search/", rectrack)
         if image:
-            output = f"[‎]({image})[{LASTFM_USERNAME}]({username}) __is now listening to:__\n\n• [{playing}]({rectrack})\n"
+            output = f"[‎]({image})[{LASTFM_USERNAME}]({username}) is now listening to :\n\n• [{playing}]({rectrack})\n"
             preview = True
         else:
-            output = f"[{LASTFM_USERNAME}]({username}) __is now listening to:__\n\n• [{playing}]({rectrack})\n"
+            output = f"[{LASTFM_USERNAME}]({username}) is now listening to :\n\n• [{playing}]({rectrack})\n"
     else:
         recent = User(LASTFM_USERNAME, lastfm).get_recent_tracks(limit=3)
         playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
-        output = f"[{LASTFM_USERNAME}]({username}) __was last listening to:__\n\n"
+        output = f"[{LASTFM_USERNAME}]({username}) was last listening to :\n\n"
         for i, track in enumerate(recent):
             LOGS.info(i)
             printable = await artist_and_song(track)
@@ -208,7 +208,7 @@ async def last_fm(lastFM):
     pattern="lastbio (on|off)",
     command=("lastbio", plugin_category),
     info={
-        "header": "To Enable or Disable the last.fm current playing to bio",
+        "header": "To enable or disable the last.fm current playing to bio",
         "usage": [
             "{tr}lastbio on",
             "{tr}lastbio off",
@@ -216,7 +216,7 @@ async def last_fm(lastFM):
     },
 )
 async def lastbio(lfmbio):
-    "To Enable or Disable the last.fm current playing to bio"
+    "To enable or disable the last.fm current playing to bio"
     arg = lfmbio.pattern_match.group(1).lower()
     if arg == "on":
         setrecursionlimit(700000)
@@ -241,7 +241,7 @@ async def lastbio(lfmbio):
     pattern="lastlog (on|off)",
     command=("lastlog", plugin_category),
     info={
-        "header": "To Enable or Disable the last.fm current playing to bot log group",
+        "header": "To enable or disable the last.fm current playing to bot log group",
         "usage": [
             "{tr}lastlog on",
             "{tr}lastlog off",
@@ -249,7 +249,7 @@ async def lastbio(lfmbio):
     },
 )
 async def lastlog(lstlog):
-    "To Enable or Disable the last.fm current playing to bot log group"
+    "To enable or disable the last.fm current playing to bot log group"
     arg = lstlog.pattern_match.group(1).lower()
     LASTFM_.LastLog = False
     if arg == "on":
