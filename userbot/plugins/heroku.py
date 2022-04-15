@@ -33,10 +33,10 @@ HEROKU_API_KEY = Config.HEROKU_API_KEY
     pattern="(set|get|del) var ([\s\S]*)",
     command=("var", plugin_category),
     info={
-        "header": "To manage heroku vars.",
+        "header": "To manage heroku vars",
         "flags": {
             "set": "To set new var in heroku or modify the old var",
-            "get": "To show the already existing var value.",
+            "get": "To show the already existing var value",
             "del": "To delete the existing value",
         },
         "usage": [
@@ -51,12 +51,12 @@ HEROKU_API_KEY = Config.HEROKU_API_KEY
 )
 async def variable(var):  # sourcery no-metrics
     """
-    Manage most of ConfigVars setting, set new var, get current var, or delete var...
+    Manage most of config vars setting , set new var , get current var , or delete var...
     """
     if (Config.HEROKU_API_KEY is None) or (Config.HEROKU_APP_NAME is None):
         return await edit_delete(
             var,
-            "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`.",
+            "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`",
         )
     app = Heroku.app(Config.HEROKU_APP_NAME)
     exe = var.pattern_match.group(1)
@@ -68,10 +68,10 @@ async def variable(var):  # sourcery no-metrics
             variable = var.pattern_match.group(2).split()[0]
             if variable in heroku_var:
                 return await cat.edit(
-                    "**ConfigVars**:" f"\n\n`{variable}` = `{heroku_var[variable]}`\n"
+                    "**Config vars** :" f"\n\n`{variable}` = `{heroku_var[variable]}`\n"
                 )
             await cat.edit(
-                "**ConfigVars**:" f"\n\n__Error:\n-> __`{variable}`__ don't exists__"
+                "**Config vars** :" f"\n\n__Error:\n-> `{variable}` don't exists"
             )
         except IndexError:
             configs = prettyjson(heroku_var.to_dict(), indent=2)
@@ -81,7 +81,7 @@ async def variable(var):  # sourcery no-metrics
                 result = fp.read()
                 await edit_or_reply(
                     cat,
-                    "`[HEROKU]` ConfigVars:\n\n"
+                    "`[HEROKU]` Config vars :\n\n"
                     "================================"
                     f"\n```{result}```\n"
                     "================================",
@@ -98,10 +98,10 @@ async def variable(var):  # sourcery no-metrics
             return await cat.edit("`.set var <ConfigVars-name> <value>`")
         await asyncio.sleep(1.5)
         if variable in heroku_var:
-            await cat.edit(f"`{variable}` **successfully changed to  ->  **`{value}`")
+            await cat.edit(f"`{variable}` **Successfully changed to  ->  **`{value}`")
         else:
             await cat.edit(
-                f"`{variable}`**  successfully added with value`  ->  **{value}`"
+                f"`{variable}`**  Successfully added with value`  ->  **{value}`"
             )
         heroku_var[variable] = value
     elif exe == "del":
@@ -109,12 +109,12 @@ async def variable(var):  # sourcery no-metrics
         try:
             variable = var.pattern_match.group(2).split()[0]
         except IndexError:
-            return await cat.edit("`Please specify ConfigVars you want to delete`")
+            return await cat.edit("`Please specify Config vars you want to delete`")
         await asyncio.sleep(1.5)
         if variable not in heroku_var:
             return await cat.edit(f"`{variable}`**  does not exist**")
 
-        await cat.edit(f"`{variable}`  **successfully deleted**")
+        await cat.edit(f"`{variable}`  **Successfully deleted**")
         del heroku_var[variable]
 
 
@@ -122,7 +122,7 @@ async def variable(var):  # sourcery no-metrics
     pattern="usage$",
     command=("usage", plugin_category),
     info={
-        "header": "To Check dyno usage of userbot and also to know how much left.",
+        "header": "To check dyno usage of userbot and also to know how much left",
         "usage": "{tr}usage",
     },
 )
@@ -133,7 +133,7 @@ async def dyno_usage(dyno):
     if (HEROKU_APP_NAME is None) or (HEROKU_API_KEY is None):
         return await edit_delete(
             dyno,
-            "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`.",
+            "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`",
         )
     dyno = await edit_or_reply(dyno, "`Processing...`")
     useragent = (
@@ -143,15 +143,15 @@ async def dyno_usage(dyno):
     )
     user_id = Heroku.account().id
     headers = {
-        "User-Agent": useragent,
-        "Authorization": f"Bearer {Config.HEROKU_API_KEY}",
-        "Accept": "application/vnd.heroku+json; version=3.account-quotas",
+        "User-Agent" : useragent,
+        "Authorization" : f"Bearer {Config.HEROKU_API_KEY}",
+        "Accept" : "application/vnd.heroku+json; version=3.account-quotas",
     }
     path = "/accounts/" + user_id + "/actions/get-quota"
     r = requests.get(heroku_api + path, headers=headers)
     if r.status_code != 200:
         return await dyno.edit(
-            "`Error: something bad happened`\n\n" f">.`{r.reason}`\n"
+            "`Error : Something bad happened`\n\n" f">.`{r.reason}`\n"
         )
     result = r.json()
     quota = result["account_quota"]
@@ -192,7 +192,7 @@ async def dyno_usage(dyno):
     pattern="(herokulogs|logs)$",
     command=("logs", plugin_category),
     info={
-        "header": "To get recent 100 lines logs from heroku.",
+        "header": "To get recent 100 lines logs from heroku",
         "usage": ["{tr}herokulogs", "{tr}logs"],
     },
 )
@@ -201,24 +201,24 @@ async def _(dyno):
     if (HEROKU_APP_NAME is None) or (HEROKU_API_KEY is None):
         return await edit_delete(
             dyno,
-            "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`.",
+            "Set the required vars in heroku to function this normally `HEROKU_API_KEY` and `HEROKU_APP_NAME`",
         )
     try:
         Heroku = heroku3.from_key(HEROKU_API_KEY)
         app = Heroku.app(HEROKU_APP_NAME)
     except BaseException:
         return await dyno.reply(
-            " Please make sure your Heroku API Key, Your App name are configured correctly in the heroku"
+            " Please make sure your Heroku api key , your app name are configured correctly in the heroku"
         )
     data = app.get_log()
     await edit_or_reply(
-        dyno, data, deflink=True, linktext="**Recent 100 lines of heroku logs: **"
+        dyno, data, deflink=True, linktext="**Recent 100 lines of heroku logs : **"
     )
 
 
 def prettyjson(obj, indent=2, maxlinelength=80):
-    """Renders JSON content with indentation and line splits/concatenations to fit maxlinelength.
-    Only dicts, lists and basic types are supported"""
+    """Renders JSON content with indentation and line splits / concatenations to fit maxlinelength
+    Only dicts , lists and basic types are supported"""
     items, _ = getsubitems(
         obj,
         itemkey="",
