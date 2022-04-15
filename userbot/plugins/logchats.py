@@ -87,7 +87,7 @@ async def log_tagged_messages(event):
     except Exception as e:
         LOGS.info(str(e))
     messaget = media_type(event)
-    resalt = f"#TAGS \n<b>Group : </b><code>{hmm.title}</code>"
+    resalt = f"TAGS \n<b>Group : </b><code>{hmm.title}</code>"
     if full is not None:
         resalt += (
             f"\n<b>From : </b> 👤{_format.htmlmentionuser(full.first_name , full.id)}"
@@ -96,7 +96,7 @@ async def log_tagged_messages(event):
         resalt += f"\n<b>Message type : </b><code>{messaget}</code>"
     else:
         resalt += f"\n<b>Message : </b>{event.message.message}"
-    resalt += f"\n<b>Message link: </b><a href = 'https://t.me/c/{hmm.id}/{event.message.id}'> link</a>"
+    resalt += f"\n<b>Message link : </b><a href = 'https://t.me/c/{hmm.id}/{event.message.id}'> link</a>"
     if not event.is_private:
         await event.client.send_message(
             Config.PM_LOGGER_GROUP_ID,
@@ -110,7 +110,7 @@ async def log_tagged_messages(event):
     pattern="save(?:\s|$)([\s\S]*)",
     command=("save", plugin_category),
     info={
-        "header": "To log the replied message to bot log group so you can check later.",
+        "header": "To log the replied message to bot log group so you can check later",
         "description": "Set PRIVATE_GROUP_BOT_API_ID in vars for functioning of this",
         "usage": [
             "{tr}save",
@@ -128,11 +128,11 @@ async def log(log_text):
             textx = user + log_text.pattern_match.group(1)
             await log_text.client.send_message(BOTLOG_CHATID, textx)
         else:
-            await log_text.edit("`What am I supposed to log?`")
+            await log_text.edit("`What am I supposed to log ?`")
             return
-        await log_text.edit("`Logged Successfully`")
+        await log_text.edit("`Logged successfully`")
     else:
-        await log_text.edit("`This feature requires Logging to be enabled!`")
+        await log_text.edit("`This feature requires logging to be enabled !`")
     await asyncio.sleep(2)
     await log_text.delete()
 
@@ -141,7 +141,7 @@ async def log(log_text):
     pattern="log$",
     command=("log", plugin_category),
     info={
-        "header": "To turn on logging of messages from that chat.",
+        "header": "To turn on logging of messages from that chat",
         "description": "Set PM_LOGGER_GROUP_ID in vars to work this",
         "usage": [
             "{tr}log",
@@ -149,13 +149,13 @@ async def log(log_text):
     },
 )
 async def set_no_log_p_m(event):
-    "To turn on logging of messages from that chat."
+    "To turn on logging of messages from that chat"
     if Config.PM_LOGGER_GROUP_ID != -100:
         chat = await event.get_chat()
         if no_log_pms_sql.is_approved(chat.id):
             no_log_pms_sql.disapprove(chat.id)
             await edit_delete(
-                event, "`logging of messages from this group has been started`", 5
+                event, "`Logging of messages from this group has been started`", 5
             )
 
 
@@ -163,7 +163,7 @@ async def set_no_log_p_m(event):
     pattern="nolog$",
     command=("nolog", plugin_category),
     info={
-        "header": "To turn off logging of messages from that chat.",
+        "header": "To turn off logging of messages from that chat",
         "description": "Set PM_LOGGER_GROUP_ID in vars to work this",
         "usage": [
             "{tr}nolog",
@@ -171,7 +171,7 @@ async def set_no_log_p_m(event):
     },
 )
 async def set_no_log_p_m(event):
-    "To turn off logging of messages from that chat."
+    "To turn off logging of messages from that chat"
     if Config.PM_LOGGER_GROUP_ID != -100:
         chat = await event.get_chat()
         if not no_log_pms_sql.is_approved(chat.id):
@@ -185,7 +185,7 @@ async def set_no_log_p_m(event):
     pattern="pmlog (on|off)$",
     command=("pmlog", plugin_category),
     info={
-        "header": "To turn on or turn off logging of Private messages in pmlogger group.",
+        "header": "To turn on or turn off logging of private messages in pmlogger group",
         "description": "Set PM_LOGGER_GROUP_ID in vars to work this",
         "usage": [
             "{tr}pmlog on",
@@ -194,11 +194,11 @@ async def set_no_log_p_m(event):
     },
 )
 async def set_pmlog(event):
-    "To turn on or turn off logging of Private messages"
+    "To turn on or turn off logging of private messages"
     if Config.PM_LOGGER_GROUP_ID == -100:
         return await edit_delete(
             event,
-            "__For functioning of this you need to set PM_LOGGER_GROUP_ID in config vars__",
+            "For functioning of this you need to set PM_LOGGER_GROUP_ID in config vars",
             10,
         )
     input_str = event.pattern_match.group(1)
@@ -227,7 +227,7 @@ async def set_pmlog(event):
     pattern="grplog (on|off)$",
     command=("grplog", plugin_category),
     info={
-        "header": "To turn on or turn off group tags logging in pmlogger group.",
+        "header": "To turn on or turn off group tags logging in pmlogger group",
         "description": "Set PM_LOGGER_GROUP_ID in vars to work this",
         "usage": [
             "{tr}grplog on",
@@ -240,7 +240,7 @@ async def set_grplog(event):
     if Config.PM_LOGGER_GROUP_ID == -100:
         return await edit_delete(
             event,
-            "__For functioning of this you need to set PM_LOGGER_GROUP_ID in config vars__",
+            "For functioning of this you need to set PM_LOGGER_GROUP_ID in config vars",
             10,
         )
     input_str = event.pattern_match.group(1)
