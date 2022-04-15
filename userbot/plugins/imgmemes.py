@@ -28,7 +28,7 @@ plugin_category = "fun"
     info={
         "header": "Fake google search meme",
         "usage": "{tr}fakegs search query ; what you mean text",
-        "examples": "{tr}fakegs Catuserbot ; One of the Popular userbot",
+        "examples": "{tr}fakegs catuserbot ; One of the popular userbot",
     },
 )
 async def nekobot(cat):
@@ -39,15 +39,15 @@ async def nekobot(cat):
         if cat.is_reply and not reply_to_id.media:
             text = reply_to_id.message
         else:
-            return await edit_delete(cat, "`What should i search in google.`", 5)
-    cate = await edit_or_reply(cat, "`Connecting to https://www.google.com/ ...`")
+            return await edit_delete(cat, "`What should I search in google ?`", 5)
+    cate = await edit_or_reply(cat, "`Connecting to https://www.google.com/...`")
     text = deEmojify(text)
     if ";" in text:
         search, result = text.split(";")
     else:
         await edit_delete(
             cat,
-            "__How should i create meme follow the syntax as show__ `.fakegs top text ; bottom text`",
+            "How should I create meme follow the syntax as show`.fakegs top text ; bottom text`",
             5,
         )
         return
@@ -63,13 +63,13 @@ async def nekobot(cat):
     pattern="trump(?:\s|$)([\s\S]*)",
     command=("trump", plugin_category),
     info={
-        "header": "trump tweet sticker with given custom text",
+        "header": "Trump tweet sticker with given custom text",
         "usage": "{tr}trump <text>",
-        "examples": "{tr}trump Catuserbot is One of the Popular userbot",
+        "examples": "{tr}trump catuserbot is one of the popular userbot",
     },
 )
 async def nekobot(cat):
-    "trump tweet sticker with given custom text_"
+    "Trump tweet sticker with given custom text"
     text = cat.pattern_match.group(1)
     text = re.sub("&", "", text)
     reply_to_id = await reply_id(cat)
@@ -79,7 +79,7 @@ async def nekobot(cat):
         if cat.is_reply and not reply.media:
             text = reply.message
         else:
-            return await edit_delete(cat, "**Trump : **`What should I tweet`", 5)
+            return await edit_delete(cat, "**Trump : **`What should I tweet ?`", 5)
     cate = await edit_or_reply(cat, "`Requesting trump to tweet...`")
     text = deEmojify(text)
     await asyncio.sleep(2)
@@ -94,13 +94,13 @@ async def nekobot(cat):
     pattern="modi(?:\s|$)([\s\S]*)",
     command=("modi", plugin_category),
     info={
-        "header": "modi tweet sticker with given custom text",
+        "header": "Modi tweet sticker with given custom text",
         "usage": "{tr}modi <text>",
-        "examples": "{tr}modi Catuserbot is One of the Popular userbot",
+        "examples": "{tr}modi catuserbot is one of the popular userbot",
     },
 )
 async def nekobot(cat):
-    "modi tweet sticker with given custom text"
+    "Modi tweet sticker with given custom text"
     text = cat.pattern_match.group(1)
     text = re.sub("&", "", text)
     reply_to_id = await reply_id(cat)
@@ -110,7 +110,7 @@ async def nekobot(cat):
         if cat.is_reply and not reply.media:
             text = reply.message
         else:
-            return await edit_delete(cat, "**Modi : **`What should I tweet`", 5)
+            return await edit_delete(cat, "**Modi : **`What should I tweet ?`", 5)
     cate = await edit_or_reply(cat, "Requesting modi to tweet...")
     text = deEmojify(text)
     await asyncio.sleep(2)
@@ -127,7 +127,7 @@ async def nekobot(cat):
     info={
         "header": "Change my mind banner with given custom text",
         "usage": "{tr}cmm <text>",
-        "examples": "{tr}cmm Catuserbot is One of the Popular userbot",
+        "examples": "{tr}cmm catuserbot is one of the popular userbot",
     },
 )
 async def nekobot(cat):
@@ -140,8 +140,8 @@ async def nekobot(cat):
         if cat.is_reply and not reply.media:
             text = reply.message
         else:
-            return await edit_delete(cat, "`Give text to write on banner, man`", 5)
-    cate = await edit_or_reply(cat, "`Your banner is under creation wait a sec...`")
+            return await edit_delete(cat, "`Give text to write on banner , man`", 5)
+    cate = await edit_or_reply(cat, "`Your banner is under creation wait a second...`")
     text = deEmojify(text)
     await asyncio.sleep(2)
     catfile = await changemymind(text)
@@ -155,13 +155,13 @@ async def nekobot(cat):
     pattern="kanna(?:\s|$)([\s\S]*)",
     command=("kanna", plugin_category),
     info={
-        "header": "kanna chan sticker with given custom text",
+        "header": "Kanna chan sticker with given custom text",
         "usage": "{tr}kanna text",
-        "examples": "{tr}kanna Catuserbot is One of the Popular userbot",
+        "examples": "{tr}kanna catuserbot is one of the popular userbot",
     },
 )
 async def nekobot(cat):
-    "kanna chan sticker with given custom text"
+    "Kanna chan sticker with given custom text"
     text = cat.pattern_match.group(1)
     text = re.sub("&", "", text)
     reply_to_id = await reply_id(cat)
@@ -171,7 +171,7 @@ async def nekobot(cat):
         if cat.is_reply and not reply.media:
             text = reply.message
         else:
-            return await edit_delete(cat, "**Kanna : **`What should i show you`", 5)
+            return await edit_delete(cat, "**Kanna : **`What should I show you ?`", 5)
     cate = await edit_or_reply(cat, "`Kanna is writing your text...`")
     text = deEmojify(text)
     await asyncio.sleep(2)
@@ -188,7 +188,7 @@ async def nekobot(cat):
     info={
         "header": "The desired person tweet sticker with given custom text",
         "usage": "{tr}tweet <username> ; <text>",
-        "examples": "{tr}tweet iamsrk ; Catuserbot is One of the Popular userbot",
+        "examples": "{tr}tweet iamsrk ; catuserbot is one of the popular userbot",
     },
 )
 async def nekobot(cat):
@@ -204,7 +204,7 @@ async def nekobot(cat):
         else:
             return await edit_delete(
                 cat,
-                "what should I tweet? Give some text and format must be like `.tweet username ; your text` ",
+                "What should I tweet ? Give some text and format must be like `.tweet username ; your text` ",
                 5,
             )
     if ";" in text:
@@ -212,7 +212,7 @@ async def nekobot(cat):
     else:
         await edit_delete(
             cat,
-            "__what should I tweet? Give some text and format must be like__ `.tweet username ; your text`",
+            "What should I tweet ? Give some text and format must be like `.tweet username ; your text`",
             5,
         )
         return
