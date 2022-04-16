@@ -18,20 +18,20 @@ GENIUS = Config.GENIUS_API_TOKEN
     pattern="lyrics(?:\s|$)([\s\S]*)",
     command=("lyrics", plugin_category),
     info={
-        "header": "Song lyrics searcher using genius api.",
-        "description": "if you want to provide artist name with song name then use this format {tr}lyrics <artist name> - <song name> . if you use this format in your query then flags won't work. by default it will show first query.",
+        "header": "Song lyrics searcher using genius api",
+        "description": "If you want to provide artist name with song name then use this format {tr}lyrics <artist name> - <song name> ! If you use this format in your query then flags won't work , by default it will show first query",
         "flags": {
-            "-l": "to get list of search lists.",
-            "-g": "To get paticular song lyrics.",
+            "-l": "to get list of search lists",
+            "-n": "To get particular song lyrics",
         },
-        "note": "For functioning of this command set the GENIUS_API_TOKEN in heroku. Get value from  https://genius.com/developers.",
+        "note": "For functioning of this command set the GENIUS_API_TOKEN in heroku , get value from  https://genius.com/developers",
         "usage": [
             "{tr}lyrics <artist name> - <song name>",
             "{tr}lyrics -l <song name>",
             "{tr}lyrics -n<song number> <song name>",
         ],
         "examples": [
-            "{tr}lyrics Armaan Malik - butta bomma",
+            "{tr}lyrics Armaan malik - butta bomma",
             "{tr}lyrics -l butta bomma",
             "{tr}lyrics -n2 butta bomma",
         ],
@@ -50,14 +50,14 @@ async def lyrics(event):  # sourcery no-metrics
     try:
         songno = songno[0]
         songno = songno.replace("-n", "")
-        match = match.replace("-n" + songno, "")
+        match = match.replace(f"-n{songno}", "")
         songno = int(songno)
     except IndexError:
         songno = 1
     if songno < 1 or songno > 10:
         return await edit_or_reply(
             event,
-            "`song number must be in between 1 to 10 use -l flag to query results`",
+            "`Song number must be in between 1 to 10 use -l flag to query results`",
         )
     match = match.replace("-l", "")
     listview = bool(listview)
@@ -76,21 +76,21 @@ async def lyrics(event):  # sourcery no-metrics
             songs = None
         if songs is None:
             return await catevent.edit(f"Song **{artist} - {song}** not found!")
-        result = f"**Search query**: \n`{artist} - {song}`\n\n```{songs.lyrics}```"
+        result = f"**Search query** : \n`{artist} - {song}`\n\n```{songs.lyrics}```"
     else:
         catevent = await edit_or_reply(event, f"`Searching lyrics for {query}...`")
         response = genius.search_songs(query)
-        msg = f"**The songs found for the given query:** `{query}`\n\n"
+        msg = f"**The songs found for the given query :** `{query}`\n\n"
         if len(response["hits"]) == 0:
             return await edit_or_reply(
-                catevent, f"**I can't find lyrics for the given query: **`{query}`"
+                catevent, f"**I can't find lyrics for the given query : **`{query}`"
             )
         for i, an in enumerate(response["hits"], start=1):
             msg += f"{i}. `{an['result']['title']}`\n"
         if listview:
             result = msg
         else:
-            result = f"**The song found for the given query:** `{query}`\n\n"
+            result = f"**The song found for the given query :** `{query}`\n\n"
             if songno > len(response["hits"]):
                 return await edit_or_reply(
                     catevent,
