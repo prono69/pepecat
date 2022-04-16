@@ -19,7 +19,7 @@ plugin_category = "extra"
     pattern="mask$",
     command=("mask", plugin_category),
     info={
-        "header": "reply to image to get hazmat suit for that image.",
+        "header": "Reply to image to get hazmat suit for that image",
         "usage": "{tr}mask",
     },
 )
@@ -27,10 +27,10 @@ async def _(catbot):
     "Hazmat suit maker"
     reply_message = await catbot.get_reply_message()
     if not reply_message.media or not reply_message:
-        return await edit_or_reply(catbot, "```reply to media message```")
+        return await edit_or_reply(catbot, "```Reply to media message```")
     chat = "@hazmat_suit_bot"
     if reply_message.sender.bot:
-        return await edit_or_reply(catbot, "```Reply to actual users message.```")
+        return await edit_or_reply(catbot, "```Reply to actual users message```")
     event = await catbot.edit("```Processing```")
     async with catbot.client.conversation(chat) as conv:
         try:
@@ -45,7 +45,7 @@ async def _(catbot):
             )
         if response.text.startswith("Forward"):
             await event.edit(
-                "```can you kindly disable your forward privacy settings for good?```"
+                "```Can you kindly disable your forward privacy settings for good ?```"
             )
         else:
             await catbot.client.send_file(event.chat_id, response.message.media)
@@ -56,21 +56,21 @@ async def _(catbot):
     pattern="awooify$",
     command=("awooify", plugin_category),
     info={
-        "header": "Check yourself by replying to image.",
+        "header": "Check yourself by replying to image",
         "usage": "{tr}awooify",
     },
 )
 async def catbot(catmemes):
-    "replied Image will be face of other image"
+    "Replied Image will be face of other image"
     replied = await catmemes.get_reply_message()
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if not replied:
-        return await edit_or_reply(catmemes, "reply to a supported media file")
+        return await edit_or_reply(catmemes, "Reply to a supported media file")
     if replied.media:
-        catevent = await edit_or_reply(catmemes, "passing to telegraph...")
+        catevent = await edit_or_reply(catmemes, "Passing to telegraph...")
     else:
-        return await edit_or_reply(catmemes, "reply to a supported media file")
+        return await edit_or_reply(catmemes, "Reply to a supported media file")
     download_location = await catmemes.client.download_media(
         replied, Config.TMP_DOWNLOAD_DIRECTORY
     )
@@ -81,12 +81,12 @@ async def catbot(catmemes):
         if size > 5242880:
             os.remove(download_location)
             return await catevent.edit(
-                "the replied file size is not supported it must me below 5 mb"
+                "The replied file size is not supported it must me below 5 mb"
             )
-        await catevent.edit("generating image..")
+        await catevent.edit("Generating image..")
     else:
         os.remove(download_location)
-        return await catevent.edit("the replied file is not supported")
+        return await catevent.edit("The replied file is not supported")
     try:
         response = upload_file(download_location)
         os.remove(download_location)
@@ -103,21 +103,21 @@ async def catbot(catmemes):
     pattern="lolice$",
     command=("lolice", plugin_category),
     info={
-        "header": "image masker check your self by replying to image.",
+        "header": "Image masker check your self by replying to image",
         "usage": "{tr}lolice",
     },
 )
 async def catbot(catmemes):
-    "replied Image will be face of other image"
+    "Replied Image will be face of other image"
     replied = await catmemes.get_reply_message()
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if not replied:
-        return await edit_or_reply(catmemes, "reply to a supported media file")
+        return await edit_or_reply(catmemes, "Reply to a supported media file")
     if replied.media:
-        catevent = await edit_or_reply(catmemes, "passing to telegraph...")
+        catevent = await edit_or_reply(catmemes, "Passing to telegraph...")
     else:
-        return await edit_or_reply(catmemes, "reply to a supported media file")
+        return await edit_or_reply(catmemes, "Reply to a supported media file")
     download_location = await catmemes.client.download_media(
         replied, Config.TMP_DOWNLOAD_DIRECTORY
     )
@@ -128,12 +128,12 @@ async def catbot(catmemes):
         if size > 5242880:
             os.remove(download_location)
             return await catevent.edit(
-                "the replied file size is not supported it must me below 5 mb"
+                "The replied file size is not supported it must me below 5 mb"
             )
-        await catevent.edit("generating image..")
+        await catevent.edit("Generating image..")
     else:
         os.remove(download_location)
-        return await catevent.edit("the replied file is not supported")
+        return await catevent.edit("The replied file is not supported")
     try:
         response = upload_file(download_location)
         os.remove(download_location)
@@ -150,7 +150,7 @@ async def catbot(catmemes):
     pattern="bun$",
     command=("bun", plugin_category),
     info={
-        "header": "reply to image and check yourself.",
+        "header": "Reply to image and check yourself",
         "usage": "{tr}bun",
     },
 )
@@ -160,11 +160,11 @@ async def catbot(catmemes):
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if not replied:
-        return await edit_or_reply(catmemes, "reply to a supported media file")
+        return await edit_or_reply(catmemes, "Reply to a supported media file")
     if replied.media:
-        catevent = await edit_or_reply(catmemes, "passing to telegraph...")
+        catevent = await edit_or_reply(catmemes, "Passing to telegraph...")
     else:
-        return await edit_or_reply(catmemes, "reply to a supported media file")
+        return await edit_or_reply(catmemes, "Reply to a supported media file")
     download_location = await catmemes.client.download_media(
         replied, Config.TMP_DOWNLOAD_DIRECTORY
     )
@@ -175,12 +175,12 @@ async def catbot(catmemes):
         if size > 5242880:
             os.remove(download_location)
             return await catevent.edit(
-                "the replied file size is not supported it must me below 5 mb"
+                "The replied file size is not supported it must me below 5 mb"
             )
-        await catevent.edit("generating image..")
+        await catevent.edit("Generating image..")
     else:
         os.remove(download_location)
-        return await catevent.edit("the replied file is not supported")
+        return await catevent.edit("The replied file is not supported")
     try:
         response = upload_file(download_location)
         os.remove(download_location)
@@ -197,21 +197,21 @@ async def catbot(catmemes):
     pattern="iphx$",
     command=("iphx", plugin_category),
     info={
-        "header": "replied image as iphone x wallpaper.",
+        "header": "Replied image as iphone x wallpaper",
         "usage": "{tr}iphx",
     },
 )
 async def catbot(catmemes):
-    "replied image as iphone x wallpaper."
+    "Replied image as iphone x wallpaper"
     replied = await catmemes.get_reply_message()
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     if not replied:
-        return await edit_or_reply(catmemes, "reply to a supported media file")
+        return await edit_or_reply(catmemes, "Reply to a supported media file")
     if replied.media:
-        catevent = await edit_or_reply(catmemes, "passing to telegraph...")
+        catevent = await edit_or_reply(catmemes, "Passing to telegraph...")
     else:
-        return await edit_or_reply(catmemes, "reply to a supported media file")
+        return await edit_or_reply(catmemes, "Reply to a supported media file")
     download_location = await catmemes.client.download_media(
         replied, Config.TMP_DOWNLOAD_DIRECTORY
     )
@@ -222,18 +222,18 @@ async def catbot(catmemes):
         if size > 5242880:
             os.remove(download_location)
             return await catevent.edit(
-                "the replied file size is not supported it must me below 5 mb"
+                "The replied file size is not supported it must me below 5 mb"
             )
-        await catevent.edit("generating image..")
+        await catevent.edit("Generating image..")
     else:
         os.remove(download_location)
-        return await catevent.edit("the replied file is not supported")
+        return await catevent.edit("The replied file is not supported")
     try:
         response = upload_file(download_location)
         os.remove(download_location)
     except exceptions.TelegraphException as exc:
         os.remove(download_location)
-        return await catevent.edit("ERROR: " + str(exc))
+        return await catevent.edit("ERROR : " + str(exc))
     cat = f"https://telegra.ph{response[0]}"
     cat = await iphonex(cat)
     await catevent.delete()
