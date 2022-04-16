@@ -43,9 +43,9 @@ plugin_category = "extra"
     command=("logo", plugin_category),
     info={
         "header": "Make a logo in image or sticker",
-        "description": "Just a fun purpose plugin to create logo in image or in sticker.",
+        "description": "Just a fun purpose plugin to create logo in image or in sticker",
         "flags": {
-            "s": "To create a logo in sticker instade of image.",
+            "s": "To create a logo in sticker instade of image",
         },
         "usage": [
             "{tr}logo <text>",
@@ -65,9 +65,9 @@ async def very(event):
     if not text and reply:
         text = reply.text
     if not text:
-        return await edit_delete(event, "**ಠ∀ಠ Gimmi text to make logo**")
+        return await edit_delete(event, "**Give me text to make logo**")
     reply_to_id = await reply_id(event)
-    catevent = await edit_or_reply(event, "`Processing.....`")
+    catevent = await edit_or_reply(event, "`Processing...`")
     LOGO_FONT_SIZE = gvarstatus("LOGO_FONT_SIZE") or 220
     LOGO_FONT_WIDTH = gvarstatus("LOGO_FONT_WIDTH") or 2
     LOGO_FONT_HEIGHT = gvarstatus("LOGO_FONT_HEIGHT") or 2
@@ -138,9 +138,9 @@ async def very(event):
     command=("lbg", plugin_category),
     info={
         "header": "Change the background of logo",
-        "description": "To change the background on which logo will created, in **bg** there few built-in backgrounds.",
+        "description": "To change the background on which logo will created , in **bg** there few built-in backgrounds",
         "flags": {
-            "c": "Custom background for logo, can set by giving a telegraph link or reply to media.",
+            "c": "Custom background for logo , can set by giving a telegraph link or reply to media",
         },
         "usage": [
             "{tr}lbg <background color code>",
@@ -160,7 +160,7 @@ async def bad(event):
     soup = BeautifulSoup(source.text, features="html.parser")
     links = soup.find_all("a", class_="js-navigation-open Link--primary")
     bg_name = []
-    lbg_list = "**Available background names are here:-**\n\n"
+    lbg_list = "**Available background names are here :-**\n\n"
     for i, each in enumerate(links, start=1):
         cat = os.path.splitext(each.text)[0]
         bg_name.append(cat)
@@ -175,11 +175,11 @@ async def bad(event):
             output = await _cattools.media_to_pic(event, reply_message)
             convert_toimage(output[1], filename="./temp/bg_img.jpg")
             return await edit_delete(
-                event, "This media is successfully set as background."
+                event, "This media is successfully set as background"
             )
         if not input_str.startswith("https://t"):
             return await edit_delete(
-                event, "Give a valid Telegraph picture link, Or reply to a media."
+                event, "Give a valid telegraph picture link , or reply to a media"
             )
         addgvar("LOGO_BACKGROUND", input_str)
         return await edit_delete(
@@ -203,15 +203,15 @@ async def bad(event):
     pattern="lf(|c|s|h|w|sc|sw)(?:\s|$)([\s\S]*)",
     command=("lf", plugin_category),
     info={
-        "header": "Change text style for logo.",
-        "description": "Customise logo font, font size, font position like text hight or width.",
+        "header": "Change text style for logo",
+        "description": "Customise logo font, font size , font position like text height or width",
         "flags": {
-            "c": "To change color of logo font.",
-            "s": "To change size of logo font.",
-            "h": "To change hight of logo font.",
-            "w": "To change width of logo font.",
-            "sw": "To change stroke width of logo font.",
-            "sc": "To change stroke color of logo font.",
+            "c": "To change color of logo font",
+            "s": "To change size of logo font",
+            "h": "To change hight of logo font",
+            "w": "To change width of logo font",
+            "sw": "To change stroke width of logo font",
+            "sc": "To change stroke color of logo font",
         },
         "usage": [
             "{tr}lf <font name>",
@@ -242,7 +242,7 @@ async def pussy(event):
         soup = BeautifulSoup(source.text, features="html.parser")
         links = soup.find_all("a", class_="js-navigation-open Link--primary")
         logo_font = []
-        font_name = "**Available font names are here:-**\n\n"
+        font_name = "**Available font names are here :-**\n\n"
         for i, each in enumerate(links, start=1):
             cat = os.path.splitext(each.text)[0]
             logo_font.append(cat)
@@ -275,7 +275,7 @@ async def pussy(event):
         if not input_str:
             return await edit_delete(
                 event,
-                f"**Available color names are here:-**\n\n{fg_list}",
+                f"**Available color names are here :-**\n\n{fg_list}",
                 time=80,
             )
         if input_str not in fg_name:
@@ -283,14 +283,14 @@ async def pussy(event):
             await asyncio.sleep(1)
             await edit_delete(
                 catevent,
-                f"**Available color names are here:-**\n\n{fg_list}",
+                f"**Available color names are here :-**\n\n{fg_list}",
                 time=80,
             )
         elif cmd == "c":
             addgvar("LOGO_FONT_COLOR", input_str)
             await edit_delete(
                 event,
-                f"**Foreground color for logo changed to :-** `{input_str}`",
+                f"**Foreground colour for logo changed to :-** `{input_str}`",
                 10,
             )
         else:
@@ -315,7 +315,7 @@ async def pussy(event):
             else:
                 await edit_delete(
                     event,
-                    f"**Font size is between 0 - 1000, You can't set limit to :** `{input_str}`",
+                    f"**Font size is between 0 - 1000 , you can't set limit to :** `{input_str}`",
                 )
         elif cmd == "w":
             input_str = float(input_str)
@@ -327,19 +327,19 @@ async def pussy(event):
             else:
                 await edit_delete(
                     event,
-                    f"**Font width is between 0 - 100, You can't set limit to {input_str}",
+                    f"**Font width is between 0 - 100 , you can't set limit to {input_str}",
                 )
         elif cmd == "h":
             input_str = float(input_str)
             if input_str > 0 and input_str <= 100:
                 addgvar("LOGO_FONT_HEIGHT", input_str)
                 await edit_delete(
-                    event, f"**Font hight is changed to :-** `{input_str}`"
+                    event, f"**Font height is changed to :-** `{input_str}`"
                 )
             else:
                 await edit_delete(
                     event,
-                    f"**Font hight is between 0 - 100, You can't set limit to {input_str}",
+                    f"**Font height is between 0 - 100 , you can't set limit to {input_str}",
                 )
         elif cmd == "sw":
             input_str = int(input_str)
@@ -351,7 +351,7 @@ async def pussy(event):
             else:
                 await edit_delete(
                     event,
-                    f"**Font stroke width size is between 0 - 100, You can't set limit to :** `{input_str}`",
+                    f"**Font stroke width size is between 0 - 100 , You can't set limit to :** `{input_str}`",
                 )
 
 
@@ -360,11 +360,11 @@ async def pussy(event):
     command=("lvar", plugin_category),
     info={
         "header": "Manage values which set for logo",
-        "description": "To see which value have been set, or to delete a value , or to reset all values.",
+        "description": "To see which value have been set , or to delete a value , or to reset all values",
         "flags": {
-            "g": "Gets the value of the var which you set manually for logo.",
-            "d": "Delete the value of the var which you set manually for logo.",
-            "r": "Delete all the values of the vars which you set manually for logo & reset all changes.",
+            "g": "Gets the value of the var which you set manually for logo",
+            "d": "Delete the value of the var which you set manually for logo",
+            "r": "Delete all the values of the vars which you set manually for logo & reset all changes",
         },
         "usage": [
             "{tr}glvar <var code>",
@@ -385,7 +385,7 @@ async def cat(event):
         var = vars_list[input_str]
         if cmd == "g":
             var_data = gvarstatus(var)
-            await edit_delete(event, f"📑 Value of **{var}** is  `{var_data}`", time=60)
+            await edit_delete(event, f"Value of **{var}** is  `{var_data}`", time=60)
         elif cmd == "d":
             if input_str == "lbg" and os.path.exists("./temp/bg_img.jpg"):
                 os.remove("./temp/bg_img.jpg")
@@ -393,7 +393,7 @@ async def cat(event):
                 os.remove("./temp/logo.ttf")
             delgvar(var)
             await edit_delete(
-                event, f"📑 Value of **{var}** is now deleted & set to default.", time=60
+                event, f"Value of **{var}** is now deleted & set to default", time=60
             )
     elif not input_str and cmd == "r":
         delgvar("LOGO_BACKGROUND")
@@ -410,12 +410,12 @@ async def cat(event):
             os.remove("./temp/logo.ttf")
         await edit_delete(
             event,
-            "📑 Values for all vars deleted successfully & all settings reset.",
+            "Values for all vars deleted successfully & all settings reset",
             time=20,
         )
     else:
         await edit_delete(
             event,
-            f"**📑 Give correct vars name :**\n__Correct Vars code list is :__\n\n1. `lbg` : **LOGO_BACKGROUND**\n2. `lfc` : **LOGO_FONT_COLOR**\n3. `lf` : **LOGO_FONT**\n4. `lfs` : **LOGO_FONT_SIZE**\n5. `lfh` : **LOGO_FONT_HEIGHT**\n6. `lfw` : **LOGO_FONT_WIDTH**",
+            f"**Give correct vars name :**\nCorrect Vars code list is :\n\n1. `lbg` : **LOGO_BACKGROUND**\n2. `lfc` : **LOGO_FONT_COLOR**\n3. `lf` : **LOGO_FONT**\n4. `lfs` : **LOGO_FONT_SIZE**\n5. `lfh` : **LOGO_FONT_HEIGHT**\n6. `lfw` : **LOGO_FONT_WIDTH**",
             time=60,
         )
