@@ -14,17 +14,17 @@ plugin_category = "utils"
 async def ocr_space_file(
     filename, overlay=False, api_key=Config.OCR_SPACE_API_KEY, language="eng"
 ):
-    """OCR.space API request with local file.
+    """Ocr.space api request with local file
         Python3.5 - not tested on 2.7
-    :param filename: Your file path & name.
-    :param overlay: Is OCR.space overlay required in your response.
-                    Defaults to False.
-    :param api_key: OCR.space API key.
-                    Defaults to 'helloworld'.
-    :param language: Language code to be used in OCR.
+    :Param filename : Your file path & name
+    :Param overlay : Is ocr.space overlay required in your response
+                    Defaults to false
+    :Param api_key : Ocr.space API key.
+                    Defaults to 'helloworld'
+    :Param language : Language code to be used in ocr
                     List of available language codes can be found on https://ocr.space/OCRAPI
-                    Defaults to 'en'.
-    :return: Result in JSON format.
+                    Defaults to 'en'
+    :Return : Result in json format
     """
 
     payload = {
@@ -45,18 +45,18 @@ async def ocr_space_file(
     pattern="ocr(?:\s|$)([\s\S]*)",
     command=("ocr", plugin_category),
     info={
-        "header": "To read text in image and print it.",
-        "description": "Reply to an image or sticker to extract text from it.\n\nGet language codes from [here](https://ocr.space/ocrapi).",
+        "header": "To read text in image and print it",
+        "description": "Reply to an image or sticker to extract text from it\n\nGet language codes from [here](https://ocr.space/ocrapi)",
         "usage": "{tr}ocr <language code>",
         "examples": "{tr}ocr eng",
     },
 )
 async def ocr(event):
-    "To read text in image."
+    "To read text in image"
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if mediatype is None or mediatype not in ["Photo", "Document"]:
-        return await edit_delete(event, "__Reply to image to read text on it__")
+        return await edit_delete(event, "Reply to image to read text on it")
     catevent = await edit_or_reply(event, "`Reading...`")
     if not os.path.isdir(Config.TEMP_DIR):
         os.makedirs(Config.TEMP_DIR)
@@ -66,7 +66,7 @@ async def ocr(event):
     try:
         ParsedText = test_file["ParsedResults"][0]["ParsedText"]
     except BaseException:
-        await catevent.edit("`Couldn't read it.`\n`I guess I need new glasses.`")
+        await catevent.edit("`Couldn't read it`\n`I guess I need new glasses`")
     else:
-        await catevent.edit(f"**Here's what I could read from it:**\n\n`{ParsedText}`")
+        await catevent.edit(f"**Here's what I could read from it :**\n\n`{ParsedText}`")
     os.remove(downloaded_file_name)
