@@ -11,7 +11,7 @@ plugin_category = "extra"
     pattern="(tagall|all)(?:\s|$)([\s\S]*)",
     command=("tagall", plugin_category),
     info={
-        "header": "tags recent 50 persons in the group may not work for all",
+        "header": "Tags recent 50 persons in the group may not work for all",
         "usage": [
             "{tr}all <text>",
             "{tr}tagall",
@@ -19,7 +19,7 @@ plugin_category = "extra"
     },
 )
 async def _(event):
-    "To tag all."
+    "To tag all"
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(2)
     mentions = input_str or "@all"
@@ -34,13 +34,13 @@ async def _(event):
     pattern="report$",
     command=("report", plugin_category),
     info={
-        "header": "To tags admins in group.",
+        "header": "To tags admins in group",
         "usage": "{tr}report",
     },
 )
 async def _(event):
-    "To tags admins in group."
-    mentions = "@admin: **Spam Spotted**"
+    "To tags admins in group"
+    mentions = "@admin : **Spam spotted**"
     chat = await event.get_input_chat()
     reply_to_id = await reply_id(event)
     async for x in event.client.iter_participants(
@@ -56,7 +56,7 @@ async def _(event):
     pattern="men ([\s\S]*)",
     command=("mention", plugin_category),
     info={
-        "header": "Tags that person with the given custom text.",
+        "header": "Tags that person with the given custom text",
         "usage": [
             "{tr}men username/userid text",
             "text (username/mention)[custom text] text",
@@ -65,7 +65,7 @@ async def _(event):
     },
 )
 async def _(event):
-    "Tags that person with the given custom text."
+    "Tags that person with the given custom text"
     user, input_str = await get_user_from_event(event)
     if not user:
         return
