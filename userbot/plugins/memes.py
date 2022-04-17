@@ -49,7 +49,7 @@ async def get_user(event):
             replied_user = await event.client(GetFullUserRequest(user_object.id))
 
         except (TypeError, ValueError):
-            await event.edit("`I don't slap aliens, they ugly AF !!`")
+            await event.edit("`I don't slap aliens , they ugly af !`")
             return None
     return replied_user
 
@@ -58,7 +58,7 @@ async def get_user(event):
     pattern="(\w+)say ([\s\S]*)",
     command=("cowsay", plugin_category),
     info={
-        "header": "A fun art plugin.",
+        "header": "A fun art plugin",
         "types": [
             "default",
             "beavis",
@@ -118,13 +118,13 @@ async def get_user(event):
     },
 )
 async def univsaye(cowmsg):
-    "A fun art plugin."
+    "A fun art plugin"
     arg = cowmsg.pattern_match.group(1).lower()
     text = cowmsg.pattern_match.group(2)
     if arg == "cow":
         arg = "default"
     if arg not in cow.COWACTERS:
-        return await edit_delete(cowmsg, "check help menu to know the correct options.")
+        return await edit_delete(cowmsg, "Check help menu to know the correct options")
     cheese = cow.get_cow(arg)
     cheese = cheese()
     await edit_or_reply(cowmsg, f"`{cheese.milk(text).replace('`', '´')}`")
@@ -134,7 +134,7 @@ async def univsaye(cowmsg):
     pattern="coin ?([\s\S]*)",
     command=("coin", plugin_category),
     info={
-        "header": "Coin flipper.",
+        "header": "Coin flipper",
         "usage": [
             "{tr}coin <heads/tails>",
             "{tr}coin",
@@ -142,7 +142,7 @@ async def univsaye(cowmsg):
     },
 )
 async def _(event):
-    "flips a coin."
+    "Flips a coin"
     r = random.randint(1, 100)
     input_str = event.pattern_match.group(1)
     if input_str:
@@ -150,27 +150,27 @@ async def _(event):
     if r % 2 == 1:
         if input_str == "heads":
             await edit_or_reply(
-                event, "The coin landed on: **Heads**. \n You were correct."
+                event, "The coin landed on : **Heads** \n You were correct"
             )
         elif input_str == "tails":
             await edit_or_reply(
                 event,
-                "The coin landed on: **Heads**. \n You weren't correct, try again ...",
+                "The coin landed on : **Heads** \n You weren't correct , try again...",
             )
         else:
-            await edit_or_reply(event, "The coin landed on: **Heads**.")
+            await edit_or_reply(event, "The coin landed on : **Heads**")
     elif r % 2 == 0:
         if input_str == "tails":
             await edit_or_reply(
-                event, "The coin landed on: **Tails**. \n You were correct."
+                event, "The coin landed on : **Tails** \n You were correct"
             )
         elif input_str == "heads":
             await edit_or_reply(
                 event,
-                "The coin landed on: **Tails**. \n You weren't correct, try again ...",
+                "The coin landed on : **Tails** \n You weren't correct , try again...",
             )
         else:
-            await edit_or_reply(event, "The coin landed on: **Tails**.")
+            await edit_or_reply(event, "The coin landed on : **Tails**")
     else:
         await edit_or_reply(event, r"¯\_(ツ)_/¯")
 
@@ -179,12 +179,12 @@ async def _(event):
     pattern="slap(?:\s|$)([\s\S]*)",
     command=("slap", plugin_category),
     info={
-        "header": "To slap a person with random objects !!",
+        "header": "To slap a person with random objects !",
         "usage": "{tr}slap reply/username>",
     },
 )
 async def who(event):
-    "To slap a person with random objects !!"
+    "To slap a person with random objects !"
     replied_user = await get_user(event)
     if replied_user is None:
         return
@@ -193,7 +193,7 @@ async def who(event):
         await edit_or_reply(event, caption)
     except BaseException:
         await edit_or_reply(
-            event, "`Can't slap this person, need to fetch some sticks and stones !!`"
+            event, "`Can't slap this person , need to fetch some sticks and stones !`"
         )
 
 
@@ -201,7 +201,7 @@ async def who(event):
     pattern="(yes|no|maybe|decide)$",
     command=("decide", plugin_category),
     info={
-        "header": "To decide something will send gif according to given input or ouput.",
+        "header": "To decide something will send gif according to given input or ouput",
         "usage": [
             "{tr}yes",
             "{tr}no",
@@ -211,7 +211,7 @@ async def who(event):
     },
 )
 async def decide(event):
-    "To send random gif associated with yes or no or maybe."
+    "To send random gif associated with yes or no or maybe"
     decision = event.pattern_match.group(1).lower()
     message_id = event.reply_to_msg_id or None
     if decision != "decide":
@@ -229,17 +229,17 @@ async def decide(event):
     pattern="shout(?:\s|$)([\s\S]*)",
     command=("shout", plugin_category),
     info={
-        "header": "shouts the text in a fun way",
+        "header": "Shouts the text in a fun way",
         "usage": [
             "{tr}shout <text>",
         ],
     },
 )
 async def shout(args):
-    "shouts the text in a fun way"
+    "Shouts the text in a fun way"
     input_str = args.pattern_match.group(1)
     if not input_str:
-        return await edit_delete(args, "__What should i shout?__")
+        return await edit_delete(args, "What should I shout ?")
     words = input_str.split()
     msg = ""
     for messagestr in words:
@@ -260,7 +260,7 @@ async def shout(args):
     pattern="owo ?([\s\S]*)",
     command=("owo", plugin_category),
     info={
-        "header": "check yourself.",
+        "header": "Check yourself",
         "usage": [
             "{tr}owo <text>",
         ],
@@ -275,7 +275,7 @@ async def faces(owo):
     elif textx:
         message = textx.text
     else:
-        return await edit_or_reply(owo, "` UwU no text given! `")
+        return await edit_or_reply(owo, "` OoO no text given ! `")
     reply_text = re.sub(r"(r|l)", "w", message)
     reply_text = re.sub(r"(R|L)", "W", reply_text)
     reply_text = re.sub(r"n([aeiou])", r"ny\1", reply_text)
@@ -290,24 +290,24 @@ async def faces(owo):
     pattern="clap(?:\s|$)([\s\S]*)",
     command=("clap", plugin_category),
     info={
-        "header": "Praise people!",
+        "header": "Praise people",
         "usage": [
             "{tr}clap <text>",
         ],
     },
 )
 async def claptext(event):
-    "Praise people!"
+    "Praise people"
     textx = await event.get_reply_message()
     if event.pattern_match.group(1):
         query = event.pattern_match.group(1)
     elif textx.message:
         query = textx.message
     else:
-        return await edit_or_reply(event, "`Hah, I don't clap pointlessly!`")
-    reply_text = "👏 "
-    reply_text += query.replace(" ", " 👏 ")
-    reply_text += " 👏"
+        return await edit_or_reply(event, "`Hah , I don't clap pointlessly !`")
+    reply_text = "👏🏻 "
+    reply_text += query.replace(" ", " 👏🏻 ")
+    reply_text += " 👏🏻"
     await edit_or_reply(event, reply_text)
 
 
@@ -315,14 +315,14 @@ async def claptext(event):
     pattern="smk(?:\s|$)([\s\S]*)",
     command=("smk", plugin_category),
     info={
-        "header": "A shit module for ツ , who cares.",
+        "header": "A shit module for ツ , who cares",
         "usage": [
             "{tr}smk <text>",
         ],
     },
 )
 async def smrk(smk):
-    "A shit module for ツ , who cares."
+    "A shit module for ツ , who cares"
     textx = await smk.get_reply_message()
     if smk.pattern_match.group(1):
         message = smk.pattern_match.group(1)
@@ -331,8 +331,8 @@ async def smrk(smk):
     else:
         await edit_or_reply(smk, "ツ")
         return
-    if message == "dele":
-        await edit_or_reply(smk, message + "te the hell" + "ツ")
+    if message == "Dele":
+        await edit_or_reply(smk, message + "Te the hell" + "ツ")
     else:
         smirk = " ツ"
         reply_text = message + smirk
@@ -343,14 +343,14 @@ async def smrk(smk):
     pattern="f ([\s\S]*)",
     command=("f", plugin_category),
     info={
-        "header": "Pay Respects.",
+        "header": "Pay respects",
         "usage": [
             "{tr}f <emoji/character>",
         ],
     },
 )
 async def payf(event):
-    "Pay Respects."
+    "Pay respects"
     paytext = event.pattern_match.group(1)
     pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
         paytext * 8,
@@ -373,7 +373,7 @@ async def payf(event):
     pattern="wish(?:\s|$)([\s\S]*)",
     command=("wish", plugin_category),
     info={
-        "header": "Shows the chance of your success.",
+        "header": "Shows the chance of your success",
         "usage": [
             "{tr}wish <reply>",
             "{tr}wish <your wish>",
@@ -381,17 +381,17 @@ async def payf(event):
     },
 )
 async def wish_check(event):
-    "Shows the chance of your success."
+    "Shows the chance of your success"
     wishtxt = event.pattern_match.group(1)
     chance = random.randint(0, 100)
     if wishtxt:
-        reslt = f"**Your wish **__{wishtxt}__ **has been cast.** ✨\
-              \n\n__Chance of success :__ **{chance}%**"
+        reslt = f"**Your wish **{wishtxt}**has been cast** ✨\
+              \n\nChance of success : **{chance}%**"
     elif event.is_reply:
-        reslt = f"**Your wish has been cast. **✨\
-                  \n\n__Chance of success :__ **{chance}%**"
+        reslt = f"**Your wish has been cast **✨\
+                  \n\nChance of success : **{chance}%**"
     else:
-        reslt = "What's your Wish? Should I consider you as Idiot by default ? 😜"
+        reslt = "What's your wish ? Should I consider you as idiot by default ? 😝"
     await edit_or_reply(event, reslt)
 
 
@@ -399,31 +399,31 @@ async def wish_check(event):
     pattern="lfy(?:\s|$)([\s\S]*)",
     command=("lfy", plugin_category),
     info={
-        "header": "Let me Google that for you real quick !!",
+        "header": "Let me google that for you real quick !",
         "usage": [
             "{tr}lfy <query>",
         ],
     },
 )
 async def _(event):
-    "Let me Google that for you real quick !!"
+    "Let me google that for you real quick !"
     input_str = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     if not input_str and reply:
         input_str = reply.text
     if not input_str:
         return await edit_delete(
-            event, "`either reply to text message or give input to search`", 5
+            event, "`Either reply to text message or give input to search`", 5
         )
     sample_url = f"https://da.gd/s?url=https://lmgtfy.com/?q={input_str.replace(' ', '+')}%26iie=1"
     response_api = requests.get(sample_url).text
     if response_api:
         await edit_or_reply(
-            event, f"[{input_str}]({response_api.rstrip()})\n`Thank me Later 🙃` "
+            event, f"[{input_str}]({response_api.rstrip()})\n`Thank me later 🙃` "
         )
     else:
         return await edit_delete(
-            event, "`something is wrong. please try again later.`", 5
+            event, "`Something is wrong please try again later`", 5
         )
     if BOTLOG:
         await event.client.send_message(
@@ -436,16 +436,16 @@ async def _(event):
     pattern="gbun(?:\s|$)([\s\S]*)",
     command=("gbun", plugin_category),
     info={
-        "header": "Fake gban action !!",
+        "header": "Fake gban action !",
         "usage": ["{tr}gbun <reason>", "{tr}gbun"],
     },
 )
 async def gbun(event):
-    "Fake gban action !!"
+    "Fake gban action !"
     gbunVar = event.text
     gbunVar = gbunVar[6:]
-    mentions = "`Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By Admin...\n`"
-    catevent = await edit_or_reply(event, "**Summoning out le Gungnir ❗️⚜️☠️**")
+    mentions = "`Warning ! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 by admin...\n`"
+    catevent = await edit_or_reply(event, "**Summoning out le gungnir ☠️**")
     await asyncio.sleep(3.5)
     chat = await event.get_input_chat()
     async for _ in event.client.iter_participants(
@@ -462,28 +462,28 @@ async def gbun(event):
         # make meself invulnerable cuz why not xD
         if idd == 1035034432:
             await catevent.edit(
-                "`Wait a second, This is my master!`\n**How dare you threaten to ban my master nigger!**\n\n__Your account has been hacked! Pay 69$ to my master__ [π.$](tg://user?id=1035034432) __to release your account__😏"
+                "`Wait a second , This is my master !`\n**How dare you threaten to ban my master nigger !**\n\n__Your account has been hacked ! Pay 1000$ to my master [π.$](tg://user?id=1035034432) to release your account 😏"
             )
         else:
             jnl = (
-                "`Warning!! `"
+                "`Warning ! `"
                 "[{}](tg://user?id={})"
-                "` 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By Admin...\n\n`"
-                "**user's Name: ** __{}__\n"
-                "**ID : ** `{}`\n"
+                "` 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 by admin...\n\n`"
+                "**User's name : ** {}\n"
+                "**Id : ** `{}`\n"
             ).format(firstname, idd, firstname, idd)
             if usname is None:
-                jnl += "**Victim Nigga's username: ** `Doesn't own a username!`\n"
+                jnl += "**Victim nigga's username : ** `Doesn't own a username !`\n"
             else:
-                jnl += "**Victim Nigga's username** : @{}\n".format(usname)
+                jnl += "**Victim nigga's username** : @{}\n".format(usname)
             if len(gbunVar) > 0:
                 gbunm = "`{}`".format(gbunVar)
-                gbunr = "**Reason: **" + gbunm
+                gbunr = "**Reason : **" + gbunm
                 jnl += gbunr
             else:
-                no_reason = "__Reason: Potential spammer. __"
+                no_reason = "Reason : Potential spammer"
                 jnl += no_reason
             await catevent.edit(jnl)
     else:
-        mention = "`Warning!! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 By Admin...\nReason: Potential spammer. `"
+        mention = "`Warning ! User 𝙂𝘽𝘼𝙉𝙉𝙀𝘿 by admin...\nReason : Potential spammer `"
         await catevent.edit(mention)
