@@ -53,8 +53,8 @@ async def subprocess_run(megadl, cmd):
     exitCode = subproc.returncode
     if exitCode != 0:
         await megadl.edit(
-            "**An error was detected while running subprocess.**\n"
-            f"exitCode : `{exitCode}`\n"
+            "**An error was detected while running subprocess**\n"
+            f"exitcode : `{exitCode}`\n"
             f"stdout : `{stdout.decode().strip()}`\n"
             f"stderr : `{stderr.decode().strip()}`"
         )
@@ -66,13 +66,13 @@ async def subprocess_run(megadl, cmd):
     pattern="mega(?:\s|$)([\s\S]*)",
     command=("mega", plugin_category),
     info={
-        "header": "Downloads mega files from it links.",
-        "description": "Pass mega link to command so that it will download to bot server, for uploading to TG, check .help -c upload. Folder is not supported currently and only mega file links are supported.",
+        "header": "Downloads mega files from it links",
+        "description": "Pass mega link to command so that it will download to bot server , for uploading to tg , check .help -c upload ! Folder is not supported currently and only mega file links are supported",
         "usage": "{tr}mega <mega.nz link>",
     },
 )
 async def mega_downloader(megadl):  # sourcery no-metrics
-    "To download mega files from mega.nz links."
+    "To download mega files from mega.nz links"
     catevent = await edit_or_reply(megadl, "`Collecting information...`")
     if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TMP_DOWNLOAD_DIRECTORY)
@@ -83,7 +83,7 @@ async def mega_downloader(megadl):  # sourcery no-metrics
     elif msg_link:
         link = msg_link.text
     else:
-        return await catevent.edit("Usage: `.mega` **<MEGA.nz link>**")
+        return await catevent.edit("Usage : `.mega` **<MEGA.nz link>**")
     try:
         link = re.findall(r"\bhttps?://.*mega.*\.nz\S+", link)[0]
         # - Mega changed their URL again -
@@ -93,14 +93,14 @@ async def mega_downloader(megadl):  # sourcery no-metrics
             await catevent.edit("`folder download support are removed...`")
             return
     except IndexError:
-        await catevent.edit("`MEGA.nz link not found...`")
+        await catevent.edit("`Mega.nz link not found...`")
         return None
     cmd = f"bin/megadown -q -m {link}"
     result = await subprocess_run(catevent, cmd)
     try:
         data = json.loads(result[0])
     except json.JSONDecodeError:
-        await catevent.edit("**JSONDecodeError**: `failed to extract link...`")
+        await catevent.edit("**JSON decode error** : `Failed to extract link...`")
         return None
     except (IndexError, TypeError):
         return
@@ -122,7 +122,7 @@ async def mega_downloader(megadl):  # sourcery no-metrics
     try:
         downloader.start(blocking=False)
     except HTTPError as e:
-        await catevent.edit(f"**HTTPError**: `{str(e)}`")
+        await catevent.edit(f"**HTTP error** : `{str(e)}`")
         return None
     start = time.time()
     while not downloader.isFinished():
@@ -142,13 +142,13 @@ async def mega_downloader(megadl):  # sourcery no-metrics
         diff = time.time() - start
         try:
             current_message = (
-                f"**➥file name : **`{file_name}`\n\n"
-                "**➥Status**\n"
+                f"**➥ File name : **`{file_name}`\n\n"
+                "**➥ Status :**\n"
                 f"{progress_str}\n"
                 f"`{humanbytes(downloaded)}` of `{humanbytes(total_length)}`"
                 f" @ `{speed}`\n"
                 f"**➥ Duration -> **`{time_formatter(round(diff))}`"
-                f"**➥ETA -> **`{time_formatter(estimated_total_time)}`\n"
+                f"**➥ Eta -> **`{time_formatter(estimated_total_time)}`\n"
             )
             if round(diff % 15.00) == 0 and (
                 display_message != current_message or total_length == downloaded
@@ -178,14 +178,14 @@ async def mega_downloader(megadl):  # sourcery no-metrics
             return None
         else:
             await catevent.edit(
-                f"**➥ file name : **`{file_name}`\n\n"
+                f"**➥ File name : **`{file_name}`\n\n"
                 f"**➥ Successfully downloaded in : ** `{file_path}`.\n"
                 f"**➥ Download took :** {time_formatter(download_time)}."
             )
             return None
     else:
         await megadl.edit(
-            "`Failed to download, " "check heroku Logs for more details.`"
+            "`Failed to download , " "check heroku logs for more details`"
         )
         for e in downloader.get_errors():
             LOGS.info(str(e))
