@@ -53,9 +53,9 @@ font_list = [
     pattern="pframe(f|-f)?$",
     command=("pframe", plugin_category),
     info={
-        "header": "Adds frame for the replied image.",
+        "header": "Adds frame for the replied image",
         "flags": {
-            "-f": "To send output file not as streamble image.",
+            "-f": "To send output file not as streamble image",
         },
         "usage": [
             "{tr}pframe",
@@ -63,28 +63,28 @@ font_list = [
     },
 )
 async def maccmd(event):  # sourcery no-metrics
-    "Adds frame for the replied image."
+    "Adds frame for the replied image"
     reply = await event.get_reply_message()
     mediatype = media_type(reply)
     if not reply or not mediatype or mediatype not in ["Photo", "Sticker"]:
-        return await edit_delete(event, "__Reply to photo or sticker to frame it.__")
+        return await edit_delete(event, "Reply to photo or sticker to frame it")
     if mediatype == "Sticker" and reply.document.mime_type == "application/i-tgsticker":
         return await edit_delete(
             event,
-            "__Reply to photo or sticker to frame it. Animated sticker is not supported__",
+            "Reply to photo or sticker to frame it ! Animated sticker is not supported",
         )
-    catevent = await event.edit("__Adding frame for media....__")
+    catevent = await event.edit("Adding frame for media...")
     args = event.pattern_match.group(1)
     force = bool(args)
     try:
         imag = await _cattools.media_to_pic(catevent, reply, noedits=True)
         if imag[1] is None:
             return await edit_delete(
-                imag[0], "__Unable to extract image from the replied message.__"
+                imag[0], "Unable to extract image from the replied message"
             )
         image = Image.open(imag[1])
     except Exception as e:
-        return await edit_delete(catevent, f"**Error in identifying image:**\n__{e}__")
+        return await edit_delete(catevent, f"**Error in identifying image :**\n{e}")
     wid, hgt = image.size
     img = Image.new("RGBA", (wid, hgt))
     scale = min(wid // 100, hgt // 100)
@@ -131,11 +131,11 @@ async def maccmd(event):  # sourcery no-metrics
     pattern="(mmf|mms)(?:\s|$)([\s\S]*)",
     command=("mmf", plugin_category),
     info={
-        "header": "To write text on stickers or images.",
-        "description": "To create memes.",
+        "header": "To write text on stickers or images",
+        "description": "To create memes",
         "options": {
-            "mmf": "Output will be image.",
-            "mms": "Output will be sticker.",
+            "mmf": "Output will be image",
+            "mms": "Output will be sticker",
         },
         "usage": [
             "{tr}mmf toptext ; bottomtext",
@@ -154,12 +154,12 @@ async def memes(event):
     catinput = event.pattern_match.group(2)
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edit_delete(event, "`Reply to supported media...`")
     catid = await reply_id(event)
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not catinput:
         return await edit_delete(
-            event, "`what should i write on that u idiot give text to memify`"
+            event, "`What should I write on that you idiot give text to memify`"
         )
     if ";" in catinput:
         top, bottom = catinput.split(";", 1)
@@ -171,7 +171,7 @@ async def memes(event):
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
+            output[0], "Unable to extract image from the replied message"
         )
     try:
         san = Get(san)
@@ -203,33 +203,33 @@ async def memes(event):
     pattern="cfont(?:\s|$)([\s\S]*)",
     command=("cfont", plugin_category),
     info={
-        "header": "Change the font style use for memify.To get font list use cfont command as it is without input.",
-        "usage": "{tr}.cfont <Font Name>",
+        "header": "Change the font style use for memify ! To get font list use cfont command as it is without input",
+        "usage": "{tr}.cfont <Font name>",
         "examples": "{tr}cfont RoadRage-Regular.ttf",
     },
 )
 async def lang(event):
-    "Change the font style use for memify."
+    "Change the font style use for memify"
     input_str = event.pattern_match.group(1)
     if not input_str:
-        await event.edit(f"**Available Fonts names are here:-**\n\n{FONTS}")
+        await event.edit(f"**Available fonts names are here :-**\n\n{FONTS}")
         return
     if input_str not in font_list:
         catevent = await edit_or_reply(event, "`Give me a correct font name...`")
         await asyncio.sleep(1)
-        await catevent.edit(f"**Available Fonts names are here:-**\n\n{FONTS}")
+        await catevent.edit(f"**Available fonts names are here :-**\n\n{FONTS}")
     else:
         arg = f"userbot/helpers/styles/{input_str}"
         addgvar("CNG_FONTS", arg)
-        await edit_or_reply(event, f"**Fonts for Memify changed to :-** `{input_str}`")
+        await edit_or_reply(event, f"**Fonts for memify changed to :-** `{input_str}`")
 
 
 @catub.cat_cmd(
     pattern="ascii(?:\s|$)([\s\S]*)",
     command=("ascii", plugin_category),
     info={
-        "header": "To get ascii image of replied image.",
-        "description": "pass hexa colou code along with the cmd to change custom background colour",
+        "header": "To get ascii image of replied image",
+        "description": "Pass hexa colou code along with the cmd to change custom background colour",
         "usage": [
             "{tr}ascii <hexa colour code>",
             "{tr}ascii",
@@ -237,11 +237,11 @@ async def lang(event):
     },
 )
 async def memes(event):
-    "To get ascii image of replied image."
+    "To get ascii image of replied image"
     catinput = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edit_delete(event, "`Reply to supported media...`")
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
@@ -250,7 +250,7 @@ async def memes(event):
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
+            output[0], "Unable to extract image from the replied message"
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
@@ -283,14 +283,14 @@ async def memes(event):
     pattern="invert$",
     command=("invert", plugin_category),
     info={
-        "header": "To invert colours of given image or sticker.",
+        "header": "To invert colours of given image or sticker",
         "usage": "{tr}invert",
     },
 )
 async def memes(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
-        await edit_or_reply(event, "`Reply to supported Media...`")
+        await edit_or_reply(event, "`Reply to supported media...`")
         return
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
@@ -300,7 +300,7 @@ async def memes(event):
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
+            output[0], "Unable to extract image from the replied message"
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
@@ -329,15 +329,15 @@ async def memes(event):
     pattern="solarize$",
     command=("solarize", plugin_category),
     info={
-        "header": "To sun burn the colours of given image or sticker.",
+        "header": "To sun burn the colours of given image or sticker",
         "usage": "{tr}solarize",
     },
 )
 async def memes(event):
-    "Sun burn of image."
+    "Sun burn of image"
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edit_delete(event, "`Reply to supported media...`")
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
@@ -346,7 +346,7 @@ async def memes(event):
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
+            output[0], "Unable to extract image from the replied message"
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
@@ -375,15 +375,15 @@ async def memes(event):
     pattern="mirror$",
     command=("mirror", plugin_category),
     info={
-        "header": "shows you the reflection of the media file.",
+        "header": "Shows you the reflection of the media file",
         "usage": "{tr}mirror",
     },
 )
 async def memes(event):
-    "shows you the reflection of the media file"
+    "Shows you the reflection of the media file"
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edit_delete(event, "`Reply to supported media...`")
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
@@ -392,7 +392,7 @@ async def memes(event):
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
+            output[0], "Unable to extract image from the replied message"
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
@@ -421,15 +421,15 @@ async def memes(event):
     pattern="flip$",
     command=("flip", plugin_category),
     info={
-        "header": "shows you the upside down image of the given media file.",
+        "header": "Shows you the upside down image of the given media file",
         "usage": "{tr}flip",
     },
 )
 async def memes(event):
-    "shows you the upside down image of the given media file"
+    "Shows you the upside down image of the given media file"
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edit_delete(event, "`Reply to supported media...`")
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
@@ -438,7 +438,7 @@ async def memes(event):
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
+            output[0], "Unable to extract image from the replied message"
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
@@ -467,15 +467,15 @@ async def memes(event):
     pattern="gray$",
     command=("gray", plugin_category),
     info={
-        "header": "makes your media file to black and white.",
+        "header": "Makes your media file to black and white",
         "usage": "{tr}gray",
     },
 )
 async def memes(event):
-    "makes your media file to black and white"
+    "Makes your media file to black and white"
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edit_delete(event, "`Reply to supported media...`")
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
@@ -484,7 +484,7 @@ async def memes(event):
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
+            output[0], "Unable to extract image from the replied message"
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
@@ -513,17 +513,17 @@ async def memes(event):
     pattern="zoom ?([\s\S]*)",
     command=("zoom", plugin_category),
     info={
-        "header": "zooms your media file,",
+        "header": "Zooms your media file",
         "usage": ["{tr}zoom", "{tr}zoom range"],
     },
 )
 async def memes(event):
-    "zooms your media file."
+    "Zooms your media file"
     catinput = event.pattern_match.group(1)
     catinput = 50 if not catinput else int(catinput)
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edit_delete(event, "`Reply to supported media...`")
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
@@ -532,7 +532,7 @@ async def memes(event):
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
+            output[0], "Unable to extract image from the replied message"
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
@@ -567,13 +567,13 @@ async def memes(event):
     pattern="frame ?([\s\S]*)",
     command=("frame", plugin_category),
     info={
-        "header": "make a frame for your media file.",
-        "fill": "This defines the pixel fill value or color value to be applied. The default value is 0 which means the color is black.",
+        "header": "Make a frame for your media file",
+        "fill": "This defines the pixel fill value or color value to be applied ! The default value is 0 which means the color is black",
         "usage": ["{tr}frame", "{tr}frame range", "{tr}frame range ; fill"],
     },
 )
 async def memes(event):
-    "make a frame for your media file"
+    "Make a frame for your media file"
     catinput = event.pattern_match.group(1)
     if not catinput:
         catinput = "50"
@@ -585,10 +585,10 @@ async def memes(event):
     try:
         colr = int(colr)
     except Exception as e:
-        return await edit_delete(event, f"**Error**\n`{e}`")
+        return await edit_delete(event, f"**Error :**\n`{e}`")
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(event, "`Reply to supported Media...`")
+        return await edit_delete(event, "`Reply to supported media...`")
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
@@ -597,7 +597,7 @@ async def memes(event):
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
+            output[0], "Unable to extract image from the replied message"
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
