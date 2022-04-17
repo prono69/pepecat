@@ -70,7 +70,7 @@ async def fun(e):
     },
 )
 async def Oof(e):
-    "Animation command."
+    "Animation command"
     t = "Oof"
     catevent = await edit_or_reply(e, t)
     for _ in range(15):
@@ -83,12 +83,12 @@ async def Oof(e):
     pattern="type ([\s\S]*)",
     command=("type", plugin_category),
     info={
-        "header": "Type writter animation.",
+        "header": "Type writter animation",
         "usage": "{tr}type text",
     },
 )
 async def typewriter(typew):
-    "Type writter animation."
+    "Type writter animation"
     message = typew.pattern_match.group(1)
     sleep_time = 0.2
     typing_symbol = "|"
@@ -108,13 +108,13 @@ async def typewriter(typew):
     pattern="repeat (\d*) ([\s\S]*)",
     command=("repeat", plugin_category),
     info={
-        "header": "repeats the given text with given no of times.",
+        "header": "Repeats the given text with given no of times",
         "usage": "{tr}repeat <count> <text>",
         "examples": "{tr}repeat 10 catuserbot",
     },
 )
 async def _(event):
-    "To repeat the given text."
+    "To repeat the given text"
     cat = ("".join(event.text.split(maxsplit=1)[1:])).split(" ", 1)
     message = cat[1]
     count = int(cat[0])
@@ -134,7 +134,7 @@ async def _(event):
     },
 )
 async def meme(event):
-    "Animation command."
+    "Animation command"
     memeVar = event.text
     sleepValue = 0.5
     memeVar = memeVar[6:]
@@ -211,7 +211,7 @@ async def meme(event):
     },
 )
 async def give(event):
-    "Animation command."
+    "Animation command"
     giveVar = event.text
     sleepValue = 0.5
     lp = giveVar[6:]
@@ -258,12 +258,12 @@ async def give(event):
     pattern="sadmin$",
     command=("sadmin", plugin_category),
     info={
-        "header": "Shouts Admin Animation command",
+        "header": "Shouts admin animation command",
         "usage": "{tr}sadmin",
     },
 )
 async def _(event):
-    "Shouts Admin Animation command."
+    "Shouts Admin Animation command"
     animation_ttl = range(13)
     event = await edit_or_reply(event, "sadmin")
     animation_chars = [
