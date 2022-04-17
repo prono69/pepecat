@@ -12,12 +12,12 @@ plugin_category = "fun"
     pattern="congo$",
     command=("congo", plugin_category),
     info={
-        "header": " Congratulate the people..",
+        "header": " Congratulate the people",
         "usage": "{tr}congo",
     },
 )
 async def _(e):
-    "Congratulate the people."
+    "Congratulate the people"
     txt = random.choice(catmemes.CONGOREACTS)
     await edit_or_reply(e, txt)
 
@@ -26,12 +26,12 @@ async def _(e):
     pattern="shg$",
     command=("shg", plugin_category),
     info={
-        "header": "Shrug at it !!",
+        "header": "Shrug at it !",
         "usage": "{tr}shg",
     },
 )
 async def shrugger(e):
-    "Shrug at it !!"
+    "Shrug at it !"
     txt = random.choice(catmemes.SHGS)
     await edit_or_reply(e, txt)
 
@@ -40,12 +40,12 @@ async def shrugger(e):
     pattern="runs$",
     command=("runs", plugin_category),
     info={
-        "header": "Run, run, RUNNN!.",
+        "header": "Run , run , runnnn !",
         "usage": "{tr}runs",
     },
 )
 async def runner_lol(e):
-    "Run, run, RUNNN!"
+    "Run , run , runnnn !"
     txt = random.choice(catmemes.RUNSREACTS)
     await edit_or_reply(e, txt)
 
@@ -54,12 +54,12 @@ async def runner_lol(e):
     pattern="noob$",
     command=("noob", plugin_category),
     info={
-        "header": "Whadya want to know? Are you a NOOB?",
+        "header": "Whadya want to know ? Are you a noob ?",
         "usage": "{tr}noob",
     },
 )
 async def metoo(e):
-    "Whadya want to know? Are you a NOOB?"
+    "Whadya want to know ? Are you a noob ?"
     txt = random.choice(catmemes.NOOBSTR)
     await edit_or_reply(e, txt)
 
@@ -68,12 +68,12 @@ async def metoo(e):
     pattern="insult$",
     command=("insult", plugin_category),
     info={
-        "header": "insult someone.",
+        "header": "Insult someone",
         "usage": "{tr}insult",
     },
 )
 async def insult(e):
-    "insult someone."
+    "Insult someone"
     txt = random.choice(catmemes.INSULT_STRINGS)
     await edit_or_reply(e, txt)
 
@@ -82,12 +82,12 @@ async def insult(e):
     pattern="hey$",
     command=("hey", plugin_category),
     info={
-        "header": "start a conversation with people",
+        "header": "Start a conversation with people",
         "usage": "{tr}hey",
     },
 )
 async def hoi(e):
-    "start a conversation with people."
+    "Start a conversation with people"
     txt = random.choice(catmemes.HELLOSTR)
     await edit_or_reply(e, txt)
 
@@ -96,12 +96,12 @@ async def hoi(e):
     pattern="pro$",
     command=("pro", plugin_category),
     info={
-        "header": "If you think you're pro, try this.",
+        "header": "If you think you're pro , try this",
         "usage": "{tr}pro",
     },
 )
 async def proo(e):
-    "If you think you're pro, try this."
+    "If you think you're pro , try this"
     txt = random.choice(catmemes.PRO_STRINGS)
     await edit_or_reply(e, txt)
 
@@ -126,7 +126,7 @@ async def proo(e):
     },
 )
 async def _(e):
-    "Make your userbot react."
+    "Make your userbot react"
     input_str = e.pattern_match.group(1)
     if input_str in "happy":
         emoticons = catmemes.FACEREACTS[0]
@@ -156,12 +156,12 @@ async def _(e):
     pattern="10iq$",
     command=("10iq", plugin_category),
     info={
-        "header": "You retard !!",
+        "header": "You retard !",
         "usage": "{tr}10iq",
     },
 )
 async def iqless(e):
-    "You retard !!"
+    "You retard !"
     await edit_or_reply(e, "♿")
 
 
@@ -169,12 +169,12 @@ async def iqless(e):
     pattern="fp$",
     command=("fp", plugin_category),
     info={
-        "header": "send you face pam emoji!",
+        "header": "Send you face pam emoji !",
         "usage": "{tr}fp",
     },
 )
 async def facepalm(e):
-    "send you face pam emoji!"
+    "send you face pam emoji !"
     await edit_or_reply(e, "🤦‍♂")
 
 
@@ -182,17 +182,17 @@ async def facepalm(e):
     pattern="bt$",
     command=("bt", plugin_category),
     info={
-        "header": "Believe me, you will find this useful.",
+        "header": "Believe me , you will find this useful",
         "usage": "{tr}bt",
     },
     groups_only=True,
 )
 async def bluetext(e):
-    """Believe me, you will find this useful."""
+    """Believe me , you will find this useful"""
     await edit_or_reply(
         e,
-        "/BLUETEXT /MUST /CLICK.\n"
-        "/ARE /YOU /A /STUPID /ANIMAL /WHICH /IS /ATTRACTED /TO /COLOURS?",
+        "/BLUETEXT /MUST /CLICK\n"
+        "/ARE /YOU /A /STUPID /ANIMAL /WHICH /IS /ATTRACTED /TO /COLOURS ?",
     )
 
 
@@ -200,11 +200,11 @@ async def bluetext(e):
     pattern="session$",
     command=("session", plugin_category),
     info={
-        "header": "telethon session error code(fun)",
+        "header": "telethon session error code ( fun )",
         "usage": "{tr}session",
     },
 )
 async def _(event):
-    "telethon session error code(fun)."
-    mentions = "**telethon.errors.rpcerrorlist.AuthKeyDuplicatedError: The authorization key (session file) was used under two different IP addresses simultaneously, and can no longer be used. Use the same session exclusively, or use different sessions (caused by GetMessagesRequest)**"
+    "Telethon session error code ( fun )"
+    mentions = "**Telethon.errors.rpcerrorlist.authkeyduplicatederror : The authorization key ( session file ) was used under two different ip addresses simultaneously , and can no longer be used ! Use the same session exclusively , or use different sessions ( caused by getmessagesrequest )**"
     await edit_or_reply(event, mentions)
