@@ -17,16 +17,16 @@ plugin_category = "utils"
     pattern="detect$",
     command=("detect", plugin_category),
     info={
-        "header": "To detect the nudity in reply image.",
+        "header": "To detect the nudity in reply image",
         "description": "Reply detect command to any image or non animated sticker to detect the nudity in that",
         "usage": "{tr}detect",
     },
 )
 async def detect(event):
-    "To detect the nudity in reply image."
+    "To detect the nudity in reply image"
     if Config.DEEP_AI is None:
         return await edit_delete(
-            event, "Add VAR `DEEP_AI` get Api Key from https://deepai.org/", 5
+            event, "Add VAR `DEEP_AI` get api key from https://deepai.org/", 5
         )
     reply = await event.get_reply_message()
     if not reply:
@@ -39,7 +39,7 @@ async def detect(event):
         return await edit_delete(
             event, "`Reply to any image or non animated sticker !`", 5
         )
-    catevent = await edit_or_reply(event, "`Detecting NSFW limit...`")
+    catevent = await edit_or_reply(event, "`Detecting nsfw limit...`")
     r = requests.post(
         "https://api.deepai.org/api/nsfw-detector",
         files={
