@@ -42,7 +42,7 @@ def get_key(val):
     pattern="pcode(?:\s|$)([\s\S]*)",
     command=("pcode", plugin_category),
     info={
-        "header": "Will paste the entire text on the blank white image.",
+        "header": "Will paste the entire text on the blank white image",
         "flags": {
             "f": "Use this flag to send it as file rather than image",
         },
@@ -50,7 +50,7 @@ def get_key(val):
     },
 )
 async def paste_img(event):
-    "To paste text to image."
+    "To paste text to image"
     reply_to = await reply_id(event)
     d_file_name = None
     catevent = await edit_or_reply(event, "`Pasting the text on image`")
@@ -76,12 +76,12 @@ async def paste_img(event):
         else:
             return await edit_delete(
                 catevent,
-                "`Either reply to text/code file or reply to text message or give text along with command`",
+                "`Either reply to text or code file or reply to text message or give text along with command`",
             )
     pygments.highlight(
         text_to_print,
         Python3Lexer(),
-        ImageFormatter(font_name="DejaVu Sans Mono", line_numbers=True),
+        ImageFormatter(font_name="Dejavu sans mono", line_numbers=True),
         "out.png",
     )
     try:
@@ -96,19 +96,19 @@ async def paste_img(event):
         if d_file_name is not None:
             os.remove(d_file_name)
     except Exception as e:
-        await edit_delete(catevent, f"**Error:**\n`{e}`", time=10)
+        await edit_delete(catevent, f"**Error :**\n`{e}`", time=10)
 
 
 @catub.cat_cmd(
     pattern="(d|p|s|n)?(paste|neko)(?:\s|$)([\S\s]*)",
     command=("paste", plugin_category),
     info={
-        "header": "To paste text to a paste bin.",
-        "description": "Uploads the given text to website so that you can share text/code with others easily. If no flag is used then it will use p as default",
+        "header": "To paste text to a paste bin",
+        "description": "Uploads the given text to website so that you can share text/code with others easily ! If no flag is used then it will use p as default",
         "flags": {
             "d": "Will paste text to dog.bin",
             "p": "Will paste text to pasty.lus.pm",
-            "s": "Will paste text to spaceb.in (language extension not there at present.)",
+            "s": "Will paste text to spaceb.in ( language extension not there at present )",
         },
         "usage": [
             "{tr}{flags}paste <reply/text>",
@@ -121,8 +121,8 @@ async def paste_img(event):
     },
 )
 async def paste_bin(event):
-    "To paste text to a paste bin."
-    catevent = await edit_or_reply(event, "`pasting text to paste bin....`")
+    "To paste text to a paste bin"
+    catevent = await edit_or_reply(event, "`Pasting text to paste bin...`")
     input_str = event.pattern_match.group(3)
     reply = await event.get_reply_message()
     ext = re.findall(r"-\w+", input_str)
@@ -131,14 +131,14 @@ async def paste_bin(event):
         input_str = input_str.replace(ext[0], "").strip()
     except IndexError:
         extension = None
-    if event.pattern_match.group(2) == "neko":
+    if event.pattern_match.group(2) == "Neko" :
         pastetype = "n"
     else:
         pastetype = event.pattern_match.group(1) or "p"
     text_to_print = input_str or ""
     if text_to_print == "" and reply and reply.media:
         mediatype = media_type(reply)
-        if mediatype == "Document":
+        if mediatype == "Document" :
             d_file_name = await event.client.download_media(reply, Config.TEMP_DIR)
             if extension is None:
                 extension = get_extension(reply.document)
@@ -150,7 +150,7 @@ async def paste_bin(event):
         else:
             return await edit_delete(
                 catevent,
-                "`Either reply to text/code file or reply to text message or give text along with command`",
+                "`Either reply to text or code file or reply to text message or give text along with command`",
             )
     if extension and extension.startswith("."):
         extension = extension[1:]
@@ -159,25 +159,25 @@ async def paste_bin(event):
         if "error" in response:
             return await edit_delete(
                 catevent,
-                "**Error while pasting text:**\n`Unable to process your request may be pastebins are down.`",
+                "**Error while pasting text :**\n`Unable to process your request may be pastebins are down`",
             )
 
         result = ""
         if pastebins[response["bin"]] != pastetype:
             result += f"<b>{get_key(pastetype)} is down, So </b>"
-        result += f"<b>Pasted to: <a href={response['url']}>{response['bin']}</a></b>"
+        result += f"<b>Pasted to : <a href={response['url']}>{response['bin']}</a></b>"
         if response["raw"] != "":
             result += f"\n<b>Raw link: <a href={response['raw']}>Raw</a></b>"
         await catevent.edit(result, link_preview=False, parse_mode="html")
     except Exception as e:
-        await edit_delete(catevent, f"**Error while pasting text:**\n`{e}`")
+        await edit_delete(catevent, f"**Error while pasting text :**\n`{e}`")
 
 
 @catub.cat_cmd(
     command=("neko", plugin_category),
     info={
-        "header": "To paste text to a neko bin.",
-        "description": "Uploads the given text to nekobin so that you can share text/code with others easily.",
+        "header": "To paste text to a neko bin",
+        "description": "Uploads the given text to nekobin so that you can share text or code with others easily",
         "usage": ["{tr}neko <reply/text>", "{tr}neko {extension} <reply/text>"],
         "examples": [
             "{tr}neko <reply/text>",
@@ -186,7 +186,7 @@ async def paste_bin(event):
     },
 )
 async def _(event):
-    "To paste text to a neko bin."
+    "To paste text to a neko bin"
     # just to show in help menu as seperate
 
 
@@ -194,14 +194,14 @@ async def _(event):
     pattern="g(et)?paste(?:\s|$)([\s\S]*)",
     command=("getpaste", plugin_category),
     info={
-        "header": "To paste text into telegram from pastebin link.",
-        "description": "Gets the content of a pastebin. You can provide link along with cmd or reply to link.",
+        "header": "To paste text into telegram from pastebin link",
+        "description": "Gets the content of a pastebin ! You can provide link along with cmd or reply to link",
         "Support bins": ["pasty", "spacebin", "nekobin", "dogbin"],
         "usage": ["{tr}getpaste <link>", "{tr}gpaste <link>"],
     },
 )
 async def get_dogbin_content(event):
-    "To paste text into telegram from del dog link."
+    "To paste text into telegram from del dog link"
     textx = await event.get_reply_message()
     url = event.pattern_match.group(2)
     if not url and textx.text:
@@ -216,8 +216,8 @@ async def get_dogbin_content(event):
                 url = iurl
                 break
     if not url:
-        return await edit_delete(event, "__I can't find any pastebin link.__")
-    catevent = await edit_or_reply(event, "`Getting Contents of pastebin.....`")
+        return await edit_delete(event, "I can't find any pastebin link")
+    catevent = await edit_or_reply(event, "`Getting contents of pastebin...`")
     rawurl = None
     if "raw" in url:
         rawurl = url
@@ -232,23 +232,23 @@ async def get_dogbin_content(event):
         elif "catbin" in url:
             rawurl = f"http://catbin.up.railway.app/raw/{fid[0]}"
         else:
-            return await edit_delete(event, "__This pastebin is not supported.__")
+            return await edit_delete(event, "This pastebin is not supported")
     resp = requests.get(rawurl)
     try:
         resp.raise_for_status()
     except requests.exceptions.HTTPError as HTTPErr:
         return await catevent.edit(
-            f"**Request returned an unsuccessful status code.**\n\n__{str(HTTPErr)}__"
+            f"**Request returned an unsuccessful status code**\n\n{str(HTTPErr)}"
         )
     except requests.exceptions.Timeout as TimeoutErr:
         return await catevent.edit(f"**Request timed out.**__{str(TimeoutErr)}__")
     except requests.exceptions.TooManyRedirects as RedirectsErr:
         return await catevent.edit(
             (
-                f"**Request exceeded the configured number of maximum redirections.**__{str(RedirectsErr)}__"
+                f"**Request exceeded the configured number of maximum redirections**{str(RedirectsErr)}"
             )
         )
-    reply_text = f"**Fetched dogbin URL content successfully!**\n\n**Content:** \n```{resp.text}```"
+    reply_text = f"**Fetched dogbin url content successfully !**\n\n**Content :** \n```{resp.text}```"
     await edit_or_reply(catevent, reply_text)
 
 
@@ -256,20 +256,20 @@ async def get_dogbin_content(event):
     pattern="paster(?:\s|$)([\s\S]*)",
     command=("paster", plugin_category),
     info={
-        "header": "Create a instant view or a paste it in telegraph file.",
+        "header": "Create a instant view or a paste it in telegraph file",
         "usage": ["{tr}paster <reply>", "{tr}paster text"],
     },
 )
 async def _(event):
-    "Create a instant view or a paste it in telegraph file."
-    catevent = await edit_or_reply(event, "`pasting text to paste bin....`")
+    "Create a instant view or a paste it in telegraph file"
+    catevent = await edit_or_reply(event, "`Pasting text to paste bin...`")
     input_str = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     pastetype = "d"
     text_to_print = input_str or ""
     if text_to_print == "" and reply and reply.media:
         mediatype = media_type(reply)
-        if mediatype == "Document":
+        if mediatype == "Document" :
             d_file_name = await event.client.download_media(reply, Config.TEMP_DIR)
             with open(d_file_name, "r") as f:
                 text_to_print = f.read()
@@ -279,18 +279,18 @@ async def _(event):
         else:
             return await edit_delete(
                 catevent,
-                "`Either reply to text/code file or reply to text message or give text along with command`",
+                "`Either reply to text or code file or reply to text message or give text along with command`",
             )
     try:
         response = await pastetext(text_to_print, pastetype, extension="txt")
         if "error" in response:
             return await edit_delete(
                 catevent,
-                "**Error while pasting text:**\n`Unable to process your request may be pastebins are down.`",
+                "**Error while pasting text :**\n`Unable to process your request may be pastebins are down`",
             )
 
     except Exception as e:
-        return await edit_delete(catevent, f"**Error while pasting text:**\n`{e}`")
+        return await edit_delete(catevent, f"**Error while pasting text :**\n`{e}`")
     url = response["url"]
     chat = "@CorsaBot"
     await catevent.edit("`Making instant view...`")
@@ -302,7 +302,7 @@ async def _(event):
             await event.client.send_message(chat, url)
             response = await response
         except YouBlockedUserError:
-            return await catevent.edit("```Please unblock me (@CorsaBot) and try```")
+            return await catevent.edit("```Please unblock me ( @CorsaBot ) and try```")
         result = ""
         if response:
             await event.client.send_read_acknowledge(conv.chat_id)
