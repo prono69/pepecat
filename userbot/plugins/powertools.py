@@ -22,18 +22,18 @@ plugin_category = "tools"
     pattern="restart$",
     command=("restart", plugin_category),
     info={
-        "header": "Restarts the bot !!",
+        "header": "Restarts the bot",
         "usage": "{tr}restart",
     },
     disable_errors=True,
 )
 async def _(event):
-    "Restarts the bot !!"
+    "Restarts the bot !"
     if BOTLOG:
-        await event.client.send_message(BOTLOG_CHATID, "#RESTART \n" "Bot Restarted")
+        await event.client.send_message(BOTLOG_CHATID, "RESTART \n" "Bot restarted")
     sandy = await edit_or_reply(
         event,
-        "Restarted. `.ping` me or `.help` to check if I am online, actually it takes 1-2 min for restarting",
+        "Restarted ! `.ping` me or `.help` to check if I am online , actually it takes 1-2 min for restarting",
     )
     try:
         ulist = get_collectionlist_items()
@@ -58,16 +58,16 @@ async def _(event):
     pattern="shutdown$",
     command=("shutdown", plugin_category),
     info={
-        "header": "Shutdowns the bot !!",
-        "description": "To turn off the dyno of heroku. you cant turn on by bot you need to got to heroku and turn on or use @hk_heroku_bot",
+        "header": "Shutdowns the bot",
+        "description": "To turn off the dyno of heroku you can't turn on by bot you need to got to heroku and turn on or use @hk_heroku_bot",
         "usage": "{tr}shutdown",
     },
 )
 async def _(event):
     "Shutdowns the bot"
     if BOTLOG:
-        await event.client.send_message(BOTLOG_CHATID, "#SHUTDOWN \n" "Bot shut down")
-    await edit_or_reply(event, "`Turning off bot now ...Manually turn me on later`")
+        await event.client.send_message(BOTLOG_CHATID, "SHUTDOWN \n" "Bot shut down")
+    await edit_or_reply(event, "`Turning off bot now... Manually turn me on later`")
     if HEROKU_APP is not None:
         HEROKU_APP.process_formation()["worker"].scale(0)
     else:
@@ -78,7 +78,7 @@ async def _(event):
     pattern="sleep( [0-9]+)?$",
     command=("sleep", plugin_category),
     info={
-        "header": "Userbot will stop working for the mentioned time.",
+        "header": "Userbot will stop working for the mentioned time",
         "usage": "{tr}sleep <seconds>",
         "examples": "{tr}sleep 60",
     },
@@ -93,31 +93,31 @@ async def _(event):
             BOTLOG_CHATID,
             "You put the bot to sleep for " + str(counter) + " seconds",
         )
-    event = await edit_or_reply(event, f"`ok, let me sleep for {counter} seconds`")
+    event = await edit_or_reply(event, f"`okay , let me sleep for {counter} seconds`")
     sleep(counter)
-    await event.edit("`OK, I'm awake now.`")
+    await event.edit("`Okay , I'm awake now`")
 
 
 @catub.cat_cmd(
     pattern="notify (on|off)$",
     command=("notify", plugin_category),
     info={
-        "header": "To update the your chat after restart or reload .",
-        "description": "Will send the ping cmd as reply to the previous last msg of (restart/reload/update cmds).",
+        "header": "To update the your chat after restart or reload",
+        "description": "Will send the ping cmd as reply to the previous last msg of ( restart / reload / update cmds )",
         "usage": [
             "{tr}notify <on/off>",
         ],
     },
 )
 async def set_pmlog(event):
-    "To update the your chat after restart or reload ."
+    "To update the your chat after restart or reload"
     input_str = event.pattern_match.group(1)
     if input_str == "off":
         if gvarstatus("restartupdate") is None:
-            return await edit_delete(event, "__Notify was already disabled__")
+            return await edit_delete(event, "Notify was already disabled")
         delgvar("restartupdate")
-        return await edit_or_reply(event, "__Notify was disabled successfully.__")
+        return await edit_or_reply(event, "Notify was disabled successfully")
     if gvarstatus("restartupdate") is None:
         addgvar("restartupdate", "turn-oned")
-        return await edit_or_reply(event, "__Notify was enabled successfully.__")
-    await edit_delete(event, "__Notify was already enabled.__")
+        return await edit_or_reply(event, "Notify was enabled successfully")
+    await edit_delete(event, "Notify was already enabled")
