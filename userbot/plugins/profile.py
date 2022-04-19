@@ -18,14 +18,14 @@ plugin_category = "utils"
 
 
 # ====================== CONSTANT ===============================
-INVALID_MEDIA = "```The extension of the media entity is invalid.```"
-PP_CHANGED = "```Profile picture changed successfully.```"
-PP_TOO_SMOL = "```This image is too small, use a bigger image.```"
-PP_ERROR = "```Failure occured while processing image.```"
-BIO_SUCCESS = "```Successfully edited Bio.```"
-NAME_OK = "```Your name was successfully changed.```"
-USERNAME_SUCCESS = "```Your username was successfully changed.```"
-USERNAME_TAKEN = "```This username is already taken.```"
+INVALID_MEDIA = "```The extension of the media entity is invalid```"
+PP_CHANGED = "```Profile picture changed successfully```"
+PP_TOO_SMOL = "```This image is too small, use a bigger image```"
+PP_ERROR = "```Failure occured while processing image```"
+BIO_SUCCESS = "```Successfully edited bio```"
+NAME_OK = "```Your name was successfully changed```"
+USERNAME_SUCCESS = "```Your username was successfully changed```"
+USERNAME_TAKEN = "```This username is already taken```"
 # ===============================================================
 
 
@@ -33,30 +33,30 @@ USERNAME_TAKEN = "```This username is already taken.```"
     pattern="pbio ([\s\S]*)",
     command=("pbio", plugin_category),
     info={
-        "header": "To set bio for this account.",
+        "header": "To set bio for this account",
         "usage": "{tr}pbio <your bio>",
     },
 )
 async def _(event):
-    "To set bio for this account."
+    "To set bio for this account"
     bio = event.pattern_match.group(1)
     try:
         await event.client(functions.account.UpdateProfileRequest(about=bio))
-        await edit_delete(event, "`successfully changed my profile bio`")
+        await edit_delete(event, "`Successfully changed my profile bio`")
     except Exception as e:
-        await edit_or_reply(event, f"**Error:**\n`{e}`")
+        await edit_or_reply(event, f"**Error :**\n`{e}`")
 
 
 @catub.cat_cmd(
     pattern="pname ([\s\S]*)",
     command=("pname", plugin_category),
     info={
-        "header": "To set/change name for this account.",
+        "header": "To set/change name for this account",
         "usage": ["{tr}pname firstname ; last name", "{tr}pname firstname"],
     },
 )
 async def _(event):
-    "To set/change name for this account."
+    "To set/change name for this account"
     names = event.pattern_match.group(1)
     first_name = names
     last_name = ""
@@ -70,22 +70,22 @@ async def _(event):
         )
         await edit_delete(event, "`My name was changed successfully`")
     except Exception as e:
-        await edit_or_reply(event, f"**Error:**\n`{e}`")
+        await edit_or_reply(event, f"**Error :**\n`{e}`")
 
 
 @catub.cat_cmd(
     pattern="ppic$",
     command=("ppic", plugin_category),
     info={
-        "header": "To set profile pic for this account.",
+        "header": "To set profile pic for this account",
         "usage": "{tr}ppic <reply to image or gif>",
     },
 )
 async def _(event):
-    "To set profile pic for this account."
+    "To set profile pic for this account"
     reply_message = await event.get_reply_message()
     catevent = await edit_or_reply(
-        event, "`Downloading Profile Picture to my local ...`"
+        event, "`Downloading profile picture to my local...`"
     )
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
@@ -98,12 +98,12 @@ async def _(event):
         await catevent.edit(str(e))
     else:
         if photo:
-            await catevent.edit("`now, Uploading to Telegram ...`")
+            await catevent.edit("`Now , uploading to telegram...`")
             if photo.endswith((".mp4", ".MP4")):
                 # https://t.me/tgbetachat/324694
                 size = os.stat(photo).st_size
                 if size > 2097152:
-                    await catevent.edit("`size must be less than 2 mb`")
+                    await catevent.edit("`Size must be less than 2 mb`")
                     os.remove(photo)
                     return
                 catpic = None
@@ -118,7 +118,7 @@ async def _(event):
                     )
                 )
             except Exception as e:
-                await catevent.edit(f"**Error:**\n`{e}`")
+                await catevent.edit(f"**Error :**\n`{e}`")
             else:
                 await edit_or_reply(
                     catevent, "`My profile picture was successfully changed`"
@@ -133,12 +133,12 @@ async def _(event):
     pattern="pusername ([\s\S]*)",
     command=("pusername", plugin_category),
     info={
-        "header": "To set/update username for this account.",
+        "header": "To set/update username for this account",
         "usage": "{tr}pusername <new username>",
     },
 )
 async def update_username(event):
-    """For .username command, set a new username in Telegram."""
+    """For .username command , set a new username in telegram"""
     newusername = event.pattern_match.group(1)
     try:
         await event.client(UpdateUsernameRequest(newusername))
@@ -146,19 +146,19 @@ async def update_username(event):
     except UsernameOccupiedError:
         await edit_or_reply(event, USERNAME_TAKEN)
     except Exception as e:
-        await edit_or_reply(event, f"**Error:**\n`{e}`")
+        await edit_or_reply(event, f"**Error :**\n`{e}`")
 
 
 @catub.cat_cmd(
     pattern="count$",
     command=("count", plugin_category),
     info={
-        "header": "To get your profile stats for this account.",
+        "header": "To get your profile stats for this account",
         "usage": "{tr}count",
     },
 )
 async def count(event):
-    """For .count command, get profile stats."""
+    """For .count command , get profile stats"""
     u = 0
     g = 0
     c = 0
@@ -184,11 +184,11 @@ async def count(event):
         else:
             LOGS.info(d)
 
-    result += f"`Users:`\t**{u}**\n"
-    result += f"`Groups:`\t**{g}**\n"
-    result += f"`Super Groups:`\t**{c}**\n"
-    result += f"`Channels:`\t**{bc}**\n"
-    result += f"`Bots:`\t**{b}**"
+    result += f"`Users :`\t**{u}**\n"
+    result += f"`Groups :`\t**{g}**\n"
+    result += f"`Super Groups :`\t**{c}**\n"
+    result += f"`Channels :`\t**{bc}**\n"
+    result += f"`Bots :`\t**{b}**"
 
     await catevent.edit(result)
 
@@ -197,13 +197,13 @@ async def count(event):
     pattern="delpfp ?([\s\S]*)",
     command=("delpfp", plugin_category),
     info={
-        "header": "To delete profile pic for this account.",
-        "description": "If you havent mentioned no of profile pics then only 1 will be deleted.",
+        "header": "To delete profile pic for this account",
+        "description": "If you havent mentioned no of profile pics then only 1 will be deleted",
         "usage": ["{tr}delpfp <no of pics to be deleted>", "{tr}delpfp"],
     },
 )
 async def remove_profilepic(delpfp):
-    """For .delpfp command, delete your current profile picture in Telegram."""
+    """For .delpfp command , delete your current profile picture in telegram"""
     group = delpfp.text[8:]
     if group == "all":
         lim = 0
@@ -224,7 +224,7 @@ async def remove_profilepic(delpfp):
     ]
     await delpfp.client(DeletePhotosRequest(id=input_photos))
     await edit_delete(
-        delpfp, f"`Successfully deleted {len(input_photos)} profile picture(s).`"
+        delpfp, f"`Successfully deleted {len(input_photos)} profile picture(s)`"
     )
 
 
@@ -232,14 +232,14 @@ async def remove_profilepic(delpfp):
     pattern="myusernames$",
     command=("myusernames", plugin_category),
     info={
-        "header": "To list public channels or groups created by this account.",
+        "header": "To list public channels or groups created by this account",
         "usage": "{tr}myusernames",
     },
 )
 async def _(event):
-    "To list all public channels and groups."
+    "To list all public channels and groups"
     result = await event.client(GetAdminedPublicChannelsRequest())
-    output_str = "**Your current reserved usernames are:**\n"
+    output_str = "**Your current reserved usernames are :**\n"
     output_str += "".join(
         f" - {channel_obj.title} @{channel_obj.username} \n"
         for channel_obj in result.chats
