@@ -20,12 +20,12 @@ moviepath = os.path.join(os.getcwd(), "temp", "moviethumb.jpg")
     pattern="wiki ([\s\S]*)",
     command=("wiki", plugin_category),
     info={
-        "header": "To get wikipedia data about query.",
+        "header": "To get wikipedia data about query",
         "usage": "{tr}wiki <query>",
     },
 )
 async def wiki(event):
-    """To fetch content from Wikipedia."""
+    """To fetch content from wikipedia"""
     match = event.pattern_match.group(1)
     result = None
     try:
@@ -36,7 +36,7 @@ async def wiki(event):
             f"`{i}`\n" if lineno > 1 else f"**{i}**\n"
             for lineno, i in enumerate(error, start=1)
         )
-        return await edit_or_reply(event, f"**Disambiguated page found.**\n\n{result}")
+        return await edit_or_reply(event, f"**Disambiguated page found**\n\n{result}")
     except PageError:
         pass
     if not result:
@@ -49,14 +49,14 @@ async def wiki(event):
                 for lineno, i in enumerate(error, start=1)
             )
             return await edit_or_reply(
-                event, f"**Disambiguated page found.**\n\n{result}"
+                event, f"**Disambiguated page found**\n\n{result}"
             )
         except PageError:
             return await edit_delete(
-                event, f"**Sorry i Can't find any results for **`{match}`"
+                event, f"**Sorry I can't find any results for **`{match}`"
             )
     await edit_or_reply(
-        event, "**Search:**\n`" + match + "`\n\n**Result:**\n" + f"__{result}__"
+        event, "**Search :**\n`" + match + "`\n\n**Result :**\n" + f"{result}"
     )
     if BOTLOG:
         await event.client.send_message(
@@ -68,13 +68,13 @@ async def wiki(event):
     pattern="imdb ([\s\S]*)",
     command=("imdb", plugin_category),
     info={
-        "header": "To fetch imdb data about the given movie or series.",
+        "header": "To fetch imdb data about the given movie or series",
         "usage": "{tr}imdb <movie/series name>",
     },
 )
 async def imdb_query(event):  # sourcery no-metrics
-    """To fetch imdb data about the given movie or series."""
-    catevent = await edit_or_reply(event, "`searching........`")
+    """To fetch imdb data about the given movie or series"""
+    catevent = await edit_or_reply(event, "`Searching...`")
     reply_to = await reply_id(event)
     try:
         movie_name = event.pattern_match.group(1)
@@ -120,18 +120,18 @@ async def imdb_query(event):  # sourcery no-metrics
         mov_box = await get_moviecollections(movie)
         resulttext = f"""
 <b>Title : </b><code>{mov_title}</code>
-<b>Imdb Url : </b><a href='https://www.imdb.com/title/tt{movieid}'>{mov_ltitle}</a>
+<b>Imdb url : </b><a href='https://www.imdb.com/title/tt{movieid}'>{mov_ltitle}</a>
 <b>Info : </b><code>{mov_runtime} | {mov_airdate}</code>
 <b>Genres : </b><code>{mov_genres}</code>
 <b>Rating : </b><code>{mov_rating}</code>
 <b>Country : </b><code>{mov_countries}</code>
 <b>Language : </b><code>{mov_languages}</code>
 <b>Director : </b><code>{mov_director}</code>
-<b>Music Director : </b><code>{mov_composers}</code>
+<b>Music director : </b><code>{mov_composers}</code>
 <b>Writer : </b><code>{mov_writer}</code>
 <b>Stars : </b><code>{mov_cast}</code>
-<b>Box Office : </b>{mov_box}
-<b>Story Outline : </b><i>{mov_plot}</i>"""
+<b>Box office : </b>{mov_box}
+<b>Story outline : </b><i>{mov_plot}</i>"""
         if "full-size cover url" in moviekeys:
             imageurl = movie["full-size cover url"]
         else:
@@ -163,6 +163,6 @@ async def imdb_query(event):  # sourcery no-metrics
             parse_mode="HTML",
         )
     except IndexError:
-        await catevent.edit(f"__No movie found with name {movie_name}.__")
+        await catevent.edit(f"No movie found with name {movie_name}")
     except Exception as e:
-        await catevent.edit(f"**Error:**\n__{e}__")
+        await catevent.edit(f"**Error :**\n__{e}__")
