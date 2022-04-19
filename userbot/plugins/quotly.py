@@ -20,7 +20,7 @@ from userbot import catub
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import convert_tosticker, media_type, process
-from ..helpers.utils import _cattools, reply_id
+from ..helpers.utils import _cattools, get_user_from_event, reply_id
 
 FONT_FILE_TO_USE = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
 
@@ -35,13 +35,13 @@ def get_warp_length(width):
     pattern="qpic(?:\s|$)([\s\S]*)",
     command=("qpic", plugin_category),
     info={
-        "header": "Makes quote pic.",
+        "header": "Makes quote pic",
         "flags": {
-            "-b": "To get black and white output.",
+            "-b": "To get black and white output",
             "-s": "To output file as sticker",
         },
         "usage": "{tr}qpic <flag> <input/reply to text msg>",
-        "examples": ["{tr}qpic CatUserbot.", "{tr}qpic -b CatUserbot."],
+        "examples": ["{tr}qpic CatUserbot", "{tr}qpic -b CatUserbot"],
     },
 )
 async def q_pic(event):  # sourcery no-metrics
@@ -60,9 +60,9 @@ async def q_pic(event):  # sourcery no-metrics
         text = reply.raw_text
     else:
         return await edit_delete(
-            event, "__Provide input along with cmd or reply to text message.__"
+            event, "Provide input along with cmd or reply to text message"
         )
-    catevent = await edit_or_reply(event, "__Making Quote pic....__")
+    catevent = await edit_or_reply(event, "Making quote pic...")
     mediatype = media_type(reply)
     if (
         (not reply)
@@ -79,7 +79,7 @@ async def q_pic(event):  # sourcery no-metrics
         imag = await _cattools.media_to_pic(event, reply, noedits=True)
         if imag[1] is None:
             return await edit_delete(
-                imag[0], "__Unable to extract image from the replied message.__"
+                imag[0], "Unable to extract image from the replied message"
             )
         user = event.client.uid
         pfp = imag[1]
@@ -97,7 +97,7 @@ async def q_pic(event):  # sourcery no-metrics
                 ).content
             )
     text = "\n".join(textwrap.wrap(text, 25))
-    text = "“" + text + "„"
+    text = f"“{text}„"
     font = ImageFont.truetype(FONT_FILE_TO_USE, 50)
     img = Image.open(pfp)
     if black:
@@ -140,69 +140,64 @@ async def q_pic(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="q(?:\s|$)([\s\S]*)",
+    pattern="(q|rq|fq|frq)(?:\s|$)([\s\S]*)",
     command=("q", plugin_category),
     info={
-        "header": "Makes your message as sticker quote.",
-        "usage": "{tr}q",
+        "header": "Makes your message as sticker quote",
+        "flags": {
+            "r": "Use r infront of q to include the previous replied message",
+            "f": "Use f infront of q to create fake quote with given user",
+        },
+        "usage": [
+            "{tr}q",
+            "{tr}rq",
+            "{fq} <user/reply> <text>",
+            "{frq} <user/reply> <text>",
+        ],
+        "examples": ["{tr}fq @jisan7509 hello bad boys and girls"],
     },
 )
 async def stickerchat(catquotes):
     "Makes your message as sticker quote"
     reply = await catquotes.get_reply_message()
-    if not reply:
-        return await edit_or_reply(
-            catquotes, "`I cant quote the message . reply to a message`"
-        )
-    fetchmsg = reply.message
-    repliedreply = None
-    mediatype = media_type(reply)
+    cmd = catquotes.pattern_match.group(1)
+    mediatype = None
+    if cmd in ["rq", "q", "frq"]:
+        if not reply:
+            return await edit_or_reply(
+                catquotes, "`I can't quote the message reply to a message`"
+            )
+        fetchmsg = reply.message
+        mediatype = media_type(reply)
+    if cmd == "rq":
+        repliedreply = await reply.get_reply_message()
+    elif cmd == "frq":
+        repliedreply = reply
+    else:
+        repliedreply = None
     if mediatype and mediatype in ["Photo", "Round Video", "Gif"]:
         return await edit_or_reply(catquotes, "`Replied message is not supported now`")
     catevent = await edit_or_reply(catquotes, "`Making quote...`")
-    user = (
-        await catquotes.client.get_entity(reply.forward.sender)
-        if reply.fwd_from
-        else reply.sender
-    )
-    res, catmsg = await process(fetchmsg, user, catquotes.client, reply, repliedreply)
-    if not res:
-        return
-    outfi = os.path.join("./temp", "sticker.png")
-    catmsg.save(outfi)
-    endfi = convert_tosticker(outfi)
-    await catquotes.client.send_file(catquotes.chat_id, endfi, reply_to=reply)
-    await catevent.delete()
-    os.remove(endfi)
-
-
-@catub.cat_cmd(
-    pattern="rq(?:\s|$)([\s\S]*)",
-    command=("rq", plugin_category),
-    info={
-        "header": "Makes your message along with the previous replied message as sticker quote",
-        "usage": "{tr}rq",
-    },
-)
-async def stickerchat(catquotes):
-    "To make sticker message."
-    reply = await catquotes.get_reply_message()
-    if not reply:
-        return await edit_or_reply(
-            catquotes, "`I cant quote the message . reply to a message`"
+    if cmd in ["rq", "q"]:
+        user = (
+            await catquotes.client.get_entity(reply.forward.sender)
+            if reply.fwd_from
+            else reply.sender
         )
-    fetchmsg = reply.message
-    repliedreply = await reply.get_reply_message()
-    mediatype = media_type(reply)
-    if mediatype and mediatype in ["Photo", "Round Video", "Gif"]:
-        return await edit_or_reply(catquotes, "`Replied message is not supported now`")
-    catevent = await edit_or_reply(catquotes, "`Making quote...`")
-    user = (
-        await catquotes.client.get_entity(reply.forward.sender)
-        if reply.fwd_from
-        else reply.sender
+    else:
+        user, rank = await get_user_from_event(catquotes, secondgroup=True)
+        if not user:
+            return
+        fetchmsg = rank
+        if not fetchmsg and reply:
+            fetchmsg = reply.message
+        if not fetchmsg:
+            return await edit_or_reply(
+                catquotes, "`I can't quote the message no text is given`"
+            )
+    res, catmsg = await process(
+        fetchmsg, user, catquotes.client, reply, catquotes, repliedreply
     )
-    res, catmsg = await process(fetchmsg, user, catquotes.client, reply, repliedreply)
     if not res:
         return
     outfi = os.path.join("./temp", "sticker.png")
@@ -250,7 +245,7 @@ async def _(event):
             event, "`Either reply to message or give input to function properly`"
         )
     chat = "@QuotLyBot"
-    catevent = await edit_or_reply(event, "```Making a Quote```")
+    catevent = await edit_or_reply(event, "```Making a quote```")
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -266,7 +261,7 @@ async def _(event):
                 )
             response = await response
         except YouBlockedUserError:
-            return await catevent.edit("```Please unblock me (@QuotLyBot) u Nigga```")
+            return await catevent.edit("```Please unblock me ( @QuotLyBot ) you nigga```")
         await event.client.send_read_acknowledge(conv.chat_id)
         await catevent.delete()
         await event.client.send_message(
