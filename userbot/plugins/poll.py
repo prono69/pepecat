@@ -16,10 +16,10 @@ plugin_category = "extra"
     pattern="poll(?:\s|$)([\s\S]*)",
     command=("poll", plugin_category),
     info={
-        "header": "To create a poll.",
-        "description": "If you doesnt give any input it sends a default poll",
+        "header": "To create a poll",
+        "description": "If you doesn't give any input it sends a default poll",
         "usage": ["{tr}poll", "{tr}poll question ; option 1; option2"],
-        "examples": "{tr}poll Are you an early bird or a night owl ;Early bird ; Night owl",
+        "examples": "{tr}poll Are you an early bird or a night owl ; Early bird ; Night owl",
     },
 )
 async def pollcreator(catpoll):
@@ -27,14 +27,14 @@ async def pollcreator(catpoll):
     reply_to_id = await reply_id(catpoll)
     string = "".join(catpoll.text.split(maxsplit=1)[1:])
     if not string:
-        options = Build_Poll(["Yah sure 😊✌️", "Nah 😏😕", "Whatever die sur 🥱🙄"])
+        options = Build_Poll(["Yeah sure ✌🏻", "Nah 😏", "Whatever die sir 🙄"])
         try:
             await catpoll.client.send_message(
                 catpoll.chat_id,
                 file=InputMediaPoll(
                     poll=Poll(
                         id=random.getrandbits(32),
-                        question="👆👆So do you guys agree with this?",
+                        question="So do you guys agree with this ?",
                         answers=options,
                     )
                 ),
@@ -43,7 +43,7 @@ async def pollcreator(catpoll):
             await catpoll.delete()
         except PollOptionInvalidError:
             await edit_or_reply(
-                catpoll, "`A poll option used invalid data (the data may be too long).`"
+                catpoll, "`A poll option used invalid data ( the data may be too long )`"
             )
         except ForbiddenError:
             await edit_or_reply(catpoll, "`This chat has forbidden the polls`")
@@ -69,7 +69,7 @@ async def pollcreator(catpoll):
             except PollOptionInvalidError:
                 await edit_or_reply(
                     catpoll,
-                    "`A poll option used invalid data (the data may be too long).`",
+                    "`A poll option used invalid data ( the data may be too long )`",
                 )
             except ForbiddenError:
                 await edit_or_reply(catpoll, "`This chat has forbidden the polls`")
@@ -78,5 +78,5 @@ async def pollcreator(catpoll):
         else:
             await edit_or_reply(
                 catpoll,
-                "Make sure that you used Correct syntax `.poll question ; option1 ; option2`",
+                "Make sure that you used correct syntax `.poll question ; option1 ; option2`",
             )
