@@ -87,8 +87,8 @@ async def _(event):  # sourcery no-metrics
     pattern="savepwel(?:\s|$)([\s\S]*)",
     command=("savepwel", plugin_category),
     info={
-        "header": "To welcome user(sends welcome message to here private messages).",
-        "description": "Saves the message as a welcome note in the chat. And will send welcome message to every new user who ever joins newly in group.",
+        "header": "To welcome user ( sends welcome message to here private messages )",
+        "description": "Saves the message as a welcome note in the chat and will send welcome message to every new user who ever joins newly in group",
         "option": {
             "{mention}": "To mention the user",
             "{title}": "To get chat name in message",
@@ -102,7 +102,7 @@ async def _(event):  # sourcery no-metrics
             "{my_fullname}": "To use my full name",
             "{my_last}": "To use my last name",
             "{my_mention}": "To mention myself",
-            "{my_username}": "To use my username.",
+            "{my_username}": "To use my username",
         },
         "usage": [
             "{tr}savepwel <welcome message>",
@@ -112,7 +112,7 @@ async def _(event):  # sourcery no-metrics
     },
 )
 async def save_welcome(event):
-    "To set private welcome message."
+    "To set private welcome message"
     msg = await event.get_reply_message()
     string = "".join(event.text.split(maxsplit=1)[1:])
     msg_id = None
@@ -120,9 +120,9 @@ async def save_welcome(event):
         if BOTLOG_CHATID:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"#WELCOME_NOTE\
-                \nCHAT ID: {event.chat_id}\
-                \nThe following message is saved as the welcome note for the {get_display_name(await event.get_chat())}, Dont delete this message !!",
+                f"WELCOME_NOTE\
+                \nCHAT ID : {event.chat_id}\
+                \nThe following message is saved as the welcome note for the {get_display_name(await event.get_chat())}, dont delete this message !",
             )
             msg_o = await event.client.forward_messages(
                 entity=BOTLOG_CHATID, messages=msg, from_peer=event.chat_id, silent=True
@@ -131,13 +131,13 @@ async def save_welcome(event):
         else:
             await edit_or_reply(
                 event,
-                "`Saving media as part of the welcome note requires the BOTLOG_CHATID to be set.`",
+                "`Saving media as part of the welcome note requires the BOTLOG_CHATID to be set`",
             )
             return
     elif event.reply_to_msg_id and not string:
         rep_msg = await event.get_reply_message()
         string = rep_msg.text
-    success = "`Welcome note {} for this chat.`"
+    success = "`Welcome note {} for this chat`"
     if addwelcome_setting(event.chat_id, 0, string, msg_id) is True:
         return await edit_or_reply(event, success.format("saved"))
     rmwelcome_setting(event.chat_id)
@@ -150,15 +150,15 @@ async def save_welcome(event):
     pattern="clearpwel$",
     command=("clearpwel", plugin_category),
     info={
-        "header": "To turn off private welcome message.",
-        "description": "Deletes the private welcome note for the current chat.",
+        "header": "To turn off private welcome message",
+        "description": "Deletes the private welcome note for the current chat",
         "usage": "{tr}clearpwel",
     },
 )
 async def del_welcome(event):
     "To turn off private welcome message"
     if rmwelcome_setting(event.chat_id) is True:
-        await edit_or_reply(event, "`Welcome note deleted for this chat.`")
+        await edit_or_reply(event, "`Welcome note deleted for this chat`")
     else:
         await edit_or_reply(event, "`Do I have a welcome note here ?`")
 
@@ -167,7 +167,7 @@ async def del_welcome(event):
     pattern="listpwel$",
     command=("listpwel", plugin_category),
     info={
-        "header": "To check current private welcome message in group.",
+        "header": "To check current private welcome message in group",
         "usage": "{tr}listpwel",
     },
 )
@@ -175,18 +175,18 @@ async def show_welcome(event):
     "To show current private welcome message in group"
     cws = getcurrent_welcome_settings(event.chat_id)
     if not cws:
-        await edit_or_reply(event, "`No pwelcome message saved here.`")
+        await edit_or_reply(event, "`No pwelcome message saved here`")
         return
     if cws.f_mesg_id:
         msg_o = await event.client.get_messages(
             entity=BOTLOG_CHATID, ids=int(cws.f_mesg_id)
         )
         await edit_or_reply(
-            event, "`I am currently pwelcoming new users with this welcome note.`"
+            event, "`I am currently pwelcoming new users with this welcome note`"
         )
         await event.reply(msg_o.message, file=msg_o.media)
     elif cws.reply:
         await edit_or_reply(
-            event, "`I am currently pwelcoming new users with this welcome note.`"
+            event, "`I am currently pwelcoming new users with this welcome note`"
         )
         await event.reply(cws.reply, link_preview=False)
