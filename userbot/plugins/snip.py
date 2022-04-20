@@ -50,8 +50,8 @@ async def incom_note(event):
     pattern="snips (\w*)",
     command=("snips", plugin_category),
     info={
-        "header": "To save notes to the bot.",
-        "description": "Saves the replied message as a note with the notename. (Works with pics, docs, and stickers too!. and get them by using #notename",
+        "header": "To save notes to the bot",
+        "description": "Saves the replied message as a note with the notename ( works with pics , docs , and stickers too and get them by using notename )",
         "usage": "{tr}snips <keyword>",
     },
 )
@@ -69,9 +69,9 @@ async def add_snip(event):
     if msg and not string:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"#NOTE\
+            f"NOTE\
             \n**Keyword :** `#{keyword}`\
-            \n\nThe following message is saved as the snip in your bot , do NOT delete it !!",
+            \n\nThe following message is saved as the snip in your bot , do not delete it",
         )
         msg_o = await event.client.forward_messages(
             entity=BOTLOG_CHATID, messages=msg, from_peer=event.chat_id, silent=True
@@ -80,22 +80,22 @@ async def add_snip(event):
     elif msg:
         return await edit_delete(
             event,
-            "`What should i save for your snip either do reply or give snip text along with keyword`",
+            "`What should I save for your snip either do reply or give snip text along with keyword ?`",
         )
     if not msg:
         if string:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"#NOTE\
+                f"NOTE\
             \n**Keyword :** `#{keyword}`\
-            \n\nThe following message is saved as the snip in your bot , do NOT delete it !!",
+            \n\nThe following message is saved as the snip in your bot , do not delete it",
             )
             msg_o = await event.client.send_message(BOTLOG_CHATID, string)
             msg_id = msg_o.id
             string = None
         else:
-            return await edit_delete(event, "`what should i save for your snip`")
-    success = "Note {} is successfully {}. Use` #{} `to get it"
+            return await edit_delete(event, "`What should i save for your snip ?`")
+    success = "Note {} is successfully {} ! Use` #{} `to get it"
     if add_note(keyword, string, msg_id) is False:
         rm_note(keyword)
         if add_note(keyword, string, msg_id) is False:
@@ -110,22 +110,22 @@ async def add_snip(event):
     pattern="snipl$",
     command=("snipl", plugin_category),
     info={
-        "header": "To list all notes in bot.",
+        "header": "To list all notes in bot",
         "usage": "{tr}snipl",
     },
 )
 async def on_snip_list(event):
-    "To list all notes in bot."
-    message = "You havent saved any notes/snip"
+    "To list all notes in bot"
+    message = "You haven't saved any notes or snip"
     notes = get_notes()
     if not BOTLOG:
         return await edit_delete(
             event, "`For saving snip you must set PRIVATE_GROUP_BOT_API_ID`"
         )
     for note in notes:
-        if message == "You havent saved any notes/snip":
-            message = "Notes saved in your bot are\n\n"
-        message += f"👉 `#{note.keyword}`"
+        if message == "You haven't saved any notes or snip":
+            message = "Notes saved in your bot are :\n\n"
+        message += f"🎐 `#{note.keyword}`"
         if note.f_mesg_id:
             msglink = await get_message_link(BOTLOG_CHATID, note.f_mesg_id)
             message += f"  [preview]({msglink})\n"
@@ -138,12 +138,12 @@ async def on_snip_list(event):
     pattern="snipd (\S+)",
     command=("snipd", plugin_category),
     info={
-        "header": "To delete paticular note in bot.",
+        "header": "To delete paticular note in bot",
         "usage": "{tr}snipd <keyword>",
     },
 )
 async def on_snip_delete(event):
-    "To delete paticular note in bot."
+    "To delete paticular note in bot"
     name = event.pattern_match.group(1)
     name = name.lower()
     catsnip = get_note(name)
@@ -151,6 +151,6 @@ async def on_snip_delete(event):
         rm_note(name)
     else:
         return await edit_or_reply(
-            event, f"Are you sure that #{name} is saved as snip?"
+            event, f"Are you sure that #{name} is saved as snip ?"
         )
-    await edit_or_reply(event, f"`snip #{name} deleted successfully`")
+    await edit_or_reply(event, f"`Snip #{name} deleted successfully`")
