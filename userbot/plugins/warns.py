@@ -12,8 +12,8 @@ plugin_category = "admin"
     pattern="warn(?:\s|$)([\s\S]*)",
     command=("warn", plugin_category),
     info={
-        "header": "To warn a user.",
-        "description": "will warn the replied user.",
+        "header": "To warn a user",
+        "description": "Will warn the replied user",
         "usage": "{tr}warn <reason>",
     },
 )
@@ -30,21 +30,21 @@ async def _(event):
     if num_warns >= limit:
         sql.reset_warns(reply_message.sender_id, event.chat_id)
         if soft_warn:
-            logger.info("TODO: kick user")
-            reply = "{} warnings, [user](tg://user?id={}) has to bee kicked!".format(
+            logger.info("TODO : kick user")
+            reply = "{} warnings , [user](tg://user?id={}) has to been kicked !".format(
                 limit, reply_message.sender_id
             )
         else:
-            logger.info("TODO: ban user")
-            reply = "{} warnings, [user](tg://user?id={}) has to bee banned!".format(
+            logger.info("TODO : ban user")
+            reply = "{} warnings , [user](tg://user?id={}) has to been banned !".format(
                 limit, reply_message.sender_id
             )
     else:
-        reply = "[user](tg://user?id={}) has {}/{} warnings... watch out!".format(
+        reply = "[user](tg://user?id={}) has {}/{} warnings... watch out !".format(
             reply_message.sender_id, num_warns, limit
         )
         if warn_reason:
-            reply += "\nReason for last warn:\n{}".format(html.escape(warn_reason))
+            reply += "\nReason for last warn :\n{}".format(html.escape(warn_reason))
     await edit_or_reply(event, reply)
 
 
@@ -52,7 +52,7 @@ async def _(event):
     pattern="warns",
     command=("warns", plugin_category),
     info={
-        "header": "To get users warns list.",
+        "header": "To get users warns list",
         "usage": "{tr}warns <reply>",
     },
 )
@@ -60,21 +60,21 @@ async def _(event):
     "To get users warns list"
     reply_message = await event.get_reply_message()
     if not reply_message:
-        return await edit_delete(event, "__Reply to user to get his warns.__")
+        return await edit_delete(event, "Reply to user to get his warns")
     result = sql.get_warns(reply_message.sender_id, event.chat_id)
     if not result or result[0] == 0:
-        return await edit_or_reply(event, "this user hasn't got any warnings!")
+        return await edit_or_reply(event, "This user hasn't got any warnings !")
     num_warns, reasons = result
     limit, soft_warn = sql.get_warn_setting(event.chat_id)
     if not reasons:
         return await edit_or_reply(
             event,
-            "this user has {} / {} warning, but no reasons for any of them.".format(
+            "This user has {} / {} warning , but no reasons for any of them".format(
                 num_warns, limit
             ),
         )
 
-    text = "This user has {}/{} warnings, for the following reasons:".format(
+    text = "This user has {}/{} warnings , for the following reasons :".format(
         num_warns, limit
     )
     text += "\r\n"
@@ -97,4 +97,4 @@ async def _(event):
     "To reset warns"
     reply_message = await event.get_reply_message()
     sql.reset_warns(reply_message.sender_id, event.chat_id)
-    await edit_or_reply(event, "__Warnings have been reset!__")
+    await edit_or_reply(event, "Warnings have been reset")
