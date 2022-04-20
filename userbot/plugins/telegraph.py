@@ -13,7 +13,7 @@ from userbot import catub
 from ..Config import Config
 from ..core.logger import logging
 from ..core.managers import edit_or_reply
-from . import BOTLOG, BOTLOG_CHATID
+from . import BOTLOG, BOTLOG_CHATID, mention
 
 LOGS = logging.getLogger(__name__)
 plugin_category = "utils"
@@ -33,12 +33,12 @@ def resize_image(image):
     pattern="(t(ele)?g(raph)?) ?(m|t|media|text)(?:\s|$)([\s\S]*)",
     command=("telegraph", plugin_category),
     info={
-        "header": "To get telegraph link.",
+        "header": "To get telegraph link",
         "description": "Reply to text message to paste that text on telegraph you can also pass input along with command \
-            So that to customize title of that telegraph and reply to media file to get sharable link of that media(atmost 5mb is supported)",
-        "options": {
-            "m or media": "To get telegraph link of replied sticker/image/video/gif.",
-            "t or text": "To get telegraph link of replied text you can use custom title.",
+            so that to customize title of that telegraph and reply to media file to get sharable link of that media ( atmost 5mb is supported )",
+        "options" : {
+            "m or media": "To get telegraph link of replied sticker or image or video or gif",
+            "t or text": "To get telegraph link of replied text you can use custom title",
         },
         "usage": [
             "{tr}tgm",
@@ -49,17 +49,17 @@ def resize_image(image):
     },
 )  # sourcery no-metrics
 async def _(event):
-    "To get telegraph link."
-    catevent = await edit_or_reply(event, "`processing........`")
+    "To get telegraph link"
+    catevent = await edit_or_reply(event, "`Processing...`")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"Created New Telegraph account {auth_url} for the current session. \n**Do not give this url to anyone, even if they say they are from Telegram!**",
+            f"Created new telegraph account {auth_url} for the current session \n**Do not give this url to anyone , even if they say they are from telegram**",
         )
     optional_title = event.pattern_match.group(5)
     if not event.reply_to_msg_id:
         return await catevent.edit(
-            "`Reply to a message to get a permanent telegra.ph link.`",
+            "`Reply to a message to get a permanent telegra.ph link`",
         )
 
     start = datetime.now()
@@ -82,8 +82,9 @@ async def _(event):
             ms = (end - start).seconds
             os.remove(downloaded_file_name)
             await catevent.edit(
-                f"**link : **[telegraph](https://telegra.ph{media_urls[0]})\
-                    \n**Time Taken : **`{ms} seconds.`",
+                f"**➥ Uploaded to :-**[telegraph](https://telegra.ph{media_urls[0]})\
+                 \n**➥ Uploaded in {ms} seconds.**\
+                 \n**➥ Uploaded by :-** {mention}",
                 link_preview=True,
             )
     elif input_str in ["text", "t"]:
@@ -119,7 +120,8 @@ async def _(event):
         ms = (end - start).seconds
         cat = f"https://telegra.ph/{response['path']}"
         await catevent.edit(
-            f"**link : ** [telegraph]({cat})\
-                 \n**Time Taken : **`{ms} seconds.`",
+            f"**➥ Uploaded to :-** [telegraph]({cat})\
+                 \n**➥ Uploaded in {ms} seconds.**\
+                 \n**➥ Uploaded by :-** {mention}",
             link_preview=True,
         )
