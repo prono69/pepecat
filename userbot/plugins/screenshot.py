@@ -22,21 +22,21 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="ss ([\s\S]*)",
+    pattern="(ss|gis) ([\s\S]*)",
     command=("ss", plugin_category),
     info={
-        "header": "To Take a screenshot of a website.",
+        "header": "To take a screenshot of a website",
         "usage": "{tr}ss <link>",
         "examples": "{tr}ss https://github.com/TgCatUB/catuserbot",
     },
 )
 async def _(event):
-    "To Take a screenshot of a website."
+    "To take a screenshot of a website"
     if Config.CHROME_BIN is None:
         return await edit_or_reply(
-            event, "Need to install Google Chrome. Module Stopping."
+            event, "Need to install google chrome ! Module stopping"
         )
-    catevent = await edit_or_reply(event, "`Processing ...`")
+    catevent = await edit_or_reply(event, "`Processing...`")
     start = datetime.now()
     try:
         chrome_options = webdriver.ChromeOptions()
@@ -47,18 +47,22 @@ async def _(event):
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.binary_location = Config.CHROME_BIN
-        await event.edit("`Starting Google Chrome BIN`")
+        await event.edit("`Starting google chrome bin`")
         driver = webdriver.Chrome(chrome_options=chrome_options)
-        input_str = event.pattern_match.group(1)
+        cmd = event.pattern_match.group(1)
+        input_str = event.pattern_match.group(2)
         inputstr = input_str
-        caturl = url(inputstr)
-        if not caturl:
-            inputstr = f"http://{input_str}"
+        if cmd == "ss":
             caturl = url(inputstr)
-        if not caturl:
-            return await catevent.edit("`The given input is not supported url`")
+            if not caturl:
+                inputstr = f"http://{input_str}"
+                caturl = url(inputstr)
+            if not caturl:
+                return await catevent.edit("`The given input is not supported url`")
+        if cmd == "gis":
+            inputstr = f"https://www.google.com/search?q={input_str}"
         driver.get(inputstr)
-        await catevent.edit("`Calculating Page Dimensions`")
+        await catevent.edit("`Calculating page dimensions`")
         height = driver.execute_script(
             "return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);"
         )
@@ -75,7 +79,7 @@ async def _(event):
         message_id = await reply_id(event)
         end = datetime.now()
         ms = (end - start).seconds
-        hmm = f"**url : **{input_str} \n**Time :** `{ms} seconds`"
+        hmm = f"**Url : **{input_str} \n**Time :** `{ms} seconds`"
         await catevent.delete()
         with io.BytesIO(im_png) as out_file:
             out_file.name = f"{input_str}.PNG"
@@ -96,22 +100,22 @@ async def _(event):
     pattern="scapture ([\s\S]*)",
     command=("scapture", plugin_category),
     info={
-        "header": "To Take a screenshot of a website.",
+        "header": "To take a screenshot of a website",
         "description": "For functioning of this command you need to set SCREEN_SHOT_LAYER_ACCESS_KEY var",
         "usage": "{tr}scapture <link>",
         "examples": "{tr}scapture https://github.com/TgCatUB/catuserbot",
     },
 )
 async def _(event):
-    "To Take a screenshot of a website."
+    "To take a screenshot of a website"
     start = datetime.now()
     message_id = await reply_id(event)
     if Config.SCREEN_SHOT_LAYER_ACCESS_KEY is None:
         return await edit_or_reply(
             event,
-            "`Need to get an API key from https://screenshotlayer.com/product and need to set it SCREEN_SHOT_LAYER_ACCESS_KEY !`",
+            "`Need to get an api key from https://screenshotlayer.com/product and need to set it SCREEN_SHOT_LAYER_ACCESS_KEY`",
         )
-    catevent = await edit_or_reply(event, "`Processing ...`")
+    catevent = await edit_or_reply(event, "`Processing...`")
     sample_url = "https://api.screenshotlayer.com/api/capture?access_key={}&url={}&fullpage={}&viewport={}&format={}&force={}"
     input_str = event.pattern_match.group(1)
     inputstr = input_str
@@ -130,7 +134,7 @@ async def _(event):
     contentType = response_api.headers["content-type"]
     end = datetime.now()
     ms = (end - start).seconds
-    hmm = f"**url : **{input_str} \n**Time :** `{ms} seconds`"
+    hmm = f"**Url : **{input_str} \n**Time :** `{ms} seconds`"
     if "image" in contentType:
         with io.BytesIO(response_api.content) as screenshot_image:
             screenshot_image.name = "screencapture.png"
