@@ -20,12 +20,11 @@ plugin_category = "utils"
 moviepath = os.path.join(os.getcwd(), "temp", "moviethumb.jpg")
 
 justwatchapi.__dict__["HEADER"] = {
-    "User-Agent": "JustWatch client (github.com/dawoudt/JustWatchAPI)"
+    "User-agent" : "JustWatch client (github.com/dawoudt/JustWatchAPI)"
 }
 
 
 def get_stream_data(query):
-    stream_data = {}
     # Compatibility for Current Userge Users
     try:
         country = Config.WATCH_COUNTRY
@@ -35,12 +34,15 @@ def get_stream_data(query):
     just_watch = JustWatch(country=country)
     results = just_watch.search_for_item(query=query)
     movie = results["items"][0]
-    stream_data["title"] = movie["title"]
-    stream_data["movie_thumb"] = (
-        "https://images.justwatch.com"
-        + movie["poster"].replace("{profile}", "")
-        + "s592"
-    )
+    stream_data = {
+        "title": movie["title"],
+        "movie_thumb": (
+            "https://images.justwatch.com"
+            + movie["poster"].replace("{profile}", "")
+            + "s592"
+        ),
+    }
+
     stream_data["release_year"] = movie["original_release_year"]
     try:
         LOGS.info(movie["cinema_release_date"])
@@ -74,7 +76,7 @@ def get_stream_data(query):
 # Helper Functions
 def pretty(name):
     if name == "play":
-        name = "Google Play Movies"
+        name = "Google play movies"
     return name[0].upper() + name[1:]
 
 
@@ -91,16 +93,16 @@ def get_provider(url):
     pattern="watch ([\s\S]*)",
     command=("watch", plugin_category),
     info={
-        "header": "To search online streaming sites for that movie.",
-        "description": "Fetches the list of sites(standard) where you can watch that movie.",
+        "header": "To search online streaming sites for that movie",
+        "description": "Fetches the list of sites ( standard ) where you can watch that movie",
         "usage": "{tr}watch <movie name>",
         "examples": "{tr}watch aquaman",
     },
 )
 async def _(event):
-    "To search online streaming sites for that movie."
+    "To search online streaming sites for that movie"
     query = event.pattern_match.group(1)
-    et = await edit_or_reply(event, "`Finding Sites...`")
+    et = await edit_or_reply(event, "`Finding sites...`")
     try:
         streams = get_stream_data(query)
     except Exception as e:
@@ -123,13 +125,13 @@ async def _(event):
     if release_date is None:
         release_date = release_year
 
-    output_ = f"**Movie:**\n`{title}`\n**Release Date:**\n`{release_date}`"
+    output_ = f"**Movie :**\n`{title}`\n**Release date :**\n`{release_date}`"
     if imdb_score:
-        output_ = output_ + f"\n**IMDB: **{imdb_score}"
+        output_ = f"{output_}\n**IMDB : **{imdb_score}"
     if tmdb_score:
-        output_ = output_ + f"\n**TMDB: **{tmdb_score}"
+        output_ = f"{output_}\n**TMDB : **{tmdb_score}"
 
-    output_ = output_ + "\n\n**Available on:**\n"
+    output_ = output_ + "\n\n**Available on :**\n"
     for provider, link in stream_providers.items():
         if "sonyliv" in link:
             link = link.replace(" ", "%20")
