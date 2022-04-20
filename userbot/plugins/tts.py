@@ -21,7 +21,7 @@ plugin_category = "utils"
     pattern="tts(?:\s|$)([\s\S]*)",
     command=("tts", plugin_category),
     info={
-        "header": "Text to speech command.",
+        "header": "Text to speech command",
         "usage": [
             "{tr}tts <text>",
             "{tr}tts <reply>",
@@ -30,7 +30,7 @@ plugin_category = "utils"
     },
 )
 async def _(event):
-    "text to speech command"
+    "Text to speech command"
     input_str = event.pattern_match.group(1)
     start = datetime.now()
     reply_to_id = await reply_id(event)
@@ -42,10 +42,10 @@ async def _(event):
         lan = input_str or "en"
     else:
         if not input_str:
-            return await edit_or_reply(event, "Invalid Syntax. Module stopping.")
+            return await edit_or_reply(event, "Invalid syntax ! Module stopping")
         text = input_str
         lan = "en"
-    catevent = await edit_or_reply(event, "`Recording......`")
+    catevent = await edit_or_reply(event, "`Recording...`")
     text = deEmojify(text.strip())
     lan = lan.strip()
     if not os.path.isdir("./temp/"):
@@ -67,8 +67,9 @@ async def _(event):
             "100k",
             "-vbr",
             "on",
-            required_file_name + ".opus",
+            f"{required_file_name}.opus",
         ]
+
         try:
             t_response = subprocess.check_output(
                 command_to_execute, stderr=subprocess.STDOUT
@@ -78,7 +79,7 @@ async def _(event):
             # continue sending required_file_name
         else:
             os.remove(required_file_name)
-            required_file_name = required_file_name + ".opus"
+            required_file_name = f"{required_file_name}.opus"
         end = datetime.now()
         ms = (end - start).seconds
         await event.client.send_file(
@@ -91,7 +92,8 @@ async def _(event):
         os.remove(required_file_name)
         await edit_delete(
             catevent,
-            "`Processed text {} into voice in {} seconds!`".format(text[0:20], ms),
+            "`Processed text {} into voice in {} seconds !`".format(text[:20], ms),
         )
+
     except Exception as e:
-        await edit_or_reply(catevent, f"**Error:**\n`{e}`")
+        await edit_or_reply(catevent, f"**Error :**\n`{e}`")
