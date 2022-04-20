@@ -32,26 +32,13 @@ def close_connection(*_):
 
 
 signal.signal(signal.SIGTERM, close_connection)
-
-<<<<<<< HEAD
 CAT_ID = ["790841356", "986755683", "880678601"]
 
 agent = UserAgent()
-
-
 def user_agent():
     return agent.random
 
-
-if Config.UPSTREAM_REPO == "badcat":
-    UPSTREAM_REPO_URL = "https://github.com/Jisan09/catuserbot"
-elif Config.UPSTREAM_REPO == "goodcat":
-    UPSTREAM_REPO_URL = "https://github.com/TgCatUB/catuserbot"
-else:
-    UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
-=======
 UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
->>>>>>> branch 'master' of https://github.com/TgCatUB/catuserbot
 
 if Config.PRIVATE_GROUP_BOT_API_ID == 0:
     if gvarstatus("PRIVATE_GROUP_BOT_API_ID") is None:
