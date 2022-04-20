@@ -17,7 +17,7 @@ plugin_category = "utils"
     pattern="stt$",
     command=("stt", plugin_category),
     info={
-        "header": "speech to text module.",
+        "header": "Speech to text module",
         "usage": "{tr}stt",
     },
 )
@@ -26,7 +26,7 @@ async def _(event):
     if Config.IBM_WATSON_CRED_URL is None or Config.IBM_WATSON_CRED_PASSWORD is None:
         return await edit_delete(
             event,
-            "`You need to set the required ENV variables for this module. \nModule stopping`",
+            "`You need to set the required env variables for this module\nModule stopping`",
         )
     start = datetime.now()
     lan = "en"
@@ -37,21 +37,22 @@ async def _(event):
     if not reply or (mediatype and mediatype not in ["Voice", "Audio"]):
         return await edit_delete(
             event,
-            "`Reply to a voice message or Audio, to get the relevant transcript.`",
+            "`Reply to a voice message or audio , to get the relevant transcript`",
         )
-    catevent = await edit_or_reply(event, "`Downloading to my local, for analysis  🙇`")
+    catevent = await edit_or_reply(event, "`Downloading to my local , for analysis 🙇`")
     required_file_name = await event.client.download_media(reply, Config.TEMP_DIR)
-    await catevent.edit("`Starting analysis, using IBM WatSon Speech To Text`")
+    await catevent.edit("`Starting analysis , using ibm watson speech to text`")
     headers = {
         "Content-Type": reply.media.document.mime_type,
     }
     data = open(required_file_name, "rb").read()
     response = requests.post(
-        Config.IBM_WATSON_CRED_URL + "/v1/recognize",
+        f"{Config.IBM_WATSON_CRED_URL}/v1/recognize",
         headers=headers,
         data=data,
         auth=("apikey", Config.IBM_WATSON_CRED_PASSWORD),
     )
+
     r = response.json()
     if "results" not in r:
         return await catevent.edit(r["error"])
@@ -65,12 +66,12 @@ async def _(event):
         transcript_confidence += " " + str(alternatives["confidence"])
     end = datetime.now()
     ms = (end - start).seconds
-    if transcript_response == "":
-        string_to_show = "**Language : **`{}`\n**Time Taken : **`{} seconds`\n**No Results Found**".format(
+    if not transcript_response:
+        string_to_show = "**Language : **`{}`\n**Time taken : **`{} seconds`\n**No results found**".format(
             lan, ms
         )
     else:
-        string_to_show = "**Language : **`{}`\n**Transcript : **`{}`\n**Time Taken : **`{} seconds`\n**Confidence : **`{}`".format(
+        string_to_show = "**Language : **`{}`\n**Transcript : **`{}`\n**Time taken : **`{} seconds`\n**Confidence : **`{}`".format(
             lan, transcript_response, ms, transcript_confidence
         )
     await catevent.edit(string_to_show)
