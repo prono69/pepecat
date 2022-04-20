@@ -28,13 +28,13 @@ link_regex = re.compile(
     pattern="labstack(?:\s|$)([\s\S]*)",
     command=("labstack", plugin_category),
     info={
-        "header": "To upload media to labstack.",
+        "header": "To upload media to labstack",
         "description": "Will upload media to labstack and shares you link so that you can share with friends and it expires automatically after 7 days",
         "usage": "{tr}labstack <reply to media or provide path of media>",
     },
 )
 async def labstack(event):
-    "to upload media to labstack"
+    "To upload media to labstack"
     editor = await edit_or_reply(event, "Processing...")
     input_str = event.pattern_match.group(1)
     reply = await event.get_reply_message()
@@ -65,13 +65,14 @@ async def labstack(event):
     command_to_exec = [
         "curl",
         "-F",
-        "files=@" + filebase,
+        f"files=@{filebase}",
         "-H",
         "Transfer-Encoding: chunked",
         "-H",
         "Up-User-ID: IZfFbjUcgoo3Ao3m",
         url,
     ]
+
     try:
         t_response = subprocess.check_output(command_to_exec, stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as exc:
@@ -91,21 +92,21 @@ async def labstack(event):
     pattern="webupload ?(.+?|) --(fileio|anonfiles|transfer|filebin|anonymousfiles|bayfiles)",
     command=("webupload", plugin_category),
     info={
-        "header": "To upload media to some online media sharing platforms.",
-        "description": "you can upload media to any of the sites mentioned. so you can share link to others.",
+        "header": "To upload media to some online media sharing platforms",
+        "description": "You can upload media to any of the sites mentioned so you can share link to others",
         "options": {
-            "fileio": "to file.io site",
-            "anonfiles": "to anonfiles site",
-            "transfer": "to transfer.sh site",
-            "filebin": "to file bin site",
-            "anonymousfiles": "to anonymousfiles site",
-            "bayfiles": "to bayfiles site",
+            "fileio": "To file.io site",
+            "anonfiles": "To anonfiles site",
+            "transfer": "To transfer.sh site",
+            "filebin": "To file bin site",
+            "anonymousfiles": "To anonymousfiles site",
+            "bayfiles": "To bayfiles site",
         },
         "usage": [
             "{tr}webupload --option",
             "{tr}webupload path --option",
         ],
-        "examples": "{tr}.webupload --fileio reply this to media file.",
+        "examples": "{tr}.webupload --fileio reply this to media file",
     },
 )
 async def _(event):
@@ -140,7 +141,7 @@ async def _(event):
             full_file_path=file_name, bare_local_name=filename
         )
     except KeyError:
-        return await editor.edit("Invalid selected Transfer")
+        return await editor.edit("Invalid selected transfer")
     cmd = selected_one
     # start the subprocess $SHELL
     process = await asyncio.create_subprocess_shell(
@@ -148,8 +149,7 @@ async def _(event):
     )
     stdout, stderr = await process.communicate()
     error = stderr.decode().strip()
-    t_response = stdout.decode().strip()
-    if t_response:
+    if t_response := stdout.decode().strip():
         try:
             t_response = json.dumps(json.loads(t_response), sort_keys=True, indent=4)
         except Exception as e:
@@ -159,7 +159,7 @@ async def _(event):
         result = ""
         for i in urls:
             if not result:
-                result = "**Uploaded File link/links :**"
+                result = "**Uploaded file link or links :**"
             result += f"\n{i[0]}"
         await editor.edit(result)
     else:
