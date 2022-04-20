@@ -12,13 +12,13 @@ plugin_category = "utils"
     pattern="dns(?:\s|$)([\s\S]*)",
     command=("dns", plugin_category),
     info={
-        "header": "To get Domain Name System(dns) of the given link.",
+        "header": "To get domain name system ( dns ) of the given link",
         "usage": "{tr}dns <url/reply to url>",
         "examples": "{tr}dns google.com",
     },
 )
 async def _(event):
-    "To get Domain Name System(dns) of the given link."
+    "To get domain name system(dns) of the given link"
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     reply = await event.get_reply_message()
     if not input_str and reply:
@@ -32,13 +32,13 @@ async def _(event):
         catstr = f"http://{input_str}"
         check = url(catstr)
     if not check:
-        return await edit_delete(event, "`the given link is not supported`", 5)
+        return await edit_delete(event, "`The given link is not supported`", 5)
     sample_url = f"https://da.gd/dns/{input_str}"
     if response_api := requests.get(sample_url).text:
         await edit_or_reply(event, f"DNS records of {input_str} are \n{response_api}")
     else:
         await edit_or_reply(
-            event, f"__I can't seem to find `{input_str}` on the internet__"
+            event, f"I can't seem to find `{input_str}` on the internet"
         )
 
 
@@ -46,13 +46,13 @@ async def _(event):
     pattern="short(?:\s|$)([\s\S]*)",
     command=("short", plugin_category),
     info={
-        "header": "To short the given url.",
+        "header": "To short the given url",
         "usage": "{tr}short <url/reply to url>",
         "examples": "{tr}short https://github.com/TgCatUB/catuserbot",
     },
 )
 async def _(event):
-    "shortens the given link"
+    "Shortens the given link"
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     reply = await event.get_reply_message()
     if not input_str and reply:
@@ -66,7 +66,7 @@ async def _(event):
         catstr = f"http://{input_str}"
         check = url(catstr)
     if not check:
-        return await edit_delete(event, "`the given link is not supported`", 5)
+        return await edit_delete(event, "`The given link is not supported`", 5)
     if not input_str.startswith("http"):
         input_str = f"http://{input_str}"
     sample_url = f"https://da.gd/s?url={input_str}"
@@ -75,20 +75,20 @@ async def _(event):
             event, f"Generated {response_api} for {input_str}.", link_preview=False
         )
     else:
-        await edit_or_reply(event, "`Something is wrong, please try again later.`")
+        await edit_or_reply(event, "`Something is wrong , please try again later`")
 
 
 @catub.cat_cmd(
     pattern="unshort(?:\s|$)([\s\S]*)",
     command=("unshort", plugin_category),
     info={
-        "header": "To unshort the given dagb shorten url.",
+        "header": "To unshort the given dagb shorten url",
         "usage": "{tr}unshort <url/reply to url>",
         "examples": "{tr}unshort https://da.gd/rm6qri",
     },
 )
 async def _(event):
-    "To unshort the given dagb shorten url."
+    "To unshort the given dagb shorten url"
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     reply = await event.get_reply_message()
     if not input_str and reply:
@@ -102,20 +102,20 @@ async def _(event):
         catstr = f"http://{input_str}"
         check = url(catstr)
     if not check:
-        return await edit_delete(event, "`the given link is not supported`", 5)
+        return await edit_delete(event, "`The given link is not supported`", 5)
     if not input_str.startswith("http"):
         input_str = f"http://{input_str}"
     r = requests.get(input_str, allow_redirects=False)
     if str(r.status_code).startswith("3"):
         await edit_or_reply(
             event,
-            f"Input URL: {input_str}\nReDirected URL: {r.headers['Location']}",
+            f"Input url : {input_str}\nRe-directed url : {r.headers['Location']}",
             link_preview=False,
         )
     else:
         await edit_or_reply(
             event,
-            "Input URL {} returned status_code {}".format(input_str, r.status_code),
+            "Input url {} returned status_code {}".format(input_str, r.status_code),
         )
 
 
@@ -124,13 +124,13 @@ async def _(event):
     pattern="hl(?:\s|$)([\s\S]*)",
     command=("hl", plugin_category),
     info={
-        "header": "To hide the url with white spaces using hyperlink.",
+        "header": "To hide the url with white spaces using hyperlink",
         "usage": "{tr}hl <url/reply to url>",
         "examples": "{tr}hl https://da.gd/rm6qri",
     },
 )
 async def _(event):
-    "To hide the url with white spaces using hyperlink."
+    "To hide the url with white spaces using hyperlink"
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     reply = await event.get_reply_message()
     if not input_str and reply:
@@ -144,5 +144,5 @@ async def _(event):
         catstr = f"http://{input_str}"
         check = url(catstr)
     if not check:
-        return await edit_delete(event, "`the given link is not supported`", 5)
+        return await edit_delete(event, "`The given link is not supported`", 5)
     await edit_or_reply(event, f"[ㅤㅤㅤㅤㅤㅤㅤ]({input_str})")
