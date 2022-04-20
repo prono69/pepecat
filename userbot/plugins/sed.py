@@ -93,8 +93,8 @@ async def on_edit(event):
     pattern="^s/((?:\\/|[^/])+)/((?:\\/|[^/])*)(/.*)?",
     command=("sed", plugin_category),
     info={
-        "header": "Replaces a word or words with other words.",
-        "description": "Tag any sentence and type s/a/b. where is required word to replace and b is correct word.",
+        "header": "Replaces a word or words with other words",
+        "description": "Tag any sentence and type s/a/b where is required word to replace and b is correct word",
         "usage": "s<delimiter><old word(s)><delimiter><new word(s)>",
         "delimiters": ["/", ":", "|", "_"],
         "examples": "s/delimiter/symbol - replace this command to this message",
@@ -103,7 +103,7 @@ async def on_edit(event):
 async def on_regex(event):
     "To replace words in sentences"
     if not event.is_private and await group_has_sedbot(await event.get_input_chat()):
-        await edit_delete(event, "This group has a sed bot. Ignoring this message!")
+        await edit_delete(event, "This group has a sed bot ! Ignoring this message")
         return
     m, s = doit(event.chat_id, event.pattern_match, await event.get_reply_message())
     if m is not None:
