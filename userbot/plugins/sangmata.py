@@ -15,9 +15,9 @@ plugin_category = "utils"
     pattern="sg(u)?(?:\s|$)([\s\S]*)",
     command=("sg", plugin_category),
     info={
-        "header": "To get name history of the user.",
+        "header": "To get name history of the user",
         "flags": {
-            "u": "That is sgu to get username history.",
+            "u": "That is sgu to get username history",
         },
         "usage": [
             "{tr}sg <username/userid/reply>",
@@ -27,7 +27,7 @@ plugin_category = "utils"
     },
 )
 async def _(event):  # sourcery no-metrics
-    "To get name/username history."
+    "To get name/username history"
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     reply_message = await event.get_reply_message()
     if not input_str and not reply_message:
