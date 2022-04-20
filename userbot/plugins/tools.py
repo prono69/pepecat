@@ -12,6 +12,7 @@ from barcode.writer import ImageWriter
 from bs4 import BeautifulSoup
 from PIL import Image, ImageColor
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.tl.functions.contacts import UnblockRequest as unblock
 
 from userbot import catub
 
@@ -19,7 +20,8 @@ from ..Config import Config
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import AioHttp
-from ..helpers.utils import _catutils, _format, reply_id
+from ..helpers.functions import delete_conv
+from ..helpers.utils import _catutils, reply_id
 
 plugin_category = "tools"
 
@@ -31,19 +33,19 @@ LOGS = logging.getLogger(__name__)
     pattern="cur(?:\s|$)([\s\S]*)",
     command=("cur", plugin_category),
     info={
-        "header": "To convert one currency value to other.",
-        "description": "To find exchange rates of currencies.",
+        "header": "To convert one currency value to other",
+        "description": "To find exchange rates of currencies",
         "usage": "{tr}cur <value> <from currencyid> <to currencyid>",
         "examples": "{tr}cur 10 USD INR",
         "note": "List of currency ids are [Country & Currency](https://da.gd/j588M) or [Only Currency data](https://da.gd/obZIdk)",
     },
 )
 async def currency(event):
-    """To convert one currency value to other."""
+    """To convert one currency value to other"""
     if Config.CURRENCY_API is None:
         return await edit_delete(
             event,
-            "__You haven't set the api value. Set Api var __`CURRENCY_API` __in heroku get value from https://free.currencyconverterapi.com__.",
+            "You haven't set the api value , set api var `CURRENCY_API` in heroku get value from https://free.currencyconverterapi.com",
             link_preview=False,
             time=10,
         )
@@ -52,7 +54,7 @@ async def currency(event):
     if len(values) == 3:
         value, fromcurrency, tocurrency = values
     else:
-        return await edit_delete(event, "__Use proper syntax. check__ `.help -c cur`")
+        return await edit_delete(event, "Use proper syntax check `.help -c cur`")
     fromcurrency = fromcurrency.upper()
     tocurrency = tocurrency.upper()
     try:
@@ -70,19 +72,19 @@ async def currency(event):
         except KeyError:
             return await edit_delete(
                 event,
-                "__You have used wrong currency codes or Api can't fetch details or try by restarting bot it will work if everything is fine.__",
+                "You have used wrong currency codes or api can't fetch details or try by restarting bot it will work if everything is fine",
                 time=10,
             )
         output = float(value) * float(result)
         output = round(output, 4)
         await edit_or_reply(
             event,
-            f"The Currency value of **{symbols[fromcurrency]}{value} {fromcurrency}** in **{tocurrency}** is **{symbols[tocurrency]}{output}**",
+            f"The currency value of **{symbols[fromcurrency]}{value} {fromcurrency}** in **{tocurrency}** is **{symbols[tocurrency]}{output}**",
         )
     except Exception:
         await edit_or_reply(
             event,
-            "__It seems you are using different currency value. which doesn't exist on earth.__",
+            "It seems you are using different currency value. which doesn't exist on earth",
         )
 
 
@@ -90,44 +92,50 @@ async def currency(event):
     pattern="scan( -i)?$",
     command=("scan", plugin_category),
     info={
-        "header": "To scan the replied file for virus.",
-        "flag": {"i": "to get output as image."},
+        "header": "To scan the replied file for virus",
+        "flag": {"i": "to get output as image"},
         "usage": ["{tr}scan", "{tr}scan -i"],
     },
 )
-async def _(event):
+async def scan(event):
     input_str = event.pattern_match.group(1)
     if not event.reply_to_msg_id:
-        return await edit_or_reply(event, "```Reply to any user message.```")
+        return await edit_or_reply(event, "```Reply to any user message```")
     reply_message = await event.get_reply_message()
     if not reply_message.media:
-        return await edit_or_reply(event, "```reply to a media message```")
+        return await edit_or_reply(event, "```Reply to a media message```")
     chat = "@VS_Robot"
-    catevent = await edit_or_reply(event, " `Sliding my tip, of fingers over it`")
+    catevent = await edit_or_reply(event, " `Sliding my tip , of fingers over it`")
     async with event.client.conversation(chat) as conv:
         try:
-            await conv.send_message("/start")
-            await conv.get_response()
-            await event.client.forward_messages(chat, reply_message)
-            response1 = await conv.get_response()
-            if response1.text:
-                await event.client.send_read_acknowledge(conv.chat_id)
-                return await catevent.edit(response1.text, parse_mode=_format.parse_pre)
-            await conv.get_response()
-            await event.client.send_read_acknowledge(conv.chat_id)
-            response3 = await conv.get_response()
-            response4 = await conv.get_response()
-            await event.client.send_read_acknowledge(conv.chat_id)
+            flag = await conv.send_message("/start")
         except YouBlockedUserError:
-            return await catevent.edit(
-                "`You blocked `@VS_Robot` Unblock it and give a try`"
+            await edit_or_reply(
+                catevent, "**Error :** Trying to unblock & retry , wait a second..."
             )
-        if not input_str:
-            return await edit_or_reply(catevent, response4.text)
-        await catevent.delete()
-        await event.client.send_file(
-            event.chat_id, response3.media, reply_to=(await reply_id(event))
-        )
+            await catub(unblock("VS_Robot"))
+            flag = await conv.send_message("/start")
+        await conv.get_response()
+        await conv.send_message(reply_message)
+        response1 = await conv.get_response()
+        if response1.text:
+            await event.client.send_read_acknowledge(conv.chat_id)
+            sec = "".join([num for num in response1.text if num.isdigit()])
+            await edit_delete(catevent, f"**Please wait for {sec}s before retry**", 15)
+        else:
+            await conv.get_response()
+            await event.client.send_read_acknowledge(conv.chat_id)
+            response2 = await conv.get_response()
+            response3 = await conv.get_response()
+            await event.client.send_read_acknowledge(conv.chat_id)
+            if not input_str:
+                await edit_or_reply(catevent, response3.text[30:])
+            else:
+                await catevent.delete()
+                await event.client.send_file(
+                    event.chat_id, response2.media, reply_to=(await reply_id(event))
+                )
+        await delete_conv(event, chat, flag)
 
 
 @catub.cat_cmd(
@@ -135,13 +143,13 @@ async def _(event):
     command=("decode", plugin_category),
     info={
         "header": "To decode qrcode or barcode",
-        "description": "Reply to qrcode or barcode to decode it and get text.",
+        "description": "Reply to qrcode or barcode to decode it and get text",
         "usage": "{tr}decode",
     },
 )
 async def parseqr(event):
     "To decode qrcode or barcode"
-    catevent = await edit_or_reply(event, "`Decoding....`")
+    catevent = await edit_or_reply(event, "`Decoding...`")
     reply = await event.get_reply_message()
     downloaded_file_name = await reply.download_media()
     # parse the Official ZXing webpage to decode the QRCode
@@ -155,26 +163,26 @@ async def parseqr(event):
         await edit_or_reply(catevent, f"**The decoded message is :**\n`{qr_contents}`")
     except IndexError:
         result = soup.text
-        await edit_or_reply(catevent, f"**Failed to Decode:**\n`{result}`")
+        await edit_or_reply(catevent, f"**Failed to decode :**\n`{result}`")
     except Exception as e:
-        await edit_or_reply(catevent, f"**Error:**\n`{e}`")
+        await edit_or_reply(catevent, f"**Error :**\n`{e}`")
 
 
 @catub.cat_cmd(
     pattern="barcode ?([\s\S]*)",
     command=("barcode", plugin_category),
     info={
-        "header": "To get barcode of given text.",
+        "header": "To get barcode of given text",
         "usage": "{tr}barcode <text>",
         "example": "{tr}barcode www.google.com",
     },
 )
 async def _(event):
-    "to make barcode of given content."
+    "to make barcode of given content"
     catevent = await edit_or_reply(event, "...")
     start = datetime.now()
     input_str = event.pattern_match.group(1)
-    message = "SYNTAX: `.barcode <long text to include>`"
+    message = "SYNTAX : `.barcode <long text to include>`"
     reply_msg_id = await reply_id(event)
     if input_str:
         message = input_str
@@ -193,7 +201,7 @@ async def _(event):
         else:
             message = previous_message.message
     else:
-        message = "SYNTAX: `.barcode <long text to include>`"
+        message = "SYNTAX : `.barcode <long text to include>`"
     bar_code_type = "code128"
     try:
         bar_code_mode_f = barcode.get(bar_code_type, message, writer=ImageWriter())
@@ -209,22 +217,22 @@ async def _(event):
         return await catevent.edit(str(e))
     end = datetime.now()
     ms = (end - start).seconds
-    await edit_delete(catevent, "Created BarCode in {} seconds".format(ms))
+    await edit_delete(catevent, "Created barcode in {} seconds".format(ms))
 
 
 @catub.cat_cmd(
     pattern="makeqr(?: |$)([\s\S]*)",
     command=("makeqr", plugin_category),
     info={
-        "header": "To get makeqr of given text.",
+        "header": "To get makeqr of given text",
         "usage": "{tr}makeqr <text>",
         "example": "{tr}makeqr www.google.com",
     },
 )
 async def make_qr(makeqr):
-    "make a QR Code containing the given content."
+    "make a QR Code containing the given content"
     input_str = makeqr.pattern_match.group(1)
-    message = "SYNTAX: `.makeqr <long text to include>`"
+    message = "SYNTAX : `.makeqr <long text to include>`"
     reply_msg_id = await reply_id(makeqr)
     if input_str:
         message = input_str
@@ -260,13 +268,13 @@ async def make_qr(makeqr):
     pattern="cal ([\s\S]*)",
     command=("cal", plugin_category),
     info={
-        "header": "To get calendar of given month and year.",
+        "header": "To get calendar of given month and year",
         "usage": "{tr}cal year ; month",
         "examples": "{tr}cal 2021 ; 5",
     },
 )
 async def _(event):
-    "To get calendar of given month and year."
+    "To get calendar of given month and year"
     input_str = event.pattern_match.group(1)
     input_sgra = input_str.split(";")
     if len(input_sgra) != 2:
@@ -278,15 +286,15 @@ async def _(event):
         output_result = calendar.month(int(yyyy.strip()), int(mm.strip()))
         await edit_or_reply(event, f"```{output_result}```")
     except Exception as e:
-        await edit_delete(event, f"**Error:**\n`{e}`", 5)
+        await edit_delete(event, f"**Error :**\n`{e}`", 5)
 
 
 @catub.cat_cmd(
     pattern="ip(?:\s|$)([\s\S]*)",
     command=("ip", plugin_category),
     info={
-        "header": "Find details of an IP address",
-        "description": "To check detailed info of provided ip address.",
+        "header": "Find details of an ip address",
+        "description": "To check detailed info of provided ip address",
         "usage": "{tr}ip <mine/ip address",
         "examples": [
             "{tr}ip mine",
@@ -295,7 +303,7 @@ async def _(event):
     },
 )
 async def spy(event):
-    "To see details of an ip."
+    "To see details of an ip"
     inpt = event.pattern_match.group(1)
     if not inpt:
         return await edit_delete(event, "**Give an ip address to lookup...**", 20)
@@ -304,7 +312,7 @@ async def spy(event):
     if API is None:
         return await edit_delete(
             event,
-            "**Get an API key from [Ipdata](https://dashboard.ipdata.co/sign-up.html) & set that in heroku var `IPDATA_API`**",
+            "**Get an api key from [Ipdata](https://dashboard.ipdata.co/sign-up.html) & set that in heroku var `IPDATA_API`**",
             80,
         )
     url = requests.get(f"https://api.ipdata.co/{check}?api-key={API}")
@@ -312,7 +320,7 @@ async def spy(event):
     try:
         return await edit_delete(event, f"**{r['message']}**", 60)
     except KeyError:
-        await edit_or_reply(event, "🔍 **Searching...**")
+        await edit_or_reply(event, "**Searching... 🔍**")
     ip = r["ip"]
     city = r["city"]
     postal = r["postal"]
@@ -350,20 +358,20 @@ async def spy(event):
         lang2 = ""
 
     string = f"✘ <b>Lookup For Ip : {ip}</b> {emoji_flag}\n\n\
-    <b>• City Name :</b>  <code>{city}</code>\n\
-    <b>• Region Name :</b>  <code>{region}</code> [<code>{region_code}</code>]\n\
-    <b>• Country Name :</b>  <code>{country}</code> [<code>{country_code}</code>]\n\
-    <b>• Continent Name :</b>  <code>{continent}</code> [<code>{continent_code}</code>]\n\
-    <b>• View on Map :  <a href = https://www.google.com/maps/search/?api=1&query={latitude}%2C{longitude}>Google Map</a></b>\n\
-    <b>• Postal Code :</b> <code>{postal}</code>\n\
-    <b>• Caller Code :</b>  <code>+{calling_code}</code>\n\
-    <b>• Carrier Detail :  <a href = https://www.{carriel}>{' '.join(carrier.split()[:2])}</a></b>\n\
+    <b>• City name :</b>  <code>{city}</code>\n\
+    <b>• Region name :</b>  <code>{region}</code> [<code>{region_code}</code>]\n\
+    <b>• Country name :</b>  <code>{country}</code> [<code>{country_code}</code>]\n\
+    <b>• Continent name :</b>  <code>{continent}</code> [<code>{continent_code}</code>]\n\
+    <b>• View on map :  <a href = https://www.google.com/maps/search/?api=1&query={latitude}%2C{longitude}>Google Map</a></b>\n\
+    <b>• Postal code :</b> <code>{postal}</code>\n\
+    <b>• Caller code :</b>  <code>+{calling_code}</code>\n\
+    <b>• Carrier detail :  <a href = https://www.{carriel}>{' '.join(carrier.split()[:2])}</a></b>\n\
     <b>• Language :</b>  {language1} {lang2}\n\
     <b>• Currency :</b>  <code>{currency}</code> [<code>{symbol}{currcode}</code>]\n\
-    <b>• Time Zone :</b> <code>{time_zone}</code> [<code>{time_z}</code>]\n\
+    <b>• Time zone :</b> <code>{time_zone}</code> [<code>{time_z}</code>]\n\
     <b>• Time :</b> <code>{current_time[11:16]}</code>\n\
     <b>• Date :</b> <code>{current_time[:10]}</code>\n\
-    <b>• Time Offset :</b> <code>{current_time[-6:]}</code>"
+    <b>• Time offset :</b> <code>{current_time[-6:]}</code>"
     await edit_or_reply(event, string, parse_mode="html")
 
 
@@ -371,13 +379,13 @@ async def spy(event):
     pattern="ifsc ([\s\S]*)",
     command=("ifsc", plugin_category),
     info={
-        "header": "to get details of the relevant bank or branch.",
+        "header": "to get details of the relevant bank or branch",
         "usage": "{tr}ifsc <ifsc code>",
         "examples": "{tr}ifsc SBIN0016086",
     },
 )
 async def _(event):
-    "to get details of the relevant bank or branch."
+    "to get details of the relevant bank or branch"
     input_str = event.pattern_match.group(1)
     url = "https://ifsc.razorpay.com/{}".format(input_str)
     r = requests.get(url)
@@ -394,13 +402,13 @@ async def _(event):
     pattern="color ([\s\S]*)",
     command=("color", plugin_category),
     info={
-        "header": "To get color pic of given hexa color code.",
+        "header": "To get color pic of given hexa color code",
         "usage": "{tr}color <colour code>",
         "examples": "{tr}color #ff0000",
     },
 )
 async def _(event):
-    "To get color pic of given hexa color code."
+    "To get color pic of given hexa color code"
     input_str = event.pattern_match.group(1)
     message_id = await reply_id(event)
     if not input_str.startswith("#"):
@@ -430,13 +438,13 @@ async def _(event):
     pattern="xkcd(?:\s|$)([\s\S]*)",
     command=("xkcd", plugin_category),
     info={
-        "header": "Searches for the query for the relevant XKCD comic.",
+        "header": "Searches for the query for the relevant XKCD comic",
         "usage": "{tr}xkcd <query>",
     },
 )
 async def _(event):
-    "Searches for the query for the relevant XKCD comic."
-    catevent = await edit_or_reply(event, "`processiong...........`")
+    "Searches for the query for the relevant XKCD comic"
+    catevent = await edit_or_reply(event, "`Processiong...`")
     input_str = event.pattern_match.group(1)
     xkcd_id = None
     if input_str:
@@ -467,11 +475,11 @@ async def _(event):
     data.get("title")
     output_str = """[\u2060]({})**{}**
 [XKCD ]({})
-Title: {}
-Alt: {}
-Day: {}
-Month: {}
-Year: {}""".format(
+Title : {}
+Alt : {}
+Day : {}
+Month : {}
+Year : {}""".format(
         img, input_str, xkcd_link, safe_title, alt, day, month, year
     )
     await catevent.edit(output_str, link_preview=True)
