@@ -91,8 +91,8 @@ async def _(event):  # sourcery no-metrics
     pattern="savewelcome(?:\s|$)([\s\S]*)",
     command=("savewelcome", plugin_category),
     info={
-        "header": "To welcome new users in chat.",
-        "description": "Saves the message as a welcome note in the chat. And will send welcome message to every new user in group who ever joins newly in group.",
+        "header": "To welcome new users in chat",
+        "description": "Saves the message as a welcome note in the chat and will send welcome message to every new user in group who ever joins newly in group",
         "option": {
             "{mention}": "To mention the user",
             "{title}": "To get chat name in message",
@@ -106,7 +106,7 @@ async def _(event):  # sourcery no-metrics
             "{my_fullname}": "To use my full name",
             "{my_last}": "To use my last name",
             "{my_mention}": "To mention myself",
-            "{my_username}": "To use my username.",
+            "{my_username}": "To use my username",
         },
         "usage": [
             "{tr}savewelcome <welcome message>",
@@ -116,7 +116,7 @@ async def _(event):  # sourcery no-metrics
     },
 )
 async def save_welcome(event):
-    "To set welcome message in chat."
+    "To set welcome message in chat"
     msg = await event.get_reply_message()
     string = "".join(event.text.split(maxsplit=1)[1:])
     msg_id = None
@@ -124,9 +124,9 @@ async def save_welcome(event):
         if BOTLOG_CHATID:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"#WELCOME_NOTE\
-                \nCHAT ID: {event.chat_id}\
-                \nThe following message is saved as the welcome note for the {get_display_name(await event.get_chat())}, Don't delete this message !!",
+                f"WELCOME_NOTE\
+                \nCHAT ID : {event.chat_id}\
+                \nThe following message is saved as the welcome note for the {get_display_name(await event.get_chat())} , don't delete this message",
             )
             msg_o = await event.client.forward_messages(
                 entity=BOTLOG_CHATID, messages=msg, from_peer=event.chat_id, silent=True
@@ -135,12 +135,12 @@ async def save_welcome(event):
         else:
             return await edit_or_reply(
                 event,
-                "`Saving media as part of the welcome note requires the BOTLOG_CHATID to be set.`",
+                "`Saving media as part of the welcome note requires the BOTLOG_CHATID to be set`",
             )
     elif event.reply_to_msg_id and not string:
         rep_msg = await event.get_reply_message()
         string = rep_msg.text
-    success = "`Welcome note {} for this chat.`"
+    success = "`Welcome note {} for this chat`"
     if add_welcome_setting(event.chat_id, 0, string, msg_id) is True:
         return await edit_or_reply(event, success.format("saved"))
     rm_welcome_setting(event.chat_id)
@@ -153,15 +153,15 @@ async def save_welcome(event):
     pattern="clearwelcome$",
     command=("clearwelcome", plugin_category),
     info={
-        "header": "To turn off welcome message in group.",
-        "description": "Deletes the welcome note for the current chat.",
+        "header": "To turn off welcome message in group",
+        "description": "Deletes the welcome note for the current chat",
         "usage": "{tr}clearwelcome",
     },
 )
 async def del_welcome(event):
     "To turn off welcome message"
     if rm_welcome_setting(event.chat_id) is True:
-        await edit_or_reply(event, "`Welcome note deleted for this chat.`")
+        await edit_or_reply(event, "`Welcome note deleted for this chat`")
     else:
         await edit_or_reply(event, "`Do I have a welcome note here ?`")
 
@@ -170,7 +170,7 @@ async def del_welcome(event):
     pattern="listwelcome$",
     command=("listwelcome", plugin_category),
     info={
-        "header": "To check current welcome message in group.",
+        "header": "To check current welcome message in group",
         "usage": "{tr}listwelcome",
     },
 )
@@ -178,18 +178,18 @@ async def show_welcome(event):
     "To show current welcome message in group"
     cws = get_current_welcome_settings(event.chat_id)
     if not cws:
-        return await edit_or_reply(event, "`No welcome message saved here.`")
+        return await edit_or_reply(event, "`No welcome message saved here`")
     if cws.f_mesg_id:
         msg_o = await event.client.get_messages(
             entity=BOTLOG_CHATID, ids=int(cws.f_mesg_id)
         )
         await edit_or_reply(
-            event, "`I am currently welcoming new users with this welcome note.`"
+            event, "`I am currently welcoming new users with this welcome note`"
         )
         await event.reply(msg_o.message, file=msg_o.media)
     elif cws.reply:
         await edit_or_reply(
-            event, "`I am currently welcoming new users with this welcome note.`"
+            event, "`I am currently welcoming new users with this welcome note`"
         )
         await event.reply(cws.reply, link_preview=False)
 
@@ -198,25 +198,25 @@ async def show_welcome(event):
     pattern="cleanwelcome (on|off)$",
     command=("cleanwelcome", plugin_category),
     info={
-        "header": "To turn off or turn on of deleting previous welcome message.",
-        "description": "if you want to delete previous welcome message and send new one turn on it by deafult it will be on. Turn it off if you need",
+        "header": "To turn off or turn on of deleting previous welcome message",
+        "description": "If you want to delete previous welcome message and send new one turn on it by deafult it will be on ! Turn it off if you need",
         "usage": "{tr}cleanwelcome <on/off>",
     },
 )
 async def del_welcome(event):
-    "To turn off or turn on of deleting previous welcome message."
+    "To turn off or turn on of deleting previous welcome message"
     input_str = event.pattern_match.group(1)
     if input_str == "on":
         if gvarstatus("clean_welcome") is None:
-            return await edit_delete(event, "__Already it was turned on.__")
+            return await edit_delete(event, "Already it was turned on")
         delgvar("clean_welcome")
         return await edit_delete(
             event,
-            "__From now on previous welcome message will be deleted and new welcome message will be sent.__",
+            "From now on previous welcome message will be deleted and new welcome message will be sent",
         )
     if gvarstatus("clean_welcome") is None:
         addgvar("clean_welcome", "false")
         return await edit_delete(
-            event, "__From now on previous welcome message will not be deleted .__"
+            event, "From now on previous welcome message will not be deleted"
         )
     await edit_delete(event, "It was turned off already")
