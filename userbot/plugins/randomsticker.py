@@ -22,12 +22,12 @@ PAT_IMAGE = "pat.webp"
     pattern="cat$",
     command=("cat", plugin_category),
     info={
-        "header": "To get random cat stickers.",
+        "header": "To get random cat stickers",
         "usage": "{tr}cat",
     },
 )
 async def _(event):
-    "To get random cat stickers."
+    "To get random cat stickers"
     await event.delete()
     reply_to_id = await reply_id(event)
     with open("temp.png", "wb") as f:
@@ -48,12 +48,12 @@ async def _(event):
     pattern="dab$",
     command=("dab", plugin_category),
     info={
-        "header": "To get random dabbing pose stickers.",
+        "header": "To get random dabbing pose stickers",
         "usage": "{tr}dab",
     },
 )
 async def _(event):
-    "To get random dabbing pose stickers."
+    "To get random dabbing pose stickers"
     reply_to_id = await reply_id(event)
     blacklist = {
         1653974154589768377,
@@ -90,12 +90,12 @@ async def _(event):
     pattern="brain$",
     command=("brain", plugin_category),
     info={
-        "header": "To get random brain stickers.",
+        "header": "To get random brain stickers",
         "usage": "{tr}brain",
     },
 )
 async def handler(event):
-    "To get random brain stickers."
+    "To get random brain stickers"
     reply_to_id = await reply_id(event)
     blacklist = {}
     await event.delete()
@@ -122,12 +122,12 @@ async def handler(event):
     pattern="pat$",
     command=("pat", plugin_category),
     info={
-        "header": "To get random pat stickers.",
+        "header": "To get random pat stickers",
         "usage": "{tr}pat",
     },
 )
 async def lastfm(event):
-    "To get random pat stickers."
+    "To get random pat stickers"
     await event.delete()
     reply_to_id = await reply_id(event)
     resp = requests.get("http://headp.at/js/pats.json")
