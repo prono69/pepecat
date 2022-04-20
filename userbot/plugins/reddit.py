@@ -25,7 +25,7 @@ plugin_category = "misc"
     pattern="reddit(?:\s|$)([\s\S]*)",
     command=("reddit", plugin_category),
     info={
-        "header": "get a random reddit post.",
+        "header": "Get a random reddit post",
         "usage": "{tr}reddit <subreddit>",
         "examples": "{tr}reddit dankmemes",
     },
@@ -39,20 +39,20 @@ async def reddit_fetch(event):
         cn = requests.get(subreddit_api)
         r = cn.json()
     except ValueError:
-        return await edit_delete(event, "Value error!.")
+        return await edit_delete(event, "Value error")
     if "code" in r:
         if BOTLOG:
             code = r["code"]
             code_message = r["message"]
             await event.client.send_message(
-                BOTLOG_CHATID, f"**Error Code: {code}**\n`{code_message}`"
+                BOTLOG_CHATID, f"**Error code : {code}**\n`{code_message}`"
             )
-            await edit_delete(event, f"**Error Code: {code}**\n`{code_message}`")
+            await edit_delete(event, f"**Error code : {code}**\n`{code_message}`")
     else:
         if "url" not in r:
             return await edit_delete(
                 event,
-                "Coudn't Find a post with Image, Please Try Again",
+                "Coudn't find a post with image , please try again",
             )
         postlink = r["postLink"]
         subreddit = r["subreddit"]
@@ -61,18 +61,18 @@ async def reddit_fetch(event):
         author = r["author"]
         upvote = r["ups"]
         captionx = f"**{title}**\n"
-        captionx += f"`Posted by u/{author}`\n"
+        captionx += f"`Posted by you/{author}`\n"
         captionx += f"↕️ `{upvote}`\n"
         if r["spoiler"]:
-            captionx += "⚠️ Post marked as SPOILER\n"
+            captionx += "Post marked as spoiler ⚠️\n"
         if r["nsfw"]:
-            captionx += "🔞 Post marked Adult \n"
+            captionx += "Post marked adult 🔞\n"
 
             if await age_verification(event, reply_to):
                 return
 
         await event.delete()
-        captionx += f"Source: [r/{subreddit}]({postlink})"
+        captionx += f"Source : [r/{subreddit}]({postlink})"
         sandy = await event.client.send_file(
             event.chat_id, media_url, caption=captionx, reply_to=reply_to
         )
