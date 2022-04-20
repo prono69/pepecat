@@ -28,20 +28,20 @@ def convert_from_bytes(size):
     pattern="speedtest(?:\s|$)([\s\S]*)",
     command=("speedtest", plugin_category),
     info={
-        "header": "Botserver's speedtest by ookla.",
+        "header": "Botserver's speedtest by ookla",
         "options": {
-            "text": "will give output as text",
+            "text": "Will give output as text",
             "image": (
-                "Will give output as image this is default option if "
-                "no input is given."
+                "Will give output as image this is default option if"
+                "no input is given"
             ),
-            "file": "will give output as png file.",
+            "file": "Will give output as png file",
         },
         "usage": ["{tr}speedtest <option>", "{tr}speedtest"],
     },
 )
 async def _(event):
-    "Botserver's speedtest by ookla."
+    "Botserver's speedtest by ookla"
     input_str = event.pattern_match.group(1)
     as_text = False
     as_document = False
@@ -52,7 +52,7 @@ async def _(event):
     elif input_str == "text":
         as_text = True
     catevent = await edit_or_reply(
-        event, "`Calculating my internet speed. Please wait!`"
+        event, "`Calculating my internet speed please wait`"
     )
     start = time()
     s = speedtest.Speedtest()
@@ -74,13 +74,13 @@ async def _(event):
         speedtest_image = response
         if as_text:
             await catevent.edit(
-                """`SpeedTest completed in {} seconds`
+                """`Speedtest completed in {} seconds`
 
-`Download: {} (or) {} MB/s`
-`Upload: {} (or) {} MB/s`
-`Ping: {} ms`
-`Internet Service Provider: {}`
-`ISP Rating: {}`""".format(
+`Download : {} (or) {} mb/s`
+`Upload : {} (or) {} mb/s`
+`Ping : {} ms`
+`Internet service provider : {}`
+`ISP rating : {}`""".format(
                     ms,
                     convert_from_bytes(download_speed),
                     round(download_speed / 8e6, 2),
@@ -95,7 +95,7 @@ async def _(event):
             await event.client.send_file(
                 event.chat_id,
                 speedtest_image,
-                caption="**SpeedTest** completed in {} seconds".format(ms),
+                caption="**Speedtest** completed in {} seconds".format(ms),
                 force_document=as_document,
                 reply_to=reply_msg_id,
                 allow_cache=False,
@@ -103,12 +103,12 @@ async def _(event):
             await event.delete()
     except Exception as exc:
         await catevent.edit(
-            """**SpeedTest** completed in {} seconds
-Download: {} (or) {} MB/s
-Upload: {} (or) {} MB/s
-Ping: {} ms
+            """**Speedtest** completed in {} seconds
+Download : {} (or) {} mb/s
+Upload : {} (or) {} mb/s
+Ping : {} ms
 
-__With the Following ERRORs__
+With the following ERRORS
 {}""".format(
                 ms,
                 convert_from_bytes(download_speed),
