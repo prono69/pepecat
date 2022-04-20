@@ -1,14 +1,22 @@
 import asyncio
 import os
-import random
 import re
+import random
+import time
 from datetime import datetime
-
 from telethon.events import CallbackQuery
+import requests
+from telethon.errors.rpcerrorlist import (
+    MediaEmptyError,
+    WebpageCurlFailedError,
+    WebpageMediaEmptyError,
+)
 
+from ..Config import Config
 from ..core.managers import edit_or_reply
 from ..sql_helper.globals import gvarstatus
-from . import BOTLOG_CHATID, catub, hmention, mention, reply_id
+from ..helpers.functions import get_readable_time
+from . import StartTime, catub, mention, BOTLOG_CHATID, hmention, reply_id
 
 plugin_category = "tools"
 
@@ -38,6 +46,12 @@ PING_MENTION = os.environ.get("PING_MENTION") or "ℜ𝔲𝔩𝔢𝔰 𝔅𝔶"
 # lol
 PONG = "ɪ ꜱʟᴀʏ ᴅʀᴀɢᴏɴꜱ ᴀᴛ ɴɪɢʜᴛ ᴡʜɪʟᴇ ʏᴏᴜ ꜱʟᴇᴇᴘ🖤🥀"
 
+temp_ = "Pong!"
+temp = "Pong!\n`{ping} ms`"
+if Config.BADCAT:
+    temp_ = "__**☞ Pong**__"
+    temp = "__**☞ Pong**__\n➥ `{ping}` **ms**\n➥ __**Bot of **__{mention}"
+
 
 @catub.cat_cmd(
     pattern="ping( -a|$)",
@@ -51,37 +65,58 @@ PONG = "ɪ ꜱʟᴀʏ ᴅʀᴀɢᴏɴꜱ ᴀᴛ ɴɪɢʜᴛ ᴡʜɪʟᴇ ʏᴏ�
 async def _(event):
     "To check ping"
     flag = event.pattern_match.group(1)
+    reply_to_id = await reply_id(event)
+    uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    catevent = await edit_or_reply(event, f"`Checking`")
-    end = datetime.now()
-    ms = str((end - start).microseconds / 1000)
-    for normal in ms:
-        if normal in normaltext:
-            pingchars = pingfont[normaltext.index(normal)]
-            ms = ms.replace(normal, pingchars)
     my = f"𝗣𝗶𝗻𝗴:\n`{ms}` 𝗺𝘀"
-    ping_caption = gvarstatus("PING_TEMPLATE") or my
     if flag == " -a":
         catevent = await edit_or_reply(event, "`!....`")
         await asyncio.sleep(0.3)
-        await catevent.edit("`..!..`")
+        await edit_or_reply(catevent, "`..!..`")
         await asyncio.sleep(0.3)
-        await catevent.edit("`....!`")
+        await edit_or_reply(catevent, "`....!`")
         end = datetime.now()
         tms = (end - start).microseconds / 1000
-        ms = str(round((tms - 0.6) / 3, 3))
+        ms = round((tms - 0.6) / 3, 3)
         for normal in ms:
             if normal in normaltext:
                 pingchars = pingfont[normaltext.index(normal)]
                 ms = ms.replace(normal, pingchars)
-        await catevent.edit(
-            f"<b> 𝗔𝘃𝗲𝗿𝗮𝗴𝗲 𝗣𝗼𝗻𝗴!<b>\n <code>{ms} 𝗺𝘀<code>",
-            parse_mode="html",
-        )
+        await edit_or_reply(catevent, f"**𝗔𝘃𝗲𝗿𝗮𝗴𝗲 𝗣𝗼𝗻𝗴!**\n`{ms} 𝗺𝘀`")
     else:
-        ping_caption = gvarstatus("PING_TEMPLATE") or my
-        caption = ping_caption.format(ping=ms, mention=mention)
-        await catevent.edit(caption)
+        catevent = await edit_or_reply(event, temp_)
+        end = datetime.now()
+        ms = (end - start).microseconds / 1000
+        ANIME = None
+        ping_temp = gvarstatus("PING_TEMPLATE") or temp
+        PING_PIC = gvarstatus("PING_PIC")
+        if "ANIME" in ping_temp:
+            data = requests.get("https://animechan.vercel.app/api/random").json()
+            ANIME = f"**“{data['quote']}” - {data['character']} ({data['anime']})**"
+        caption = ping_temp.format(
+            ANIME=ANIME,
+            mention=mention,
+            uptime=uptime,
+            ping=ms,
+        )
+        if PING_PIC:
+            CAT = list(PING_PIC.split())
+            PIC = random.choice(CAT)
+            try:
+                await event.client.send_file(
+                    event.chat_id, PIC, caption=caption, reply_to=reply_to_id
+                )
+                await catevent.delete()
+            except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError):
+                return await edit_or_reply(
+                    catevent,
+                    f"**Media Value Error!!**\n__Change the link by __`.setdv`\n\n**__Can't get media from this link :-**__ `{PIC}`",
+                )
+        else:
+            await edit_or_reply(
+                catevent,
+                caption,
+            )
 
 
 @catub.cat_cmd(
@@ -99,7 +134,7 @@ async def _(event):
         return
     reply_to_id = await reply_id(event)
     PING_PICS = (
-        gvarstatus("PING_PICS")
+        gvarstatus("PING_PIC")
         or "https://telegra.ph/file/1328d62db93ad22b69ba2.jpg https://telegra.ph/file/b2da6e4c55dd29600e4ed.jpg"
     )
     PING_PICS = PING_PICS.rsplit(",")
@@ -157,3 +192,4 @@ async def ping(event):
     ms = str((end - start).microseconds / 1000)
     ping_data = f"「 𝗣𝗶𝗻𝗴 」 {ms}ms"
     await event.answer(ping_data, cache_time=0, alert=True)
+        

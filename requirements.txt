@@ -34,6 +34,7 @@ kwot
 lottie
 lyricsgenius
 markdown
+markdown-it-py
 motor
 moviepy
 nekos.py
@@ -82,9 +83,9 @@ webpage2telegraph==2021.7.14
 scipy
 wordcloud
 wget
-youtube_dl
+yt_dlp
 
-git+https://github.com/prono69/Telethon
+git+https://github.com/sandy1709/Telethon@beta
 git+https://github.com/goldsmith/Wikipedia
 git+https://github.com/sandy1709/py-googletrans
 git+https://github.com/alexmercerind/youtube-search-python

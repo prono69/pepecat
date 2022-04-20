@@ -87,6 +87,7 @@ async def bot_start(event):
     my_last = user.last_name
     my_fullname = f"{my_first} {my_last}" if my_last else my_first
     my_username = f"@{user.username}" if user.username else my_mention
+    custompic = gvarstatus("BOT_START_PIC") or None
     if chat.id != Config.OWNER_ID:
         customstrmsg = gvarstatus("START_TEXT") or None
         if customstrmsg is not None:
@@ -121,15 +122,23 @@ async def bot_start(event):
             \nHow can i help you ?"
         buttons = None
     try:
-        await event.client.send_file(
-            chat.id,
-            PIC,
-            caption=start_msg,
-            link_preview=False,
-            buttons=buttons,
-            reply_to=reply_to,
-            allow_cache=True,
-        )
+        if custompic:
+            await event.client.send_file(
+                chat.id,
+                file=custompic,
+                caption=start_msg,
+                link_preview=False,
+                buttons=buttons,
+                reply_to=reply_to,
+            )
+        else:
+            await event.client.send_message(
+                chat.id,
+                start_msg,
+                link_preview=False,
+                buttons=buttons,
+                reply_to=reply_to,
+            )
     except Exception as e:
         if BOTLOG:
             await event.client.send_message(

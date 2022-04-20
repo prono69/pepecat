@@ -7,30 +7,32 @@ from os import environ
 from re import sub
 from sys import setrecursionlimit
 from urllib import parse
-
+ 
 from pylast import LastFMNetwork, MalformedResponseError, User, WSError, md5
 from telethon.errors import AboutTooLongError
 from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
-
+ 
 from userbot import catub
-
+ 
 from ..Config import Config
 from ..core.logger import logging
 from ..helpers.functions import deEmojify, hide_inlinebot
-from . import BOTLOG, BOTLOG_CHATID, DEFAULT_BIO, reply_id
-
+from ..helpers.utils import reply_id
+from ..sql_helper.globals import gvarstatus
+from . import BOTLOG, BOTLOG_CHATID, edit_or_reply
+ 
 LOGS = logging.getLogger(__name__)
 plugin_category = "extra"
-
-
+ 
+DEFAULT_BIO = gvarstatus("DEFAULT_BIO")
 BIO_PREFIX = Config.BIO_PREFIX
 LASTFM_API = Config.LASTFM_API
 LASTFM_SECRET = Config.LASTFM_SECRET
 LASTFM_USERNAME = Config.LASTFM_USERNAME
 LASTFM_PASSWORD_PLAIN = Config.LASTFM_PASSWORD_PLAIN
-
+ 
 LASTFM_PASS = md5(LASTFM_PASSWORD_PLAIN)
 if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
     lastfm = LastFMNetwork(
@@ -41,7 +43,7 @@ if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
     )
 else:
     lastfm = None
-
+ 
 # =================== CONSTANT ===================
 LFM_BIO_ENABLED = "```last.fm current music to bio is now enabled.```"
 LFM_BIO_DISABLED = (
@@ -54,8 +56,8 @@ LFM_LOG_DISABLED = "```last.fm logging to bot log is now disabled.```"
 LFM_LOG_ERR = "```No option specified.```"
 ERROR_MSG = "```last.fm module halted, got an unexpected error.```"
 # ================================================
-
-
+ 
+ 
 class LASTFM:
     def __init__(self):
         self.ARTIST = 0
@@ -64,11 +66,11 @@ class LASTFM:
         self.LASTFMCHECK = False
         self.RUNNING = False
         self.LastLog = False
-
-
+ 
+ 
 LASTFM_ = LASTFM()
-
-
+ 
+ 
 async def gettags(track=None, isNowPlaying=None, playing=None):
     if isNowPlaying:
         tags = playing.get_top_tags()
@@ -80,17 +82,17 @@ async def gettags(track=None, isNowPlaying=None, playing=None):
         arg = track.track
     if not tags:
         tags = arg.artist.get_top_tags()
-    tags = "".join(" #" + t.item.__str__() for t in tags[:5])
+    tags = "".join(f" #{t.item.__str__()}" for t in tags[:5])
     tags = sub("^ ", "", tags)
     tags = sub(" ", "_", tags)
     tags = sub("_#", " #", tags)
     return tags
-
-
+ 
+ 
 async def artist_and_song(track):
     return f"{track.track}"
-
-
+ 
+ 
 async def get_curr_track(lfmbio):  # sourcery no-metrics
     oldartist = ""
     oldsong = ""
@@ -98,7 +100,7 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
         try:
             if LASTFM_.USER_ID == 0:
                 LASTFM_.USER_ID = (await lfmbio.client.get_me()).id
-            user_info = await catub(GetFullUserRequest(LASTFM_.USER_ID))
+            user_info = (await catub(GetFullUserRequest(LASTFM_.USER_ID))).full_user
             LASTFM_.RUNNING = True
             playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
             LASTFM_.SONG = playing.get_title()
@@ -156,8 +158,8 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
                 await catub.send_message(BOTLOG_CHATID, f"Error changing bio:\n{err}")
         await sleep(2)
     LASTFM_.RUNNING = False
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="lastfm$",
     command=("lastfm", plugin_category),
@@ -169,7 +171,7 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
 )
 async def last_fm(lastFM):
     ".lastfm command, fetch scrobble data from last.fm."
-    await lastFM.edit("Processing...")
+    await edit_or_reply(lastFM, "Processing...")
     preview = None
     playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
     username = f"https://www.last.fm/user/{LASTFM_USERNAME}"
@@ -200,11 +202,11 @@ async def last_fm(lastFM):
             if tags:
                 output += f"`{tags}`\n\n"
     if preview is not None:
-        await lastFM.edit(f"{output}", parse_mode="md", link_preview=True)
+        await edit_or_reply(lastFM, f"{output}", parse_mode="md", link_preview=True)
     else:
-        await lastFM.edit(f"{output}", parse_mode="md")
-
-
+        await edit_or_reply(lastFM, f"{output}", parse_mode="md")
+ 
+ 
 @catub.cat_cmd(
     pattern="lastbio (on|off)",
     command=("lastbio", plugin_category),
@@ -224,20 +226,20 @@ async def lastbio(lfmbio):
         if not LASTFM_.LASTFMCHECK:
             LASTFM_.LASTFMCHECK = True
             environ["errorcheck"] = "0"
-            await lfmbio.edit(LFM_BIO_ENABLED)
+            await edit_or_reply(lfmbio, LFM_BIO_ENABLED)
             await sleep(4)
             await get_curr_track(lfmbio)
         else:
-            await lfmbio.edit(LFM_BIO_RUNNING)
+            await edit_or_reply(lfmbio, LFM_BIO_RUNNING)
     elif arg == "off":
         LASTFM_.LASTFMCHECK = False
         LASTFM_.RUNNING = False
         await lfmbio.client(UpdateProfileRequest(about=DEFAULT_BIO))
-        await lfmbio.edit(LFM_BIO_DISABLED)
+        await edit_or_reply(lfmbio, LFM_BIO_DISABLED)
     else:
-        await lfmbio.edit(LFM_BIO_ERR)
-
-
+        await edit_or_reply(lfmbio, LFM_BIO_ERR)
+ 
+ 
 @catub.cat_cmd(
     pattern="lastlog (on|off)",
     command=("lastlog", plugin_category),
@@ -255,35 +257,31 @@ async def lastlog(lstlog):
     LASTFM_.LastLog = False
     if arg == "on":
         LASTFM_.LastLog = True
-        await lstlog.edit(LFM_LOG_ENABLED)
+        await edit_or_reply(lstlog, LFM_LOG_ENABLED)
     elif arg == "off":
         LASTFM_.LastLog = False
-        await lstlog.edit(LFM_LOG_DISABLED)
+        await edit_or_reply(lstlog, LFM_LOG_DISABLED)
     else:
-        await lstlog.edit(LFM_LOG_ERR)
-
-
+        await edit_or_reply(lstlog, LFM_LOG_ERR)
+ 
+ 
 @catub.cat_cmd(
     pattern="now$",
     command=("now", plugin_category),
     info={
-        "header": "Sends the song via @nowplaybot",
-        "description": "Sends the currently listening song (on spotify) to Telegram. Authorize with @nowplaybot for the command to work.",
+        "header": "Send your current listening song from Lastfm/Spotify/Deezer.",
         "usage": "{tr}now",
+        "note": "For working of this command, you need to authorize @NowPlayBot.",
     },
 )
-async def current(event):
-    "Sends Muzik via @nowplaybot"
+async def now(event):
+    "Send your current listening song."
+    text = " "
     reply_to_id = await reply_id(event)
-    if event.fwd_from:
-        return
-    bot = "@nowplaybot"
-    results = await event.client.inline_query(bot, "current link")
-    await results[0].click(
-        event.chat_id,
-        reply_to=reply_to_id,
-    )
+    bot_name = "@nowplaybot"
+    text = deEmojify(text)
     await event.delete()
+    await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
 
 
 @catub.cat_cmd(
@@ -300,6 +298,6 @@ async def nowimg(event):
     text = " "
     reply_to_id = await reply_id(event)
     bot_name = "@Spotipiebot"
-    text = deEmojify(text)
     await event.delete()
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
+

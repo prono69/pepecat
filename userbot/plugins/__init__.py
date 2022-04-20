@@ -23,14 +23,11 @@ bot = catub
 LOGS = logging.getLogger(__name__)
 USERID = catub.uid if Config.OWNER_ID == 0 else Config.OWNER_ID
 ALIVE_NAME = gvarstatus("ALIVE_NAME") or "ПIKIƬΛ"
-AUTONAME = Config.AUTONAME
-DEFAULT_BIO = Config.DEFAULT_BIO
 eor = edit_or_reply
 eod = edit_delete
 THUMB_IMAGE = (
     gvarstatus("THUMB_IMAGE") or "https://telegra.ph/file/ba9acea0064aaed188195.jpg"
 )
-
 
 Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
 heroku_api = "https://api.heroku.com"
@@ -38,8 +35,6 @@ HEROKU_APP_NAME = Config.HEROKU_APP_NAME
 HEROKU_API_KEY = Config.HEROKU_API_KEY
 
 thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
-
-USERID = catub.uid if Config.OWNER_ID == 0 else Config.OWNER_ID
 
 # mention user
 mention = f"[{ALIVE_NAME}](tg://user?id={USERID})"
@@ -50,10 +45,6 @@ PMMESSAGE_CACHE = {}
 PMMENU = "pmpermit_menu" not in Config.NO_LOAD
 
 # Gdrive
-G_DRIVE_CLIENT_ID = Config.G_DRIVE_CLIENT_ID
-G_DRIVE_CLIENT_SECRET = Config.G_DRIVE_CLIENT_SECRET
-G_DRIVE_DATA = Config.G_DRIVE_DATA
-G_DRIVE_FOLDER_ID = Config.G_DRIVE_FOLDER_ID
 TMP_DOWNLOAD_DIRECTORY = Config.TMP_DOWNLOAD_DIRECTORY
 
 # spamwatch support
