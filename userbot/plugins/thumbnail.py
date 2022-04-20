@@ -24,13 +24,13 @@ thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
     pattern="savethumb$",
     command=("savethumb", plugin_category),
     info={
-        "header": "To save replied image as temporary thumb.",
+        "header": "To save replied image as temporary thumb",
         "usage": "{tr}savethumb",
     },
 )
 async def _(event):
-    "To save replied image as temporary thumb."
-    catevent = await edit_or_reply(event, "`Processing ...`")
+    "To save replied image as temporary thumb"
+    catevent = await edit_or_reply(event, "`Processing...`")
     if not event.reply_to_msg_id:
         return await catevent.edit("`Reply to a photo to save custom thumbnail`")
     downloaded_file_name = await event.client.download_media(
@@ -48,7 +48,7 @@ async def _(event):
     # https://pillow.readthedocs.io/en/3.1.x/reference/Image.html#create-thumbnails
     os.remove(downloaded_file_name)
     await catevent.edit(
-        "Custom video/file thumbnail saved. This image will be used in the upload, till `.clearthumb`."
+        "Custom video or file thumbnail saved ! This image will be used in the upload , till `.clearthumb`"
     )
 
 
@@ -56,24 +56,24 @@ async def _(event):
     pattern="clearthumb$",
     command=("clearthumb", plugin_category),
     info={
-        "header": "To delete thumb image.",
+        "header": "To delete thumb image",
         "usage": "{tr}clearthumb",
     },
 )
 async def _(event):
-    "To delete thumb image."
+    "To delete thumb image"
     if os.path.exists(thumb_image_path):
         os.remove(thumb_image_path)
     else:
         await edit_or_reply(event, "`No thumbnail is set to clear`")
-    await edit_or_reply(event, "✅ Custom thumbnail cleared successfully.")
+    await edit_or_reply(event, "Custom thumbnail cleared successfully")
 
 
 @catub.cat_cmd(
     pattern="getthumb$",
     command=("getthumb", plugin_category),
     info={
-        "header": "To get thumbnail of given video or gives your present thumbnail.",
+        "header": "To get thumbnail of given video or gives your present thumbnail",
         "usage": "{tr}getthumb",
     },
 )
@@ -98,7 +98,7 @@ async def _(event):
         except Exception as e:
             await edit_or_reply(event, str(e))
     elif os.path.exists(thumb_image_path):
-        caption_str = "Currently Saved Thumbnail"
+        caption_str = "Currently saved thumbnail"
         await event.client.send_file(
             event.chat_id,
             thumb_image_path,
