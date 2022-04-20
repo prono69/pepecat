@@ -18,35 +18,35 @@ plugin_category = "fun"
     pattern="trash$",
     command=("trash", plugin_category),
     info={
-        "header": "Reply to image/sticker to get meme on that image.",
+        "header": "Reply to image or sticker to get meme on that image",
         "usage": "{tr}trash",
     },
 )
 async def catbot(event):
-    "image meme creator."
+    "Image meme creator"
     replied = await event.get_reply_message()
     catid = await reply_id(event)
     if not replied:
-        return await edit_or_reply(event, "reply to a supported media file")
+        return await edit_or_reply(event, "Reply to a supported media file")
     output = await _cattools.media_to_pic(event, replied)
     if output[1] is None:
         return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
+            output[0], "Unable to extract image from the replied message"
         )
     download_location = convert_toimage(output[1])
     size = os.stat(download_location).st_size
     if size > 5242880:
         os.remove(download_location)
         return await output[0].edit(
-            "the replied file size is not supported it must me below 5 mb"
+            "The replied file size is not supported it must me below 5 mb"
         )
     await event.reply(file=download_location)
-    await output[0].edit("generating image..")
+    await output[0].edit("Generating image..")
     try:
         response = upload_file(download_location)
     except exceptions.TelegraphException as exc:
         os.remove(download_location)
-        return await output[0].edit(f"**Error: **\n`{exc}`")
+        return await output[0].edit(f"**Error : **\n`{exc}`")
     cat = f"https://telegra.ph{response[0]}"
     cat = await trash(cat)
     os.remove(download_location)
@@ -58,34 +58,34 @@ async def catbot(event):
     pattern="threats$",
     command=("threats", plugin_category),
     info={
-        "header": "Reply to image/sticker to get meme on that image.",
+        "header": "Reply to image/sticker to get meme on that image",
         "usage": "{tr}threats",
     },
 )
 async def catbot(event):
-    "image meme creator."
+    "image meme creator"
     replied = await event.get_reply_message()
     catid = await reply_id(event)
     if not replied:
-        return await edit_or_reply(event, "reply to a supported media file")
+        return await edit_or_reply(event, "Reply to a supported media file")
     output = await _cattools.media_to_pic(event, replied)
     if output[1] is None:
         return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
+            output[0], "Unable to extract image from the replied message"
         )
     download_location = convert_toimage(output[1])
     size = os.stat(download_location).st_size
     if size > 5242880:
         os.remove(download_location)
         return await output[0].edit(
-            "the replied file size is not supported it must me below 5 mb"
+            "The replied file size is not supported it must me below 5 mb"
         )
-    await output[0].edit("generating image..")
+    await output[0].edit("Generating image..")
     try:
         response = upload_file(download_location)
     except exceptions.TelegraphException as exc:
         os.remove(download_location)
-        return await output[0].edit(f"**Error: **\n`{exc}`")
+        return await output[0].edit(f"**Error : **\n`{exc}`")
     cat = f"https://telegra.ph{response[0]}"
     cat = await threats(cat)
     await output[0].delete()
@@ -97,13 +97,13 @@ async def catbot(event):
     pattern="trap(?:\s|$)([\s\S]*)",
     command=("trap", plugin_category),
     info={
-        "header": "Reply to image/sticker to get meme on that image.",
+        "header": "Reply to image/sticker to get meme on that image",
         "Description": "creates a trap card",
         "usage": "{tr}trap (name of the person to trap) ; (trapper name)",
     },
 )
 async def catbot(event):
-    "image meme creator."
+    "Image meme creator"
     input_str = event.pattern_match.group(1)
     input_str = deEmojify(input_str)
     if ";" in input_str:
@@ -111,25 +111,25 @@ async def catbot(event):
     else:
         return await edit_or_reply(
             event,
-            "**Syntax :** reply to image or sticker with `.trap (name of the person to trap);(trapper name)`",
+            "**Syntax :** Reply to image or sticker with `.trap (name of the person to trap);(trapper name)`",
         )
     replied = await event.get_reply_message()
     catid = await reply_id(event)
     if not replied:
-        return await edit_or_reply(event, "reply to a supported media file")
+        return await edit_or_reply(event, "Reply to a supported media file")
     output = await _cattools.media_to_pic(event, replied)
     if output[1] is None:
         return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
+            output[0], "Unable to extract image from the replied message"
         )
     download_location = convert_toimage(output[1])
     size = os.stat(download_location).st_size
     if size > 5242880:
         os.remove(download_location)
         return await output[0].edit(
-            "the replied file size is not supported it must me below 5 mb"
+            "The replied file size is not supported it must me below 5 mb"
         )
-    await output[0].edit("generating image..")
+    await output[0].edit("Generating image..")
     try:
         response = upload_file(download_location)
     except exceptions.TelegraphException as exc:
@@ -146,13 +146,13 @@ async def catbot(event):
     pattern="phub(?:\s|$)([\s\S]*)",
     command=("phub", plugin_category),
     info={
-        "header": "Reply to image/sticker to get meme on that image.",
+        "header": "Reply to image/sticker to get meme on that image",
         "description": "pornhub comment creator",
         "usage": "{tr}phub (username);(text in comment)",
     },
 )
 async def catbot(event):
-    "image meme creator."
+    "Image meme creator"
     input_str = event.pattern_match.group(1)
     input_str = deEmojify(input_str)
     if ";" in input_str:
@@ -160,31 +160,31 @@ async def catbot(event):
     else:
         return await edit_or_reply(
             event,
-            "**Syntax :** reply to image or sticker with `.phub (username);(text in comment)`",
+            "**Syntax :** Reply to image or sticker with `.phub (username);(text in comment)`",
         )
     replied = await event.get_reply_message()
     catid = await reply_id(event)
     if not replied:
-        return await edit_or_reply(event, "reply to a supported media file")
+        return await edit_or_reply(event, "Reply to a supported media file")
     output = await _cattools.media_to_pic(event, replied)
     if output[1] is None:
         return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
+            output[0], "Unable to extract image from the replied message"
         )
     download_location = convert_toimage(output[1])
     size = os.stat(download_location).st_size
     if size > 5242880:
         os.remove(download_location)
         return await output[0].edit(
-            "the replied file size is not supported it must me below 5 mb"
+            "The replied file size is not supported it must me below 5 mb"
         )
 
-    await output[0].edit("generating image..")
+    await output[0].edit("Generating image..")
     try:
         response = upload_file(download_location)
     except exceptions.TelegraphException as exc:
         os.remove(download_location)
-        return await output[0].edit(f"**Error: **\n`{exc}`")
+        return await output[0].edit(f"**Error : **\n`{exc}`")
     cat = f"https://telegra.ph{response[0]}"
     cat = await phcomment(cat, text, username)
     await output[0].delete()
