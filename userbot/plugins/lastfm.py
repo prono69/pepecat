@@ -7,32 +7,32 @@ from os import environ
 from re import sub
 from sys import setrecursionlimit
 from urllib import parse
- 
+
 from pylast import LastFMNetwork, MalformedResponseError, User, WSError, md5
 from telethon.errors import AboutTooLongError
 from telethon.errors.rpcerrorlist import FloodWaitError
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.users import GetFullUserRequest
- 
+
 from userbot import catub
- 
+
 from ..Config import Config
 from ..core.logger import logging
 from ..helpers.functions import deEmojify, hide_inlinebot
 from ..helpers.utils import reply_id
 from ..sql_helper.globals import gvarstatus
 from . import BOTLOG, BOTLOG_CHATID, edit_or_reply
- 
+
 LOGS = logging.getLogger(__name__)
 plugin_category = "extra"
- 
+
 DEFAULT_BIO = gvarstatus("DEFAULT_BIO")
 BIO_PREFIX = Config.BIO_PREFIX
 LASTFM_API = Config.LASTFM_API
 LASTFM_SECRET = Config.LASTFM_SECRET
 LASTFM_USERNAME = Config.LASTFM_USERNAME
 LASTFM_PASSWORD_PLAIN = Config.LASTFM_PASSWORD_PLAIN
- 
+
 LASTFM_PASS = md5(LASTFM_PASSWORD_PLAIN)
 if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
     lastfm = LastFMNetwork(
@@ -43,7 +43,7 @@ if LASTFM_API and LASTFM_SECRET and LASTFM_USERNAME and LASTFM_PASS:
     )
 else:
     lastfm = None
- 
+
 # =================== CONSTANT ===================
 LFM_BIO_ENABLED = "```last.fm current music to bio is now enabled.```"
 LFM_BIO_DISABLED = (
@@ -56,8 +56,8 @@ LFM_LOG_DISABLED = "```last.fm logging to bot log is now disabled.```"
 LFM_LOG_ERR = "```No option specified.```"
 ERROR_MSG = "```last.fm module halted, got an unexpected error.```"
 # ================================================
- 
- 
+
+
 class LASTFM:
     def __init__(self):
         self.ARTIST = 0
@@ -66,11 +66,11 @@ class LASTFM:
         self.LASTFMCHECK = False
         self.RUNNING = False
         self.LastLog = False
- 
- 
+
+
 LASTFM_ = LASTFM()
- 
- 
+
+
 async def gettags(track=None, isNowPlaying=None, playing=None):
     if isNowPlaying:
         tags = playing.get_top_tags()
@@ -87,12 +87,12 @@ async def gettags(track=None, isNowPlaying=None, playing=None):
     tags = sub(" ", "_", tags)
     tags = sub("_#", " #", tags)
     return tags
- 
- 
+
+
 async def artist_and_song(track):
     return f"{track.track}"
- 
- 
+
+
 async def get_curr_track(lfmbio):  # sourcery no-metrics
     oldartist = ""
     oldsong = ""
@@ -158,8 +158,8 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
                 await catub.send_message(BOTLOG_CHATID, f"Error changing bio:\n{err}")
         await sleep(2)
     LASTFM_.RUNNING = False
- 
- 
+
+
 @catub.cat_cmd(
     pattern="lastfm$",
     command=("lastfm", plugin_category),
@@ -205,8 +205,8 @@ async def last_fm(lastFM):
         await edit_or_reply(lastFM, f"{output}", parse_mode="md", link_preview=True)
     else:
         await edit_or_reply(lastFM, f"{output}", parse_mode="md")
- 
- 
+
+
 @catub.cat_cmd(
     pattern="lastbio (on|off)",
     command=("lastbio", plugin_category),
@@ -238,8 +238,8 @@ async def lastbio(lfmbio):
         await edit_or_reply(lfmbio, LFM_BIO_DISABLED)
     else:
         await edit_or_reply(lfmbio, LFM_BIO_ERR)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="lastlog (on|off)",
     command=("lastlog", plugin_category),
@@ -263,8 +263,8 @@ async def lastlog(lstlog):
         await edit_or_reply(lstlog, LFM_LOG_DISABLED)
     else:
         await edit_or_reply(lstlog, LFM_LOG_ERR)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="now$",
     command=("now", plugin_category),
@@ -300,4 +300,3 @@ async def nowimg(event):
     bot_name = "@Spotipiebot"
     await event.delete()
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
-

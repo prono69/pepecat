@@ -46,11 +46,7 @@ async def fetch_info(replied_user, event):
         Config.TMP_DOWNLOAD_DIRECTORY + str(user_id) + ".jpg",
         download_big=True,
     )
-    first_name = (
-        first_name.replace("\u2060", "")
-        if first_name
-        else ("None")
-    )
+    first_name = first_name.replace("\u2060", "") if first_name else ("None")
     full_name = full_name or first_name
     username = "@{}".format(username) if username else ("None")
     user_bio = "None" if not user_bio else user_bio

@@ -177,7 +177,9 @@ async def load_plugins(folder, extfolder=None):
                 if shortname not in failure:
                     failure.append(shortname)
                 os.remove(Path(f"{plugin_path}/{shortname}.py"))
-                LOGS.info(f"Pepecat - {shortname} | ERROR - {e}\nBase Folder - {plugin_path}")
+                LOGS.info(
+                    f"Pepecat - {shortname} | ERROR - {e}\nBase Folder - {plugin_path}"
+                )
     if extfolder:
         if not failure:
             failure.append("None")

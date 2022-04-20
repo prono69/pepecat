@@ -631,7 +631,7 @@ async def anilist(event):  # sourcery no-metrics
     html_ += f"<h4>About Character and Role:</h4>{result['description'] or 'N/A'}"
     html_ += "<br><br>"
     html_ += f"<a href='{result['siteUrl']}'> View on anilist</a>"
- 
+
     synopsis_link = await post_to_telegraph(
         result["name"]["full"],
         f"<code>{caption}</code>\n" + f"<br>" + html_,

@@ -1,4 +1,3 @@
-
 from PIL import Image
 from telegraph import Telegraph, exceptions, upload_file
 from telethon.tl import types
@@ -163,7 +162,7 @@ async def bad(event):  # sourcery no-metrics
                         event,
                         "**To save your Current Profile info Set the value:**\\n `.setdv DEFAULT_USER Me`",
                     )
- 
+
                 USERINFO = await catub.get_entity(catub.uid)
                 FULL_USERINFO = (await catub(GetFullUserRequest(catub.uid))).full_user
                 addgvar("FIRST_NAME", USERINFO.first_name)

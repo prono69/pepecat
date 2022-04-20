@@ -144,5 +144,3 @@ async def app(event):
     await result.delete()
     await event.client.send_message(event.chat_id, result, reply_to=reply_to_id)
     await event.delete()
-    
-    

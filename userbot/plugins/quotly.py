@@ -3,34 +3,34 @@ imported from nicegrill
 modified by @mrconfused
 QuotLy: Avaible commands: .qbot
 """
- 
+
 import io
 import os
 import re
 import textwrap
 from textwrap import wrap
- 
+
 import requests
 from PIL import Image, ImageDraw, ImageFont
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.utils import get_display_name
- 
+
 from userbot import catub
- 
+
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import convert_tosticker, media_type, process
 from ..helpers.utils import _cattools, get_user_from_event, reply_id
- 
+
 FONT_FILE_TO_USE = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
- 
+
 plugin_category = "fun"
- 
- 
+
+
 def get_warp_length(width):
     return int((20.0 / 1024.0) * (width + 0.0))
- 
- 
+
+
 @catub.cat_cmd(
     pattern="qpic(?:\s|$)([\s\S]*)",
     command=("qpic", plugin_category),
@@ -132,13 +132,15 @@ async def q_pic(event):  # sourcery no-metrics
         output.name = "CatUserbot.png"
         img.save(output, "PNG")
     output.seek(0)
-    await event.client.send_file(event.chat_id, output, caption = "Don't kang bitch", reply_to=reply_to)
+    await event.client.send_file(
+        event.chat_id, output, caption="Don't kang bitch", reply_to=reply_to
+    )
     await catevent.delete()
     for i in [pfp]:
         if os.path.lexists(i):
             os.remove(i)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="(q|rq|fq|frq)(?:\s|$)([\s\S]*)",
     command=("q", plugin_category),
@@ -206,8 +208,8 @@ async def stickerchat(catquotes):
     await catquotes.client.send_file(catquotes.chat_id, endfi, reply_to=reply)
     await catevent.delete()
     os.remove(endfi)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="qbot(?:\s|$)([\s\S]*)",
     command=("qbot", plugin_category),
@@ -265,6 +267,5 @@ async def _(event):
         await event.client.send_read_acknowledge(conv.chat_id)
         await catevent.delete()
         await event.client.send_message(
-            event.chat_id, response.message, caption= "Bitch", reply_to=reply_to
+            event.chat_id, response.message, caption="Bitch", reply_to=reply_to
         )
-        

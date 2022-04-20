@@ -19,8 +19,15 @@ from validators.url import url
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.functions import delete_conv, name_dl, song_dl, video_dl, yt_search, deEmojify, hide_inlinebot
-
+from ..helpers.functions import (
+    deEmojify,
+    delete_conv,
+    hide_inlinebot,
+    name_dl,
+    song_dl,
+    video_dl,
+    yt_search,
+)
 from ..helpers.tools import media_type
 from ..helpers.utils import _catutils, reply_id
 from . import catub, hmention
@@ -230,7 +237,7 @@ async def shazamcmd(event):
         return await edit_delete(
             catevent, f"**Error while reverse searching song:**\n__{e}__"
         )
- 
+
     image = track["images"]["background"]
     song = track["share"]["subject"]
     await event.client.send_file(
@@ -293,6 +300,7 @@ async def _(event):
         )
         await catevent.delete()
         await delete_conv(event, chat, purgeflag)
+
 
 # reverse search by  @Lal_bakthan
 @catub.cat_cmd(
@@ -620,4 +628,3 @@ async def wave(odi):
                 await odi.client.send_read_acknowledge(conv.chat_id)
             except Exception:
                 await edit_delete(odi, f"`No result found for {song}`", 6)
-                

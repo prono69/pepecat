@@ -35,8 +35,11 @@ signal.signal(signal.SIGTERM, close_connection)
 CAT_ID = ["790841356", "986755683", "880678601"]
 
 agent = UserAgent()
+
+
 def user_agent():
     return agent.random
+
 
 UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
 
