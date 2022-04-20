@@ -10,7 +10,7 @@ plugin_category = "Extra"
     command=("upper", plugin_category),
     info={
         "header": "Text operation change to upper text",
-        "usage": "{tr}upper <input text /reply to text>",
+        "usage": "{tr}upper <input text / reply to text>",
         "examples": "{tr}upper reply to valid text or give valid text as input",
     },
 )
@@ -33,7 +33,7 @@ async def some(event):
     command=("lower", plugin_category),
     info={
         "header": "Text operation change to lower text",
-        "usage": "{tr}lower <input text /reply to text>",
+        "usage": "{tr}lower <input text / reply to text>",
         "examples": "{tr}lower reply to valid text or give valid text as input",
     },
 )
@@ -56,7 +56,7 @@ async def good(event):
     command=("title", plugin_category),
     info={
         "header": "Text operation change to title text",
-        "usage": "{tr}title<input text /reply to text>",
+        "usage": "{tr}title<input text / reply to text>",
         "examples": "{tr}title Reply to valid text or give valid text as input",
     },
 )
@@ -80,8 +80,8 @@ async def stuff(event):
     info={
         "header": "Text operation change to camel text",
         "usage": [
-            "{tr}camel <input text /reply to text>",
-            "{tr}rcamel <input text /reply to text>",
+            "{tr}camel <input text / reply to text>",
+            "{tr}rcamel <input text / reply to text>",
         ],
         "examples": [
             "{tr}camel reply to valid text or give valid text as input",
