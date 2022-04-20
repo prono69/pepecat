@@ -40,13 +40,12 @@ async def catlst_of_files(path):
     files = []
     for dirname, dirnames, filenames in os.walk(path):
         # print path to all filenames.
-        for filename in filenames:
-            files.append(os.path.join(dirname, filename))
+        files.extend(os.path.join(dirname, filename) for filename in filenames)
     return files
 
 
 def get_video_thumb(file, output=None, width=320):
-    output = file + ".jpg"
+    output = f"{file}.jpg"
     metadata = extractMetadata(createParser(file))
     cmd = [
         "ffmpeg",
@@ -133,8 +132,8 @@ async def upload(path, event, udir_event, catflag=None):  # sourcery no-metrics
     command=("upload", plugin_category),
     info={
         "header": "To upload files from server to telegram",
-        "description": "To upload files which are downloaded in your bot.",
-        "flags": {"f": "Use this to make upload files as documents."},
+        "description": "To upload files which are downloaded in your bot",
+        "flags": {"f": "Use this to make upload files as documents"},
         "examples": [
             "{tr}upload <file/folder path>",
             "{tr}upload -f <file/folder path>",
@@ -142,7 +141,7 @@ async def upload(path, event, udir_event, catflag=None):  # sourcery no-metrics
     },
 )
 async def uploadir(event):
-    "To upload files to telegram."
+    "To upload files to telegram"
     input_str = event.pattern_match.group(2)
     path = Path(input_str)
     start = datetime.now()
@@ -151,9 +150,9 @@ async def uploadir(event):
     if not os.path.exists(path):
         return await edit_or_reply(
             event,
-            f"`there is no such directory/file with the name {path} to upload`",
+            f"`There is no such directory or file with the name {path} to upload`",
         )
-    udir_event = await edit_or_reply(event, "Uploading....")
+    udir_event = await edit_or_reply(event, "Uploading...")
     if os.path.isdir(path):
         await edit_or_reply(udir_event, f"`Gathering file details in directory {path}`")
         UPLOAD_.uploaded = 0
@@ -162,15 +161,15 @@ async def uploadir(event):
         ms = (end - start).seconds
         await edit_delete(
             udir_event,
-            f"`Uploaded {UPLOAD_.uploaded} files successfully in {ms} seconds. `",
+            f"`Uploaded {UPLOAD_.uploaded} files successfully in {ms} seconds `",
         )
     else:
-        await edit_or_reply(udir_event, "`Uploading file .....`")
+        await edit_or_reply(udir_event, "`Uploading file...`")
         UPLOAD_.uploaded = 0
         await upload(path, event, udir_event, catflag=flag)
         end = datetime.now()
         ms = (end - start).seconds
         await edit_delete(
             udir_event,
-            f"`Uploaded file {path} successfully in {ms} seconds. `",
+            f"`Uploaded file {path} successfully in {ms} seconds `",
         )
