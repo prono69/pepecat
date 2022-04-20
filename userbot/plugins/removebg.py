@@ -49,10 +49,10 @@ def ReTrieveURL(input_url):
     pattern="(rmbg|srmbg)(?:\s|$)([\s\S]*)",
     command=("rmbg", plugin_category),
     info={
-        "header": "To remove background of a image/sticker/image link.",
+        "header": "To remove background of a image or sticker or image link",
         "options": {
             "rmbg": "to get output as png format",
-            "srmbg": "To get output as webp format(sticker).",
+            "srmbg": "To get output as webp format( sticker )",
         },
         "usage": [
             "{tr}rmbg",
@@ -63,11 +63,11 @@ def ReTrieveURL(input_url):
     },
 )
 async def remove_background(event):
-    "To remove background of a image."
+    "To remove background of a image"
     if Config.REM_BG_API_KEY is None:
         return await edit_delete(
             event,
-            "`You have to set REM_BG_API_KEY in Config vars with API token from remove.bg to use this plugin .`",
+            "`You have to set REM_BG_API_KEY in config vars with api token from remove.bg to use this plugin`",
             10,
         )
     cmd = event.pattern_match.group(1)
@@ -75,7 +75,7 @@ async def remove_background(event):
     message_id = await reply_id(event)
     if event.reply_to_msg_id and not input_str:
         reply_message = await event.get_reply_message()
-        catevent = await edit_or_reply(event, "`Analysing this Image/Sticker...`")
+        catevent = await edit_or_reply(event, "`Analysing this image or sticker...`")
         file_name = os.path.join(Config.TEMP_DIR, "rmbg.png")
         try:
             await event.client.download_media(reply_message, file_name)
@@ -83,17 +83,17 @@ async def remove_background(event):
             await edit_delete(catevent, f"`{e}`", 5)
             return
         else:
-            await catevent.edit("`Removing Background of this media`")
+            await catevent.edit("`Removing background of this media`")
             file_name = convert_toimage(file_name)
             response = ReTrieveFile(file_name)
             os.remove(file_name)
     elif input_str:
-        catevent = await edit_or_reply(event, "`Removing Background of this media`")
+        catevent = await edit_or_reply(event, "`Removing background of this media`")
         response = ReTrieveURL(input_str)
     else:
         await edit_delete(
             event,
-            "`Reply to any image or sticker with rmbg/srmbg to get background less png file or webp format or provide image link along with command`",
+            "`Reply to any image or sticker with rmbg or srmbg to get background less png file or webp format or provide image link along with command`",
             5,
         )
         return
