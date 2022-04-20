@@ -1,33 +1,20 @@
-from asyncio import sleep
-
 from googletrans import LANGUAGES, Translator
 
 from userbot import catub
 
 from ..core.managers import edit_delete, edit_or_reply
+from ..helpers.functions.functions import getTranslate
 from ..sql_helper.globals import addgvar, gvarstatus
 from . import BOTLOG, BOTLOG_CHATID, deEmojify
 
 plugin_category = "utils"
-
-# https://github.com/ssut/py-googletrans/issues/234#issuecomment-722379788
-async def getTranslate(text, **kwargs):
-    translator = Translator()
-    result = None
-    for _ in range(10):
-        try:
-            result = translator.translate(text, **kwargs)
-        except Exception:
-            translator = Translator()
-            await sleep(0.1)
-    return result
 
 
 @catub.cat_cmd(
     pattern="tl ([\s\S]*)",
     command=("tl", plugin_category),
     info={
-        "header": "To translate the text to required language.",
+        "header": "To translate the text to required language",
         "note": "For langugage codes check [this link](https://bit.ly/2SRQ6WU)",
         "usage": [
             "{tr}tl <language code> ; <text>",
@@ -37,7 +24,7 @@ async def getTranslate(text, **kwargs):
     },
 )
 async def _(event):
-    "To translate the text."
+    "To translate the text"
     input_str = event.pattern_match.group(1)
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
@@ -47,7 +34,7 @@ async def _(event):
         lan, text = input_str.split(";")
     else:
         return await edit_delete(
-            event, "`.tl LanguageCode` as reply to a message", time=5
+            event, "`.tl Languagecode` as reply to a message", time=5
         )
     text = deEmojify(text.strip())
     lan = lan.strip()
@@ -66,8 +53,8 @@ async def _(event):
     pattern="trt(?: |$)([\s\S]*)",
     command=("trt", plugin_category),
     info={
-        "header": "To translate the text to required language.",
-        "note": "for this set command set lanuage by lang tst command.",
+        "header": "To translate the text to required language",
+        "note": "for this command set lanuage by `{tr}lang trt` command",
         "usage": [
             "{tr}trt",
             "{tr}trt <text>",
@@ -75,7 +62,7 @@ async def _(event):
     },
 )
 async def translateme(trans):
-    "To translate the text to required language."
+    "To translate the text to required language"
     textx = await trans.get_reply_message()
     message = trans.pattern_match.group(1)
     if message:
@@ -84,13 +71,13 @@ async def translateme(trans):
         message = textx.text
     else:
         return await edit_or_reply(
-            trans, "`Give a text or reply to a message to translate!`"
+            trans, "`Give a text or reply to a message to translate !`"
         )
     TRT_LANG = gvarstatus("TRT_LANG") or "en"
     try:
         reply_text = await getTranslate(deEmojify(message), dest=TRT_LANG)
     except ValueError:
-        return await edit_delete(trans, "`Invalid destination language.`", time=5)
+        return await edit_delete(trans, "`Invalid destination language`", time=5)
     source_lan = LANGUAGES[f"{reply_text.src.lower()}"]
     transl_lan = LANGUAGES[f"{reply_text.dest.lower()}"]
     reply_text = f"**From {source_lan.title()}({reply_text.src.lower()}) to {transl_lan.title()}({reply_text.dest.lower()}) :**\n`{reply_text.text}`"
@@ -99,55 +86,68 @@ async def translateme(trans):
     if BOTLOG:
         await trans.client.send_message(
             BOTLOG_CHATID,
-            f"`Translated some {source_lan.title()} stuff to {transl_lan.title()} just now.`",
+            f"`Translated some {source_lan.title()} stuff to {transl_lan.title()} just now`",
         )
 
 
 @catub.cat_cmd(
-    pattern="lang (ai|trt) ([\s\S]*)",
+    pattern="lang (ai|trt|tocr) ([\s\S]*)",
     command=("lang", plugin_category),
     info={
-        "header": "To set language for trt/ai command.",
+        "header": "To set language for trt/ai command",
         "description": "Check here [Language codes](https://bit.ly/2SRQ6WU)",
         "options": {
             "trt": "default language for trt command",
+            "tocr": "default language for tocr command",
             "ai": "default language for chatbot(ai)",
         },
         "usage": "{tr}lang option <language codes>",
         "examples": [
             "{tr}lang trt te",
+            "{tr}lang tocr bn",
             "{tr}lang ai hi",
         ],
     },
 )
 async def lang(value):
-    "To set language for trt comamnd."
+    "To set language for trt comamnd"
     arg = value.pattern_match.group(2).lower()
     input_str = value.pattern_match.group(1)
     if arg not in LANGUAGES:
         return await edit_or_reply(
             value,
-            f"`Invalid Language code !!`\n`Available language codes for TRT`:\n\n`{LANGUAGES}`",
+            f"`Invalid language code !`\n`Available language codes for TRT` :\n\n`{LANGUAGES}`",
         )
     LANG = LANGUAGES[arg]
     if input_str == "trt":
         addgvar("TRT_LANG", arg)
         await edit_or_reply(
-            value, f"`Language for Translator changed to {LANG.title()}.`"
+            value, f"**Language for translator changed to :** `{LANG.title()}`"
+        )
+    elif input_str == "tocr":
+        addgvar("TOCR_LANG", arg)
+        await edit_or_reply(
+            value, f"**Language for translated Ocr changed to :** `{LANG.title()}`"
         )
     else:
         addgvar("AI_LANG", arg)
         await edit_or_reply(
-            value, f"`Language for chatbot is changed to {LANG.title()}.`"
+            value, f"**Language for chatbot is changed to :** `{LANG.title()}`"
         )
     LANG = LANGUAGES[arg]
 
+    if BOTLOG and input_str == "trt":
+        await value.client.send_message(
+            BOTLOG_CHATID, f"**Language for translator changed to :** `{LANG.title()}`"
+        )
     if BOTLOG:
-        if input_str == "trt":
+        if input_str == "tocr":
             await value.client.send_message(
-                BOTLOG_CHATID, f"`Language for Translator changed to {LANG.title()}.`"
+                BOTLOG_CHATID,
+                f"**Language for translated ocr changed to :** `{LANG.title()}`",
             )
         if input_str == "ai":
             await value.client.send_message(
-                BOTLOG_CHATID, f"`Language for chatbot is changed to {LANG.title()}.`"
+                BOTLOG_CHATID,
+                f"**Language for chatbot is changed to :** `{LANG.title()}`",
             )
