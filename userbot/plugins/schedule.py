@@ -9,7 +9,7 @@ plugin_category = "utils"
     pattern="schd (\d*) ([\s\S]*)",
     command=("schd", plugin_category),
     info={
-        "header": "To schedule a message after given time(in seconds).",
+        "header": "To schedule a message after given time ( in seconds ) ",
         "usage": "{tr}schd <time_in_seconds>  <message to send>",
         "examples": "{tr}schd 120 hello",
     },
