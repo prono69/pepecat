@@ -16,8 +16,8 @@ plugin_category = "utils"
     pattern="otransfer ([\s\S]*)",
     command=("otransfer", plugin_category),
     info={
-        "header": "To transfer channel ownership.",
-        "description": "Transfers ownership to the given username for this set this var `TG_2STEP_VERIFICATION_CODE` in heroku with your 2-step verification code.",
+        "header": "To transfer channel ownership",
+        "description": "Transfers ownership to the given username for this set this var `TG_2STEP_VERIFICATION_CODE` in heroku with your 2-step verification code",
         "usage": "{tr}otransfer <username to whom you want to transfer>",
     },
 )
@@ -33,6 +33,6 @@ async def _(event):
             )
         )
     except Exception as e:
-        await event.edit(f"**Error:**\n`{e}`")
+        await event.edit(f"**Error :**\n`{e}`")
     else:
-        await event.edit("Transferred 🌚")
+        await event.edit("Transferred")
