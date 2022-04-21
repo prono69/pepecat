@@ -9,13 +9,13 @@ from . import catub
 plugin_category = "useless"
 
 @catub.cat_cmd(
-    pattern="cmt ?(.*)",
-    command=("cmt", plugin_category),
+    pattern="mt ?(.*)",
+    command=("mt", plugin_category),
     info={
         "header": "Changes musics tag",
-        "examples": "{tr}cmt Loser : Neoni <reply>",
+        "examples": "{tr}mt Loser : Neoni <reply>",
         "usage": [
-            "{tr}cmt <song title>:<artist> <reply audio>",
+            "{tr}mt <song title>:<artist> <reply audio>",
         ],
     },
 )
@@ -29,7 +29,7 @@ async def cmt(odi):
             await edit_delete(odi, "`Please reply an audio`")
         elif not (text and ":" in text):
             await edit_delete(odi, "`Try to do it with correct form`")
-        else: #Under odi copyright :)
+        else: # Under odi copyright :)
             await odi.edit("`Changing music tag...`")
             audio = await reply.download_media()
             x, y = text.replace(" ", "-").split(":")
