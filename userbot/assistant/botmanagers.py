@@ -49,9 +49,9 @@ def progress_str(total: int, current: int) -> str:
     prog_arg = "**Progress** : `{}%`\n" "```[{}{}]```"
     return prog_arg.format(
         percentage,
-        "".join((Config.FINISHED_PROGRESS_STR for i in range(floor(percentage / 5)))),
+        "".join(Config.FINISHED_PROGRESS_STR for _ in range(floor(percentage / 5))),
         "".join(
-            (Config.UNFINISHED_PROGRESS_STR for i in range(20 - floor(percentage / 5)))
+            Config.UNFINISHED_PROGRESS_STR for _ in range(20 - floor(percentage / 5))
         ),
     )
 
@@ -63,14 +63,14 @@ async def ban_user_from_bot(user, reason, reply_to=None):
     except Exception as e:
         LOGS.error(str(e))
     banned_msg = (
-        f"**You have been Banned Forever from using this bot.\nReason** : {reason}"
+        f"**You have been banned forever from using this bot\nReason** : {reason}"
     )
     await catub.tgbot.send_message(user.id, banned_msg)
-    info = f"**#Banned_Bot_PM_User**\
-            \n\n👤 {_format.mentionuser(get_display_name(user) , user.id)}\
-            \n**First Name:** {user.first_name}\
-            \n**User ID:** `{user.id}`\
-            \n**Reason:** `{reason}`"
+    info = f"**Banned_Bot_PM_User**\
+            \n\n{_format.mentionuser(get_display_name(user) , user.id)}\
+            \n**First name :** {user.first_name}\
+            \n**User id :** `{user.id}`\
+            \n**Reason :** `{reason}`"
     if BOTLOG:
         await catub.send_message(BOTLOG_CHATID, info)
     return info
@@ -81,15 +81,15 @@ async def unban_user_from_bot(user, reason, reply_to=None):
         rem_user_from_bl(user.id)
     except Exception as e:
         LOGS.error(str(e))
-    banned_msg = "**You have been Unbanned from this bot. From now on you can send messages here to contact my master.**"
+    banned_msg = "**You have been unbanned from this bot ! From now on you can send messages here to contact my master**"
 
     if reason is not None:
-        banned_msg += f"\n**Reason:** __{reason}__"
+        banned_msg += f"\n**Reason :** {reason}"
     await catub.tgbot.send_message(user.id, banned_msg)
-    info = f"**#Unbanned_Bot_PM_User**\
-            \n\n👤 {_format.mentionuser(get_display_name(user) , user.id)}\
-            \n**First Name:** {user.first_name}\
-            \n**User ID:** `{user.id}`"
+    info = f"**Unbanned_Bot_PM_User**\
+            \n\n{_format.mentionuser(get_display_name(user) , user.id)}\
+            \n**First name :** {user.first_name}\
+            \n**User id :** `{user.id}`"
     if BOTLOG:
         await catub.send_message(BOTLOG_CHATID, info)
     return info
