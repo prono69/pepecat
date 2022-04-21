@@ -24,7 +24,7 @@ heroku_api = "https://api.heroku.com"
 def check_data_base_heal_th():
     # https://stackoverflow.com/a/41961968
     is_database_working = False
-    output = "No Database is set"
+    output = "No database is set"
     if not Config.DB_URI:
         return is_database_working, output
     from ...sql_helper import SESSION
@@ -57,7 +57,7 @@ async def catalive(StartTime):
             "Authorization": f"Bearer {Config.HEROKU_API_KEY}",
             "Accept": "application/vnd.heroku+json; version=3.account-quotas",
         }
-        path = "/accounts/" + user_id + "/actions/get-quota"
+        path = f"/accounts/{user_id}/actions/get-quota"
         r = requests.get(heroku_api + path, headers=headers)
         result = r.json()
         quota = result["account_quota"]
@@ -83,9 +83,9 @@ async def catalive(StartTime):
         dyno = f"{AppHours}h {AppMinutes}m/{hours}h {minutes}m"
     except Exception as e:
         dyno = e
-    return f"Catuserbot Stats\
-                 \n\nDatabase : {check_sgnirts}\
-                  \nSudo : {sudo}\
-                  \nUptime : {uptime}\
-                  \nDyno : {dyno}\
+    return f"Catuserbot stats\
+                 \n\n💖 Database : {check_sgnirts}\
+                  \n ❤️ Sudo : {sudo}\
+                  \n 💙 Uptime : {uptime}\
+                  \n 💘 Dyno : {dyno}\
                   "
