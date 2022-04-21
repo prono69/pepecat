@@ -1,6 +1,6 @@
-# CatUserbot
-A simple Telegram userbot based on Telethon .
-![catuserbot logo](https://telegra.ph/file/b7dc845e3a48cde0d7bb1.jpg)
+# Cat Userbot
+A simple telegram userbot based on telethon
+![catuserbot logo](https://telegra.ph/file/4860c8e1a5a56d0616b79.png)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fsandy1709%2Fcatuserbot&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://github.com/TgCatUB/catuserbot)
 [![CodeFactor](https://www.codefactor.io/repository/github/TgCatUB/catuserbot/badge?&style=flat-square)](https://www.codefactor.io/repository/github/TgCatUB/catuserbot)
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
@@ -17,9 +17,9 @@ A simple Telegram userbot based on Telethon .
 
 
 
-## How to deploy catuserbot
-### Heroku Deploy
-  - [![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://github.com/TgCatUB/nekopack)
+## How to deploy cat userbot
+### Heroku deploy
+  - [![Deploy to heroku](https://www.herokucdn.com/deploy/button.svg)](https://github.com/Dark-team-11/Kitty)
 
 ### Self host
   - [check this](https://catuserbot.gitbook.io/catuserbot/tutorial/self-host)
@@ -37,24 +37,23 @@ A simple Telegram userbot based on Telethon .
 ## Disclaimer
 
 ```
-              YOU ARE FOREWARNED
-Your Telegram account may get banned.   
-Catuserbot or we are not responsible for your account, 
+Your telegram account may get banned   
+Cat userbot or we are not responsible for your account , 
 This bot is intended for the purpose of having fun with some fun commands 
-and group management with some helpfull commands.
+and group management with some helpful commands
 
-If  you ended up spamming groups, getting reported left and right, 
-and you ended up in being fight with Telegram 
-and at the end Telegram Team deleted your account. DON'T BLAME US.
+If  you ended up spamming groups , getting reported left and right , 
+and you ended up in being fight with telegram 
+and at the end telegram team will delete your account then don't blame us
 
-No personal support will be provided / We won't spoon feed you. 
+No personal support will be provided , we won't spoon feed you 
 If you need help ask in our support group 
-and we or our friends will try to help you.
+and we or our friends will try to help you
 
-Thanks for using our bot 😺
+Thank you for using our bot 
 ```
 
 ## Credits
-   - Special thanks to [LonamiWebs](https://github.com/LonamiWebs/Telethon/) for Telethon library.
+   - Special thanks to [LonamiWebs](https://github.com/LonamiWebs/Telethon/) for telethon library
    - To all devs of these [Userbots](https://github.com/TgCatUB/catuserbot/tree/bugs#inspiration)
    - Finally to all [contributors of Catuserbot](https://github.com/TgCatUB/catuserbot/graphs/contributors)
