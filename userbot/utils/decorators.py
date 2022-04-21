@@ -37,10 +37,10 @@ def admin_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
                 CMD_LIST.update({file_test: [cmd]})
         else:
             if len(Config.COMMAND_HAND_LER) == 2:
-                catreg = "^" + Config.COMMAND_HAND_LER
+                catreg = f"^{Config.COMMAND_HAND_LER}"
                 reg = Config.COMMAND_HAND_LER[1]
             elif len(Config.COMMAND_HAND_LER) == 1:
-                catreg = "^\\" + Config.COMMAND_HAND_LER
+                catreg = f"^\\{Config.COMMAND_HAND_LER}"
                 reg = Config.COMMAND_HAND_LER
             args["pattern"] = re.compile(catreg + pattern)
             if command is not None:
@@ -89,10 +89,10 @@ def sudo_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
                 SUDO_LIST.update({file_test: [cmd]})
         else:
             if len(Config.SUDO_COMMAND_HAND_LER) == 2:
-                catreg = "^" + Config.SUDO_COMMAND_HAND_LER
+                catreg = f"^{Config.SUDO_COMMAND_HAND_LER}"
                 reg = Config.SUDO_COMMAND_HAND_LER[1]
             elif len(Config.SUDO_COMMAND_HAND_LER) == 1:
-                catreg = "^\\" + Config.SUDO_COMMAND_HAND_LER
+                catreg = f"^\\{Config.SUDO_COMMAND_HAND_LER}"
                 reg = Config.COMMAND_HAND_LER
             args["pattern"] = re.compile(catreg + pattern)
             if command is not None:
@@ -135,16 +135,16 @@ def errors_handler(func):
             if Config.PRIVATE_GROUP_BOT_API_ID != 0:
                 return
             date = (datetime.datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-            ftext = f"\nDisclaimer:\nThis file is pasted only here ONLY here,\
-                                  \nwe logged only fact of error and date,\nwe respect your privacy,\
-                                  \nyou may not report this error if you've\
-                                  \nany confidential data here, no one will see your data\
+            ftext = f"\nDisclaimer :\nThis file is pasted only here only here ,\
+                                  \nWe logged only fact of error and date ,\nWe respect your privacy ,\
+                                  \nYou may not report this error if you've\
+                                  \Many confidential data here , no one will see your data\
                                   \n\n--------BEGIN USERBOT TRACEBACK LOG--------\
-                                  \nDate: {date}\nGroup ID: {str(check.chat_id)}\
-                                  \nSender ID: {str(check.sender_id)}\
-                                  \n\nEvent Trigger:\n{str(check.text)}\
-                                  \n\nTraceback info:\n{str(traceback.format_exc())}\
-                                  \n\nError text:\n{str(sys.exc_info()[1])}"
+                                  \nDate : {date}\nGroup ID: {str(check.chat_id)}\
+                                  \nSender id : {str(check.sender_id)}\
+                                  \n\nEvent trigger :\n{str(check.text)}\
+                                  \n\nTraceback info :\n{str(traceback.format_exc())}\
+                                  \n\nError text :\n{str(sys.exc_info()[1])}"
             new = {
                 "error": str(sys.exc_info()[1]),
                 "date": datetime.datetime.now(),
@@ -157,10 +157,10 @@ def errors_handler(func):
             result = output[0] + output[1]
             ftext += result
             pastelink = await paste_message(ftext)
-            text = "**CatUserbot Error report**\n\n"
+            text = "**Catuserbot error report**\n\n"
             link = "[here](https://t.me/catuserbot_support)"
             text += "If you wanna you can report it"
-            text += f"- just forward this message {link}.\n"
+            text += f"- just forward this message {link}\n"
             text += "Nothing is logged except the fact of error and date\n\n"
             text += f"**Error report : ** [{new['error']}]({pastelink})"
             await check.client.send_message(
