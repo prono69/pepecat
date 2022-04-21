@@ -28,7 +28,7 @@ Bot_BlackList.__table__.create(checkfirst=True)
 def add_user_to_bl(
     chat_id: int, first_name: str, username: str, reason: str, date: str
 ):
-    """add the user to the blacklist"""
+    """Add the user to the blacklist"""
     to_check = check_is_black_list(chat_id)
     if not to_check:
         __user = Bot_BlackList(str(chat_id), first_name, username, reason, date)
@@ -44,7 +44,7 @@ def add_user_to_bl(
 
 
 def check_is_black_list(chat_id: int):
-    """check if user_id is blacklisted"""
+    """Check if user_id is blacklisted"""
     try:
         return SESSION.query(Bot_BlackList).get(str(chat_id))
     finally:
@@ -52,9 +52,8 @@ def check_is_black_list(chat_id: int):
 
 
 def rem_user_from_bl(chat_id: int):
-    """remove the user from the blacklist"""
-    s__ = SESSION.query(Bot_BlackList).get(str(chat_id))
-    if s__:
+    """Remove the user from the blacklist"""
+    if s__ := SESSION.query(Bot_BlackList).get(str(chat_id)):
         SESSION.delete(s__)
         SESSION.commit()
         return True
