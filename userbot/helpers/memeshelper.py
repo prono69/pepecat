@@ -202,11 +202,11 @@ RENDISTR = [
     "`you talking behind meh wew uh iz my fan now bhay`",
     "`Wanna pass in Life Goto BRAZZER.CAM BHAY`",
     "`Uh iz Pro i iz noob your boob is landi uh are Randi`",
-    "`Sellers Nasa calling Uh bhay😆`",
+    "`Sellers Nasa calling Uh bhay`",
     "`Badwoo ki yojna behan bna ke ch*da uh iz badwa its your yozja?`",
-    "`CHAND PE CHADA HAI CHANDYAAN KA GHODA TERA NAAM HAI MANSUR TU HAI BEHAN KA LOD*😂`",
+    "`CHAND PE CHADA HAI CHANDYAAN KA GHODA TERA NAAM HAI MANSUR TU HAI BEHAN KA LOD`",
     "`Jab se dil lga baithe tanhai me maa chu*da baithe wo kho gyi kisi aur ke pyar hum apne hi jaato me aag lga baithe`",
-    "`Chadii ke ander se lal pani kha se ata hai ky teri masuka ka bhosda bhi paan khata hai😂`",
+    "`Chadii ke ander se lal pani kha se ata hai ky teri masuka ka bhosda bhi paan khata hai`",
     "`Sun bhosdi ke By anonyCrew MOHABBAT KE SIWA AUR BHI GAM HAI JAMANE ME BSDK GAND PAHAT JATI HAI PAISA KAMANE ME`",
     "`Thaan liya tha Sayri nhi krege Unka pichwada dekha Alfaaz nikal gye`",
     "`Ravivaar ko dekha Chand Ka Tukra Itna Baar Dekha par Jaath na Ukra`",
@@ -352,18 +352,18 @@ RAPE_STRINGS = [
     "`The user has been successfully raped`",
     "`Dekho Bhaiyya esa hai! Izzat bachailo apni warna Gaand maar lenge tumhari`",
     "`Relax your Rear, ders nothing to fear,The Rape train is finally here`",
-    "`Rape coming... Raped! haha 😆`",
+    "`Rape coming... Raped! haha `",
     "`Kitni baar Rape krvyega mujhse?`",
-    "`Tu Randi hai Sabko pta hai😂`",
+    "`Tu Randi hai Sabko pta hai`",
     "`Don't rape too much bossdk, else problem....`",
-    "`Tu sasti rendi hai Sabko pta hai😂`",
+    "`Tu sasti rendi hai Sabko pta hai`",
     "`Lodu Andha hai kya Yaha tera rape ho raha hai aur tu abhi tak yahi gaand mara raha hai lulz`",
 ]
 ABUSE_STRINGS = [
     "`Chutiya he rah jaye ga`",
     "`Ja be Gaandu`",
     "`Muh Me Lega Bhosdike ?`",
-    "`Kro Gandu giri kam nhi toh Gand Maar lenge tumhari hum😂`",
+    "`Kro Gandu giri kam nhi toh Gand Maar lenge tumhari hum`",
     "`Suno Lodu Jyda muh na chalo be muh me lawda pel Diyaa jayega`",
     "`Sharam aagyi toh aakhe juka lijia land me dam nhi hai apke toh Shilajit kha lijia`",
     "`Kahe Rahiman Kaviraaj C**t Ki Mahima Aisi,L**d Murjha Jaaye Par Ch**t Waisi Ki Waisi`",
@@ -393,7 +393,7 @@ PRO_STRINGS = [
 CHU_STRINGS = [
     "`Taare hai Asmaan me very very bright jaat na jla bskd dekh le apni hight.`",
     "`jindagi ki na toote lari iski lulli hoti nhi khadi`",
-    "`Kbhi kbhi meri dil me khyaal ata hai ayse chutiyo ko kon paida kr jata hai😂.`",
+    "`Kbhi kbhi meri dil me khyaal ata hai ayse chutiyo ko kon paida kr jata hai.`",
     "`Saawan ka mahina pawan kare shor jake gand mara bskd kahi aur.`",
     "`Dil ke armaa ansuon me beh jaye tum bskd ke chutiye hi reh gye.`",
     "`Ishq Se Tabiyat Ne Zeest Ka Mazaa aya maine is lodu ko randi khane me paya.`",
@@ -417,9 +417,9 @@ THANOS_STRINGS = [
     "`Aand kitne bhi bade ho, lund ke niche hi rehte hai`",
     "`Tum Ameer hum gareeb hum jhopdiwale Tum bhosiwale`",
     "`Sisi Bhari Gulab ki padi palang ke pass chodne wale chod gye ab q baitha udaas`",
-    "`Phuloo Ka Raja Gulaab Kaato me Rehta hai Jeewan ka Nirmata jaato me rehta hai😂`",
+    "`Phuloo Ka Raja Gulaab Kaato me Rehta hai Jeewan ka Nirmata jaato me rehta hai`",
     "`Chude hue maal ko yaad mt krna Jo Chut na de usse kabhi friyad mt karna jise chudna hai wo chud ke rhegi bekar me muth maar ke apni jindagi barbaad mt krna`",
-    "`Gand mare gandu Chut mare Chutiya Sabse accha mutti 2 mint me chutti😛`",
+    "`Gand mare gandu Chut mare Chutiya Sabse accha mutti 2 mint me chutti`",
     "`Marzi Ka Sex Pap Nahi Hota.. Piche Se Dalne Wala Kabhi Baap Nahi Hota.. Condom Zarur Lagana Mere Dost Qki.. Sex K Waqt Popat Ke Pass Dimag Nahi Hota.`",
     "`Uss Ne Hothon Se Chhu Kar Lowd* Pe Nasha Kar Diya; Lu*D Ki Baat To Aur Thi, Uss Ne To Jhato* Ko Bhi Khada Kar Diya!`",
 ]
@@ -428,7 +428,7 @@ ABUSEHARD_STRING = [
     "`Main roz teri behno ki banjar chut me apna lawda daalke andar haryali lata tha magar aaj unke ke baare me sunke mujhe bhut afsos huwa..ki unko ab bada loudha chahye..ab mera balatkaaari lawda lagataar 4 ghante tk apne muh me kon rakhega..vo teri behne hi thi jo apni kaali magar rasilli chut mere saamne khol deti aur zameen pe naagin ki tarah rengne lgti thi jaise ki kisine unki chut pe naariyal tod diya ho vo b bada wala mumbai ka naariyal..apni chennal maa ko b nhi bhej rahe mere paas to main kaixe tum logo se vaada karu ki main teri maa chodd dungaw..ab agar tun sach me chahta hai ki main tum dono k mc ki chut me dhammal karu to mera lawda apne muh me rakho aur kaho Sameer hamare sage papa hain... Aur agar tb b the apni maa ki kaali chut mere saamne nahi rakhi to tumhare ghar me ghuske tumhari maa ka balatkaar kar dungaw jaixe delhi me huwa tha...ab teri chudi hui kuttiyo ki tarah apni gaand hilaate hue mere aage kalapna mt ni to tumhari fatti bhoxdi me 100 ched karunga`",
     "`Taare hai Asmaan me very very bright jaat na jla bskd dekh le apni hight.`",
     "`Zindagi ki na toote lari iski lulli hoti nhi khadi`",
-    "`Kbhi kbhi meri dil me khyaal ata hai ayse chutiyo ko kon paida kr jata hai😂.`",
+    "`Kbhi kbhi meri dil me khyaal ata hai ayse chutiyo ko kon paida kr jata hai.`",
     "`Saawan ka mahina pawan kare shor jake gand mara bskd kahi aur.`",
     "`Dil ke armaa ansuon me beh jaye tum bskd ke chutiye hi reh gye.`",
     "`Ishq Se Tabiyat Ne Zeest Ka Mazaa aya maine is lodu ko randi khane me paya.`",
@@ -438,9 +438,9 @@ ABUSEHARD_STRING = [
     "`Aand kitne bhi bade ho, lund ke niche hi rehte hai`",
     "`Tum Ameer hum gareeb hum jhopdiwale Tum bhosiwale`",
     "`Sisi Bhari Gulab ki padi palang ke pass chodne wale chod gye ab q baitha udaas`",
-    "`Phuloo Ka Raja Gulaab Kaato me Rehta hai Jeewan ka Nirmata jaato me rehta hai😂`",
+    "`Phuloo Ka Raja Gulaab Kaato me Rehta hai Jeewan ka Nirmata jaato me rehta hai`",
     "`Chude hue maal ko yaad mt krna Jo Chut na de usse kabhi friyad mt karna jise chudna hai wo chud ke rhegi bekar me muth maar ke apni jindagi barbaad mt krna`",
-    "`Gand mare gandu Chut mare Chutiya Sabse accha mutti 2 mint me chutti😛`",
+    "`Gand mare gandu Chut mare Chutiya Sabse accha mutti 2 mint me chutti`",
     "`Marzi Ka Sex Pap Nahi Hota.. Piche Se Dalne Wala Kabhi Baap Nahi Hota.. Condom Zarur Lagana Mere Dost Qki.. Sex K Waqt Popat Ke Pass Dimag Nahi Hota.`",
     "`Uss Ne Hothon Se Chhu Kar Lowd* Pe Nasha Kar Diya; Lu*D Ki Baat To Aur Thi, Uss Ne To Jhato* Ko Bhi Khada Kar Diya!`",
 ]
@@ -566,11 +566,10 @@ WHERE = ["in the chest", "on the head", "on the butt", "on the crotch"]
 
 async def slap(replied_user, event, DEFAULTUSER):
     """Construct a funny slap sentence !!"""
-    user_id = replied_user.user.id
-    first_name = replied_user.user.first_name
-    username = replied_user.user.username
-    if username:
-        slapped = "@{}".format(username)
+    user_id = replied_user.id
+    first_name = replied_user.first_name
+    if username := replied_user.username:
+        slapped = f"@{username}"
     else:
         slapped = f"[{first_name}](tg://user?id={user_id})"
     temp = random.choice(SLAP_TEMPLATES)
@@ -683,7 +682,7 @@ FACEREACTS = [
         "=͟͟͞͞٩(๑☉ᴗ☉)੭ु⁾⁾",
         "(*⌒▽⌒*)θ～♪",
         "°˖✧◝(⁰▿⁰)◜✧˖°",
-        "✌(-‿-)✌",
+        "✌🏻(-‿-)✌🏻",
         "⌒°(❛ᴗ❛)°⌒",
         "(ﾟ<|＼(･ω･)／|>ﾟ)",
         "ヾ(o✪‿✪o)ｼ",
