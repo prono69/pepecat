@@ -11,7 +11,7 @@ from ..Config import Config
 
 plugin_category = "tools"
 
-HEADER = "「sed」\n"
+HEADER = "「sad」\n"
 KNOWN_RE_BOTS = re.compile(Config.GROUP_REG_SED_EX_BOT_S, flags=re.IGNORECASE)
 
 # Heavily based on
@@ -91,10 +91,10 @@ async def on_edit(event):
 
 @catub.cat_cmd(
     pattern="^s/((?:\\/|[^/])+)/((?:\\/|[^/])*)(/.*)?",
-    command=("sed", plugin_category),
+    command=("sad", plugin_category),
     info={
         "header": "Replaces a word or words with other words",
-        "description": "Tag any sentence and type s/a/b where is required word to replace and b is correct word",
+        "description": "Tag any sentence and type s or a or b where is required word to replace and b is correct word",
         "usage": "s<delimiter><old word(s)><delimiter><new word(s)>",
         "delimiters": ["/", ":", "|", "_"],
         "examples": "s/delimiter/symbol - replace this command to this message",
