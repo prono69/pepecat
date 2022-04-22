@@ -1,59 +1,83 @@
-# Cat Userbot
-A simple telegram userbot based on telethon
-![catuserbot logo](https://telegra.ph/file/4860c8e1a5a56d0616b79.png)
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fsandy1709%2Fcatuserbot&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://github.com/TgCatUB/catuserbot)
-[![CodeFactor](https://www.codefactor.io/repository/github/TgCatUB/catuserbot/badge?&style=flat-square)](https://www.codefactor.io/repository/github/TgCatUB/catuserbot)
-[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green?&style=flat-square)](https://GitHub.com/TgCatUB/catuserbot/graphs/commit-activity) 
-![Repo Size](https://img.shields.io/github/repo-size/TgCatUB/catuserbot?&style=flat-square&logo=github)
-[![GitHub license](https://img.shields.io/github/license/TgCatUB/catuserbot?&style=flat-square&logo=github)](https://github.com/TgCatUB/catuserbot/blob/master/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/TgCatUB/catuserbot?&style=flat-square&logo=github)](https://github.com/TgCatUB/catuserbot/issues)
-[![PR Open](https://img.shields.io/github/issues-pr/TgCatUB/catuserbot?&style=flat-square&logo=github)](https://github.com/TgCatUB/catuserbot/pulls)
-[![PR Closed](https://img.shields.io/github/issues-pr-closed/TgCatUB/catuserbot?&style=flat-square&logo=github)](https://github.com/TgCatUB/catuserbot/pulls?q=is:closed)
-[![GitHub contributors](https://img.shields.io/github/contributors/TgCatUB/catuserbot?&style=flat-square&logo=github)](https://GitHub.com/TgCatUB/catuserbot/graphs/contributors/)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/TgCatUB/catuserbot?&style=flat-square&logo=github)](https://github.com/TgCatUB/catuserbot/graphs/commit-activity)
-[![GitHub forks](https://img.shields.io/github/forks/TgCatUB/catuserbot?&style=flat-square&logo=github)](https://github.com/Dark-team-11/Kitty/fork)
-[![GitHub stars](https://img.shields.io/github/stars/TgCatUB/catuserbot?&style=flat-square&logo=github)](https://github.com/Dark-team-11/Kitty/stargazers)
+# CatUserbot
 
+A simple Telegram userbot based on Telethon .
+[![catuserbot logo](https://telegra.ph/file/4860c8e1a5a56d0616b79.png)](https://t.me/catuserbot_support) 
 
-
-## How to deploy cat userbot
-### Heroku deploy
-  - [![Deploy to heroku](https://www.herokucdn.com/deploy/button.svg)](https://github.com/Dark-team-11/Nekopack)
-
-### Self host
-  - [check this](https://catuserbot.gitbook.io/catuserbot/tutorial/self-host)
+## Deployment
+> Click on buttons to expands! 
+<details>
+<summary><b>🔗 Requirements</b></summary>
+<br>
   
-## Support
-   <a href="https://t.me/catuserbot17"><img src="https://img.shields.io/badge/Channel%20Support%3F-yes-green?&style=flat-square?&logo=telegram" width=220px></a></p>
-   <a href="https://t.me/catuserbot_support"><img src="https://img.shields.io/badge/Group%20Support%3F-yes-green?&style=flat-square?&logo=telegram" width=220px></a></p>
-   
-## Inspiration
-   - [X-tra-Telegram](https://github.com/Dark-Princ3/X-tra-Telegram)
-   - [Uniborg](https://github.com/SpEcHiDe/UniBorg) & [Uniborg fork](https://github.com/ravana69/PornHub)
-   - Nana-Remix
-   - [Userge-X](https://github.com/code-rgb/USERGE-X/)
-   
+- [Telegram API Key](https://my.telegram.org/auth) 
+- [Telegram Bot Token](https://t.me/botfather)
+- [String Session](https://replit.com/@DeepjitDas/CatUserbotStringSession?v=1) 
+
+</details>
+ 
+<details>
+<summary><b>🔗 String Session</b></summary>
+<br>
+  
+> You'll need a API_ID & API_HASH in order to generate telethon session. 
+> Always remember to use valid API'S else your account could be deleted.
+
+<h4> Generate Session via Repl: </h4>  
+<p><a href="https://replit.com/@DeepjitDas/CatUserbotStringSession?v=1"><img src="https://img.shields.io/badge/Generate%20On%20Repl-blueviolet?style=for-the-badge&logo=appveyor" width="200""/></a></p>
+
+</details>
+  
+<details>
+<summary><b>🔗 Deploy to Heroku</b></summary>
+<br>
+  
+> Heroku have two main vars for updating bot that is [ HEROKU_API_KEY & HEROKU_APP_NAME ]
+> These two vars help you to get Heroku logs,.setdv,.set var,.deldv,.del var, check dynos usage and updates of bot. 
+> Those two vars are not Mandatory! You can leave them blank too but I would suggest to keep them. 
+  
+<h4>Click the button below to deploy Catuserbot on Heroku!</h4> 
+<p><a href="https://heroku.com/deploy?template=https://github.com/Dark-team-11/Kitty"><img src="https://img.shields.io/badge/Deploy%20To%20Heroku-blueviolet?style=for-the-badge&logo=heroku" width="200""/></a></p>  
+  
+</details> 
+
+<details>
+<summary><b>🔗 Self Host</b></summary>
+<br>
+  
+> Read [Docs](https://catuserbot.gitbook.io/catuserbot/tutorial/self-host) for Self Hosting of Catuserbot. 
+  
+</details>
+
+## Configuration Vars
+
+- Checkout All [Available Vars](https://telegra.ph/All-Heroku-variables-for-catuserbot-02-03)
+- Checkout Only [Mandatory Vars](https://catuserbot.gitbook.io/catuserbot/tutorial/untitled-3) 
+
+## Contact & Support
+
+- [Catuserbot Channel](https://t.me/catuserbot17)
+- [Catuserbot Support Group](https://t.me/catuserbot_support)
+
+## License
+
+Distributed under the [GNU General Public License v3.0 License.](https://github.com/sandy1709/catuserbot/blob/master/LICENSE) See `LICENSE` for more information.
+
 ## Disclaimer
+Read these lines! 
 
-```
-Your telegram account may get banned   
-Cat userbot or we are not responsible for your account , 
-This bot is intended for the purpose of having fun with some fun commands 
-and group management with some helpful commands
+<details>
+<summary><b>🔗 Important notes</b></summary>
+<br>
+  
+>                        ❗YOU ARE FOREWARNED❗
+> Your Telegram account may get banned.
+> Catuserbot or we are not responsible for your account. 
+> This bot is intended for the purpose of having fun with some fun commands and group management with some helpfull commands.
 
-If  you ended up spamming groups , getting reported left and right , 
-and you ended up in being fight with telegram 
-and at the end telegram team will delete your account then don't blame us
+> If  you ended up spamming groups, getting reported left and right, and you ended up in being fight with Telegram and at the end Telegram Team deleted your account. DON'T BLAME US.
 
-No personal support will be provided , we won't spoon feed you 
-If you need help ask in our support group 
-and we or our friends will try to help you
+> No personal support will be provided / We won't spoon feed you. If you need help ask in our support group and we or our friends will try to help you.
+  
+>                   ❤ Thanks for using our bot 😺❤
 
-Thank you for using our bot 
-```
-
-## Credits
-   - Special thanks to [LonamiWebs](https://github.com/LonamiWebs/Telethon/) for telethon library
-   - To all devs of these [Userbots](https://github.com/TgCatUB/catuserbot/tree/bugs#inspiration)
-   - Finally to all [contributors of Catuserbot](https://github.com/TgCatUB/catuserbot/graphs/contributors)
+</details>
