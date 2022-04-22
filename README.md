@@ -19,7 +19,7 @@ A simple telegram userbot based on telethon
 
 ## How to deploy cat userbot
 ### Heroku deploy
-  - [![Deploy to heroku](https://www.herokucdn.com/deploy/button.svg)](https://Dark-team-11/Nekopack)
+  - [![Deploy to heroku](https://www.herokucdn.com/deploy/button.svg)](https://github.com/Dark-team-11/Nekopack)
 
 ### Self host
   - [check this](https://catuserbot.gitbook.io/catuserbot/tutorial/self-host)
