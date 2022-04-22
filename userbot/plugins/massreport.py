@@ -21,10 +21,10 @@ async def anim(report):
     a = 1
 
     if a == 1 :
-        msrprt = await edit_or_reply(report, "`Initiating mass report of the `[user](tg://user?id={user.id}) `in {len(san)} groups`")
+        msrprt = await edit_or_reply(report, "`Initiating mass report of the `[user](tg://user?id={user.id})`")
         time.sleep(3)
-        reporti = await msrprt.edit(f"[{user.first_name}](tg://user?id={user.id}) `was mass reported in {count} groups in {cattaken} seconds`\n\n**Reason :** `{reason}`")
+        reporti = await msrprt.edit(f"[{user.first_name}](tg://user?id={user.id}) `was mass reported in {cattaken} seconds`\n\n**Reason :** `{reason}`")
         time.sleep(11)
-        await reporti.edit(f"[{user.first_name}](tg://user?id={user.id}) `was mass reported in {count} groups in {cattaken} seconds`")
+        await reporti.edit(f"[{user.first_name}](tg://user?id={user.id}) `was mass reported in {cattaken} seconds`")
     else:
     	await edit_or_reply(f"Seems like something's wrong")
