@@ -8,7 +8,7 @@ plugin_category = "fun"
 
 @catub.cat_cmd(
     pattern="massreport ?(.*)",
-    command=("mreport",
+    command=("massreport",
     plugin_category),
       info={
         "header": "Mass reports user ( fake )",
