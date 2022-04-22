@@ -465,7 +465,7 @@ async def you_dm_other(event):
     start_date = str(datetime.now().strftime("%B %d, %Y"))
     if not pmpermit_sql.is_approved(chat.id) and str(chat.id) not in PM_WARNS:
         pmpermit_sql.approve(
-            chat.id, get_display_name(chat), start_date, chat.username, "For Outgoing"
+            chat.id, get_display_name(chat), start_date, chat.username, "For outgoing"
         )
         try:
             PMMESSAGE_CACHE = sql.get_collection("pmmessagecache").json
@@ -486,10 +486,10 @@ async def you_dm_other(event):
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"show_pmpermit_options")))
 async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
-        text = "Idoit these options are for users who messages you, not for you"
+        text = "Idoit these options are for users who messages you not for you"
         return await event.answer(text, cache_time=0, alert=True)
-    text = f"""Okay ow you are accessing the availabe menu of my master
-Let's make this smooth and let me know why you are here
+    text = f"""Okay you are accessing the availabe menu of my master
+Let's make this smooth and let me know why you are here ?
 
 **Choose one of the following reasons why you are here :**"""
     buttons = [
@@ -520,7 +520,7 @@ async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit this options for user who messages you not for you"
         return await event.answer(text, cache_time=0, alert=True)
-    text = """Okay your request has been registered ! Please don't spam my master's inbox now\n\nMy master is busy right now , when my master comes online she will check your message and ping you then we can extend this conversation more but not right now"""
+    text = """Okay your request has been registered ! Please don't spam my master's inbox now\n\nMy master is busy right now , when she comes online she will check your message and ping you then we can extend this conversation more but not right now"""
     sqllist.add_to_list("pmenquire", event.query.user_id)
     try:
         PM_WARNS = sql.get_collection("pmwarns").json
@@ -558,7 +558,7 @@ async def on_plug_in_callback_query_handler(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit these options are for users who message you not for you"
         return await event.answer(text, cache_time=0, alert=True)
-    text = """Yaa sure we can have a friendly chat but not right now we can have this some other time\n\nRight now I am little busy when I come online or if I am free I will ping you , this is damm sure"""
+    text = """Ya sure we can have a friendly chat but not right now we can have this some other time\n\nRight now I am little busy when I come online or if I am free I will ping you , this is damm sure"""
     sqllist.add_to_list("pmchat", event.query.user_id)
     try:
         PM_WARNS = sql.get_collection("pmwarns").json
