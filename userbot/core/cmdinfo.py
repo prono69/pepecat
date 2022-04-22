@@ -28,36 +28,36 @@ def _format_about(
         return about
     tmp_chelp = ""
     if "header" in about and isinstance(about["header"], str):
-        tmp_chelp += f"__{about['header'].title()}__"
+        tmp_chelp += f"{about['header'].title()}"
         del about["header"]
     if "description" in about and isinstance(about["description"], str):
         tmp_chelp += (
-            "\n\n✘  **Description :**\n" f"__{get_data(about , 'description')}__"
+            "\n\n✘  **Description :**\n" f"{get_data(about , 'description')}"
         )
         del about["description"]
     if "flags" in about:
-        tmp_chelp += "\n\n✘  **Available Flags :**"
+        tmp_chelp += "\n\n✘  **Available flags :**"
         if isinstance(about["flags"], dict):
             for f_n, f_d in about["flags"].items():
-                tmp_chelp += f"\n    ▫ `{f_n}` : __{f_d.lower()}__"
+                tmp_chelp += f"\n    ▫ `{f_n}` : {f_d.lower()}"
         else:
             tmp_chelp += f"\n    {about['flags']}"
         del about["flags"]
     if "options" in about:
-        tmp_chelp += "\n\n✘  **Available Options :**"
+        tmp_chelp += "\n\n✘  **Available options :**"
         if isinstance(about["options"], dict):
             for o_n, o_d in about["options"].items():
-                tmp_chelp += f"\n    ▫ `{o_n}` : __{o_d.lower()}__"
+                tmp_chelp += f"\n    ▫ `{o_n}` : {o_d.lower()}"
         else:
-            tmp_chelp += f"\n    __{about['options']}__"
+            tmp_chelp += f"\n    {about['options']}"
         del about["options"]
     if "types" in about:
-        tmp_chelp += "\n\n✘  **Supported Types :**"
+        tmp_chelp += "\n\n✘  **Supported types :**"
         if isinstance(about["types"], list):
             for _opt in about["types"]:
                 tmp_chelp += f"\n    `{_opt}` ,"
         else:
-            tmp_chelp += f"\n    __{about['types']}__"
+            tmp_chelp += f"\n    {about['types']}"
         del about["types"]
     if "usage" in about:
         tmp_chelp += "\n\n✘  **Usage :**"
@@ -76,19 +76,19 @@ def _format_about(
             tmp_chelp += f"\n    `{about['examples']}`"
         del about["examples"]
     if "others" in about:
-        tmp_chelp += f"\n\n✘  **Others :**\n__{get_data(about , 'others')}__"
+        tmp_chelp += f"\n\n✘  **Others :**\n{get_data(about , 'others')}"
         del about["others"]
     if about:
         for t_n, t_d in about.items():
             tmp_chelp += f"\n\n✘  **{t_n.title()} :**\n"
             if isinstance(t_d, dict):
                 for o_n, o_d in t_d.items():
-                    tmp_chelp += f"    ▫ `{o_n}` : __{get_data(t_d , o_n)}__\n"
+                    tmp_chelp += f"    ▫ `{o_n}` : {get_data(t_d , o_n)}\n"
             elif isinstance(t_d, list):
                 for _opt in t_d:
                     tmp_chelp += f"    `{_opt}` ,"
                 tmp_chelp += "\n"
             else:
-                tmp_chelp += f"__{get_data(about ,t_n)}__"
+                tmp_chelp += f"{get_data(about ,t_n)}"
                 tmp_chelp += "\n"
     return tmp_chelp.replace("{tr}", Config.COMMAND_HAND_LER)
