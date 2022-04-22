@@ -4,7 +4,7 @@ from userbot import catub
 from ..core.managers import edit_or_reply
 import time
 
-plugin_category = "fun"
+plugin_category = "admin"
 
 @catub.cat_cmd(
     pattern="massreport ?(.*)",
@@ -16,7 +16,7 @@ plugin_category = "fun"
     },
 )
 async def anim(report):
-    "Mass report user"
+    "Mass reports the user"
     
     a = 1
 
