@@ -30,7 +30,7 @@ class Config(object):
     TZ = os.environ.get("TZ", "Asia/Kolkata")
     # set this with required cat repo link
     UPSTREAM_REPO = os.environ.get(
-        "UPSTREAM_REPO", "https://github.com/TgCatUB/catuserbot"
+        "UPSTREAM_REPO", "https://github.com/Dark-team-11/Kitty"
     )
     # External plugins repo
     EXTERNAL_REPO = os.environ.get("EXTERNAL_REPO", None)
