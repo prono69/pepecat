@@ -12,10 +12,10 @@ plugin_category = "fun"
     plugin_category),
       info={
         "header": "Mass reports the user",
-        "usage": "{tr}superfban <username/reply>",
+        "usage": "{tr}massreport <username/reply>",
     },
 )
-async def anim(superfban):
+async def anim(massreport):
     "Mass reports the user"
     
     a = 1
@@ -25,6 +25,6 @@ async def anim(superfban):
         time.sleep(3)
         reporti = await msrt.edit(f"`Mass reporting the user...`")
         time.sleep(11)
-        await reporti.edit(f"Successfully mass reported the user\n\nYour account will be deleted soon\n\nReason : Toxic kids")
+        await reporti.edit(f"Successfully mass reported the user\n\nYour account will be deleted soon\n\nReason : Toxic kid")
     else:
     	await edit_or_reply(f"Seems like something's wrong")
