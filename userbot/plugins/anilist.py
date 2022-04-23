@@ -10,8 +10,8 @@ from urllib.parse import quote_plus
 
 import aiohttp
 import bs4
-import requests
 import jikanpy
+import requests
 from jikanpy.exceptions import APIException
 from pySmartDL import SmartDL
 from telegraph import exceptions, upload_file
