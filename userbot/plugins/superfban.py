@@ -21,9 +21,9 @@ async def anim(superfban):
     a = 1
 
     if a == 1 :
-        msrprt = await edit_or_reply(superfban, "`Initiating super fban of the user...`")
+        sfb = await edit_or_reply(superfban, "`Initiating super fban of the user...`")
         time.sleep(3)
-        reporti = await sfb.edit(f"`Super fbanning the user...`")
+        superfbani = await sfb.edit(f"`Super fbanning the user...`")
         time.sleep(11)
         await superfbani.edit(f"Successfully super fbanned the user\n\nGet lost bloody fool")
     else:
