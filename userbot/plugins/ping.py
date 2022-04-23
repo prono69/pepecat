@@ -69,7 +69,7 @@ async def _(event):
     reply_to_id = await reply_id(event)
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
-    my = f"𝗣𝗶𝗻𝗴:\n`{ms}` 𝗺𝘀"
+    # my = f"𝗣𝗶𝗻𝗴:\n`{ms}` 𝗺𝘀"
     if flag == " -a":
         catevent = await edit_or_reply(event, "`!....`")
         await asyncio.sleep(0.3)
@@ -136,7 +136,7 @@ async def _(event):
     reply_to_id = await reply_id(event)
     PING_PICS = (
         gvarstatus("PING_PIC")
-        or "https://telegra.ph/file/1328d62db93ad22b69ba2.jpg https://telegra.ph/file/b2da6e4c55dd29600e4ed.jpg"
+        or "https://telegra.ph/file/1328d62db93ad22b69ba2.jpg, https://telegra.ph/file/b2da6e4c55dd29600e4ed.jpg"
     )
     PING_PICS = PING_PICS.rsplit(",")
     start = datetime.now()

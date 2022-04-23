@@ -11,7 +11,7 @@ from urllib.parse import quote_plus
 import aiohttp
 import bs4
 import requests
-from jikanpy import Jikan
+import jikanpy
 from jikanpy.exceptions import APIException
 from pySmartDL import SmartDL
 from telegraph import exceptions, upload_file
@@ -40,7 +40,7 @@ from ..helpers.functions import (
 from ..helpers.tools import post_to_telegraph
 from ..helpers.utils import _cattools, reply_id
 
-jikan = Jikan()
+jikan = jikanpy.Jikan()
 
 anilistapiurl = "https://graphql.anilist.co"
 

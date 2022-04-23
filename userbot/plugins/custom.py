@@ -3,6 +3,7 @@ from telegraph import Telegraph, exceptions, upload_file
 from telethon.tl import types
 from telethon.tl.functions.users import GetFullUserRequest
 from urlextract import URLExtract
+from validators.url import url
 
 from userbot import BOTLOG_CHATID, catub
 from userbot.core.logger import logging
