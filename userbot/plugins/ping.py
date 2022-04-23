@@ -23,15 +23,15 @@ PING_PICS = PING_PICS.rsplit(" ")
 
 # Pre text i.e. before calculation ping
 
-PING_TEXT = os.environ.get("PING_TEXT") or "ꜱᴛᴀʀᴛɪɴɢ ᴛʜᴇ ɢᴀᴍᴇ !"
+PING_TEXT = os.environ.get("PING_TEXT") or "Starting the game !"
 
 # Post text i.e. the final message
 
-PONG_TEXT = os.environ.get("PONG_TEXT") or "ɴᴏᴡ ʟᴇᴛ'ꜱ ᴛʜᴇ ɢᴀᴍᴇ ʙᴇɢɪɴ !"
+PONG_TEXT = os.environ.get("PONG_TEXT") or "Now lets the game begin !"
 
 # Custom mention line
 
-PING_MENTION = os.environ.get("PING_MENTION") or "ʀᴜʟᴇꜱ ʙʏ"
+PING_MENTION = os.environ.get("PING_MENTION") or "Rules by :"
 
 # Text after the ping value
 
