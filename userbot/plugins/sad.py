@@ -95,8 +95,7 @@ async def on_edit(event):
     info={
         "header": "Replaces a word or words with other words",
         "description": "Tag any sentence and type s or a or b where is required word to replace and b is correct word",
-        "usage": "s<delimiter><old word(s)><delimiter><new word(s)>",
-        "delimiters": ["/", ":", "|", "_"],
+        "usage": "s<delimiter><old word(s)><delimiter><new word(s)>"
         "examples": "s/delimiter/symbol - replace this command to this message",
     },
 )
