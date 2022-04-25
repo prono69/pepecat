@@ -90,7 +90,7 @@ async def plugininfo(input_str, event, flag):
         try:
             outstr += f"• Info : `{CMD_INFO[cmd][1]}`\n\n"
         except IndexError:
-            outstr += "• Info :** `None`\n\n"
+            outstr += "• Info : `None`\n\n"
     outstr += f"Usage : `{cmdprefix}help <command name>`\
         \nNote : If command name is same as plugin name then use this `{cmdprefix}help -c <command name>`"
     return outstr
