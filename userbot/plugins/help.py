@@ -13,11 +13,11 @@ plugin_category = "tools"
 
 hemojis = {
     "admin": "👮🏻‍♀️",
-    "bot": "😇",
+    "bot": "💖",
     "fun": "🪄",
-    "misc": "🍻",
-    "tools": "🔮",
-    "utils": "⛄",
+    "misc": "🔮",
+    "tools": "🕸️",
+    "utils": "🍻",
     "extra": "🕯️",
 }
 
