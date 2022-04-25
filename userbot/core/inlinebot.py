@@ -71,7 +71,7 @@ def main_menu():
         ),
         (
             Button.inline(f" 🕯️ Extra ({len(GRP_INFO['extra'])})", data="extra_menu"),
-            Button.inline("  😴 Close Menu", data="close"),
+            Button.inline("  🤐 Close Menu", data="close"),
         ),
     ]
 
@@ -332,7 +332,7 @@ async def inline_handler(event):  # sourcery no-metrics
             timestamp = int(time.time() * 2)
             newtroll = {str(timestamp): {"userid": u, "text": txct}}
 
-            buttons = [Button.inline("show message 🔐", data=f"troll_{timestamp}")]
+            buttons = [Button.inline("Show message 🔐", data=f"troll_{timestamp}")]
             result = builder.article(
                 title="Troll message",
                 text=f"Only {sandy} cannot access this message !",
@@ -382,10 +382,10 @@ async def inline_handler(event):  # sourcery no-metrics
             timestamp = int(time.time() * 2)
             newsecret = {str(timestamp): {"userid": u, "text": txct}}
 
-            buttons = [Button.inline("show message 🔐", data=f"secret_{timestamp}")]
+            buttons = [Button.inline("Show message 🔐", data=f"secret_{timestamp}")]
             result = builder.article(
                 title="secret message",
-                text=f"🔒 A whisper message to {sandy}, Only he/she can open it.",
+                text=f"A whisper message to {sandy} , only he or she can open it",
                 buttons=buttons,
             )
             await event.answer([result] if result else None)
@@ -523,7 +523,7 @@ async def inline_handler(event):  # sourcery no-metrics
             await event.answer([result] if result else None)
         elif string == "pmpermit":
             buttons = [
-                Button.inline(text="Show Options.", data="show_pmpermit_options"),
+                Button.inline(text="Show options", data="show_pmpermit_options"),
             ]
             PM_PIC = gvarstatus("pmpermit_pic")
             if PM_PIC:
@@ -569,12 +569,12 @@ async def inline_handler(event):  # sourcery no-metrics
             url=CATLOGO, size=0, mime_type="image/jpeg", attributes=[]
         )
         text, msg_entities = await event.client._parse_message_text(
-            "𝗗𝗲𝗽𝗹𝗼𝘆 𝘆𝗼𝘂𝗿 𝗼𝘄𝗻 𝗖𝗮𝘁𝗨𝘀𝗲𝗿𝗯𝗼𝘁.", "md"
+            "𝗗𝗲𝗽𝗹𝗼𝘆 𝘆𝗼𝘂𝗿 𝗼𝘄𝗻 𝗖𝗮𝘁 𝗨𝘀𝗲𝗿𝗯𝗼𝘁", "md"
         )
         result = types.InputBotInlineResult(
             id=str(uuid4()),
             type="photo",
-            title="𝘾𝙖𝙩𝙐𝙨𝙚𝙧𝙗𝙤𝙩",
+            title="𝘾𝙖𝙩 𝙐𝙨𝙚𝙧𝙗𝙤𝙩",
             description="Deploy yourself",
             url="https://github.com/TgCatUB/catuserbot",
             thumb=photo,
@@ -611,9 +611,9 @@ async def on_plugin_callback_query_handler(event):
 async def on_plug_in_callback_query_handler(event):
     category = str(event.pattern_match.group(1).decode("UTF-8"))
     buttons = paginate_help(0, GRP_INFO[category], category)
-    text = f"**Category: **{category}\
-        \n**Total plugins :** {len(GRP_INFO[category])}\
-        \n**Total Commands:** {command_in_category(category)}"
+    text = f"Category : {category}\
+        \nTotal plugins : {len(GRP_INFO[category])}\
+        \nTotal commands : {command_in_category(category)}"
     await event.edit(text, buttons=buttons)
 
 
@@ -629,9 +629,9 @@ async def on_plug_in_callback_query_handler(event):
     pgno = int(event.pattern_match.group(3).decode("UTF-8"))
     if mtype == "plugin":
         buttons = paginate_help(pgno, GRP_INFO[category], category)
-        text = f"**Category : **`{category}`\
-            \n**Total plugins :** {len(GRP_INFO[category])}\
-            \n**Total Commands :** {command_in_category(category)}"
+        text = f"Category : `{category}`\
+            \nTotal plugins : {len(GRP_INFO[category])}\
+            \nTotal commands : {command_in_category(category)}"
     else:
         category_plugins = str(event.pattern_match.group(4).decode("UTF-8"))
         category_pgno = int(event.pattern_match.group(5).decode("UTF-8"))
@@ -643,9 +643,9 @@ async def on_plug_in_callback_query_handler(event):
             category_plugins=category_plugins,
             category_pgno=category_pgno,
         )
-        text = f"**Plugin : **`{category}`\
-                \n**Category : **{getkey(category)}\
-                \n**Total Commands :** {len(PLG_INFO[category])}"
+        text = f"Plugin : `{category}`\
+                \nCategory : {getkey(category)}\
+                \nTotal commands : {len(PLG_INFO[category])}"
     await event.edit(text, buttons=buttons)
 
 
@@ -677,9 +677,9 @@ async def on_plug_in_callback_query_handler(event):
             category_plugins=category_plugins,
             category_pgno=category_pgno,
         )
-        text = f"**Plugin : **`{category}`\
-                \n**Category : **{getkey(category)}\
-                \n**Total Commands :** {len(PLG_INFO[category])}"
+        text = f"Plugin : `{category}`\
+                \nCategory : {getkey(category)}\
+                \nTotal commands : {len(PLG_INFO[category])}"
         try:
             return await event.edit(text, buttons=buttons)
         except Exception as e:
@@ -736,8 +736,8 @@ async def on_plug_in_callback_query_handler(event):
             Button.inline("⚙️ Main Menu", data="mainmenu"),
         )
     ]
-    text = f"**Command :** `{tr}{cmd}`\
-        \n**Plugin :** `{category}`\
-        \n**Category :** `{category_plugins}`\
-        \n\n**✘ Intro :**\n{CMD_INFO[cmd][0]}"
+    text = f"Command : `{tr}{cmd}`\
+        \nPlugin : `{category}`\
+        \nCategory : `{category_plugins}`\
+        \n\n✘ Intro :\n{CMD_INFO[cmd][0]}"
     await event.edit(text, buttons=buttons)
