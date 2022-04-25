@@ -58,7 +58,7 @@ async def _(event):
     # add space b/w each telegraph link
     PING_PICS = (
         gvarstatus("PING_PICS")
-        or "https://telegra.ph/file/1328d62db93ad22b69ba2.jpg https://telegra.ph/file/b2da6e4c55dd29600e4ed.jpg"
+        or "https://telegra.ph/file/472fd3b1a483557d700b4.jpg https://telegra.ph/file/a9b43a88ea841dc010866.jpg"
     )
     PING_PICS = PING_PICS.rsplit(" ")
     start = datetime.now()
