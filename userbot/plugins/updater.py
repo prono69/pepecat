@@ -121,7 +121,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
     heroku_applications = heroku.apps()
     if HEROKU_APP_NAME is None:
         await event.edit(
-            "`Please set up the` **HEROKU_APP_NAME** `var`"
+            "`Please set up the HEROKU_APP_NAME var`"
             " to be able to deploy your userbot...`"
         )
         repo.__del__()
@@ -164,7 +164,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
     try:
         remote.push(refspec="HEAD:refs/heads/master", force=True)
     except Exception as error:
-        await event.edit(f"{txt}\n**Error log:**\n`{error}`")
+        await event.edit(f"{txt}\nError log :\n`{error}`")
         return repo.__del__()
     build_status = heroku_app.builds(order_by="created_at", sort="desc")[0]
     if build_status.status == "failed":
@@ -213,7 +213,7 @@ async def upstream(event):
     try:
         txt = (
             "`Oops.. Updater cannot continue due to "
-            + "some problems occured`\n\n**LOGTRACE :**\n"
+            + "some problems occured`\n\nLogtrace :\n"
         )
 
         repo = Repo()
@@ -221,7 +221,7 @@ async def upstream(event):
         await event.edit(f"{txt}\n`directory {error} is not found`")
         return repo.__del__()
     except GitCommandError as error:
-        await event.edit(f"{txt}\n`Early failure! {error}`")
+        await event.edit(f"{txt}\n`Early failure ! {error}`")
         return repo.__del__()
     except InvalidGitRepositoryError as error:
         if conf is None:
@@ -241,7 +241,7 @@ async def upstream(event):
         await event.edit(
             "**[UPDATER] :**\n"
             f"`Looks like you are using your own custom branch ({ac_br}). "
-            "in that case, Updater is unable to identify "
+            "in that case , updater is unable to identify "
             "which branch is to be merged "
             "please checkout to any official branch`"
         )
@@ -254,7 +254,7 @@ async def upstream(event):
     # Special case for deploy
     if changelog == "" and not force_update:
         await event.edit(
-            "\n`Catuserbot is`  **up-to-date**  `with`  "
+            "\n`Catuserbot is up-to-date with`"
             f"**{UPSTREAM_REPO_BRANCH}**\n"
         )
         return repo.__del__()
