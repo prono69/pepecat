@@ -4,7 +4,7 @@ from userbot import catub
 from ..core.managers import edit_or_reply
 import time
 
-plugin_category = "fun"
+plugin_category = "extra"
 
 @catub.cat_cmd(
     pattern="bloody ?(.*)",
@@ -12,7 +12,7 @@ plugin_category = "fun"
     plugin_category),
       info={
         "header": "Bloody",
-        "usage": "{tr}bh <username/reply>",
+        "usage": "{tr}bloody <username/reply>",
     },
 )
 async def anim(hell):
@@ -21,9 +21,9 @@ async def anim(hell):
     a = 1
 
     if a == 1 :
-        bh = await edit_or_reply(hell,"🤞🏻")
+        bh = await edit_or_reply(hell,"Esh 🤞🏻...")
         time.sleep(3)
-        helli = await bh.edit(f"✌🏻")
+        helli = await bh.edit(f"Esh ✌🏻...")
         time.sleep(9)
         await helli.edit(f"Huh you bloody hell 😑/n/nGo to hell")
     else:
