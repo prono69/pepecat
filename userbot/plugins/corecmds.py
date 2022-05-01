@@ -1,5 +1,4 @@
 import os
-from datetime import datetime
 from pathlib import Path
 
 import requests
@@ -196,6 +195,7 @@ async def unload(event):
         for cmd in PLG_INFO[shortname]:
             CMD_INFO.pop(cmd)
         PLG_INFO.pop(shortname)
+
 
 @catub.cat_cmd(
     pattern="getad ([\s\S]*)",

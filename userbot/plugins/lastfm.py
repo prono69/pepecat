@@ -262,6 +262,7 @@ async def lastlog(lstlog):
     else:
         await edit_or_reply(lstlog, LFM_LOG_ERR)
 
+
 """
 @catub.cat_cmd(
     pattern="now$",
