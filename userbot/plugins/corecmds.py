@@ -188,9 +188,9 @@ async def unload(event):
         CMD_HELP.pop(shortname)
     try:
         remove_plugin(shortname)
-        await edit_or_reply(event, f"{shortname} is Uninstalled successfully")
+        await edit_delete(event, f"**{shortname} Is Uɴɪɴsᴛᴀʟʟᴇᴅ Sᴜᴄᴄᴇssғᴜʟʟʏ**", 10)
     except Exception as e:
-        await edit_or_reply(event, f"Successfully uninstalled {shortname}\n{e}")
+        await edit_or_reply(event, f"Successfully uninstalled {shortname}\n`{e}`")
     if shortname in PLG_INFO:
         for cmd in PLG_INFO[shortname]:
             CMD_INFO.pop(cmd)

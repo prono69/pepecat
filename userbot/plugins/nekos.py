@@ -80,21 +80,24 @@ for m in SFW:
         "header": "Contains NSFW \nSearch images from nekos",
         "usage": "{tr}ne <argument from choice>",
         "examples": "{tr}ne neko",
-        "options": useless.nsfw(useless.hemtai),
+        "options": useless.nsfw(useless.nekos()),
     },
 )
-async def _(event):
+async def neko(event):
     "Search images from nekos"
     reply_to = await reply_id(event)
     choose = event.pattern_match.group(1)
-    if choose not in useless.hemtai:
+    if choose not in useless.nekos():
         return await edit_delete(
-            event, "**Wrong Category!!**\nDo `.help -c nn` for Category list (*_*)`"
+            event,
+            f"**Wrong catagory!! Choose from here:**\n\n{useless.nsfw(useless.nekos())}",
+            60,
         )
     if await age_verification(event, reply_to):
         return
     catevent = await edit_or_reply(event, "`Processing Nekos...`")
-    target = nekos.img(f"{choose}")
+    target = useless.nekos(choose)
+    await event.delete()
     nohorny = await event.client.send_file(
         event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
     )
@@ -102,7 +105,7 @@ async def _(event):
         await _catutils.unsavegif(event, nohorny)
     except:
         pass
-    await catevent.delete()
+    # await catevent.delete()
 
 
 @catub.cat_cmd(
@@ -148,7 +151,7 @@ async def avatarlewd(event):
     if await age_verification(event, reply_to):
         return
     with open("temp.png", "wb") as f:
-        target = "nsfw_avatar"
+        target = "hentai"
         f.write(requests.get(nekos.img(target)).content)
     img = Image.open("temp.png")
     img.save("temp.webp", "webp")
