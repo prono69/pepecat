@@ -1,5 +1,4 @@
 import requests
-import json
 
 pawn = [
     "nsfw",
@@ -116,24 +115,111 @@ async def importent(event):
 """
 
 
-endpoints = {"v1":{"end":['pussy', 'cum', 'boobs', 'bj', 'anal', 'hentai', 'feet', 'blowjob', 'poke', 'holo', 'baka'],"api":"http://api.nekos.fun:8080/api/","checker":"image"},"v2":{"end":['lewd', 'spank', 'gasm', 'tickle', 'slap', 'pat', 'neko', 'meow', 'lizard', 'kiss', 'hug', 'fox_girl', 'feed', 'cuddle', 'ngif', 'smug', 'woof', 'wallpaper', 'goose', 'gecg', 'avatar', 'waifu'],"api":"https://nekos.life/api/v2/img/","checker":"url"},"v3":{"end":['ass', 'bdsm', 'boobjob', 'creampie', 'cuckold', 'elves', 'ero', 'femdom', 'foot', 'gangbang', 'glasses', 'incest', 'manga', 'masturbation', 'nsfwMobileWallpaper', 'orgy','public', 'tentacles', 'thighs', 'uniform', 'vagina', 'yuri', 'zettaiRyouiki'],"api":"https://hmtai.herokuapp.com/nsfw/","checker":"url"},"v4":{"end":['doujin', 'gifs', 'netorare', 'maid', 'panties', 'school', 'succubus'],"api":"https://akaneko-api.herokuapp.com/api/","checker":"url"}}
- 
- 
-def nekos(endpoint=None,endpoints=endpoints):
+endpoints = {
+    "v1": {
+        "end": [
+            "pussy",
+            "cum",
+            "boobs",
+            "bj",
+            "anal",
+            "hentai",
+            "feet",
+            "blowjob",
+            "poke",
+            "holo",
+            "baka",
+        ],
+        "api": "http://api.nekos.fun:8080/api/",
+        "checker": "image",
+    },
+    "v2": {
+        "end": [
+            "lewd",
+            "spank",
+            "gasm",
+            "tickle",
+            "slap",
+            "pat",
+            "neko",
+            "meow",
+            "lizard",
+            "kiss",
+            "hug",
+            "fox_girl",
+            "feed",
+            "cuddle",
+            "ngif",
+            "smug",
+            "woof",
+            "wallpaper",
+            "goose",
+            "gecg",
+            "avatar",
+            "waifu",
+        ],
+        "api": "https://nekos.life/api/v2/img/",
+        "checker": "url",
+    },
+    "v3": {
+        "end": [
+            "ass",
+            "bdsm",
+            "boobjob",
+            "creampie",
+            "cuckold",
+            "elves",
+            "ero",
+            "femdom",
+            "foot",
+            "gangbang",
+            "glasses",
+            "incest",
+            "manga",
+            "masturbation",
+            "nsfwMobileWallpaper",
+            "orgy",
+            "public",
+            "tentacles",
+            "thighs",
+            "uniform",
+            "vagina",
+            "yuri",
+            "zettaiRyouiki",
+        ],
+        "api": "https://hmtai.herokuapp.com/nsfw/",
+        "checker": "url",
+    },
+    "v4": {
+        "end": ["doujin", "gifs", "netorare", "maid", "panties", "school", "succubus"],
+        "api": "https://akaneko-api.herokuapp.com/api/",
+        "checker": "url",
+    },
+}
+
+
+def nekos(endpoint=None, endpoints=endpoints):
     if endpoint:
         for i in endpoints:
             if endpoint in endpoints[i]["end"]:
                 api = endpoints[i]["api"]
                 checker = endpoints[i]["checker"]
-        result = requests.get(api+endpoint).json()
+        result = requests.get(api + endpoint).json()
         return result[checker]
-    return endpoints["v1"]["end"]+endpoints["v2"]["end"]+endpoints["v3"]["end"]+endpoints["v4"]["end"]
- 
+    return (
+        endpoints["v1"]["end"]
+        + endpoints["v2"]["end"]
+        + endpoints["v3"]["end"]
+        + endpoints["v4"]["end"]
+    )
+
+
 def nsfw(catagory):
     catagory.sort(key=str.casefold)
     horny = "**Catagory :** "
     for i in catagory:
         horny += f" `{i.lower()}` |"
     return horny
-    
+
+
 API = "https://catmemeapi.herokuapp.com/gimme"

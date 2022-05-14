@@ -95,7 +95,7 @@ async def neko(event):
         )
     if await age_verification(event, reply_to):
         return
-    catevent = await edit_or_reply(event, "`Processing Nekos...`")
+    await edit_or_reply(event, "`Processing Nekos...`")
     target = useless.nekos(choose)
     await event.delete()
     nohorny = await event.client.send_file(
