@@ -1,10 +1,15 @@
-FROM alpine:latest
+FROM sandy1709/catuserbot:slim-buster
 
-COPY . .
+#clonning repo 
+RUN git clone https://github.com/sandy1709/catuserbot.git /root/userbot
+#working directory 
+WORKDIR /root/userbot
 
-RUN apk add curl git python3 && curl https://get.okteto.com -sSfL | sh
+# Install requirements
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-CMD ["python3", "okteto-up.py"]
+ENV PATH="/home/userbot/bin:$PATH"
+
+CMD ["python3","-m","userbot"]
 © 2022 GitHub, Inc.
 Terms
-Privacy
