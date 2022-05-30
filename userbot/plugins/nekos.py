@@ -95,9 +95,9 @@ async def neko(event):
         )
     if await age_verification(event, reply_to):
         return
-    await edit_or_reply(event, "`Processing Nekos...`")
+    catevent = await edit_or_reply(event, "`Processing Nekos...`")
     target = useless.nekos(choose)
-    await event.delete()
+    await catevent.delete()
     nohorny = await event.client.send_file(
         event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
     )
@@ -133,8 +133,8 @@ async def dva(event):
         )
     if not url:
         return await edit_delete(event, "`uuuf.. No URL found from the API`")
+    await event.delete()    
     await event.client.send_file(event.chat_id, file=url, reply_to=reply_to)
-    await event.delete()
 
 
 @catub.cat_cmd(
@@ -152,14 +152,14 @@ async def avatarlewd(event):
         return
     with open("temp.png", "wb") as f:
         target = "hentai"
-        f.write(requests.get(nekos.img(target)).content)
+        f.write(requests.get(useless.nekos(target)).content)
     img = Image.open("temp.png")
     img.save("temp.webp", "webp")
+    await event.delete()
     await event.client.send_file(
         event.chat_id, file=open("temp.webp", "rb"), reply_to=reply_to
     )
     os.remove("temp.webp")
-    await event.delete()
 
 
 @catub.cat_cmd(
@@ -192,12 +192,11 @@ async def lewdn(event):
     reply_to = await reply_id(event)
     if await age_verification(event, reply_to):
         return
-    nsfw = requests.get("https://nekos.life/api/lewd/neko").json()
-    url = nsfw.get("neko")
+    url = useless.nekos("neko")
     if not url:
-        return await edit_delete(event, "`Uff.. No NEKO found from the API`")
+        return await edit_delete(event, "`Uff.. No NEKO found from the API`")   
+    await event.delete()    
     await event.client.send_file(event.chat_id, file=url, reply_to=reply_to)
-    await event.delete()
 
 
 @catub.cat_cmd(
@@ -215,14 +214,14 @@ async def gasm(event):
         return
     with open("temp.png", "wb") as f:
         target = "gasm"
-        f.write(requests.get(nekos.img(target)).content)
+        f.write(requests.get(useless.nekos(target)).content)
     img = Image.open("temp.png")
     img.save("temp.webp", "webp")
+    await event.delete()
     await event.client.send_file(
         event.chat_id, file=open("temp.webp", "rb"), reply_to=reply_to
     )
     os.remove("temp.webp")
-    await event.delete()
 
 
 @catub.cat_cmd(
@@ -238,14 +237,14 @@ async def waifu(event):
     reply_to = await reply_id(event)
     with open("temp.png", "wb") as f:
         target = "waifu"
-        f.write(requests.get(nekos.img(target)).content)
+        f.write(requests.get(useless.nekos(target)).content)
     img = Image.open("temp.png")
     img.save("temp.webp", "webp")
+    await event.delete()
     await event.client.send_file(
         event.chat_id, file=open("temp.webp", "rb"), reply_to=reply_to
     )
     os.remove("temp.webp")
-    await event.delete()
 
 
 @catub.cat_cmd(

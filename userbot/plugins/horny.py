@@ -8,6 +8,7 @@ This module can search images in danbooru and send in to the chat!
 import html
 import os
 import urllib
+import random
 from urllib.parse import quote as urlencode
 
 import aiohttp
@@ -433,3 +434,23 @@ async def _(event):
         except YouBlockedUserError:
             await eod(event, "```Unblock @SeXn1bot```")
             return
+
+            
+
+
+@catub.cat_cmd(
+    pattern="boru ?(.*)",
+    command=("boru", plugin_category),
+    info={
+        "header": "NSFW 🔞\nDownload images from danbooru",
+        "usage": "{tr}boru <query>",
+    },
+)
+async def booru(event):
+    query = event.pattern_match.group(1)
+    reply_to = await reply_id(event)
+    resp = requests.get(f"https://danbooru.donmai.us/posts.json?tags={query}")
+    link = resp.json()
+    r = random.choice(link)
+    pic = r["large_file_url"]
+    await event.client.send_file(event.chat_id, file=pic, caption=f"**{query}**", reply_to=reply_to)

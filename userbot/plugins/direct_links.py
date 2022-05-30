@@ -79,6 +79,8 @@ async def direct_link_generator(event):
             reply += anonfiles(link)
         elif "1drv.ms" in link:
             reply += onedrive(link)
+        elif "pixeldrain.com" in link:
+        	reply += pixeldrain(link)
         else:
             reply += re.findall(r"\bhttps?://(.*?[^/]+)", link)[0] + " is not supported"
     await catevent.edit(reply, link_preview=False)
@@ -426,3 +428,21 @@ def onedrive(link: str) -> str:
     resp2 = requests.head(dl_link)
     dl_size = humanbytes(int(resp2.headers["Content-Length"]))
     return f"[{file_name} ({dl_size})]({dl_link})"
+
+    
+    
+def pixeldrain(url: str) -> str:
+    """ Based on https://github.com/yash-dk/TorToolkit-Telegram """
+    url = url.strip("/ ")
+    file_id = url.split("/")[-1]
+    if url.split("/")[-2] == "l":
+        info_link = f"https://pixeldrain.com/api/list/{file_id}"
+        dl_link = f"https://pixeldrain.com/api/list/{file_id}/zip"
+    else:
+        info_link = f"https://pixeldrain.com/api/file/{file_id}/info"
+        dl_link = f"https://pixeldrain.com/api/file/{file_id}"
+    resp = rget(info_link).json()
+    if resp["success"]:
+        return dl_link
+    else:
+        raise Exception("ERROR: Cant't download due {}.".format(resp["message"]))
