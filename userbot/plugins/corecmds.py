@@ -173,7 +173,7 @@ async def unload(event):
 )
 async def unload(event):
     "To uninstall a plugin."
-    shortname = event.pattern_match.group(1)
+    shortname = event.pattern_match.group(2)
     path = plug_checker(shortname)
     if not os.path.exists(path):
         return await edit_delete(
