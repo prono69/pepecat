@@ -80,7 +80,7 @@ async def direct_link_generator(event):
         elif "1drv.ms" in link:
             reply += onedrive(link)
         elif "pixeldrain.com" in link:
-        	reply += pixeldrain(link)
+            reply += pixeldrain(link)
         else:
             reply += re.findall(r"\bhttps?://(.*?[^/]+)", link)[0] + " is not supported"
     await catevent.edit(reply, link_preview=False)
@@ -429,10 +429,9 @@ def onedrive(link: str) -> str:
     dl_size = humanbytes(int(resp2.headers["Content-Length"]))
     return f"[{file_name} ({dl_size})]({dl_link})"
 
-    
-    
+
 def pixeldrain(url: str) -> str:
-    """ Based on https://github.com/yash-dk/TorToolkit-Telegram """
+    """Based on https://github.com/yash-dk/TorToolkit-Telegram"""
     url = url.strip("/ ")
     file_id = url.split("/")[-1]
     if url.split("/")[-2] == "l":

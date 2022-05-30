@@ -133,7 +133,7 @@ async def dva(event):
         )
     if not url:
         return await edit_delete(event, "`uuuf.. No URL found from the API`")
-    await event.delete()    
+    await event.delete()
     await event.client.send_file(event.chat_id, file=url, reply_to=reply_to)
 
 
@@ -194,8 +194,8 @@ async def lewdn(event):
         return
     url = useless.nekos("neko")
     if not url:
-        return await edit_delete(event, "`Uff.. No NEKO found from the API`")   
-    await event.delete()    
+        return await edit_delete(event, "`Uff.. No NEKO found from the API`")
+    await event.delete()
     await event.client.send_file(event.chat_id, file=url, reply_to=reply_to)
 
 
