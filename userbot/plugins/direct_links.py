@@ -440,7 +440,7 @@ def pixeldrain(url: str) -> str:
     else:
         info_link = f"https://pixeldrain.com/api/file/{file_id}/info"
         dl_link = f"https://pixeldrain.com/api/file/{file_id}"
-    resp = rget(info_link).json()
+    resp = requests.get(info_link).json()
     if resp["success"]:
         return dl_link
     else:
