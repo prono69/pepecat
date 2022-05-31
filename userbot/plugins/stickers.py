@@ -183,10 +183,10 @@ async def newpacksticker(
     args,
     pack,
     packnick,
+    is_video,
     emoji,
     packname,
     is_anim,
-    is_video,
     stfile,
     otherpack=False,
     pkang=False,
@@ -246,8 +246,8 @@ async def add_to_pack(
     pack,
     userid,
     username,
-    is_anim,
     is_video,
+    is_anim,
     stfile,
     emoji,
     cmd,
@@ -290,10 +290,10 @@ async def add_to_pack(
                 args,
                 pack,
                 packnick,
+                is_video,
                 emoji,
                 packname,
                 is_anim,
-                is_video,
                 stfile,
                 otherpack=True,
                 pkang=pkang,
@@ -453,7 +453,7 @@ async def kang(args):  # sourcery no-metrics
         )
         htmlstr = response.read().decode("utf8").split("\n")
         if (
-            "  A <strong>Telegram</strong> user has created the <strong>Sticker Set</strong>."
+            "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
             not in htmlstr
         ):
             async with args.client.conversation("@Stickers") as conv:
@@ -663,7 +663,7 @@ async def pack_kang(event):  # sourcery no-metrics
             )
             htmlstr = response.read().decode("utf8").split("\n")
             if (
-                "  A <strong>Telegram</strong> user has created the <strong>Sticker Set</strong>."
+                "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
                 in htmlstr
             ):
                 async with event.client.conversation("@Stickers") as conv:
@@ -744,7 +744,7 @@ async def pussycat(args):
     )
     htmlstr = response.read().decode("utf8").split("\n")
     if (
-        "  A <strong>Telegram</strong> user has created the <strong>Sticker Set</strong>."
+        "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>."
         not in htmlstr
     ):
         async with args.client.conversation("@Stickers") as xconv:
@@ -781,7 +781,7 @@ async def pussycat(args):
     )
     if os.path.exists(sticker):
         os.remove(sticker)
-
+        
 
 @catub.cat_cmd(
     pattern="gridpack(?:\s|$)([\s\S]*)",
