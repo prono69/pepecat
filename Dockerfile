@@ -12,3 +12,4 @@ ENV PATH="/home/userbot/bin:$PATH"
 
 CMD ["python3","-m","userbot"]
 © 2022 GitHub, Inc.
+Terms
