@@ -781,7 +781,7 @@ async def pussycat(args):
     )
     if os.path.exists(sticker):
         os.remove(sticker)
-        
+
 
 @catub.cat_cmd(
     pattern="gridpack(?:\s|$)([\s\S]*)",
