@@ -68,6 +68,7 @@ KANGING_STR = [
     "Mr.Steal Your Sticker is stealing this sticker... ",
     "Aaja Bsdk aa Sala Kurkure...",
     "Dekh bsdk main tera sticker kang kar raha hu",
+    "I am just checking this sticker Hehe :)",
 ]
 
 
@@ -328,7 +329,7 @@ async def add_to_pack(
 
 
 @catub.cat_cmd(
-    pattern="kang(?:\s|$)([\s\S]*)",
+    pattern="(kang|k)(?:\s|$)([\s\S]*)",
     command=("kang", plugin_category),
     info={
         "header": "To kang a sticker.",
@@ -475,8 +476,8 @@ async def kang(args):  # sourcery no-metrics
                 return
             await edit_delete(
                 catevent,
-                f"`Sticker kanged successfully!\
-                    \nYour Pack is` [here](t.me/addstickers/{packname}) `and emoji for the kanged sticker is {emoji}`",
+                f"**Sticker Ripped [Successfully](t.me/addstickers/{packname})!**\
+                \n**Emoji:** {emoji}",
                 parse_mode="md",
                 time=10,
             )
