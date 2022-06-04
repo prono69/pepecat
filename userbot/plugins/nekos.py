@@ -269,7 +269,7 @@ async def _(event):
         type = "sfw"
     if choose not in neko_help:
         return await edit_delete(
-            event, "**Wrong Category!!**\nDo `.help -c ne` for Category list (*_*)`"
+            event, "**Wrong Category!!**\nDo `.help nn` for Category list (*_*)`"
         )
     if await age_verification(event, reply_to):
         return
@@ -286,22 +286,26 @@ async def _(event):
     await catevent.delete()
 
 
-ISFW = ["maid", "waifu"]
+ISFW = [
+    "maid",
+    "marin-kitagawa",
+    "mori-calliope",
+    "oppai",
+    "raiden-shogun",
+    "selfies",
+    "uniform",
+    "waifu"
+]
 
 INSFW = [
     "ass",
+    "ecchi",
     "ero",
     "hentai",
-    "maid",
     "milf",
-    "oppai",
     "oral",
     "paizuri",
-    "selfies",
-    "uniform",
-    "ecchi",
 ]
-
 
 waifu_help = "**🔞NSFW** :  "
 for i in INSFW:
@@ -325,20 +329,19 @@ async def _(event):
     "Search images from waifu.im"
     reply_to = await reply_id(event)
     choose = event.pattern_match.group(1)
+    url = "https://api.waifu.im"
     if choose == "":
-        choose = random.choice(ISFW)
-    if choose in INSFW:
-        type = "nsfw"
+        url = "{url}/random/"
     else:
-        type = "sfw"
+    	url = f"{url}/random/?selected_tags={choose}"
     if choose not in waifu_help:
         return await edit_delete(
-            event, "**Wrong Category!!**\nDo `.help -c nm` for Category list (*_*)`"
+            event, "**Wrong Category!!**\nDo `.help nm` for Category list (*_*)`"
         )
     if await age_verification(event, reply_to):
         return
     catevent = await edit_or_reply(event, "`Processing...`")
-    resp = requests.get(f"https://api.waifu.im/{type}/{choose}").json()
+    resp = requests.get(url).json()
     target = resp["images"][0]["url"]
     nohorny = await event.client.send_file(
         event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
