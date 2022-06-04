@@ -294,7 +294,7 @@ ISFW = [
     "raiden-shogun",
     "selfies",
     "uniform",
-    "waifu"
+    "waifu",
 ]
 
 INSFW = [
@@ -333,7 +333,7 @@ async def _(event):
     if choose == "":
         url = "{url}/random/"
     else:
-    	url = f"{url}/random/?selected_tags={choose}"
+        url = f"{url}/random/?selected_tags={choose}"
     if choose not in waifu_help:
         return await edit_delete(
             event, "**Wrong Category!!**\nDo `.help nm` for Category list (*_*)`"
