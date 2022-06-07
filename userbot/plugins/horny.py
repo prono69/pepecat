@@ -450,7 +450,12 @@ async def booru(event):
     resp = requests.get(f"https://danbooru.donmai.us/posts.json?tags={query}")
     link = resp.json()
     r = random.choice(link)
-    pic = r["large_file_url"]
-    await event.client.send_file(
-        event.chat_id, file=pic, caption=f"**{query}**", reply_to=reply_to
-    )
+    await event.delete()
+    if "loli" or "shota" in query:
+    	pic = r["source"]
+    else:
+    	pic = r["large_file_url"]
+    try:
+    	await event.client.send_file(event.chat_id, file=pic, caption=f"**{query}**", reply_to=reply_to)
+    except Exception as e:
+    	await eod(event, f"**{e}**")
