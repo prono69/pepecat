@@ -452,10 +452,12 @@ async def booru(event):
     r = random.choice(link)
     await event.delete()
     if "loli" or "shota" in query:
-    	pic = r["source"]
+        pic = r["source"]
     else:
-    	pic = r["large_file_url"]
+        pic = r["large_file_url"]
     try:
-    	await event.client.send_file(event.chat_id, file=pic, caption=f"**{query}**", reply_to=reply_to)
+        await event.client.send_file(
+            event.chat_id, file=pic, caption=f"**{query}**", reply_to=reply_to
+        )
     except Exception as e:
-    	await eod(event, f"**{e}**")
+        await eod(event, f"**{e}**")
