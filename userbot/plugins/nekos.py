@@ -99,9 +99,11 @@ async def neko(event):
     target = useless.nekos(choose)
     await catevent.delete()
     try:
-      nohorny = await event.client.send_file(event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to)
+        nohorny = await event.client.send_file(
+            event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
+        )
     except Exception as e:
-      await edit_delete(event, e)
+        await edit_delete(event, e)
     await _catutils.unsavegif(event, nohorny)
 
 

@@ -120,7 +120,7 @@ endpoints = {
         "end": [
             "pussy",
             "cum",
-            #"boobs",
+            # "boobs",
             "bj",
             "anal",
             # "hentai",
@@ -208,7 +208,16 @@ endpoints = {
         "checker": "url",
     },
     "v4": {
-        "end": ["doujin", "gifs", "netorare", "maid", "panties", "school", "succubus", "lewdneko"],
+        "end": [
+            "doujin",
+            "gifs",
+            "netorare",
+            "maid",
+            "panties",
+            "school",
+            "succubus",
+            "lewdneko",
+        ],
         "api": "https://akaneko-api.herokuapp.com/api/",
         "checker": "url",
     },
