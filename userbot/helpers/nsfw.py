@@ -120,7 +120,7 @@ endpoints = {
         "end": [
             "pussy",
             "cum",
-            "boobs",
+            #"boobs",
             "bj",
             "anal",
             # "hentai",
@@ -164,29 +164,36 @@ endpoints = {
     "v3": {
         "end": [
             "ass",
+            "anal",
             "ahegao",
+            "bite",
+            "boobs",
             "bdsm",
             "boobjob",
             "blowjob",
             "creampie",
             "cuckold",
+            "classic",
             "depression",
             "elves",
             "ero",
             "femdom",
-            "foot",
+            "footjob",
             "gangbang",
             "glasses",
             "gif",
             "hentai",
+            "handjob",
             "incest",
             "jahy",
+            "kill",
             "lick",
             "manga",
             "masturbation",
             "mobileWallpaper",
             "nsfwMobileWallpaper",
             "nsfwNeko",
+            "nosebleed",
             "orgy",
             "public",
             "pantsu",
@@ -201,8 +208,13 @@ endpoints = {
         "checker": "url",
     },
     "v4": {
-        "end": ["doujin", "gifs", "netorare", "maid", "panties", "school", "succubus"],
+        "end": ["doujin", "gifs", "netorare", "maid", "panties", "school", "succubus", "lewdneko"],
         "api": "https://akaneko-api.herokuapp.com/api/",
+        "checker": "url",
+    },
+    "v5": {
+        "end": ["nekolewd", "kitsune", "punch"],
+        "api": "https://neko-love.xyz/api/v1/",
         "checker": "url",
     },
 }
@@ -221,6 +233,7 @@ def nekos(endpoint=None, endpoints=endpoints):
         + endpoints["v2"]["end"]
         + endpoints["v3"]["end"]
         + endpoints["v4"]["end"]
+        + endpoints["v5"]["end"]
     )
 
 

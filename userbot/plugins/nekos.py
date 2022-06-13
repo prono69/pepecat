@@ -98,14 +98,11 @@ async def neko(event):
     catevent = await edit_or_reply(event, "`Processing Nekos...`")
     target = useless.nekos(choose)
     await catevent.delete()
-    nohorny = await event.client.send_file(
-        event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
-    )
     try:
-        await _catutils.unsavegif(event, nohorny)
-    except:
-        pass
-    # await catevent.delete()
+      nohorny = await event.client.send_file(event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to)
+    except Exception as e:
+      await edit_delete(event, e)
+    await _catutils.unsavegif(event, nohorny)
 
 
 @catub.cat_cmd(
@@ -180,7 +177,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="lewdn$",
+    pattern="lewd$",
     command=("lewdn", plugin_category),
     info={
         "header": "NSFW \nSearch lewd nekos",
@@ -192,7 +189,7 @@ async def lewdn(event):
     reply_to = await reply_id(event)
     if await age_verification(event, reply_to):
         return
-    url = useless.nekos("neko")
+    url = useless.nekos("nekolewd")
     if not url:
         return await edit_delete(event, "`Uff.. No NEKO found from the API`")
     await event.delete()
