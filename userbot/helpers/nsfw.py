@@ -226,6 +226,11 @@ endpoints = {
         "api": "https://neko-love.xyz/api/v1/",
         "checker": "url",
     },
+    "v6": {
+        "end": ["furry", "ff", "futa", "nekoirl", "trap", "catboy"],
+        "api": "https://api.xsky.dev/",
+        "checker": "url",
+    },
 }
 
 
@@ -243,6 +248,7 @@ def nekos(endpoint=None, endpoints=endpoints):
         + endpoints["v3"]["end"]
         + endpoints["v4"]["end"]
         + endpoints["v5"]["end"]
+        + endpoints["v6"]["end"]
     )
 
 
