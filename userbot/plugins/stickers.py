@@ -130,7 +130,7 @@ def pack_nick(username, pack, is_anim, is_video):
         return f"{gvarstatus('CUSTOM_STICKER_PACKNAME')} Vol.{pack}"
 
     if is_anim:
-        return f"@{username}'s Secret Layer Vol.{pack} • [Animated]"
+        return f"@{username}'s Animated Pack Vol.{pack} • [Anim]"
     elif is_video:
         return f"@{username}'s Limitless Vol.{pack} • [Video]"
     else:
