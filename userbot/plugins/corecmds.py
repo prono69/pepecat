@@ -1,3 +1,4 @@
+import contextlib
 import os
 from pathlib import Path
 
@@ -82,10 +83,8 @@ async def load(event):
     "To load a plugin again. if you have unloaded it"
     shortname = event.pattern_match.group(1)
     try:
-        try:
+        with contextlib.suppress(BaseException):
             remove_plugin(shortname)
-        except BaseException:
-            pass
         load_module(shortname)
         await edit_delete(event, f"`Successfully loaded {shortname}`", 10)
     except Exception as e:

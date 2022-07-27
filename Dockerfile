@@ -1,7 +1,7 @@
 FROM sandy1709/catuserbot:slim-buster
 
-#clonning repo 
-RUN git clone https://github.com/prono69/pepecat.git /root/userbot
+#clonning repo
+RUN git clone https://github.com/prono69/pepecat /root/userbot
 #working directory 
 WORKDIR /root/userbot
 
