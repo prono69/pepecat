@@ -612,7 +612,7 @@ async def inline_handler(event):  # sourcery no-metrics
         elif string == "pmpermit":
             result = await article_builder(event, string)
             await event.answer([result] if result else None)
-            
+
         elif string == "":
             results = []
             alive_menu = await article_builder(event, "ialive")

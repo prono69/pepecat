@@ -10,7 +10,6 @@ import bs4
 import requests
 from PIL import Image, ImageDraw, ImageFont
 
-
 from ..helpers import ellipse_create, file_check
 from . import catub, edit_delete, edit_or_reply
 
@@ -30,8 +29,8 @@ def text_draw(font_name, font_size, img, text, width, hight, fill="white"):
         fill=fill,
         font=font,
     )
- 
- 
+
+
 @catub.cat_cmd(
     pattern="app ([\s\S]*)",
     command=("app", plugin_category),
@@ -93,13 +92,13 @@ async def app_search(event):
     urllib.request.urlretrieve(app_icon, logo)
     urllib.request.urlretrieve(bgurl, pic_name)
     background = Image.open(pic_name).resize((1024, 512))
- 
+
     thumbmask = Image.new("RGBA", (1024, 512), 0)
     thumbmask.paste(background, (0, 0))
- 
+
     thumb, x = ellipse_create(logo, 4, 0)
     thumbmask.paste(thumb, (680, 53), thumb)
- 
+
     text_draw(font, 65, thumbmask, app_name, 50, 30)
     text_draw(font, 30, thumbmask, dev_name, 60, 120, "red")
     text_draw(font, 70, thumbmask, f"{rating} / 5", 190, 260)
@@ -117,6 +116,7 @@ async def app_search(event):
         event.chat_id, pic_name, caption=app_details, parse_mode="HTML"
     )
     os.remove(pic_name)
+
 
 @catub.cat_cmd(
     pattern="sapp ?(.*)",

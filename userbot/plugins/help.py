@@ -1,19 +1,19 @@
 from telethon import functions
- 
+
 from userbot import catub
- 
+
 from ..Config import Config
 from ..core import CMD_INFO, PLG_INFO
 from ..core.cmdinfo import cmdinfo, cmdlist, grpinfo, plugininfo
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import reply_id
- 
+
 cmdprefix = Config.COMMAND_HAND_LER
- 
- 
+
+
 plugin_category = "tools"
- 
- 
+
+
 @catub.cat_cmd(
     pattern="help ?(-c|-p|-t)? ?([\s\S]*)?",
     command=("help", plugin_category),
@@ -54,8 +54,8 @@ async def _(event):
         await event.delete()
         return
     await edit_or_reply(event, outstr)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="cmds(?:\s|$)([\s\S]*)",
     command=("cmds", plugin_category),
@@ -86,8 +86,8 @@ async def _(event):
     await edit_or_reply(
         event, outstr, aslink=True, linktext="Total Commands of Catuserbot are :"
     )
- 
- 
+
+
 @catub.cat_cmd(
     pattern="s ([\s\S]*)",
     command=("s", plugin_category),
@@ -106,8 +106,8 @@ async def _(event):
     else:
         out = f"I can't find any such command `{cmd}` in CatUserbot"
     await edit_or_reply(event, out)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="dc$",
     command=("dc", plugin_category),
@@ -132,4 +132,3 @@ async def _(event):
               \n**DC5 : **Singapore, SG\
                 "
     await edit_or_reply(event, result)
- 

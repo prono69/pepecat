@@ -1,16 +1,16 @@
 # Urban Dictionary for catuserbot by @mrconfused
- 
+
 from userbot import catub
- 
+
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import AioHttp
 from ..helpers.utils import _format
- 
+
 LOGS = logging.getLogger(__name__)
 plugin_category = "utils"
- 
- 
+
+
 @catub.cat_cmd(
     pattern="ud ([\s\S]*)",
     command=("ud", plugin_category),
@@ -40,8 +40,8 @@ async def _(event):
     except Exception as e:
         await edit_delete(event, text="`The Urban Dictionary API could not be reached`")
         LOGS.info(e)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="meaning ([\s\S]*)",
     command=("meaning", plugin_category),
@@ -85,4 +85,3 @@ async def _(event):
     except Exception as e:
         await edit_delete(event, text="`The Dictionary API could not be reached`")
         LOGS.info(e)
- 

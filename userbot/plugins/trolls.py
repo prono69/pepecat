@@ -1,19 +1,19 @@
 # credits to @mrconfused and @sandy1709
 #    Copyright (C) 2020  sandeep.n(π.$)
- 
+
 import os
- 
+
 from telegraph import exceptions, upload_file
- 
+
 from userbot import Convert, catub
- 
+
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import reply_id
 from . import deEmojify, phcomment, threats, trap, trash
- 
+
 plugin_category = "fun"
- 
- 
+
+
 @catub.cat_cmd(
     pattern="trash$",
     command=("trash", plugin_category),
@@ -52,8 +52,8 @@ async def _(event):
     os.remove(output[1])
     await output[0].delete()
     await event.client.send_file(event.chat_id, cat, reply_to=catid)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="threats$",
     command=("threats", plugin_category),
@@ -92,8 +92,8 @@ async def _(event):
     await output[0].delete()
     os.remove(output[1])
     await event.client.send_file(event.chat_id, cat, reply_to=catid)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="trap(?:\s|$)([\s\S]*)",
     command=("trap", plugin_category),
@@ -142,8 +142,8 @@ async def _(event):
     await output[0].delete()
     os.remove(output[1])
     await event.client.send_file(event.chat_id, cat, reply_to=catid)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="phub(?:\s|$)([\s\S]*)",
     command=("phub", plugin_category),
@@ -181,7 +181,7 @@ async def _(event):
         return await output[0].edit(
             "the replied file size is not supported it must me below 5 mb"
         )
- 
+
     await output[0].edit("generating image..")
     try:
         response = upload_file(output[1])
@@ -193,4 +193,3 @@ async def _(event):
     await output[0].delete()
     os.remove(output[1])
     await event.client.send_file(event.chat_id, cat, reply_to=catid)
- 

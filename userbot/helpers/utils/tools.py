@@ -1,7 +1,7 @@
 import json
 import os
 from json.decoder import JSONDecodeError
-from typing import Optional, Tuple, Union
+from typing import Tuple, Union
 
 from moviepy.editor import VideoFileClip
 from PIL import Image
@@ -81,6 +81,7 @@ async def media_to_pic(event, reply, noedits=False):  # sourcery no-metrics
     if os.path.lexists(catfile):
         return catevent, catfile, mediatype
     return catevent, None
+
 
 async def get_c_m_message(message_link: str) -> Tuple[Union[str, int], int]:
     p_m_link = message_link.split("/")

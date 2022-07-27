@@ -2,7 +2,6 @@
 # songs finder for catuserbot
 # Modified by @kirito6969
 
-import asyncio
 import base64
 import contextlib
 import io
@@ -18,18 +17,10 @@ from validators.url import url
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.functions import (
-    deEmojify,
-    delete_conv,
-    hide_inlinebot,
-    name_dl,
-    song_dl,
-    video_dl,
-    yt_search,
-)
+from ..helpers.functions import deEmojify, delete_conv, hide_inlinebot, yt_search
 from ..helpers.tools import media_type
 from ..helpers.utils import reply_id
-from . import catub, song_download, hmention
+from . import catub, song_download
 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)

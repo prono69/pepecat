@@ -1,10 +1,10 @@
 import contextlib
 import json
 import os
- 
+
 from .utils.utils import runcmd
- 
- 
+
+
 async def meme_type(message):
     if message:
         try:
@@ -41,8 +41,8 @@ async def meme_type(message):
         except AttributeError:
             return await file_type(message)
     return None
- 
- 
+
+
 async def media_type(message):
     if message:
         try:
@@ -72,8 +72,8 @@ async def media_type(message):
                 return "Sticker"
             return media
     return None
- 
- 
+
+
 async def fileinfo(file):
     x, y, z, s = await runcmd(f"mediainfo '{file}' --Output=JSON")
     cat_json = json.loads(x)["media"]["track"]
@@ -95,8 +95,8 @@ async def fileinfo(file):
         dic["width"] = int(cat_json[1]["Width"])
         dic["audio"] = "Present" if cat_json[0]["AudioCount"] else "None"
     return dic
- 
- 
+
+
 async def file_type(message):
     if not os.path.exists(message):
         return None
@@ -116,4 +116,3 @@ async def file_type(message):
     elif media["extension"] == "tgs":
         return "Animated Sticker"
     return "Document"
- 

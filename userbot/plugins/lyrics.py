@@ -8,11 +8,12 @@
 import re
 
 import requests
-from . import LyricsGen, catub
+
 from userbot import catub
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
+from . import LyricsGen, catub
 
 GENIUS = Config.GENIUS_API_TOKEN
 

@@ -2,21 +2,21 @@ import asyncio
 import contextlib
 import time
 from datetime import datetime
- 
+
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.custom import Dialog
 from telethon.tl.functions.contacts import UnblockRequest as unblock
 from telethon.tl.types import Channel, Chat, User
- 
+
 from userbot import catub
 from userbot.core.managers import edit_delete, edit_or_reply
 from userbot.helpers import delete_conv
- 
+
 from ..sql_helper import global_collectionjson as sql
 from . import BOTLOG, BOTLOG_CHATID
- 
+
 plugin_category = "utils"
- 
+
 # =========================================================== #
 #                           STRINGS                           #
 # =========================================================== #
@@ -30,19 +30,19 @@ GROUPS_OWNERSTR = "<b>The list of groups in which you are owner are here </b>\n\
 # =========================================================== #
 #                                                             #
 # =========================================================== #
- 
- 
+
+
 def inline_mention(user):
     full_name = user_full_name(user) or "No Name"
     return f"[{full_name}](tg://user?id={user.id})"
- 
- 
+
+
 def user_full_name(user):
     names = [user.first_name, user.last_name]
     names = [i for i in list(names) if i]
     return " ".join(names)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="stat$",
     command=("stat", plugin_category),
@@ -141,8 +141,8 @@ async def stats(event):  # sourcery no-metrics # sourcery skip: low-code-quality
             "#ADMIN_LIST\n"
             f"Admin groups list has been succesfully updated on {date}. If you want to update it again, do  `.stat` or `.adminlist`",
         )
- 
- 
+
+
 @catub.cat_cmd(
     pattern="(|p)stat (g|ga|go|c|ca|co)$",
 )
@@ -251,8 +251,8 @@ async def full_stats(event):  # sourcery no-metrics # sourcery skip: low-code-qu
                 event.chat_id, message[i], parse_mode="html", reply_to=reply_to_msg
             )
             reply_to_msg = new_event.id
- 
- 
+
+
 @catub.cat_cmd(
     pattern="ustat(?:\s|$)([\s\S]*)",
     command=("ustat", plugin_category),
@@ -324,4 +324,3 @@ async def ustat(event):
                 event.chat_id, msg_list[i], reply_to=reply_to_msg
             )
             reply_to_msg = new_event.id
- 
