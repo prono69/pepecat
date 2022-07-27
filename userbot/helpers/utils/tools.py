@@ -82,21 +82,7 @@ async def media_to_pic(event, reply, noedits=False):  # sourcery no-metrics
         return catevent, catfile, mediatype
     return catevent, None
 
-
-async def take_screen_shot(
-    video_file: str, duration: int, path: str = ""
-) -> Optional[str]:
-    thumb_image_path = path or os.path.join(
-        "./temp/", f"{os.path.basename(video_file)}.jpg"
-    )
-    command = f"ffmpeg -ss {duration} -i '{video_file}' -vframes 1 '{thumb_image_path}'"
-    err = (await runcmd(command))[1]
-    if err:
-        LOGS.error(err)
-    return thumb_image_path if os.path.exists(thumb_image_path) else None
-
-
-def get_c_m_message(message_link: str) -> Tuple[Union[str, int], int]:
+async def get_c_m_message(message_link: str) -> Tuple[Union[str, int], int]:
     p_m_link = message_link.split("/")
     chat_id, message_id = None, None
     if len(p_m_link) == 6:

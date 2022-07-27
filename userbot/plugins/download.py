@@ -297,7 +297,7 @@ async def _e(event):
         input = reply.text
     elif not input:
         return await edit_delete(event, "__Gib Telegram Message Link__")
-    _c, m_ = get_c_m_message(input)
+    _c, m_ = await get_c_m_message(input)
     try:
         _ok_m_ = await event.client.get_messages(entity=_c, ids=m_)
     except ChannelPrivateError:

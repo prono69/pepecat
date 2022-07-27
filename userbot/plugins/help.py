@@ -77,10 +77,10 @@ async def _(event):
             return await edit_delete(event, "__Invalid plugin name recheck it.__")
         except Exception as e:
             return await edit_delete(event, f"**Error**\n`{e}`")
-        outstr = f"� **{input_str.title()} has {len(cmds)} commands**\n"
+        outstr = f"• **{input_str.title()} has {len(cmds)} commands**\n"
         for cmd in cmds:
             outstr += f"  - `{cmdprefix}{cmd}`\n"
-        outstr += f"** Usage : ** `{cmdprefix}help -c <command name>`"
+        outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help -c <command name>`"
     else:
         outstr = await cmdlist()
     await edit_or_reply(
