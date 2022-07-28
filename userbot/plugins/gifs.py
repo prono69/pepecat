@@ -1,13 +1,19 @@
 # Created by @Jisan7509
 
 import base64
+import contextlib
+import logging
 import random
+ 
+from telethon import functions, types
+from telethon.errors.rpcerrorlist import UserNotParticipantError, YouBlockedUserError
+from telethon.tl.functions.channels import GetFullChannelRequest
+from telethon.tl.functions.messages import ImportChatInviteRequest as Get
+from userbot import catub
+from userbot.core.managers import edit_delete, edit_or_reply
+from userbot.helpers import media_type, unsavegif
+from userbot.helpers.utils import reply_id
 
-import requests
-
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers import reply_id, unsavegif
-from . import catub
 
 plugin_category = "extra"
 
@@ -55,44 +61,62 @@ async def some(event):
 
 
 @catub.cat_cmd(
-    pattern="kis(?:\s|$)([\s\S]*)",
-    command=("kis", plugin_category),
+    pattern="kiss(?:\s|$)([\s\S]*)",
+    command=("kiss", plugin_category),
     info={
         "header": "Sends random kiss",
         "usage": [
-            "{tr}kis",
-            "{tr}kis <1-20>",
+            "{tr}kiss",
+            "{tr}kiss <1-20>",
         ],
     },
 )
-async def some(event):
+async def kiss(event):
     """Its useless for single like you. Get a lover first"""
     inpt = event.pattern_match.group(1)
     reply_to_id = await reply_id(event)
-    count = 1 if not inpt else int(inpt)
+    count = int(inpt) if inpt else 1
     if count < 0 and count > 20:
         await edit_delete(event, "`Give value in range 1-20`")
-    chat = "@lov2kiss"
+    res = base64.b64decode(
+        "aHR0cHM6Ly90Lm1lL2pvaW5jaGF0L0NtZEEwVzYtSVVsbFpUUTk="
+    ).decode("utf-8")
+    resource = await event.client(GetFullChannelRequest(res))
+    chat = resource.chats[0].username
+    try:
+        await event.client(
+            functions.channels.GetParticipantRequest(
+                channel=chat, participant=catub.uid
+            )
+        )
+    except UserNotParticipantError:
+        await event.client(Get(res.split("/")[4]))
+        await event.client.edit_folder(resource.full_chat.id, 1)
+        await event.client(
+            functions.account.UpdateNotifySettingsRequest(
+                peer=chat,
+                settings=types.InputPeerNotifySettings(
+                    show_previews=False,
+                    silent=True,
+                ),
+            )
+        )
     catevent = await edit_or_reply(event, "`Wait babe...`😘")
     maxmsg = await event.client.get_messages(chat)
     start = random.randint(31, maxmsg.total)
     start = min(start, maxmsg.total - 40)
     end = start + 41
     kiss = []
-    res = base64.b64decode(
-        "aHR0cHM6Ly90Lm1lL2pvaW5jaGF0L0NtZEEwVzYtSVVsbFpUUTk="
-    ).decode("utf-8")
     async for x in event.client.iter_messages(
         chat, min_id=start, max_id=end, reverse=True
     ):
-        try:
+        with contextlib.suppress(AttributeError):
             if x.media and x.media.document.mime_type == "video/mp4":
-                link = f"https://t.me/lov2kiss/{x.id}"
+                link = f"{res.split('j')[0]}{chat}/{x.id}"
                 kiss.append(link)
-        except AttributeError:
-            pass
     kisss = random.sample(kiss, count)
     for i in kisss:
         nood = await event.client.send_file(event.chat_id, i, reply_to=reply_to_id)
-        await _catutils.unsavegif(event, nood)
+        await unsavegif(event, nood)
     await catevent.delete()
+ 

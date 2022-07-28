@@ -47,8 +47,11 @@ PING_MENTION = os.environ.get("PING_MENTION") or "ℜ𝔲𝔩𝔢𝔰 𝔅𝔶"
 # lol
 PONG = "ɪ ꜱʟᴀʏ ᴅʀᴀɢᴏɴꜱ ᴀᴛ ɴɪɢʜᴛ ᴡʜɪʟᴇ ʏᴏᴜ ꜱʟᴇᴇᴘ🖤🥀"
 
-temp_ = "Pong!"
-temp = "Pong!\n`{ping} ms`"
+# temp_ = "Pong!"
+# temp = "Pong!\n`{ping} ms`"
+
+temp_ = "__**☞ Pong**__"
+temp = "__**☞ Pong**__\n➥ `{ping}` **ms**\n➥ __**Bot of **__{mention}"
 if Config.BADCAT:
     temp_ = "__**☞ Pong**__"
     temp = "__**☞ Pong**__\n➥ `{ping}` **ms**\n➥ __**Bot of **__{mention}"
