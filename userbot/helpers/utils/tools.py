@@ -1,17 +1,11 @@
 import json
-import os
 from json.decoder import JSONDecodeError
 from typing import Tuple, Union
 
-from moviepy.editor import VideoFileClip
-from PIL import Image
-
 from ...core.logger import logging
-from ...core.managers import edit_or_reply
-from ..tools import media_type
-from .utils import runcmd
 
 LOGS = logging.getLogger(__name__)
+
 
 async def get_c_m_message(message_link: str) -> Tuple[Union[str, int], int]:
     p_m_link = message_link.split("/")
