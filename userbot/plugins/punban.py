@@ -16,7 +16,7 @@ from userbot.core.managers import edit_delete, edit_or_reply
 from userbot.helpers.functions import age_verification
 from userbot.helpers.utils import _catutils, reply_id
 
-from .helpers import nsfw as useless
+from ..helpers import nsfw as useless
 
 API = useless.API
 horny = useless.nsfw(useless.pawn)
