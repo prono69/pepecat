@@ -8,7 +8,7 @@ from natsort import natsorted
 from userbot import catub
 
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.tools import post_to_telegraph
+from ..helpers.functions import post_to_telegraph
 
 plugin_category = "extra"
 

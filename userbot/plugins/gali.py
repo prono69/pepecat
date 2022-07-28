@@ -9,7 +9,7 @@ import random
 from userbot import catub
 from userbot.core.managers import edit_or_reply
 
-from .helpers import strings
+from ..helpers import strings
 
 plugin_category = "extra"
 

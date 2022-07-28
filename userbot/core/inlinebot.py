@@ -6,14 +6,14 @@ import re
 import time
 from pathlib import Path
 from uuid import uuid4
-
+ 
 from telethon import Button, types
 from telethon.errors import QueryIdInvalidError
 from telethon.events import CallbackQuery, InlineQuery
 from youtubesearchpython import VideosSearch
-
+ 
 from userbot import catub
-
+ 
 from ..assistant.inlinefm import get_manager
 from ..Config import Config
 from ..helpers.functions import rand_key
@@ -29,15 +29,15 @@ from ..sql_helper.globals import gvarstatus
 from . import CMD_INFO, GRP_INFO, PLG_INFO, check_owner
 from .cmdinfo import cmdinfo, get_key, getkey, plugininfo
 from .logger import logging
-
+ 
 LOGS = logging.getLogger(__name__)
 
 BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
+MEDIA_PATH_REGEX = re.compile(r"(:?\<\bmedia:(:?(?:.*?)+)\>)")
+tr = Config.COMMAND_HAND_LER
 CATLOGO = (
     gvarstatus("INLINE_PIC") or "https://telegra.ph/file/493268c1f5ebedc967eba.jpg"
 )
-MEDIA_PATH_REGEX = re.compile(r"(:?\<\bmedia:(:?(?:.*?)+)\>)")
-tr = Config.COMMAND_HAND_LER
 
 
 def get_thumb(name):
@@ -100,7 +100,7 @@ async def article_builder(event, method):
     description = "Button menu for CatUserbot"
     if method == "help":
         help_info = main_menu()
-        media = gvarstatus("HELP_PIC")
+        # media = gvarstatus("HELP_PIC")
         title = "Help Menu"
         description = "Help menu for CatUserbot."
         thumb = get_thumb("help.png")
@@ -411,30 +411,6 @@ async def inline_handler(event):  # sourcery no-metrics
         match2 = re.findall(inf, query)
         hid = re.compile("hide (.*)")
         match3 = re.findall(hid, query)
-        if query.startswith("ping"):
-            txt = f"• Ping • {mention} •"
-            button = [(Button.inline("Check", data="ping"))]
-            PIC = random.choice(gvarstatus("PING_PICS").split())
-            if PIC and PIC.endswith((".jpg", ".jpeg", ".png")):  # fk it im adding
-                result = builder.photo(
-                    PIC,
-                    text=txt,
-                    buttons=button,
-                )
-            elif PIC:
-                result = builder.document(
-                    PIC,
-                    title="Check Ping",
-                    text=txt,
-                    buttons=button,
-                )
-            else:
-                result = builder.article(
-                    title="Check Ping",
-                    text=txt,
-                    buttons=button,
-                )
-            await event.answer([result] if result else None)
         if string == "ialive":
             result = await article_builder(event, string)
             await event.answer([result] if result else None)
