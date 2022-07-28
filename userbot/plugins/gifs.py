@@ -2,18 +2,17 @@
 
 import base64
 import contextlib
-import logging
 import random
- 
+
 from telethon import functions, types
-from telethon.errors.rpcerrorlist import UserNotParticipantError, YouBlockedUserError
+from telethon.errors.rpcerrorlist import UserNotParticipantError
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
+
 from userbot import catub
 from userbot.core.managers import edit_delete, edit_or_reply
-from userbot.helpers import media_type, unsavegif
+from userbot.helpers import unsavegif
 from userbot.helpers.utils import reply_id
-
 
 plugin_category = "extra"
 
@@ -119,4 +118,3 @@ async def kiss(event):
         nood = await event.client.send_file(event.chat_id, i, reply_to=reply_to_id)
         await unsavegif(event, nood)
     await catevent.delete()
- 
