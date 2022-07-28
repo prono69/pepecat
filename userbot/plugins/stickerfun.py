@@ -616,7 +616,7 @@ async def gandhi(event):
         if files and os.path.exists(files):
             os.remove(files)
 
-            
+
 @catub.cat_cmd(
     pattern="(|h)pay(?:\s|$)([\s\S]*)",
     command=("pay", plugin_category),
@@ -709,4 +709,3 @@ async def app(odi):
     result = await run[0].click("me")
     await result.delete()
     await odi.client.send_message(odi.chat_id, result, reply_to=reply_to_id)
-            

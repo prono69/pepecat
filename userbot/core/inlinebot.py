@@ -6,14 +6,14 @@ import re
 import time
 from pathlib import Path
 from uuid import uuid4
- 
+
 from telethon import Button, types
 from telethon.errors import QueryIdInvalidError
 from telethon.events import CallbackQuery, InlineQuery
 from youtubesearchpython import VideosSearch
- 
+
 from userbot import catub
- 
+
 from ..assistant.inlinefm import get_manager
 from ..Config import Config
 from ..helpers.functions import rand_key
@@ -29,7 +29,7 @@ from ..sql_helper.globals import gvarstatus
 from . import CMD_INFO, GRP_INFO, PLG_INFO, check_owner
 from .cmdinfo import cmdinfo, get_key, getkey, plugininfo
 from .logger import logging
- 
+
 LOGS = logging.getLogger(__name__)
 
 BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")

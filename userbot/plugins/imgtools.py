@@ -1,30 +1,17 @@
 # by @mrconfused (@sandy1709)
-import base64
 import io
 import os
-import random
-import string
 
 from PIL import Image, ImageFilter, ImageOps
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
 from userbot import Convert, catub
 
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers import asciiart, media_type
-from ..helpers.functions import (
-    add_frame,
-    crop,
-    dotify,
-    flip_image,
-    grayscale,
-    invert_colors,
-    mirror_file,
-    solarize,
-)
-from ..helpers.utils import _cattools, reply_id
+from ..helpers import media_type
+from ..helpers.functions import dotify
 
 plugin_category = "tools"
+
 
 @catub.cat_cmd(
     pattern="imirror(s)? ?(-)?(l|r|u|b)?$",
@@ -63,7 +50,9 @@ async def imirror(event):  # sourcery no-metrics
         filename = "catuserbot.jpg"
         f_format = "jpeg"
     try:
-        imag = await Convert.to_image(catevent, reply, dirct="./temp", file=filename, noedits=True)
+        imag = await Convert.to_image(
+            catevent, reply, dirct="./temp", file=filename, noedits=True
+        )
         if imag[1] is None:
             return await edit_delete(
                 imag[0], "__Unable to extract image from the replied message.__"
