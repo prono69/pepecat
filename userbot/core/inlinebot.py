@@ -35,9 +35,6 @@ LOGS = logging.getLogger(__name__)
 BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
 MEDIA_PATH_REGEX = re.compile(r"(:?\<\bmedia:(:?(?:.*?)+)\>)")
 tr = Config.COMMAND_HAND_LER
-CATLOGO = (
-    gvarstatus("INLINE_PIC") or "https://telegra.ph/file/493268c1f5ebedc967eba.jpg"
-)
 
 
 def get_thumb(name):
@@ -100,8 +97,8 @@ async def article_builder(event, method):
     description = "Button menu for CatUserbot"
     if method == "help":
         help_info = main_menu()
-        # media = gvarstatus("HELP_PIC")
         title = "Help Menu"
+        media = gvarstatus("HELP_PIC")
         description = "Help menu for CatUserbot."
         thumb = get_thumb("help.png")
         query = help_info[0]
@@ -411,6 +408,30 @@ async def inline_handler(event):  # sourcery no-metrics
         match2 = re.findall(inf, query)
         hid = re.compile("hide (.*)")
         match3 = re.findall(hid, query)
+        if query.startswith("ping"):
+            txt = f"• Ping • {mention} •"
+            button = [(Button.inline("Check", data="ping"))]
+            PIC = random.choice(gvarstatus("PING_PICS").split())
+            if PIC and PIC.endswith((".jpg", ".jpeg", ".png")):  # fk it im adding
+                result = builder.photo(
+                    PIC,
+                    text=txt,
+                    buttons=button,
+                )
+            elif PIC:
+                result = builder.document(
+                    PIC,
+                    title="Check Ping",
+                    text=txt,
+                    buttons=button,
+                )
+            else:
+                result = builder.article(
+                    title="Check Ping",
+                    text=txt,
+                    buttons=button,
+                )
+            await event.answer([result] if result else None)
         if string == "ialive":
             result = await article_builder(event, string)
             await event.answer([result] if result else None)
@@ -588,7 +609,6 @@ async def inline_handler(event):  # sourcery no-metrics
         elif string == "pmpermit":
             result = await article_builder(event, string)
             await event.answer([result] if result else None)
-
         elif string == "":
             results = []
             alive_menu = await article_builder(event, "ialive")
@@ -690,7 +710,7 @@ async def on_plug_in_callback_query_handler(event):
     buttons = [
         (Button.inline("𝙊𝙋𝙀𝙉 𝘼𝙂𝘼𝙄𝙉", data="mainmenu"),),
     ]
-    await event.edit("**Mᴇɴᴜ Hᴀs Bᴇᴇɴ Cʟᴏsᴇᴅ**", buttons=buttons)
+    await event.edit("Mᴇɴᴜ Hᴀs ʙᴇᴇɴ ᴄʟᴏsᴇᴅ", buttons=buttons)
 
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(b"check")))

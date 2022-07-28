@@ -75,15 +75,15 @@ async def get_stats(event):
 
 
 @catub.cat_cmd(
-    pattern="ip ?(.*)",
-    command=("ip", plugin_category),
+    pattern="ips ?(.*)",
+    command=("ips", plugin_category),
     info={
         "header": "Find information about an IP address",
-        "usage": "{tr}ip <ip address>",
+        "usage": "{tr}ips <ip address>",
     },
 )
 async def ipcmd(event):
-    """Use as .ip <ip> (optional)"""
+    """Use as .ips <ip> (optional)"""
     ip = event.pattern_match.group(1)
     if not ip:
         await edit_delete(event, "`Give me an ip address :(`")
