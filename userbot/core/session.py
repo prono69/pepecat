@@ -5,6 +5,7 @@ from telethon.sessions import StringSession
 
 from ..Config import Config
 from .client import CatUserBotClient
+from userbot import TG_BOT_TOKEN
 
 __version__ = "2.10.6"
 
@@ -40,4 +41,4 @@ catub.tgbot = asst = tgbot = CatUserBotClient(
     connection=ConnectionTcpAbridged,
     auto_reconnect=True,
     connection_retries=None,
-).start(bot_token=Config.TG_BOT_TOKEN)
+).start(bot_token=TG_BOT_TOKEN)
