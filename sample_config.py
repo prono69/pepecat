@@ -8,7 +8,7 @@ from typing import Set
 from telethon.tl.types import ChatBannedRights
 from validators.url import url
 
-from userbot.sql_helper.globals import gvarstatus
+from ..sql_helper.globals import gvarstatus
 
 
 class Config(object):
