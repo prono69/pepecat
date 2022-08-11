@@ -2,7 +2,7 @@ import contextlib
 import sys
 
 import userbot
-from userbot import BOTLOG_CHATID, PM_LOGGER_GROUP_ID
+from userbot import BOTLOG_CHATID, PM_LOGGER_GROUP_ID, TG_BOT_TOKEN
 
 from .Config import Config
 from .core.logger import logging
@@ -17,7 +17,7 @@ from .utils import (
 )
 
 LOGS = logging.getLogger("CatUserbot")
-
+hmm = TG_BOT_TOKEN
 print(userbot.__copyright__)
 print(f"Licensed under the terms of the {userbot.__license__}")
 
