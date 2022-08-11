@@ -8,8 +8,6 @@ from typing import Set
 from telethon.tl.types import ChatBannedRights
 from validators.url import url
 
-from userbot.sql_helper import globals
-
 
 class Config(object):
     LOGGER = True
@@ -24,8 +22,8 @@ class Config(object):
     # Get this value by running python3 stringsetup.py or https://repl.it/@sandeep1709/generatestringsession
     STRING_SESSION = os.environ.get("STRING_SESSION", None)
     # Telegram BOT Token and bot username from @BotFather
-    ######### TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN") or os.environ.get("TG_BOT_TOKEN_BF_HER", None)
-    TG_BOT_TOKEN = globals.gvarstatus("TG_BOT_TOKEN")
+    TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN") or os.environ.get("TG_BOT_TOKEN_BF_HER", None)
+    ###TG_BOT_TOKEN = globals.gvarstatus("TG_BOT_TOKEN")
     TG_BOT_USERNAME = None
     # get this value from http://www.timezoneconverter.com/cgi-bin/findzone.tzc
     TZ = os.environ.get("TZ", "Asia/Kolkata")
