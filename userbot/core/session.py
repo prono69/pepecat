@@ -3,9 +3,10 @@ import sys
 from telethon.network.connection.tcpabridged import ConnectionTcpAbridged
 from telethon.sessions import StringSession
 
+from userbot import TG_BOT_TOKEN
+
 from ..Config import Config
 from .client import CatUserBotClient
-from userbot import TG_BOT_TOKEN
 
 __version__ = "2.10.6"
 

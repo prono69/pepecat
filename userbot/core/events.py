@@ -9,9 +9,10 @@ from telethon.tl.types import (
     MessageMediaWebPage,
 )
 
+from userbot import TG_BOT_TOKEN
+
 from ..Config import Config
 from .managers import edit_or_reply
-from userbot import TG_BOT_TOKEN
 
 
 @events.common.name_inner_event
