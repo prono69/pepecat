@@ -9,10 +9,9 @@ from telethon.tl.types import (
     MessageMediaWebPage,
 )
 
-
-
 from ..Config import Config
 from .managers import edit_or_reply
+
 
 @events.common.name_inner_event
 class NewMessage(events.NewMessage):
