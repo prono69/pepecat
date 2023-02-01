@@ -5,18 +5,19 @@ plugin for Cat_Userbot
 You remove this, you gay.
 """
 import os
- 
+
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest as unblock
+
 from userbot import Convert, catub
 from userbot.core.managers import edit_delete, edit_or_reply
 from userbot.helpers.functions import clippy, delete_conv
 from userbot.helpers.utils import reply_id
 from userbot.plugins import mention
- 
+
 plugin_category = "extra"
- 
- 
+
+
 @catub.cat_cmd(
     pattern="iascii ?([\s\S]*)",
     command=("iascii", plugin_category),
@@ -60,8 +61,8 @@ async def bad(event):
     await delete_conv(event, chat, flag)
     if os.path.exists(output[1]):
         os.remove(output[1])
- 
- 
+
+
 @catub.cat_cmd(
     pattern="line ?([\s\S]*)",
     command=("line", plugin_category),
@@ -105,8 +106,8 @@ async def pussy(event):
     await delete_conv(event, chat, flag)
     if os.path.exists(output[1]):
         os.remove(output[1])
- 
- 
+
+
 @catub.cat_cmd(
     pattern="clip ?([\s\S]*)",
     command=("clip", plugin_category),

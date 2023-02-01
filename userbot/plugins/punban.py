@@ -1,29 +1,29 @@
 # Created by @Jisan7509
 # All rights reserved.
- 
+
 import asyncio
 import os
 import random
 import re
- 
+
 import requests
 from bs4 import BeautifulSoup
 from pySmartDL import SmartDL
 from telethon.errors.rpcerrorlist import WebpageCurlFailedError
 from urlextract import URLExtract
+
 from userbot import catub
 from userbot.core.managers import edit_delete, edit_or_reply
+from userbot.helpers import nsfw as useless
 from userbot.helpers.functions import age_verification, unsavegif
 from userbot.helpers.utils import reply_id
- 
-from userbot.helpers import nsfw as useless
- 
+
 API = useless.API
 horny = useless.nsfw(useless.pawn)
- 
+
 plugin_category = "extra"
- 
- 
+
+
 def redlink(link, checker=False):
     pattern = re.compile(r"redgifs\.com\/?(?:watch\/)?([^\n.-]*)")
     regx = pattern.search(link)
@@ -31,8 +31,8 @@ def redlink(link, checker=False):
     if checker:
         return link, f"./temp/{regx[1]}.mp4"
     return link
- 
- 
+
+
 def redgif(link):
     link, file_name = redlink(link, True)
     if not os.path.isdir("./temp"):
@@ -50,8 +50,8 @@ def redgif(link):
             for chunk in r.iter_content(chunk_size=8192):
                 f.write(chunk)
             return file_name
- 
- 
+
+
 async def message_splitter(string_list, string, event):
     message = []
     for i in string_list:
@@ -70,8 +70,8 @@ async def message_splitter(string_list, string, event):
                 event.chat_id, message[i], parse_mode="html", reply_to=reply_to_msg
             )
             reply_to_msg = new_event.id
- 
- 
+
+
 @catub.cat_cmd(
     pattern="porn(?:\s|$)([\s\S]*)",
     command=("porn", plugin_category),
@@ -144,8 +144,8 @@ async def very(event):  # sourcery skip: low-code-quality
                     catevent,
                     "**ಥ‿ಥ   Sorry i could'nt found, try with difference catagory**",
                 )
- 
- 
+
+
 @catub.cat_cmd(
     pattern="bulkporn(?:\s|$)([\s\S]*)",
     command=("bulkporn", plugin_category),
@@ -169,7 +169,7 @@ async def bad(event):
         sub_r = intxt
         if " " in intxt:
             sub_r, count = intxt.split(" ")
- 
+
     if int(count) > 30:
         return await edit_delete(event, "**Value error!.. Count value 1 to 30**")
     catevent = await edit_or_reply(event, "**Just hold a sec u horny kid...**")
@@ -224,8 +224,8 @@ async def bad(event):
             )
         if i == int(count):
             await catevent.delete()
- 
- 
+
+
 @catub.cat_cmd(
     pattern="rsearch(?:\s|$)([\s\S]*)",
     command=("rsearch", plugin_category),
@@ -249,7 +249,7 @@ async def pussy(event):
         sub_r = intxt
         if " " in intxt:
             sub_r, count = intxt.split(" ")
- 
+
     if int(count) > 30:
         return await edit_delete(event, "**Value error!.. Count value 1 to 30**")
     catevent = await edit_or_reply(event, "**Just hold a sec u horny kid...**")
@@ -281,8 +281,8 @@ async def pussy(event):
         pwnlist.append(f"<b><i>{i}. <a href = {media_url}>{t}</a></b>")
     string = f"<b>{count} results for {sub_r} :</b>\n\n"
     await message_splitter(pwnlist, string, catevent)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="xlist(?:\s|$)([\s\S]*)",
     command=("xlist", plugin_category),
@@ -324,7 +324,7 @@ async def cat(event):
         return await edit_delete(
             catevent, "`No links found for that query , try differnt search...`", 60
         )
- 
+
     listlink = []
     listname = []
     pwnlist = []
@@ -339,7 +339,7 @@ async def cat(event):
         catevent,
         f"**{len(listlink)} results found for {xtext} :\nSending {xcount if xcount else 'All'} results out of them.**",
     )
- 
+
     mylink = listlink[: int(xcount)] if xcount else listlink
     for count, (l, n) in enumerate(zip(mylink, listname), start=1):
         req = requests.get(l)
@@ -350,11 +350,11 @@ async def cat(event):
         pwnlist.append(
             f"<b><i>{count}. <a href = {link}>{n.replace('_',' ').title()}</a></b>"
         )
- 
+
     string = f"<b>Showing {xcount}/{len(listlink)} results for {xtext}.</b>\n\n"
     await message_splitter(pwnlist, string, catevent)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="linkdl(?: |$)([\s\S]*)",
     command=("linkdl", plugin_category),
