@@ -2,18 +2,18 @@
 Created By @Jisan7509
 GF created by @KshitijGagan
 """
-
+ 
 import asyncio
 import random
-
+ 
 from userbot import catub
 from userbot.core.managers import edit_or_reply
-
+ 
 from ..helpers import strings
-
+ 
 plugin_category = "extra"
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="abuse$",
     command=("abuse", plugin_category),
@@ -26,8 +26,8 @@ async def abusing(abused):
     "random abuse string"
     reply_text = random.choice(strings.ABUSE_STRINGS)
     await edit_or_reply(abused, reply_text)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="abusehard$",
     command=("abusehard", plugin_category),
@@ -40,8 +40,8 @@ async def fuckedd(abusehard):
     "random gali string"
     reply_text = random.choice(strings.ABUSEHARD_STRING)
     await edit_or_reply(abusehard, reply_text)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="rndi$",
     command=("rndi", plugin_category),
@@ -54,8 +54,8 @@ async def metoo(e):
     "random gali string"
     txt = random.choice(strings.RENDISTR)
     await edit_or_reply(e, txt)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="fuck$",
     command=("fuck", plugin_category),
@@ -68,8 +68,8 @@ async def chutiya(fuks):
     "random gali string"
     reply_text = random.choice(strings.CHU_STRINGS)
     await edit_or_reply(fuks, reply_text)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="thanos$",
     command=("thanos", plugin_category),
@@ -82,8 +82,8 @@ async def thanos(thanos):
     "random gali string"
     reply_text = random.choice(strings.THANOS_STRINGS)
     await edit_or_reply(thanos, reply_text)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="gf$",
     command=("gf", plugin_category),
@@ -123,8 +123,8 @@ async def kakashi(event):
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await kakashi.edit(animation_chars[i % 21])
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="fk ([\s\S]*)",
     command=("fk", plugin_category),
@@ -155,8 +155,8 @@ async def kakashi(event):
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await kakashi.edit(animation_chars[i % 11])
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="chod$",
     command=("chod", plugin_category),
@@ -186,8 +186,8 @@ async def kakashi(event):
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await kakashi.edit(animation_chars[i % 11])
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="kis$",
     command=("kis", plugin_category),
@@ -205,8 +205,8 @@ async def _(event):
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await catevent.edit(animation_chars[i % 4])
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="fuk$",
     command=("fuk", plugin_category),
@@ -224,8 +224,8 @@ async def _(event):
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await catevent.edit(animation_chars[i % 4])
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="sex$",
     command=("sex", plugin_category),
@@ -243,8 +243,8 @@ async def _(event):
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await catevent.edit(animation_chars[i % 4])
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="nikal$",
     command=("nikal", plugin_category),
@@ -269,8 +269,8 @@ async def kakashi(event):
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await kakashi.edit(animation_chars[i % 6])
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="gaali$",
     command=("gaali", plugin_category),
@@ -282,8 +282,8 @@ async def kakashi(event):
 async def cat(event):
     "random gali string"
     await edit_or_reply(event, strings.gali1)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="gali$",
     command=("gali", plugin_category),
@@ -295,8 +295,8 @@ async def cat(event):
 async def cat(event):
     "random gali string"
     await edit_or_reply(event, strings.gali2)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="egali$",
     command=("egali", plugin_category),

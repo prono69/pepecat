@@ -3,18 +3,18 @@ Created by @Jisan7509
 Plugin for CatUserbot
 #credit @GulfysHalfyyyy
 """
-
+ 
 import asyncio
-
+ 
 from userbot import catub
 from userbot.core.managers import edit_or_reply
 from userbot.plugins import mention
-
+ 
 plugin_category = "fun"
-
-
+ 
+ 
 # ==================================================================
-
+ 
 C = (
     "\n......................................../´¯/) "
     "\n......................................,/¯../ "
@@ -42,11 +42,28 @@ C = (
     "\n............\..............( "
     "\n..............\.............\..."
 )
-
-
+ 
+ 
+GAMBAR_TITIT = """
+🍆🍆
+🍆🍆🍆
+  🍆🍆🍆
+    🍆🍆🍆
+     🍆🍆🍆
+       🍆🍆🍆
+        🍆🍆🍆
+         🍆🍆🍆
+          🍆🍆🍆
+          🍆🍆🍆
+      🍆🍆🍆🍆
+ 🍆🍆🍆🍆🍆🍆
+ 🍆🍆🍆  🍆🍆🍆
+    🍆🍆       🍆🍆
+"""
+ 
 # =======================================================
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="muth$",
     command=("muth", plugin_category),
@@ -75,8 +92,8 @@ async def kakashi(bsdk):
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await bsdk.edit(animation_chars[i % 10])
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="ohnoo$",
     command=("ohnoo", plugin_category),
@@ -106,8 +123,8 @@ async def kakashi(bsdk):
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await bsdk.edit(animation_chars[i % 11])
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="lovestory$",
     command=("lovestory", plugin_category),
@@ -137,12 +154,12 @@ async def kakashi(event):
         "  😭      ☺️ \n  /|\   /(👶)\ \n  /!\   / \ ",
         "The End 😂...",
     ]
-
+ 
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await event.edit(animation_chars[i % 14])
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="ohhyaah$",
     command=("ohhyaah", plugin_category),
@@ -173,8 +190,8 @@ async def kakashi(baby):
         "      |    /                \    |\n"
         "      👞.                  👞",
     )
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="foff$",
     command=("foff", plugin_category),
@@ -202,8 +219,8 @@ async def kakashi(fooku):
         "This is my middle finger\n"
         "It just for U🖕😂\n",
     )
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="mf$",
     command=("mf", plugin_category),
@@ -215,8 +232,8 @@ async def kakashi(fooku):
 async def kakashi(mf):
     "Bad stuff"
     await edit_or_reply(mf, C)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="sporn$",
     command=("sporn", plugin_category),
@@ -254,8 +271,8 @@ async def kakashi(pornhub):
         "⣿⣿⣿⣿⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿\n"
         "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n",
     )
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="spika$",
     command=("spika", plugin_category),
@@ -287,8 +304,8 @@ async def kakashi(pikachu):
         "⣿⣿⣿⣿⣿⣿🅼🅰️ 🅺🅸 🅲🅷🆄⢸⣿⣿⣿⣿⣿⣿\n"
         "🅿️🅸🅺🅰️ 🅿️🅸🅺🅰️ 🅿️🅸🅺🅰️🅲🅷🆄\n",
     )
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="sxx$",
     command=("sxx", plugin_category),
@@ -340,8 +357,8 @@ async def kakashi(saxy):
         "⣸⣿⣿⣿⣿⣿⣿⣿⣿⠏⠄⠄⠄⠄⠄⠸⣿⣿⣿⣿⡿⢟⣣\n"
         "ɮǟȶǟʊ ȶɦǟʀӄɨօ ӄʏǟ ɦǟǟʟ ,ӄɛֆǟ ʟǟɢǟ\n",
     )
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="sdick ([\s\S]*)",
     command=("sdick", plugin_category),
@@ -374,3 +391,21 @@ async def kakashi(dicksay):
         "⠀⠹⣟⣿⣿⣿⣿⡿⣷⡿⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀\n"
         "⠀⠀⠈⠛⠯⣿⡯⠟⠛⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n",
     )
+ 
+""" 
+@catub.cat_cmd(
+    pattern="(?:penis|dick)(?:\s|$)([\s\S]*)",
+    command=("penis|dick", plugin_category),
+    info={
+        "header": "bad art, try yourself ",
+        "usage": "{tr}penis",
+    },
+)
+async def kakashi(e):
+    "Bad stuff"
+    emoji = e.pattern_match.group(1)
+    titid = GAMBAR_TITIT
+    if emoji:
+        titid = titid.replace("🍆", emoji)
+    await e.edit(titid)
+"""    

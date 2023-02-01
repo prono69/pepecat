@@ -5,18 +5,20 @@ This module can search images in danbooru and send in to the chat!
 ──「 **Danbooru Search** 」──
 """
 
-import html
 import os
 import random
-import urllib
-from urllib.parse import quote as urlencode
-
 import aiohttp
 import requests
+import urllib
+from urllib.parse import quote as urlencode
+ 
+import requests
+from userbot import catub
+from userbot.core.managers import edit_delete, edit_or_reply
+from userbot.helpers import reply_id
+from userbot.helpers.functions import age_verification
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
-from ..helpers.functions import age_verification
-from . import catub, edit_delete, edit_or_reply, eod, eor, reply_id
 
 session = aiohttp.ClientSession()
 plugin_category = "fun"
@@ -42,7 +44,7 @@ async def danbooru(message):
     reply_to = await reply_id(message)
     if await age_verification(message, reply_to):
         return
-    await edit_or_reply(message, "`Processing…`")
+    catevent = await edit_or_reply(message, "`Processing…`")
     rating = "Explicit" if "nsfw" in message.pattern_match.group(1) else "Safe"
     search_query = message.pattern_match.group(2)
     params = {
@@ -58,14 +60,14 @@ async def danbooru(message):
             response = response.json()
         else:
             await edit_delete(
-                message,
+                catevent,
                 f"`An error occurred, response code:` **{response.status_code}**",
                 4,
             )
             return
 
     if not response:
-        await edit_delete(message, f"`No results for query:` __{search_query}__", 4)
+        await edit_delete(catevent, f"`No results for query:` __{search_query}__", 4)
         return
 
     valid_urls = [
@@ -76,7 +78,7 @@ async def danbooru(message):
 
     if not valid_urls:
         await edit_delete(
-            message, f"`Failed to find URLs for query:` __{search_query}__", 4
+            catevent, f"`Failed to find URLs for query:` __{search_query}__", 4
         )
         return
     for image_url in valid_urls:
@@ -87,9 +89,9 @@ async def danbooru(message):
             await message.delete()
             return
         except Exception as e:
-            await edit_or_reply(message, f"{e}")
+            await edit_or_reply(catevent, f"{e}")
     await edit_delete(
-        message, f"``Failed to fetch media for query:` __{search_query}__", 4
+        catevent, f"``Failed to fetch media for query:` __{search_query}__", 4
     )
 
 
@@ -241,7 +243,7 @@ async def _(event):
         return
     reply_to_id = await reply_id(event)
     chat = "@OpGufaBot"
-    k = await eor(event, "`Checking...`")
+    k = await edit_or_reply(event, "`Checking...`")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("🤪")
@@ -252,7 +254,7 @@ async def _(event):
             await k.delete()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await eod(event, "```Unblock @OpGufaBot```")
+            await edit_delete(event, "```Unblock @OpGufaBot```")
             return
 
 
@@ -271,7 +273,7 @@ async def _(event):
         return
     reply_to_id = await reply_id(event)
     chat = "@OpGufaBot"
-    k = await eor(event, "`Checking...`")
+    k = await edit_or_reply(event, "`Checking...`")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("😏")
@@ -282,7 +284,7 @@ async def _(event):
             await k.delete()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await eod(event, "```Unblock @OpGufaBot```")
+            await edit_delete(event, "```Unblock @OpGufaBot```")
             return
 
 
@@ -301,7 +303,7 @@ async def _(event):
         return
     reply_to_id = await reply_id(event)
     chat = "@OpGufaBot"
-    k = await eor(event, "```Checking...```")
+    k = await edit_or_reply(event, "```Checking...```")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("💋")
@@ -312,7 +314,7 @@ async def _(event):
             await k.delete()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await eod(event, "```Unblock @OpGufaBot```")
+            await edit_delete(event, "```Unblock @OpGufaBot```")
             return
 
 
@@ -331,7 +333,7 @@ async def _(event):
         return
     reply_to_id = await reply_id(event)
     chat = "@SeXn1bot"
-    k = await eor(event, "```Checking...```")
+    k = await edit_or_reply(event, "```Checking...```")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("💋2016 Videolar🔞")
@@ -342,7 +344,7 @@ async def _(event):
             await k.delete()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await eod(event, "```Unblock @SeXn1bot```")
+            await edit_delete(event, "```Unblock @SeXn1bot```")
             return
 
 
@@ -361,7 +363,7 @@ async def _(event):
         return
     reply_to_id = await reply_id(event)
     chat = "@SeXn1bot"
-    k = await eor(event, "```Checking...```")
+    k = await edit_or_reply(event, "```Checking...```")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("♨️Old photo👙")
@@ -372,7 +374,7 @@ async def _(event):
             await k.delete()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await eod(event, "```Unblock @SeXn1bot```")
+            await edit_delete(event, "```Unblock @SeXn1bot```")
             return
 
 
@@ -391,7 +393,7 @@ async def _(event):
         return
     reply_to_id = await reply_id(event)
     chat = "@SeXn1bot"
-    k = await eor(event, "```Checking...```")
+    k = await edit_or_reply(event, "```Checking...```")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("🔞Uz_sex♨️")
@@ -402,7 +404,7 @@ async def _(event):
             await k.delete()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await eod(event, "```Unblock @SeXn1bot```")
+            await edit_delete(event, "```Unblock @SeXn1bot```")
             return
 
 
@@ -421,7 +423,7 @@ async def _(event):
         return
     reply_to_id = await reply_id(event)
     chat = "@SeXn1bot"
-    k = await eor(event, "```Checking...```")
+    k = await edit_or_reply(event, "```Checking...```")
     async with event.client.conversation(chat) as conv:
         try:
             await conv.send_message("🔞SeX_Vido🚷")
@@ -432,7 +434,7 @@ async def _(event):
             await k.delete()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await eod(event, "```Unblock @SeXn1bot```")
+            await edit_delete(event, "```Unblock @SeXn1bot```")
             return
 
 
@@ -460,4 +462,4 @@ async def booru(event):
             event.chat_id, file=pic, caption=f"**{query}**", reply_to=reply_to
         )
     except Exception as e:
-        await eod(event, f"**{e}**")
+        await edit_delete(event, f"**{e}**")

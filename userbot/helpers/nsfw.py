@@ -4,22 +4,32 @@ pawn = [
     "nsfw",
     "nsfw_gifs",
     "nsfw_gif",
-    "60fpsporn",
+    "realgirls",
     "porn",
     "porn_gifs",
     "porninfifteenseconds",
     "CuteModeSlutMode",
     "NSFW_HTML5",
-    "the_best_nsfw_gifs",
-    "verticalgifs",
     "besthqporngifs",
     "boobs",
     "pussy",
     "jigglefuck",
-    "broslikeus",
-    "gangbang",
-    "passionx",
-    "titfuck",
+    "GirlsFinishingTheJob",
+    "SheLikesItRough",
+    "dirtysmall",
+    "NsfwGifsMonster",
+    "RedheadGifs",
+    "IndianPorn",
+    "DesiBoners",
+    "IndianBabes",
+    "Mmsvideos",
+    "snapleaks",
+    "creampie",
+    "creampies",
+    "workgonewild",
+    "militarygonewild",
+    "BustyPetite",
+    "cumsluts",
     "HappyEmbarrassedGirls",
     "suicidegirls",
     "porninaminute",
@@ -34,7 +44,6 @@ pawn = [
     "OnOff",
     "TittyDrop",
     "extramile",
-    "Exxxtras",
     "adorableporn",
 ]
 
@@ -104,28 +113,17 @@ hemtai = [
     "woof",
 ]
 
-""" 
-async def importent(event):
-    cat = ["-1001199597035", "-1001459701099", "-1001436155389", "-1001321431101"]
-    if str(event.chat_id) in cat:
-        await edit_or_reply(event, "**Yes I'm GAY**")
-        await event.client.kick_participant(event.chat_id, "me")
-        return True
-    return False
-"""
-
-
 endpoints = {
     "v1": {
         "end": [
             "pussy",
             "cum",
-            # "boobs",
+            "boobs",
             "bj",
             "anal",
-            # "hentai",
+            "hentai",
             "feet",
-            # "blowjob",
+            "blowjob",
             "poke",
             "holo",
             "baka",
@@ -260,4 +258,14 @@ def nsfw(catagory):
     return horny
 
 
-API = "https://catmemeapi.herokuapp.com/gimme"
+""" 
+async def importent(event):
+    cat = ["-1001199597035", "-1001459701099", "-1001436155389", "-1001321431101"]
+    if str(event.chat_id) in cat:
+        await edit_or_reply(event, "**Yes I'm GAY**")
+        await event.client.kick_participant(event.chat_id, "me")
+        return True
+    return False
+"""
+    
+API = "https://catmemeapi2023.herokuapp.com/gimme"

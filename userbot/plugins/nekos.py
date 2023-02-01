@@ -7,23 +7,17 @@
 """
 
 import os
-import random
-
-import nekos
+ 
 import requests
+import nekos
 from PIL import Image
 from simplejson.errors import JSONDecodeError
+from userbot import catub, user_agent
+from userbot.core.managers import edit_delete, edit_or_reply
+from userbot.helpers.functions import age_verification, unsavegif
+from userbot.helpers.utils import reply_id
 
-from ..helpers.functions import age_verification
-from . import (
-    _catutils,
-    catub,
-    edit_delete,
-    edit_or_reply,
-    reply_id,
-    useless,
-    user_agent,
-)
+from userbot.helpers import nsfw as useless
 
 plugin_category = "fun"
 
@@ -104,7 +98,7 @@ async def neko(event):
         )
     except Exception as e:
         await edit_delete(event, e)
-    await _catutils.unsavegif(event, nohorny)
+    await unsavegif(event, nohorny)
 
 
 @catub.cat_cmd(
@@ -279,7 +273,7 @@ async def _(event):
         event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
     )
     try:
-        await _catutils.unsavegif(event, nohorny)
+        await unsavegif(event, nohorny)
     except:
         pass
     await catevent.delete()
@@ -346,7 +340,7 @@ async def _(event):
         event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
     )
     try:
-        await _catutils.unsavegif(event, nohorny)
+        await unsavegif(event, nohorny)
     except:
         pass
     await catevent.delete()
