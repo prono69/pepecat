@@ -258,20 +258,11 @@ async def add_to_pack(
     except YouBlockedUserError:
         await catub(unblock("stickers"))
         await conv.send_message("/addsticker")
-    vtry = True if is_video else None
     await conv.get_response()
     await args.client.send_read_acknowledge(conv.chat_id)
     await conv.send_message(packname)
     x = await conv.get_response()
-    while ("50" in x.message) or ("120" in x.message) or vtry:
-        if vtry:
-            await conv.send_file("animate.webm")
-            x = await conv.get_response()
-            if "50 video stickers" in x.message:
-                await conv.send_message("/addsticker")
-            else:
-                vtry = None
-                break
+    while ("50" in x.message) or ("120" in x.message):
         try:
             val = int(pack)
             pack = val + 1
@@ -299,8 +290,9 @@ async def add_to_pack(
                 pkang=pkang,
             )
     if is_video:
+        await conv.send_file("animate.webm")
         os.remove("animate.webm")
-        rsp = x
+        rsp = await conv.get_response()
     elif is_anim:
         await conv.send_file("AnimatedSticker.tgs")
         os.remove("AnimatedSticker.tgs")
@@ -314,7 +306,7 @@ async def add_to_pack(
             f"Failed to add sticker, use @Stickers bot to add the sticker manually.\n**error :**{rsp.message}"
         )
         if not pkang:
-            return None, None
+            return None, None, None
         return None, None
     await conv.send_message(emoji)
     await args.client.send_read_acknowledge(conv.chat_id)
@@ -323,7 +315,7 @@ async def add_to_pack(
     await conv.get_response()
     await args.client.send_read_acknowledge(conv.chat_id)
     if not pkang:
-        return packname, emoji
+        return None, packname, emoji
     return pack, packname
 
 
@@ -469,7 +461,7 @@ async def kang(args):  # sourcery no-metrics  # sourcery skip: low-code-quality
             not in htmlstr
         ):
             async with args.client.conversation("@Stickers") as conv:
-                packname, emoji = await add_to_pack(
+                otherpack, packname, emoji = await add_to_pack(
                     catevent,
                     conv,
                     args,
@@ -483,15 +475,6 @@ async def kang(args):  # sourcery no-metrics  # sourcery skip: low-code-quality
                     emoji,
                     cmd,
                 )
-            if packname is None:
-                return
-            await edit_delete(
-                catevent,
-                f"**Sticker Ripped [Successfully](t.me/addstickers/{packname})!**\
-                \n**Emoji:** {emoji}",
-                parse_mode="md",
-                time=10,
-            )
         else:
             await catevent.edit("`Brewing a new Pack...`")
             async with args.client.conversation("@Stickers") as conv:
@@ -508,26 +491,22 @@ async def kang(args):  # sourcery no-metrics  # sourcery skip: low-code-quality
                     is_anim,
                     stfile,
                 )
-            if is_video and os.path.exists(sticker):
-                os.remove(sticker)
-            if otherpack is None:
-                return
-            if otherpack:
-                await edit_delete(
-                    catevent,
-                    f"`Sticker kanged to a Different Pack !\
-                    \nAnd Newly created pack is` [here](t.me/addstickers/{packname}) `and emoji for the kanged sticker is {emoji}`",
-                    parse_mode="md",
-                    time=10,
-                )
-            else:
-                await edit_delete(
-                    catevent,
-                    f"Sticker Kanged **[Successfully](t.me/addstickers/{packname})!**\
-                    \n**Emoji:** {emoji}",
-                    parse_mode="md",
-                    time=10,
-                )
+        if is_video and os.path.exists(sticker):
+            os.remove(sticker)
+        if packname is None:
+            return
+        if otherpack:
+            await edit_delete(
+                catevent,
+                f"`Sticker kanged to a Different Pack !\
+                \nAnd Newly created pack is` [here](t.me/addstickers/{packname}) `and emoji for the kanged sticker is {emoji}`",
+            )
+        else:
+            await edit_delete(
+                catevent,
+                f"**Sticker Ripped [Successfully](t.me/addstickers/{packname})!**\
+                \n**Emoji :** {emoji}`",
+            )
 
 
 @catub.cat_cmd(
