@@ -1,6 +1,6 @@
 from telethon.tl import functions
- 
- 
+
+
 async def create_supergroup(group_name, client, botusername, descript):
     try:
         result = await client(

@@ -4,11 +4,11 @@ import sys
 import urllib.request
 from datetime import timedelta
 from pathlib import Path
- 
+
 from telethon import Button, functions, types, utils
- 
+
 from userbot import BOTLOG, BOTLOG_CHATID, PM_LOGGER_GROUP_ID
- 
+
 from ..Config import Config
 from ..core.logger import logging
 from ..core.session import catub
@@ -21,17 +21,17 @@ from ..sql_helper.global_collection import (
 from ..sql_helper.globals import addgvar, gvarstatus
 from .pluginmanager import load_module
 from .tools import create_supergroup
- 
+
 ENV = bool(os.environ.get("ENV", False))
 LOGS = logging.getLogger("CatUBStartUP")
 cmdhr = Config.COMMAND_HAND_LER
- 
+
 if ENV:
     VPS_NOLOAD = ["vps"]
 elif os.path.exists("config.py"):
     VPS_NOLOAD = ["heroku"]
- 
- 
+
+
 async def setup_bot():
     """
     To set up bot for userbot
@@ -59,8 +59,8 @@ async def setup_bot():
     except Exception as e:
         LOGS.error(f"STRING_SESSION - {e}")
         sys.exit()
- 
- 
+
+
 async def startupmessage():
     """
     Start up message in telegram logger group
@@ -69,7 +69,8 @@ async def startupmessage():
         if BOTLOG:
             Config.CATUBLOGO = await catub.tgbot.send_file(
                 BOTLOG_CHATID,
-                gvarstatus("INLINE_PIC") or "https://graph.org/file/4e3ba8e8f7e535d5a2abe.jpg",
+                gvarstatus("INLINE_PIC")
+                or "https://graph.org/file/4e3ba8e8f7e535d5a2abe.jpg",
                 caption="**Your CatUserbot has been started successfully.**",
                 buttons=[(Button.url("Support", "https://t.me/catuserbot"),)],
             )
@@ -100,8 +101,8 @@ async def startupmessage():
     except Exception as e:
         LOGS.error(e)
         return None
- 
- 
+
+
 async def add_bot_to_logger_group(chat_id):
     """
     To add bot to logger groups
@@ -125,8 +126,8 @@ async def add_bot_to_logger_group(chat_id):
             )
         except Exception as e:
             LOGS.error(str(e))
- 
- 
+
+
 async def load_plugins(folder, extfolder=None):
     """
     To load plugins from the mentioned folder
@@ -185,8 +186,8 @@ async def load_plugins(folder, extfolder=None):
             BOTLOG_CHATID,
             f'Your external repo plugins have imported \n**No of imported plugins :** `{success}`\n**Failed plugins to import :** `{", ".join(failure)}`',
         )
- 
- 
+
+
 async def verifyLoggerGroup():
     """
     Will verify the both loggers group
@@ -253,8 +254,8 @@ async def verifyLoggerGroup():
         args = [executable, "-m", "userbot"]
         os.execle(executable, *args, os.environ)
         sys.exit(0)
- 
- 
+
+
 async def install_externalrepo(repo, branch, cfolder):
     CATREPO = repo
     rpath = os.path.join(cfolder, "requirements.txt")

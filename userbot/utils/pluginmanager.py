@@ -2,9 +2,9 @@ import contextlib
 import importlib
 import sys
 from pathlib import Path
- 
+
 from userbot import CMD_HELP, LOAD_PLUG
- 
+
 from ..Config import Config
 from ..core import LOADED_CMDS, PLG_INFO
 from ..core.logger import logging
@@ -12,10 +12,10 @@ from ..core.managers import edit_delete, edit_or_reply
 from ..core.session import catub
 from ..helpers.utils import _catutils, _format, install_pip, reply_id
 from .decorators import admin_cmd, sudo_cmd
- 
+
 LOGS = logging.getLogger("CatUserbot")
- 
- 
+
+
 def load_module(shortname, plugin_path=None):
     if shortname.startswith("__"):
         pass
@@ -57,8 +57,8 @@ def load_module(shortname, plugin_path=None):
         # for imports
         sys.modules[f"userbot.plugins.{shortname}"] = mod
         LOGS.info(f"Successfully imported {shortname}")
- 
- 
+
+
 def remove_plugin(shortname):
     try:
         cmd = []
@@ -86,8 +86,8 @@ def remove_plugin(shortname):
                 del catub._event_builders[i]
     except BaseException as exc:
         raise ValueError from exc
- 
- 
+
+
 def checkplugins(filename):
     with open(filename, "r") as f:
         filedata = f.read()
