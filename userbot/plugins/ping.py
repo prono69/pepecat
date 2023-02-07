@@ -47,11 +47,9 @@ PING_MENTION = os.environ.get("PING_MENTION") or "ℜ𝔲𝔩𝔢𝔰 𝔅𝔶"
 # lol
 PONG = "ɪ ꜱʟᴀʏ ᴅʀᴀɢᴏɴꜱ ᴀᴛ ɴɪɢʜᴛ ᴡʜɪʟᴇ ʏᴏᴜ ꜱʟᴇᴇᴘ🖤🥀"
 
-# temp_ = "Pong!"
-# temp = "Pong!\n`{ping} ms`"
 
-temp_ = "__**☞ Pong**__"
-temp = "__**☞ Pong**__\n➥ `{ping}` **ms**\n➥ __**Bot of **__{mention}"
+temp_ = "Pong!"
+temp = "Pong!\n`{ping} ms`"
 if Config.BADCAT:
     temp_ = "__**☞ Pong**__"
     temp = "__**☞ Pong**__\n➥ `{ping}` **ms**\n➥ __**Bot of **__{mention}"
@@ -139,9 +137,9 @@ async def _(event):
     reply_to_id = await reply_id(event)
     PING_PICS = (
         gvarstatus("PING_PIC")
-        or "https://telegra.ph/file/1328d62db93ad22b69ba2.jpg, https://telegra.ph/file/b2da6e4c55dd29600e4ed.jpg"
+        or "https://telegra.ph/file/1328d62db93ad22b69ba2.jpg https://telegra.ph/file/b2da6e4c55dd29600e4ed.jpg"
     )
-    PING_PICS = PING_PICS.rsplit(",")
+    PING_PICS = list(PING_PIC.split())
     start = datetime.now()
     cat = await edit_or_reply(event, "<b><i>Ｓｌａｙｉｎｇ　🥀　</b></i>", parse_mode="html")
     end = datetime.now()

@@ -50,6 +50,7 @@ vlist = [
     "INLINE_BOT",
     "LAST_NAME",
     "PING_PIC",
+    "PING_PICS",
     "PING_TEMPLATE",
     "PM_PIC",
     "PM_TEXT",
