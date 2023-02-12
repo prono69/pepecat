@@ -192,7 +192,8 @@ def nsfw(catagory):
         horny += f" `{i.lower()}` |"
     return horny
 
-API = "https://catmemeapi2023.herokuapp.com/gimme"    
+
+API = "https://catmemeapi2023.herokuapp.com/gimme"
 
 """ 
 async def importent(event):

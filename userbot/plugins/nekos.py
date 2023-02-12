@@ -7,9 +7,9 @@
 """
 
 import os
+import random
 
 import nekos
-import random
 import requests
 from PIL import Image
 from simplejson.errors import JSONDecodeError
@@ -278,6 +278,7 @@ async def _(event):
     except:
         pass
     await catevent.delete()
+
 
 # This list is for waifu.im
 ISFW = [
