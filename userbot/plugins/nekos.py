@@ -9,6 +9,7 @@
 import os
 
 import nekos
+import random
 import requests
 from PIL import Image
 from simplejson.errors import JSONDecodeError
@@ -21,7 +22,7 @@ from userbot.helpers.utils import reply_id
 
 plugin_category = "fun"
 
-
+# This list is for waifu.pics
 SFW = [
     "awoo",
     "blush",
@@ -278,7 +279,7 @@ async def _(event):
         pass
     await catevent.delete()
 
-
+# This list is for waifu.im
 ISFW = [
     "maid",
     "marin-kitagawa",
@@ -324,9 +325,9 @@ async def _(event):
     choose = event.pattern_match.group(1)
     url = "https://api.waifu.im"
     if choose == "":
-        url = "{url}/random/"
+        url = "{url}/search/"
     else:
-        url = f"{url}/random/?selected_tags={choose}"
+        url = f"{url}/search/?included_tags={choose}"
     if choose not in waifu_help:
         return await edit_delete(
             event, "**Wrong Category!!**\nDo `.help nm` for Category list (*_*)`"
@@ -341,6 +342,6 @@ async def _(event):
     )
     try:
         await unsavegif(event, nohorny)
-    except:
+    except Exception:
         pass
     await catevent.delete()
