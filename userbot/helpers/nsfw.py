@@ -149,6 +149,7 @@ endpoints = {
             "panties",
             "school",
             "succubus",
+            "uglybastard",
             "lewdneko",
         ],
         "api": "https://cuteasfubuki.cf/api/",
@@ -181,7 +182,6 @@ def nekos(endpoint=None, endpoints=endpoints):
         + endpoints["v3"]["end"]
         + endpoints["v4"]["end"]
         + endpoints["v5"]["end"]
-        + endpoints["v6"]["end"]
     )
 
 

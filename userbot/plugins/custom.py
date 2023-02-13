@@ -46,7 +46,7 @@ vlist = [
     "HELP_TEXT",
     "HELP_PIC",
     "IALIVE_PIC",
-    "INLINE_PIC",
+    "BOTPIC",
     "INLINE_BOT",
     "LAST_NAME",
     "PING_PIC",
