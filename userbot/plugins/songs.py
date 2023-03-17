@@ -301,7 +301,7 @@ async def dzd(event):
     reply_message = await event.get_reply_message()
     pro = link or reply_message.text
     extractor = URLExtract()
-    plink = extractor.find_urls(pro)
+    # plink = extractor.find_urls(pro)
     reply_to_id = await reply_id(event)
     if not link and not reply_message:
         catevent = await edit_delete(
@@ -312,7 +312,7 @@ async def dzd(event):
     chat = "@deezload2bot"
     async with event.client.conversation(chat) as conv:
         try:
-            msg = await conv.send_message(plink)
+            msg = await conv.send_message(pro)
             details = await conv.get_response()
             song = await conv.get_response()
             """ - don't spam notif - """
@@ -329,32 +329,41 @@ async def dzd(event):
             return
 
 
+async def isong(odi, text):
+    if odi.fwd_from:
+        return
+    bot = "DeezerMusicBot"
+    if not text:
+        await edit_delete(odi, "`Give me a song name`")
+    else:
+        try:
+            run = await odi.client.inline_query(bot, text)
+            result = await run[0].click("me")
+        except Exception:
+            result = ""
+    return result
+
 @catub.cat_cmd(
     pattern="isong ?(.*)",
     command=("isong", plugin_category),
     info={
-        "header": "Inline music downloader by @FeelDeD",
-        "usage": ["{tr}isong <song name>", "{tr}isong <reply>"],
+        "header": "Inline song downloader by feelded",
+        "usage": [
+            "{tr}isong <song name>",
+        ],
     },
 )
-async def music(event):
-    "Download song through @Deezermusicbot"
-    if event.fwd_from:
-        return
-    music = event.pattern_match.group(1)
-    if not music:
-        if event.is_reply:
-            music = (await event.get_reply_message()).text
-        else:
-            await edit_delete(event, "`Give a song name u Dumb`")
-            return
-    bot = "@DeezerMusicBot"
-    reply_to_id = await reply_id(event)
-    try:
-        await hide_inlinebot(event.client, bot, music, event.chat_id, reply_to_id)
-    except IndexError:
-        await edit_delete(event, "`Song not Found`")
-    await event.delete()
+async def main(odi):
+    "I Song Downloader"
+    reply_to_id = await reply_id(odi)
+    text = odi.pattern_match.group(1)
+    result = await isong(odi, text)
+    if result == "":
+        return await edit_delete(odi, f"`No result found for {text}`", 6)
+    else:
+        await odi.delete()
+        await odi.client.send_message(odi.chat_id, result, reply_to=reply_to_id)
+        await result.delete()
 
 
 # By @FeelDeD

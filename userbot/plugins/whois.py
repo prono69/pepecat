@@ -48,7 +48,7 @@ async def fetch_info(replied_user, event):
     )
     first_name = first_name.replace("\u2060", "") if first_name else ("None")
     full_name = full_name or first_name
-    username = "@{username}" if username else "None"
+    username = f"@{username}" if username else "None"
     user_bio = "None" if not user_bio else user_bio
     caption = "<b><i>USER INFO from Durov's Database :</i></b>\n\n"
     caption += f"<b>👤 Name:</b> {full_name}\n"
