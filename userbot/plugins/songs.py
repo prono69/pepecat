@@ -300,7 +300,7 @@ async def dzd(event):
     link = event.pattern_match.group(1)
     reply_message = await event.get_reply_message()
     pro = link or reply_message.text
-    extractor = URLExtract()
+    URLExtract()
     # plink = extractor.find_urls(pro)
     reply_to_id = await reply_id(event)
     if not link and not reply_message:
@@ -342,6 +342,7 @@ async def isong(odi, text):
         except Exception:
             result = ""
     return result
+
 
 @catub.cat_cmd(
     pattern="isong ?(.*)",

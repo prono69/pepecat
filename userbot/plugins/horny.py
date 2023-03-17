@@ -5,10 +5,10 @@ This module can search images in danbooru and send in to the chat!
 ──「 **Danbooru Search** 」──
 """
 
+import html
 import os
 import random
 import urllib
-import html
 from urllib.parse import quote as urlencode
 
 import aiohttp
