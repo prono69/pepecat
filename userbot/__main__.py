@@ -29,7 +29,7 @@ LOGS = logging.getLogger("CatUserbot")
 
 LOGS.info(userbot.__copyright__)
 LOGS.info(f"Licensed under the terms of the {userbot.__license__}")
- 
+
 cmdhr = Config.COMMAND_HAND_LER
 
 try:

@@ -11,7 +11,6 @@ from PIL import Image
 from telegraph import Telegraph, exceptions, upload_file
 from telethon.tl import types
 from telethon.tl.functions.users import GetFullUserRequest
-
 from urlextract import URLExtract
 
 from userbot import BOTLOG_CHATID, catub
@@ -338,8 +337,8 @@ async def custom(event):
                     \n**{input_str}** is updated newly in database as below",
         )
         await event.client.send_message(BOTLOG_CHATID, text, silent=True)
- 
- 
+
+
 @catub.cat_cmd(
     pattern="delcustom (pmpermit|pmpic|pmblock|startmsg)$",
     command=("delcustom", plugin_category),

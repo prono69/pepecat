@@ -13,7 +13,6 @@ import html
 
 from telethon.tl.types import User
 from telethon.utils import get_display_name, pack_bot_file_id
-from telethon.utils import pack_bot_file_id
 
 from userbot import catub
 from userbot.core.logger import logging

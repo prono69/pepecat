@@ -56,7 +56,7 @@ async def screenshot(event):
     image, response = await chromeDriver.get_screenshot(text, catevent)
     if not image:
         return await edit_delete(catevent, response)
- 
+
     await catevent.delete()
     with io.BytesIO(image) as out_file:
         out_file.name = f"{text}.PNG"
@@ -69,6 +69,7 @@ async def screenshot(event):
             allow_cache=False,
             silent=True,
         )
+
 
 @catub.cat_cmd(
     pattern="scapture ([\s\S]*)",

@@ -10,6 +10,7 @@
 import contextlib
 import os
 from pathlib import Path
+
 import requests
 
 from ..Config import Config
@@ -237,7 +238,7 @@ async def get_the_addons(event):
         await edit_delete(xx, "**Sᴜᴄᴄᴇssғᴜʟʟʏ Lᴏᴀᴅᴇᴅ** `{}`".format(shortname), 10)
     except Exception:
         await edit_delete(xx, "Error with {shortname}\n`{e}`")
-    
+
 
 @catub.cat_cmd(
     pattern="logs(?:\s|$)([\s\S]*)",
@@ -270,7 +271,7 @@ async def app_log(event):
     flag = [*flag]
     if flag and (flag[0] != "-" or any(i not in ["-", "f", "r", "t"] for i in flag)):
         return await edit_delete(event, "**Invalid flag...**")
- 
+
     with open("catub.log", "r") as file:
         if "f" in flag:
             log = file.read()

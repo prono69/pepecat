@@ -155,8 +155,8 @@ def _parse_eval(value):
             pass
     # is to_dict is also Good option to format?
     return str(value)
-    
-    
+
+
 @catub.cat_cmd(
     pattern="inspect ([\s\S]*)",
     command=("inspect", plugin_category),

@@ -247,7 +247,7 @@ async def article_builder(event, method):
         ]
         try:
             from userbot.plugins.alive import catalive_text
- 
+
             query = catalive_text()
         except Exception:
             return None
