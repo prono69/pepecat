@@ -1,20 +1,28 @@
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~# CatUserBot #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Copyright (C) 2020-2023 by TgCatUB@Github.
+
+# This file is part of: https://github.com/TgCatUB/catuserbot
+# and is released under the "GNU v3.0 License Agreement".
+
+# Please see: https://github.com/TgCatUB/catuserbot/blob/master/LICENSE
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
 from PIL import Image
 from telegraph import Telegraph, exceptions, upload_file
 from telethon.tl import types
 from telethon.tl.functions.users import GetFullUserRequest
+
 from urlextract import URLExtract
-from validators.url import url
 
 from userbot import BOTLOG_CHATID, catub
 from userbot.core.logger import logging
 
-from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 
 plugin_category = "tools"
 LOGS = logging.getLogger(__name__)
-cmdhd = Config.COMMAND_HAND_LER
+
 
 telegraph = Telegraph()
 r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
@@ -298,10 +306,10 @@ async def bad(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         "usage": [
             "{tr}custom <option> reply",
         ],
-        "NOTE": "You can set,fetch or delete these by `{tr}setdv` , `{tr}getdv` & `{tr}deldv` as well.",
+        "NOTE": "You can set,fetch or delete these by `{tr}set var` , `{tr}get var` & `{tr}del var` as well.",
     },
 )
-async def custom_catuserbot(event):
+async def custom(event):
     "To customize your CatUserbot."
     reply = await event.get_reply_message()
     text = None
@@ -311,17 +319,17 @@ async def custom_catuserbot(event):
         return await edit_delete(event, "__Reply to custom text or url__")
     input_str = event.pattern_match.group(1)
     if input_str == "pmpermit":
-        addgvar("pmpermit_txt", text)
+        addgvar("PM_TEXT", text)
     if input_str == "pmblock":
-        addgvar("pmblock", text)
+        addgvar("PM_BLOCK", text)
     if input_str == "startmsg":
         addgvar("START_TEXT", text)
     if input_str == "pmpic":
         urls = extractor.find_urls(reply.text)
         if not urls:
-            return await edit_delete(event, "`The given link is not supported`", 5)
+            return await edit_delete(event, "`the given link is not supported`")
         text = " ".join(urls)
-        addgvar("pmpermit_pic", text)
+        addgvar("PM_PIC", text)
     await edit_or_reply(event, f"__Your custom {input_str} has been updated__")
     if BOTLOG_CHATID:
         await event.client.send_message(
@@ -330,8 +338,8 @@ async def custom_catuserbot(event):
                     \n**{input_str}** is updated newly in database as below",
         )
         await event.client.send_message(BOTLOG_CHATID, text, silent=True)
-
-
+ 
+ 
 @catub.cat_cmd(
     pattern="delcustom (pmpermit|pmpic|pmblock|startmsg)$",
     command=("delcustom", plugin_category),
@@ -349,21 +357,21 @@ async def custom_catuserbot(event):
         "NOTE": "You can set,fetch or delete these by `{tr}setdv` , `{tr}getdv` & `{tr}deldv` as well.",
     },
 )
-async def custom_catuserbot(event):
+async def del_custom(event):
     "To delete costomization of your CatUserbot."
     input_str = event.pattern_match.group(1)
     if input_str == "pmpermit":
-        if gvarstatus("pmpermit_txt") is None:
+        if gvarstatus("PM_TEXT") is None:
             return await edit_delete(event, "__You haven't customzied your pmpermit.__")
-        delgvar("pmpermit_txt")
+        delgvar("PM_TEXT")
     if input_str == "pmblock":
-        if gvarstatus("pmblock") is None:
+        if gvarstatus("PM_BLOCK") is None:
             return await edit_delete(event, "__You haven't customzied your pmblock.__")
-        delgvar("pmblock")
+        delgvar("PM_BLOCK")
     if input_str == "pmpic":
-        if gvarstatus("pmpermit_pic") is None:
+        if gvarstatus("PM_PIC") is None:
             return await edit_delete(event, "__You haven't customzied your pmpic.__")
-        delgvar("pmpermit_pic")
+        delgvar("PM_PIC")
     if input_str == "startmsg":
         if gvarstatus("START_TEXT") is None:
             return await edit_delete(

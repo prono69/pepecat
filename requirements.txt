@@ -1,5 +1,6 @@
 akinator.py
 aiohttp
+apscheduler
 cinemagoer
 cloudscraper
 colour
@@ -31,6 +32,7 @@ markdown
 motor
 nekos.py
 natsort
+openai
 Pillow
 prettytable
 psutil
@@ -55,6 +57,7 @@ requests
 selenium
 setuptools
 ShazamAPI
+somnium
 spamwatch
 speedtest-cli
 sqlalchemy-json
@@ -72,7 +75,7 @@ wordcloud
 wget
 
 git+https://github.com/Jisan09/search-engine-parser
-git+https://github.com/Jisan09/Telethon@beta
+git+https://github.com/Jisan09/Telethon@test
 git+https://github.com/goldsmith/Wikipedia
 git+https://github.com/sandy1709/py-googletrans
 git+https://github.com/alexmercerind/youtube-search-python
