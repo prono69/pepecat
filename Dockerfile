@@ -17,7 +17,9 @@ ENV TZ=Asia/Kolkata
  
 ## Copy files into the Docker image
 COPY . .
- 
+
+RUN pip3 install -U -r requirements.txt
+
 ENV PATH="/home/userbot/bin:$PATH"
  
 CMD ["python3","-m","userbot"]
