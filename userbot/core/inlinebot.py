@@ -134,6 +134,7 @@ async def help_article(event):
         event,
         title="Help Menu",
         description="Help menu for CatUserbot.",
+        media = gvarstatus("HELP_PIC"),
         thumbnail=get_thumb("help.png"),
         text=help_info[0],
         buttons=help_info[1],
