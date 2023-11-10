@@ -52,7 +52,7 @@ async def amireallyalive(event):
     ANIME = None
     cat_caption = gvarstatus("ALIVE_TEMPLATE") or temp
     if "ANIME" in cat_caption:
-        data = requests.get("https://animechan.vercel.app/api/random").json()
+        data = requests.get("https://animechan.xyz/api/random").json()
         ANIME = f"**“{data['quote']}” - {data['character']} ({data['anime']})**"
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
@@ -62,7 +62,7 @@ async def amireallyalive(event):
     _, check_sgnirts = check_data_base_heal_th()
     EMOJI = gvarstatus("ALIVE_EMOJI") or "〣 "
     # ================================================
-    api_url = f"https://animechan.vercel.app/api/random"
+    api_url = f"https://animechan.xyz/api/random"
     try:
         response = requests.get(api_url).json()
     except Exception:
