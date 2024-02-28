@@ -150,7 +150,9 @@ async def _(event):
     )
     PING_PICS = list(PING_PIC.split())
     start = datetime.now()
-    cat = await edit_or_reply(event, "<b><i>Ｓｌａｙｉｎｇ　🥀　</b></i>", parse_mode="html")
+    cat = await edit_or_reply(
+        event, "<b><i>Ｓｌａｙｉｎｇ　🥀　</b></i>", parse_mode="html"
+    )
     end = datetime.now()
     await cat.delete()
     ms = str((end - start).microseconds / 1000)

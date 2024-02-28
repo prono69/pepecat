@@ -1,4 +1,5 @@
 """LETS DIE TOGETHER SHALL WE?"""
+
 import asyncio
 import os
 from datetime import datetime
