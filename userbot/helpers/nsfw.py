@@ -136,7 +136,7 @@ endpoints = {
             "yuri",
             "zettaiRyouiki",
         ],
-        "api": "https://hmtai.hatsunia.cfd/nsfw/",
+        "api": "https://hmtai.hatsunia.cfd/v2/",
         "checker": "url",
     },
     "v4": {
@@ -152,7 +152,7 @@ endpoints = {
             "uglybastard",
             "lewdneko",
         ],
-        "api": "https://cuteasfubuki.cf/api/",
+        "api": "https://akaneko.cuteasfubuki.xyz/api/",
         "checker": "url",
     },
     "v5": {
@@ -163,6 +163,11 @@ endpoints = {
     "v6": {
         "end": ["furry", "ff", "futa", "nekoirl", "trap", "catboy"],
         "api": "https://api.xsky.dev/",
+        "checker": "url",
+    },
+    "v7": {
+        "end": ["jav", "rb"],
+        "api": "https://scathach.redsplit.org/v3/nsfw/",
         "checker": "url",
     },
 }
@@ -182,6 +187,7 @@ def nekos(endpoint=None, endpoints=endpoints):
         + endpoints["v3"]["end"]
         + endpoints["v4"]["end"]
         + endpoints["v5"]["end"]
+        + endpoints["v7"]["end"]
     )
 
 

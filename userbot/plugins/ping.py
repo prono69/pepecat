@@ -148,7 +148,7 @@ async def _(event):
         gvarstatus("PING_PIC")
         or "https://telegra.ph/file/1328d62db93ad22b69ba2.jpg https://telegra.ph/file/b2da6e4c55dd29600e4ed.jpg"
     )
-    PING_PICS = list(PING_PIC.split())
+    PING_PICS = list(PING_PICS.split())
     start = datetime.now()
     cat = await edit_or_reply(
         event, "<b><i>Ｓｌａｙｉｎｇ　🥀　</b></i>", parse_mode="html"

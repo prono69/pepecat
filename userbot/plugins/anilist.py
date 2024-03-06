@@ -73,7 +73,7 @@ plugin_category = "extra"
 )
 async def anime_quote(event):
     "Get random anime quotes"
-    data = requests.get("https://animechan.vercel.app/api/random").json()
+    data = requests.get("https://animechan.xyz/api/random").json()
     anime = data["anime"]
     character = data["character"]
     quote = data["quote"]
