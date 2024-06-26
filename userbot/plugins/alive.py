@@ -67,7 +67,12 @@ async def amireallyalive(event):
     _, check_sgnirts = check_data_base_heal_th()
     EMOJI = gvarstatus("ALIVE_EMOJI") or "〣 "
     # ================================================
-    api_url = requests.get("https://waifu.it/api/v4/quote", headers={"Authorization": "NDE0OTk4MTA0MzQyMDAzNzIz.MTcxODQyNDM5NA--.ab7207fceb",},)
+    api_url = requests.get(
+        "https://waifu.it/api/v4/quote",
+        headers={
+            "Authorization": "NDE0OTk4MTA0MzQyMDAzNzIz.MTcxODQyNDM5NA--.ab7207fceb",
+        },
+    )
     try:
         response = requests.get(api_url).json()
     except Exception:

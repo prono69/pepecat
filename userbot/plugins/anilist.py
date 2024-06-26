@@ -73,7 +73,12 @@ plugin_category = "extra"
 )
 async def anime_quote(event):
     "Get random anime quotes"
-    data = requests.get("https://waifu.it/api/v4/quote", headers={"Authorization": "NDE0OTk4MTA0MzQyMDAzNzIz.MTcxODQyNDM5NA--.ab7207fceb",},).json()
+    data = requests.get(
+        "https://waifu.it/api/v4/quote",
+        headers={
+            "Authorization": "NDE0OTk4MTA0MzQyMDAzNzIz.MTcxODQyNDM5NA--.ab7207fceb",
+        },
+    ).json()
     anime = data["anime"]
     character = data["author"]
     quote = data["quote"]
