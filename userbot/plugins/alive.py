@@ -52,7 +52,12 @@ async def amireallyalive(event):
     ANIME = None
     cat_caption = gvarstatus("ALIVE_TEMPLATE") or temp
     if "ANIME" in cat_caption:
-        data = requests.get("https://waifu.it/api/v4/quote", headers={"Authorization": "NDE0OTk4MTA0MzQyMDAzNzIz.MTcxODQyNDM5NA--.ab7207fceb",}).json()
+        data = requests.get(
+            "https://waifu.it/api/v4/quote",
+            headers={
+                "Authorization": "NDE0OTk4MTA0MzQyMDAzNzIz.MTcxODQyNDM5NA--.ab7207fceb",
+            },
+        ).json()
         ANIME = f"**“{data['quote']}” - {data['author']} ({data['anime']})**"
     uptime = await get_readable_time((time.time() - StartTime))
     start = datetime.now()
