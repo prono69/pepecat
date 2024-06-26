@@ -72,9 +72,9 @@ async def amireallyalive(event):
         headers={
             "Authorization": "NDE0OTk4MTA0MzQyMDAzNzIz.MTcxODQyNDM5NA--.ab7207fceb",
         },
-    )
+    ).json()
     try:
-        response = requests.get(api_url).json()
+        response = api_url
     except Exception:
         response = None
     quote = response["quote"]
