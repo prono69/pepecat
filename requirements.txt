@@ -33,6 +33,7 @@ motor
 nekos.py
 natsort
 openai
+opencv-python
 Pillow
 prettytable
 psutil

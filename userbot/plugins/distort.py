@@ -9,6 +9,7 @@ from userbot import catub
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import reply_id
+from ..helpers import media_type
 
 plugin_category = "extra"
 
