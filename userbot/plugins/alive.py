@@ -79,7 +79,7 @@ async def amireallyalive(event):
         response = None
     quote = response["quote"]
     while len(quote) > 150 and (quote not in sucks):
-        res = requests.get(api_url).json()
+        res = api_url
         quote = res["quote"]
     ANIME_QUOTE = f"__{quote}__"
     # ================================================
