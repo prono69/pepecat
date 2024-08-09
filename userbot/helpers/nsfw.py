@@ -170,6 +170,11 @@ endpoints = {
         "api": "https://scathach.redsplit.org/v3/nsfw/",
         "checker": "url",
     },
+    "v8": {
+        "end": ["fingering", "lesbian", "pussy", "fuck"],
+        "api": "https://api.maher-zubair.tech/nsfw/",
+        "checker": "url",
+    },
 }
 
 
@@ -188,6 +193,7 @@ def nekos(endpoint=None, endpoints=endpoints):
         + endpoints["v4"]["end"]
         + endpoints["v5"]["end"]
         + endpoints["v7"]["end"]
+        + endpoints["v8"]["end"]
     )
 
 
