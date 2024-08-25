@@ -100,11 +100,7 @@ async def scapture(event):
         caturl = url(inputstr)
     if not caturl:
         return await catevent.edit("`The given input is not supported url`")
-    response_api = requests.get(
-        sample_url.format(
-            Config.SCREEN_SHOT_LAYER_ACCESS_KEY, inputstr, "1", "2560x1440", "PNG", "1"
-        )
-    )
+    response_api = requests.get(sample_url.format(Config.SCREEN_SHOT_LAYER_ACCESS_KEY, inputstr, "1", "2560x1440", "PNG", "1"))
     # https://stackoverflow.com/a/23718458/4723940
     contentType = response_api.headers["content-type"]
     end = datetime.now()

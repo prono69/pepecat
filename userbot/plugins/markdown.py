@@ -19,17 +19,7 @@ from telethon import events
 from telethon.extensions.markdown import DEFAULT_URL_RE
 from telethon.tl import types
 from telethon.tl.functions.messages import EditMessageRequest
-from telethon.tl.types import (
-    MessageEntityBlockquote,
-    MessageEntityBold,
-    MessageEntityCode,
-    MessageEntityItalic,
-    MessageEntityPre,
-    MessageEntitySpoiler,
-    MessageEntityStrike,
-    MessageEntityTextUrl,
-    MessageEntityUnderline,
-)
+from telethon.tl.types import MessageEntityBlockquote, MessageEntityBold, MessageEntityCode, MessageEntityItalic, MessageEntityPre, MessageEntitySpoiler, MessageEntityStrike, MessageEntityTextUrl, MessageEntityUnderline
 from telethon.utils import add_surrogate, del_surrogate
 
 from userbot import catub
@@ -44,9 +34,7 @@ nameexp = re.compile(r"\[([\w\S]+)\]\(tg://user\?id=(\d+)\)\[(.+?)\]")
 
 
 def parse_url_match(m):
-    entity = MessageEntityTextUrl(
-        offset=m.start(), length=len(m.group(1)), url=del_surrogate(m.group(2))
-    )
+    entity = MessageEntityTextUrl(offset=m.start(), length=len(m.group(1)), url=del_surrogate(m.group(2)))
     return m.group(1), entity
 
 
@@ -84,9 +72,7 @@ def parse_b_meme(m):
 
 def parse_subreddit(m):
     text = f"/{m.group(3)}"
-    entity = MessageEntityTextUrl(
-        offset=m.start(2), length=len(text), url=f"https://reddit.com{text}"
-    )
+    entity = MessageEntityTextUrl(offset=m.start(2), length=len(text), url=f"https://reddit.com{text}")
     return m.group(1) + text, entity
 
 
@@ -176,9 +162,7 @@ async def reparse(event):
     old_entities = event.message.entities or []
     parser = partial(parse, old_entities=old_entities)
     if event.raw_text:
-        message, msg_entities = await event.client._parse_message_text(
-            event.raw_text, parser
-        )
+        message, msg_entities = await event.client._parse_message_text(event.raw_text, parser)
         if len(old_entities) >= len(msg_entities) and event.raw_text == message:
             return
         await event.client(

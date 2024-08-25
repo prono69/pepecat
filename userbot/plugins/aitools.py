@@ -54,9 +54,7 @@ async def gen_img(odi):
         if query.isnumeric():
             if int(query) in rstyles:
                 addgvar("DREAM_STYLE", int(query))
-                return await edit_delete(
-                    catevent, f"`Style changed to {rstyles[int(query)]}.`"
-                )
+                return await edit_delete(catevent, f"`Style changed to {rstyles[int(query)]}.`")
 
             return await edit_delete(
                 catevent,

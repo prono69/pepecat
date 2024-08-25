@@ -25,7 +25,7 @@ A simple Telegram userbot based on Telethon .
 ### Self host
 
 - [**Check Docs**](https://tgcatub.gitbook.io/catuserbot/installation/hosting)
-  
+
 ## Support
 
    <a href="https://t.me/catuserbot17"><img src="https://img.shields.io/badge/Channel%20Support%3F-yes-green?&style=flat-square?&logo=telegram" width=220px></a></p>
@@ -42,17 +42,17 @@ A simple Telegram userbot based on Telethon .
 
 ```
               YOU ARE FOREWARNED
-Your Telegram account may get banned.   
-Catuserbot or we are not responsible for your account, 
-This bot is intended for the purpose of having fun with some fun commands 
+Your Telegram account may get banned.
+Catuserbot or we are not responsible for your account,
+This bot is intended for the purpose of having fun with some fun commands
 and group management with some helpfull commands.
 
-If  you ended up spamming groups, getting reported left and right, 
-and you ended up in being fight with Telegram 
+If  you ended up spamming groups, getting reported left and right,
+and you ended up in being fight with Telegram
 and at the end Telegram Team deleted your account. DON'T BLAME US.
 
-No personal support will be provided / We won't spoon feed you. 
-If you need help ask in our support group 
+No personal support will be provided / We won't spoon feed you.
+If you need help ask in our support group
 and we or our friends will try to help you.
 
 Thanks for using our bot 😺

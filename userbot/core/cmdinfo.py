@@ -44,7 +44,7 @@ def get_data(about, ktype):
 
 
 def _format_about(
-    about: Union[str, Dict[str, Union[str, List[str], Dict[str, str]]]]
+    about: Union[str, Dict[str, Union[str, List[str], Dict[str, str]]]],
 ) -> str:  # sourcery no-metrics  # sourcery skip: low-code-quality
     if not isinstance(about, dict):
         return about
@@ -53,9 +53,7 @@ def _format_about(
         tmp_chelp += f"__{about['header'].title()}__"
         del about["header"]
     if "description" in about and isinstance(about["description"], str):
-        tmp_chelp += (
-            "\n\n✘  **Description :**\n" f"__{get_data(about , 'description')}__"
-        )
+        tmp_chelp += "\n\n✘  **Description :**\n" f"__{get_data(about , 'description')}__"
         del about["description"]
     if "flags" in about:
         tmp_chelp += "\n\n✘  **Available Flags :**"
@@ -144,9 +142,7 @@ async def cmdinfo(input_str, event, plugin=False):
                 f"**There is no plugin or command as **`{input_str}`** in your bot.**",
             )
             return None
-        await edit_delete(
-            event, f"**There is no command as **`{input_str}`** in your bot.**"
-        )
+        await edit_delete(event, f"**There is no command as **`{input_str}`** in your bot.**")
         return None
     except Exception as e:
         await edit_delete(event, f"**Error**\n`{e}`")

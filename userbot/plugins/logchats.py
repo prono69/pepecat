@@ -49,17 +49,9 @@ async def monito_p_m_s(event):  # sourcery no-metrics
                 LOG_CHATS_.RECENT_USER = chat.id
                 if LOG_CHATS_.NEWPM:
                     if LOG_CHATS_.COUNT > 1:
-                        await LOG_CHATS_.NEWPM.edit(
-                            LOG_CHATS_.NEWPM.text.replace(
-                                "new message", f"{LOG_CHATS_.COUNT} messages"
-                            )
-                        )
+                        await LOG_CHATS_.NEWPM.edit(LOG_CHATS_.NEWPM.text.replace("new message", f"{LOG_CHATS_.COUNT} messages"))
                     else:
-                        await LOG_CHATS_.NEWPM.edit(
-                            LOG_CHATS_.NEWPM.text.replace(
-                                "new message", f"{LOG_CHATS_.COUNT} message"
-                            )
-                        )
+                        await LOG_CHATS_.NEWPM.edit(LOG_CHATS_.NEWPM.text.replace("new message", f"{LOG_CHATS_.COUNT} message"))
                     LOG_CHATS_.COUNT = 0
                 LOG_CHATS_.NEWPM = await event.client.send_message(
                     Config.PM_LOGGER_GROUP_ID,
@@ -67,9 +59,7 @@ async def monito_p_m_s(event):  # sourcery no-metrics
                 )
             try:
                 if event.message:
-                    await event.client.forward_messages(
-                        Config.PM_LOGGER_GROUP_ID, event.message, silent=True
-                    )
+                    await event.client.forward_messages(Config.PM_LOGGER_GROUP_ID, event.message, silent=True)
                 LOG_CHATS_.COUNT += 1
             except Exception as e:
                 LOGS.warn(str(e))
@@ -82,12 +72,7 @@ async def log_tagged_messages(event):
 
     if gvarstatus("GRPLOG") and gvarstatus("GRPLOG") == "false":
         return
-    if (
-        (no_log_pms_sql.is_approved(hmm.id))
-        or (Config.PM_LOGGER_GROUP_ID == -100)
-        or ("on" in AFK_.USERAFK_ON)
-        or (await event.get_sender() and (await event.get_sender()).bot)
-    ):
+    if (no_log_pms_sql.is_approved(hmm.id)) or (Config.PM_LOGGER_GROUP_ID == -100) or ("on" in AFK_.USERAFK_ON) or (await event.get_sender() and (await event.get_sender()).bot):
         return
     full = None
     try:
@@ -97,9 +82,7 @@ async def log_tagged_messages(event):
     messaget = await media_type(event)
     resalt = f"#TAGS \n<b>Group : </b><code>{hmm.title}</code>"
     if full is not None:
-        resalt += (
-            f"\n<b>From : </b> 👤{_format.htmlmentionuser(full.first_name , full.id)}"
-        )
+        resalt += f"\n<b>From : </b> 👤{_format.htmlmentionuser(full.first_name , full.id)}"
     if messaget is not None:
         resalt += f"\n<b>Message type : </b><code>{messaget}</code>"
     else:
@@ -156,15 +139,13 @@ async def log(log_text):
         ],
     },
 )
-async def set_no_log_p_m(event):
+async def set_log_p_m(event):
     "To turn on logging of messages from that chat."
     if Config.PM_LOGGER_GROUP_ID != -100:
         chat = await event.get_chat()
         if no_log_pms_sql.is_approved(chat.id):
             no_log_pms_sql.disapprove(chat.id)
-            await edit_delete(
-                event, "`logging of messages from this group has been started`", 5
-            )
+            await edit_delete(event, "`logging of messages from this group has been started`", 5)
 
 
 @catub.cat_cmd(
@@ -184,9 +165,7 @@ async def set_no_log_p_m(event):
         chat = await event.get_chat()
         if not no_log_pms_sql.is_approved(chat.id):
             no_log_pms_sql.approve(chat.id)
-            await edit_delete(
-                event, "`Logging of messages from this chat has been stopped`", 5
-            )
+            await edit_delete(event, "`Logging of messages from this chat has been stopped`", 5)
 
 
 @catub.cat_cmd(

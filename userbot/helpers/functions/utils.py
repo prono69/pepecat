@@ -25,9 +25,7 @@ async def get_message_link(channelid, msgid):
 
 def utc_to_local(utc_datetime):
     now_timestamp = time.time()
-    offset = datetime.fromtimestamp(now_timestamp) - datetime.utcfromtimestamp(
-        now_timestamp
-    )
+    offset = datetime.fromtimestamp(now_timestamp) - datetime.utcfromtimestamp(now_timestamp)
     return utc_datetime + offset
 
 
@@ -60,11 +58,7 @@ async def admin_groups(catub):
     catgroups = []
     async for dialog in catub.iter_dialogs():
         entity = dialog.entity
-        if (
-            isinstance(entity, Channel)
-            and entity.megagroup
-            and (entity.creator or entity.admin_rights)
-        ):
+        if isinstance(entity, Channel) and entity.megagroup and (entity.creator or entity.admin_rights):
             catgroups.append(entity.id)
     return catgroups
 
@@ -91,14 +85,10 @@ async def extract_time(cat, time_val):
             bantime = int(time.time() + int(time_num) * 7 * 24 * 60 * 60)
         else:
             # how even...?
-            await cat.edit(
-                f"__Invalid time type specified. Expected s,  m , h , d or w but got:__ {time_val[-1]}"
-            )
+            await cat.edit(f"__Invalid time type specified. Expected s,  m , h , d or w but got:__ {time_val[-1]}")
             return None
         return bantime
-    await cat.edit(
-        f"__Invalid time type specified. Expected s,  m , h , d or w but got: __{time_val[-1]}"
-    )
+    await cat.edit(f"__Invalid time type specified. Expected s,  m , h , d or w but got: __{time_val[-1]}")
     return None
 
 

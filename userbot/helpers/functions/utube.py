@@ -27,26 +27,20 @@ from .functions import sublists
 
 LOGS = logging.getLogger(__name__)
 BASE_YT_URL = "https://www.youtube.com/watch?v="
-YOUTUBE_REGEX = re.compile(
-    r"(?:youtube\.com|youtu\.be)/(?:[\w-]+\?v=|embed/|v/|shorts/)?([\w-]{11})"
-)
+YOUTUBE_REGEX = re.compile(r"(?:youtube\.com|youtu\.be)/(?:[\w-]+\?v=|embed/|v/|shorts/)?([\w-]{11})")
 PATH = "./userbot/cache/ytsearch.json"
 
 song_dl = "yt-dlp --force-ipv4 --write-thumbnail --add-metadata --embed-thumbnail -o './temp/%(title)s.%(ext)s' --extract-audio --audio-format mp3 --audio-quality {QUALITY} {video_link}"
 
 thumb_dl = "yt-dlp --force-ipv4 -o './temp/%(title)s.%(ext)s' --write-thumbnail --skip-download {video_link}"
 video_dl = "yt-dlp --force-ipv4 --write-thumbnail --add-metadata --embed-thumbnail -o './temp/%(title)s.%(ext)s' -f 'best[height<=480]' {video_link}"
-name_dl = (
-    "yt-dlp --force-ipv4 --get-filename -o './temp/%(title)s.%(ext)s' {video_link}"
-)
+name_dl = "yt-dlp --force-ipv4 --get-filename -o './temp/%(title)s.%(ext)s' {video_link}"
 
 
 async def yt_search(cat):
     try:
         cat = urllib.parse.quote(cat)
-        html = urllib.request.urlopen(
-            f"https://www.youtube.com/results?search_query={cat}"
-        )
+        html = urllib.request.urlopen(f"https://www.youtube.com/results?search_query={cat}")
 
         user_data = re.findall(r"watch\?v=(\S{11})", html.read().decode())
         video_link = []
@@ -146,11 +140,7 @@ def get_choice_by_id(choice_id, media_type: str):
         disp_str = "best(video+audio)[webm/mp4]"
     else:
         disp_str = str(choice_id)
-        choice_str = (
-            f"{disp_str}+(258/256/140/bestaudio[ext=m4a])/best"
-            if media_type == "v"
-            else disp_str
-        )
+        choice_str = f"{disp_str}+(258/256/140/bestaudio[ext=m4a])/best" if media_type == "v" else disp_str
 
     return choice_str, disp_str
 
@@ -183,9 +173,7 @@ async def result_formatter(results: list):
     return output
 
 
-def yt_search_btns(
-    data_key: str, page: int, vid: str, total: int, del_back: bool = False
-):
+def yt_search_btns(data_key: str, page: int, vid: str, total: int, del_back: bool = False):
     buttons = [
         [
             Button.inline(
@@ -217,9 +205,7 @@ def yt_search_btns(
 def download_button(vid: str, body: bool = False):  # sourcery no-metrics
     # sourcery skip: low-code-quality
     try:
-        vid_data = yt_dlp.YoutubeDL({"no-playlist": True}).extract_info(
-            BASE_YT_URL + vid, download=False
-        )
+        vid_data = yt_dlp.YoutubeDL({"no-playlist": True}).extract_info(BASE_YT_URL + vid, download=False)
     except ExtractorError:
         vid_data = {"formats": []}
     buttons = [
@@ -248,9 +234,7 @@ def download_button(vid: str, body: bool = False):  # sourcery no-metrics
             if video.get("acodec") != "none":
                 bitrrate = int(video.get("abr", 0))
                 if bitrrate != 0:
-                    audio_dict[bitrrate] = (
-                        f"🎵 {bitrrate}Kbps ({humanbytes(fr_size) or 'N/A'})"
-                    )
+                    audio_dict[bitrrate] = f"🎵 {bitrrate}Kbps ({humanbytes(fr_size) or 'N/A'})"
 
     video_btns = []
     for frmt in qual_list:
@@ -265,14 +249,9 @@ def download_button(vid: str, body: bool = False):  # sourcery no-metrics
                 )
             )
     buttons += sublists(video_btns, width=2)
-    buttons += [
-        [Button.inline("⭐️ BEST - 🎵 320Kbps - MP3", data=f"ytdl_download_{vid}_mp3_a")]
-    ]
+    buttons += [[Button.inline("⭐️ BEST - 🎵 320Kbps - MP3", data=f"ytdl_download_{vid}_mp3_a")]]
     buttons += sublists(
-        [
-            Button.inline(audio_dict.get(key_), data=f"ytdl_download_{vid}_{key_}_a")
-            for key_ in sorted(audio_dict.keys())
-        ],
+        [Button.inline(audio_dict.get(key_), data=f"ytdl_download_{vid}_{key_}_a") for key_ in sorted(audio_dict.keys())],
         width=2,
     )
     if body:
@@ -287,9 +266,7 @@ def _tubeDl(url: str, starttime, uid: str):
         "addmetadata": True,
         "geo_bypass": True,
         "nocheckcertificate": True,
-        "outtmpl": os.path.join(
-            Config.TEMP_DIR, str(starttime), "%(title)s-%(format)s.%(ext)s"
-        ),
+        "outtmpl": os.path.join(Config.TEMP_DIR, str(starttime), "%(title)s-%(format)s.%(ext)s"),
         #         "logger": LOGS,
         "format": uid,
         "writethumbnail": True,
@@ -307,9 +284,7 @@ def _tubeDl(url: str, starttime, uid: str):
     except DownloadError as e:
         LOGS.error(e)
     except GeoRestrictedError:
-        LOGS.error(
-            "ERROR: The uploader has not made this video available in your country"
-        )
+        LOGS.error("ERROR: The uploader has not made this video available in your country")
     else:
         return x
 

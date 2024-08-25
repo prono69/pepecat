@@ -120,8 +120,7 @@ PROGQUOTES = [
     "Difference between a virus and windows ? Viruses rarely fail.",
     "1f u c4n r34d th1s u r34lly n33d t0 g37 l41d",
     "Hacking is like sex. You get in, you get out, and hope that you didn't leave something that can be traced back to you.",
-    "Mess with the best, die like the rest."
-    "QA Engineer walks into a bar. Orders a beer. Orders 0 beers. Orders 999999999 beers. Orders a lizard. Orders -1 beers. Orders a sfdeljknesv.",
+    "Mess with the best, die like the rest." "QA Engineer walks into a bar. Orders a beer. Orders 0 beers. Orders 999999999 beers. Orders a lizard. Orders -1 beers. Orders a sfdeljknesv.",
     "There are only two hard things in Computer Science: cache invalidation, naming things and off-by-one errors.",
     "In software, we rarely have meaningful requirements. Even if we do, the only measure of success that matters is whether our solution solves the customer’s shifting idea of what their problem is.",
     "If Java had true garbage collection, most programs would delete themselves upon execution.",
@@ -340,8 +339,7 @@ RUNSREACTS = [
     "Here, take this ring and head to Mordor while you're at it.",
     "Legend has it, they're still running...",
     "Unlike Harry Potter, your parents can't protect you from me.",
-    "Fear leads to anger. Anger leads to hate. Hate leads to suffering. If you keep running in fear, you might "
-    "be the next Vader.",
+    "Fear leads to anger. Anger leads to hate. Hate leads to suffering. If you keep running in fear, you might " "be the next Vader.",
     "Keep it up, not sure we want you here anyway.",
     "You're a wiza- Oh. Wait. You're not Harry, keep moving.",
     "NO RUNNING IN THE HALLWAYS!",
@@ -496,8 +494,7 @@ SLAP_TEMPLATES = [
     "{user1} picks up a {item} and {hits} {victim} with it.",
     "{user1} ties {victim} to a chair and {throws} a {item} at them.",
     "{user1} {hits} {victim} {where} with a {item}.",
-    "{user1} ties {victim} to a pole and whips them {where} with a {item}."
-    "{user1} gave a friendly push to help {victim} learn to swim in lava.",
+    "{user1} ties {victim} to a pole and whips them {where} with a {item}." "{user1} gave a friendly push to help {victim} learn to swim in lava.",
     "{user1} sent {victim} to /dev/null.",
     "sent {victim} down the memory hole.",
     "{user1} beheaded {victim}.",

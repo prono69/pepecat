@@ -47,7 +47,7 @@ async def selfdestruct(destroy):
         "examples": "{tr}selfdm 10 hi",
     },
 )
-async def selfdestruct(destroy):
+async def selfdestruct_func(destroy):
     "To self destruct the sent message"
     cat = ("".join(destroy.text.split(maxsplit=1)[1:])).split(" ", 1)
     message = cat[1]

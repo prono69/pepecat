@@ -9,23 +9,10 @@
 
 import contextlib
 
-from telethon.errors import (
-    BadRequestError,
-    ImageProcessFailedError,
-    PhotoCropSizeSmallError,
-)
+from telethon.errors import BadRequestError, ImageProcessFailedError, PhotoCropSizeSmallError
 from telethon.errors.rpcerrorlist import UserAdminInvalidError, UserIdInvalidError
-from telethon.tl.functions.channels import (
-    EditAdminRequest,
-    EditBannedRequest,
-    EditPhotoRequest,
-)
-from telethon.tl.types import (
-    ChatAdminRights,
-    ChatBannedRights,
-    InputChatPhotoEmpty,
-    MessageMediaPhoto,
-)
+from telethon.tl.functions.channels import EditAdminRequest, EditBannedRequest, EditPhotoRequest
+from telethon.tl.types import ChatAdminRights, ChatBannedRights, InputChatPhotoEmpty, MessageMediaPhoto
 from telethon.utils import get_display_name
 
 from userbot import catub
@@ -110,11 +97,7 @@ async def set_group_photo(event):  # sourcery no-metrics
                 return await edit_delete(event, INVALID_MEDIA)
         if photo:
             try:
-                await event.client(
-                    EditPhotoRequest(
-                        event.chat_id, await event.client.upload_file(photo)
-                    )
-                )
+                await event.client(EditPhotoRequest(event.chat_id, await event.client.upload_file(photo)))
                 await edit_delete(event, CHAT_PP_CHANGED)
             except PhotoCropSizeSmallError:
                 return await edit_delete(event, PP_TOO_SMOL)
@@ -133,9 +116,7 @@ async def set_group_photo(event):  # sourcery no-metrics
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            "#GROUPPIC\n"
-            f"Group profile pic {process} successfully "
-            f"CHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
+            "#GROUPPIC\n" f"Group profile pic {process} successfully " f"CHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
         )
 
 
@@ -257,13 +238,9 @@ async def _ban_person(event):
         return await catevent.edit(NO_PERM)
     reply = await event.get_reply_message()
     if reason:
-        await catevent.edit(
-            f"{_format.mentionuser(user.first_name ,user.id)}` is banned !!`\n**Reason : **`{reason}`"
-        )
+        await catevent.edit(f"{_format.mentionuser(user.first_name ,user.id)}` is banned !!`\n**Reason : **`{reason}`")
     else:
-        await catevent.edit(
-            f"{_format.mentionuser(user.first_name ,user.id)} `is banned !!`"
-        )
+        await catevent.edit(f"{_format.mentionuser(user.first_name ,user.id)} `is banned !!`")
     if BOTLOG:
         if reason:
             await event.client.send_message(
@@ -285,9 +262,7 @@ async def _ban_person(event):
                 await reply.forward_to(BOTLOG_CHATID)
                 await reply.delete()
         except BadRequestError:
-            return await catevent.edit(
-                "`I dont have message nuking rights! But still he is banned!`"
-            )
+            return await catevent.edit("`I dont have message nuking rights! But still he is banned!`")
 
 
 @catub.cat_cmd(
@@ -313,15 +288,11 @@ async def nothanos(event):
     catevent = await edit_or_reply(event, "`Unbanning...`")
     try:
         await event.client(EditBannedRequest(event.chat_id, user.id, UNBAN_RIGHTS))
-        await catevent.edit(
-            f"{_format.mentionuser(user.first_name ,user.id)} `is Unbanned Successfully. Granting another chance.`"
-        )
+        await catevent.edit(f"{_format.mentionuser(user.first_name ,user.id)} `is Unbanned Successfully. Granting another chance.`")
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "#UNBAN\n"
-                f"USER: [{user.first_name}](tg://user?id={user.id})\n"
-                f"CHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
+                "#UNBAN\n" f"USER: [{user.first_name}](tg://user?id={user.id})\n" f"CHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
     except UserIdInvalidError:
         await catevent.edit("`Uh oh my unban logic broke!`")
@@ -359,9 +330,7 @@ async def startmute(
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if is_muted(event.chat_id, event.chat_id):
-            return await event.edit(
-                "`This user is already muted in this chat ~~lmfao sed rip~~`"
-            )
+            return await event.edit("`This user is already muted in this chat ~~lmfao sed rip~~`")
         if event.chat_id == catub.uid:
             return await edit_delete(event, "`You cant mute yourself`")
         try:
@@ -373,26 +342,21 @@ async def startmute(
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "#PM_MUTE\n"
-                f"**User :** [{replied_user.first_name}](tg://user?id={event.chat_id})\n",
+                "#PM_MUTE\n" f"**User :** [{replied_user.first_name}](tg://user?id={event.chat_id})\n",
             )
     else:
         chat = await event.get_chat()
         admin = chat.admin_rights
         creator = chat.creator
         if not admin and not creator:
-            return await edit_or_reply(
-                event, "`You can't mute a person without admin rights niqq.` ಥ﹏ಥ  "
-            )
+            return await edit_or_reply(event, "`You can't mute a person without admin rights niqq.` ಥ﹏ಥ  ")
         user, reason = await get_user_from_event(event)
         if not user:
             return
         if user.id == catub.uid:
             return await edit_or_reply(event, "`Sorry, I can't mute myself`")
         if is_muted(user.id, event.chat_id):
-            return await edit_or_reply(
-                event, "`This user is already muted in this chat ~~lmfao sed rip~~`"
-            )
+            return await edit_or_reply(event, "`This user is already muted in this chat ~~lmfao sed rip~~`")
         result = await event.client.get_permissions(event.chat_id, user.id)
         try:
             if result.participant.banned_rights.send_messages:
@@ -414,17 +378,14 @@ async def startmute(
                         "`You can't mute a person if you dont have delete messages permission. ಥ﹏ಥ`",
                     )
             elif "creator" not in vars(chat):
-                return await edit_or_reply(
-                    event, "`You can't mute a person without admin rights niqq.` ಥ﹏ಥ  "
-                )
+                return await edit_or_reply(event, "`You can't mute a person without admin rights niqq.` ಥ﹏ಥ  ")
             mute(user.id, event.chat_id)
         except Exception as e:
             return await edit_or_reply(event, f"**Error : **`{e}`")
         if reason:
             await edit_or_reply(
                 event,
-                f"{_format.mentionuser(user.first_name ,user.id)} `is muted in {get_display_name(await event.get_chat())}`\n"
-                f"`Reason:`{reason}",
+                f"{_format.mentionuser(user.first_name ,user.id)} `is muted in {get_display_name(await event.get_chat())}`\n" f"`Reason:`{reason}",
             )
         else:
             await edit_or_reply(
@@ -434,9 +395,7 @@ async def startmute(
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "#MUTE\n"
-                f"**User :** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**Chat :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
+                "#MUTE\n" f"**User :** [{user.first_name}](tg://user?id={user.id})\n" f"**Chat :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
 
 
@@ -458,22 +417,17 @@ async def endmute(event):
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if not is_muted(event.chat_id, event.chat_id):
-            return await event.edit(
-                "`__This user is not muted in this chat__\n（ ^_^）o自自o（^_^ ）`"
-            )
+            return await event.edit("`__This user is not muted in this chat__\n（ ^_^）o自自o（^_^ ）`")
         try:
             unmute(event.chat_id, event.chat_id)
         except Exception as e:
             await event.edit(f"**Error **\n`{e}`")
         else:
-            await event.edit(
-                "`Successfully unmuted that person\n乁( ◔ ౪◔)「    ┑(￣Д ￣)┍`"
-            )
+            await event.edit("`Successfully unmuted that person\n乁( ◔ ౪◔)「    ┑(￣Д ￣)┍`")
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "#PM_UNMUTE\n"
-                f"**User :** [{replied_user.first_name}](tg://user?id={event.chat_id})\n",
+                "#PM_UNMUTE\n" f"**User :** [{replied_user.first_name}](tg://user?id={event.chat_id})\n",
             )
     else:
         user, _ = await get_user_from_event(event)
@@ -485,9 +439,7 @@ async def endmute(event):
             else:
                 result = await event.client.get_permissions(event.chat_id, user.id)
                 if result.participant.banned_rights.send_messages:
-                    await event.client(
-                        EditBannedRequest(event.chat_id, user.id, UNBAN_RIGHTS)
-                    )
+                    await event.client(EditBannedRequest(event.chat_id, user.id, UNBAN_RIGHTS))
         except AttributeError:
             return await edit_or_reply(
                 event,
@@ -502,9 +454,7 @@ async def endmute(event):
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                "#UNMUTE\n"
-                f"**User :** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**Chat :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
+                "#UNMUTE\n" f"**User :** [{user.first_name}](tg://user?id={user.id})\n" f"**Chat :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             )
 
 
@@ -534,17 +484,13 @@ async def kick(event):
     except Exception as e:
         return await catevent.edit(f"{NO_PERM}\n{e}")
     if reason:
-        await catevent.edit(
-            f"`Kicked` [{user.first_name}](tg://user?id={user.id})`!`\nReason: {reason}"
-        )
+        await catevent.edit(f"`Kicked` [{user.first_name}](tg://user?id={user.id})`!`\nReason: {reason}")
     else:
         await catevent.edit(f"`Kicked` [{user.first_name}](tg://user?id={user.id})`!`")
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            "#KICK\n"
-            f"USER: [{user.first_name}](tg://user?id={user.id})\n"
-            f"CHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)\n",
+            "#KICK\n" f"USER: [{user.first_name}](tg://user?id={user.id})\n" f"CHAT: {get_display_name(await event.get_chat())}(`{event.chat_id}`)\n",
         )
 
 
@@ -620,9 +566,7 @@ async def unpin(event):
         elif options == "all":
             await event.client.unpin_message(event.chat_id)
         else:
-            return await edit_delete(
-                event, "`Reply to a message to unpin it or use .unpin all`", 5
-            )
+            return await edit_delete(event, "`Reply to a message to unpin it or use .unpin all`", 5)
     except BadRequestError:
         return await edit_delete(event, NO_PERM, 5)
     except Exception as e:
@@ -647,9 +591,7 @@ async def unpin(event):
     info={
         "header": "To get recent deleted messages in group",
         "description": "To check recent deleted messages in group, by default will show 5. you can get 1 to 15 messages.",
-        "flags": {
-            "u": "use this flag to upload media to chat else will just show as media."
-        },
+        "flags": {"u": "use this flag to upload media to chat else will just show as media."},
         "usage": [
             "{tr}undlt <count>",
             "{tr}undlt -u <count>",
@@ -673,9 +615,7 @@ async def _iundlt(event):  # sourcery no-metrics
             lim = 1
     else:
         lim = 5
-    adminlog = await event.client.get_admin_log(
-        event.chat_id, limit=lim, edit=False, delete=True
-    )
+    adminlog = await event.client.get_admin_log(event.chat_id, limit=lim, edit=False, delete=True)
     deleted_msg = f"**Recent {lim} Deleted message(s) in this group are :**"
     if not flag:
         for msg in adminlog:
@@ -692,9 +632,7 @@ async def _iundlt(event):  # sourcery no-metrics
             ruser = await event.client.get_entity(msg.old.from_id)
             _media_type = await media_type(msg.old)
             if _media_type is None:
-                await main_msg.reply(
-                    f"{msg.old.message}\n**Sent by** {_format.mentionuser(ruser.first_name ,ruser.id)}"
-                )
+                await main_msg.reply(f"{msg.old.message}\n**Sent by** {_format.mentionuser(ruser.first_name ,ruser.id)}")
             else:
                 await main_msg.reply(
                     f"{msg.old.message}\n**Sent by** {_format.mentionuser(ruser.first_name ,ruser.id)}",

@@ -11,12 +11,7 @@ import pathlib
 import typing
 
 from telethon import events, hints, types
-from telethon.tl.types import (
-    InputPeerChannel,
-    InputPeerChat,
-    InputPeerUser,
-    MessageMediaWebPage,
-)
+from telethon.tl.types import InputPeerChannel, InputPeerChat, InputPeerUser, MessageMediaWebPage
 
 from ..Config import Config
 from ..sql_helper.globals import gvarstatus
@@ -36,9 +31,7 @@ class NewMessage(events.NewMessage):
         if not _event:
             return
 
-        if self.inline is not None and bool(self.inline) != bool(
-            event.message.via_bot_id
-        ):
+        if self.inline is not None and bool(self.inline) != bool(event.message.via_bot_id):
             return
 
         if self.require_admin and not isinstance(event._chat_peer, types.PeerUser):
@@ -55,9 +48,7 @@ class NewMessage(events.NewMessage):
 
             if self.incoming:
                 try:
-                    p = event._client.loop.create_task(
-                        event._client.get_permissions(event.chat_id, event.sender_id)
-                    )
+                    p = event._client.loop.create_task(event._client.get_permissions(event.chat_id, event.sender_id))
                     participant = p.participant
                 except Exception:
                     participant = None
@@ -87,11 +78,7 @@ class MessageEdited(NewMessage):
         if isinstance(update, types.UpdateEditMessage):
             return cls.Event(update.message)
         if isinstance(update, types.UpdateEditChannelMessage):
-            if (
-                update.message.edit_date
-                and update.message.is_channel
-                and not update.message.is_group
-            ):
+            if update.message.edit_date and update.message.is_channel and not update.message.is_group:
                 return
             return cls.Event(update.message)
 
@@ -132,18 +119,9 @@ async def safe_check_text(msg):  # sourcery no-metrics
             or (Config.SPOTIFY_CLIENT_SECRET and Config.SPOTIFY_CLIENT_SECRET in msg)
             or (Config.GITHUB_ACCESS_TOKEN and Config.GITHUB_ACCESS_TOKEN in msg)
             or (Config.DEEP_AI and Config.DEEP_AI in msg)
-            or (
-                Config.SCREEN_SHOT_LAYER_ACCESS_KEY
-                and Config.SCREEN_SHOT_LAYER_ACCESS_KEY in msg
-            )
-            or (
-                Config.IBM_WATSON_CRED_PASSWORD
-                and Config.IBM_WATSON_CRED_PASSWORD in msg
-            )
-            or (
-                Config.TG_2STEP_VERIFICATION_CODE
-                and Config.TG_2STEP_VERIFICATION_CODE in msg
-            )
+            or (Config.SCREEN_SHOT_LAYER_ACCESS_KEY and Config.SCREEN_SHOT_LAYER_ACCESS_KEY in msg)
+            or (Config.IBM_WATSON_CRED_PASSWORD and Config.IBM_WATSON_CRED_PASSWORD in msg)
+            or (Config.TG_2STEP_VERIFICATION_CODE and Config.TG_2STEP_VERIFICATION_CODE in msg)
         )
     )
 

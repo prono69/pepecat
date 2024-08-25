@@ -14,8 +14,8 @@ flag = True
 check = 0
 while flag:
     try:
-        from . import format as _format
-        from . import utils as _catutils
+        from . import format as _format  # noqa F401
+        from . import utils as _catutils  # noqa F401
         from .events import *
         from .format import *
         from .utils import *

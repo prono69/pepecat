@@ -61,15 +61,11 @@ async def ls(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
                     files += f"🎵`{contents}`\n"
                 if str(contents).endswith((".opus")):
                     files += f"🎙`{contents}`\n"
-                elif str(contents).endswith(
-                    (".mkv", ".mp4", ".webm", ".avi", ".mov", ".flv")
-                ):
+                elif str(contents).endswith((".mkv", ".mp4", ".webm", ".avi", ".mov", ".flv")):
                     files += f"🎞`{contents}`\n"
                 elif str(contents).endswith((".zip", ".tar", ".tar.gz", ".rar")):
                     files += f"🗜`{contents}`\n"
-                elif str(contents).endswith(
-                    (".jpg", ".jpeg", ".png", ".gif", ".bmp", ".ico")
-                ):
+                elif str(contents).endswith((".jpg", ".jpeg", ".png", ".gif", ".bmp", ".ico")):
                     files += f"🖼`{contents}`\n"
                 else:
                     files += f"📄`{contents}`\n"
@@ -172,9 +168,7 @@ async def make_dir(event):
             f"Already a directory named {original} exists",
         )
         return
-    mone = await edit_or_reply(
-        event, "creating the directory ...", parse_mode=_format.parse_pre
-    )
+    mone = await edit_or_reply(event, "creating the directory ...", parse_mode=_format.parse_pre)
     await asyncio.sleep(2)
     try:
         await _catutils.runcmd(f"mkdir {original}")
@@ -218,9 +212,7 @@ async def copy(event):
             f"there is no such directory or file with the name `{original}` check again",
         )
         return
-    mone = await edit_or_reply(
-        event, "copying the file ...", parse_mode=_format.parse_pre
-    )
+    mone = await edit_or_reply(event, "copying the file ...", parse_mode=_format.parse_pre)
     await asyncio.sleep(2)
     try:
         await _catutils.runcmd(f"cp -r {original} {location}")
@@ -263,9 +255,7 @@ async def move(event):
             event,
             f"there is no such directory or file with the name `{original}` check again",
         )
-    mone = await edit_or_reply(
-        event, "Moving the file ...", parse_mode=_format.parse_pre
-    )
+    mone = await edit_or_reply(event, "Moving the file ...", parse_mode=_format.parse_pre)
     await asyncio.sleep(2)
     try:
         shutil.move(original, location)

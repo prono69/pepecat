@@ -41,10 +41,7 @@ async def wiki(event):
         result = summary(match, auto_suggest=False)
     except DisambiguationError as error:
         error = str(error).split("\n")
-        result = "".join(
-            f"`{i}`\n" if lineno > 1 else f"**{i}**\n"
-            for lineno, i in enumerate(error, start=1)
-        )
+        result = "".join(f"`{i}`\n" if lineno > 1 else f"**{i}**\n" for lineno, i in enumerate(error, start=1))
         return await edit_or_reply(event, f"**Disambiguated page found.**\n\n{result}")
     except PageError:
         pass
@@ -53,24 +50,13 @@ async def wiki(event):
             result = summary(match, auto_suggest=True)
         except DisambiguationError as error:
             error = str(error).split("\n")
-            result = "".join(
-                f"`{i}`\n" if lineno > 1 else f"**{i}**\n"
-                for lineno, i in enumerate(error, start=1)
-            )
-            return await edit_or_reply(
-                event, f"**Disambiguated page found.**\n\n{result}"
-            )
+            result = "".join(f"`{i}`\n" if lineno > 1 else f"**{i}**\n" for lineno, i in enumerate(error, start=1))
+            return await edit_or_reply(event, f"**Disambiguated page found.**\n\n{result}")
         except PageError:
-            return await edit_delete(
-                event, f"**Sorry i Can't find any results for **`{match}`"
-            )
-    await edit_or_reply(
-        event, "**Search:**\n`" + match + "`\n\n**Result:**\n" + f"__{result}__"
-    )
+            return await edit_delete(event, f"**Sorry i Can't find any results for **`{match}`")
+    await edit_or_reply(event, "**Search:**\n`" + match + "`\n\n**Result:**\n" + f"__{result}__")
     if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID, f"Wiki query `{match}` was executed successfully"
-        )
+        await event.client.send_message(BOTLOG_CHATID, f"Wiki query `{match}` was executed successfully")
 
 
 @catub.cat_cmd(
@@ -111,20 +97,10 @@ async def imdb_query(event):
             mov_airdate = ""
         mov_genres = ", ".join(movie["genres"]) if "genres" in moviekeys else "Not Data"
         mov_rating = str(movie["rating"]) if "rating" in moviekeys else "Not Data"
-        mov_rating += (
-            " (by " + str(movie["votes"]) + ")"
-            if "votes" in moviekeys and "rating" in moviekeys
-            else ""
-        )
-        mov_countries = (
-            ", ".join(movie["countries"]) if "countries" in moviekeys else "Not Data"
-        )
-        mov_languages = (
-            ", ".join(movie["languages"]) if "languages" in moviekeys else "Not Data"
-        )
-        mov_plot = (
-            str(movie["plot outline"]) if "plot outline" in moviekeys else "Not Data"
-        )
+        mov_rating += " (by " + str(movie["votes"]) + ")" if "votes" in moviekeys and "rating" in moviekeys else ""
+        mov_countries = ", ".join(movie["countries"]) if "countries" in moviekeys else "Not Data"
+        mov_languages = ", ".join(movie["languages"]) if "languages" in moviekeys else "Not Data"
+        mov_plot = str(movie["plot outline"]) if "plot outline" in moviekeys else "Not Data"
         mov_director = await get_cast("director", movie)
         mov_composers = await get_cast("composers", movie)
         mov_writer = await get_cast("writer", movie)

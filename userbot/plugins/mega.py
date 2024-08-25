@@ -52,12 +52,7 @@ async def subprocess_run(megadl, cmd):
     stdout, stderr = await subproc.communicate()
     exitCode = subproc.returncode
     if exitCode != 0:
-        await megadl.edit(
-            "**An error was detected while running subprocess.**\n"
-            f"exitCode : `{exitCode}`\n"
-            f"stdout : `{stdout.decode().strip()}`\n"
-            f"stderr : `{stderr.decode().strip()}`"
-        )
+        await megadl.edit("**An error was detected while running subprocess.**\n" f"exitCode : `{exitCode}`\n" f"stdout : `{stdout.decode().strip()}`\n" f"stderr : `{stderr.decode().strip()}`")
         return exitCode
     return stdout.decode().strip(), stderr.decode().strip(), exitCode
 
@@ -151,9 +146,7 @@ async def mega_downloader(megadl):  # sourcery no-metrics
                 f"**➥ Duration -> **`{time_formatter(round(diff))}`"
                 f"**➥ETA -> **`{time_formatter(estimated_total_time)}`\n"
             )
-            if round(diff % 15.00) == 0 and (
-                display_message != current_message or total_length == downloaded
-            ):
+            if round(diff % 15.00) == 0 and (display_message != current_message or total_length == downloaded):
                 await catevent.edit(current_message)
                 await asyncio.sleep(1)
                 display_message = current_message
@@ -167,9 +160,7 @@ async def mega_downloader(megadl):  # sourcery no-metrics
         download_time = round(downloader.get_dl_time() + wait)
         try:
             P = multiprocessing.Process(
-                target=await decrypt_file(
-                    catevent, file_path, temp_file_path, hex_key, hex_raw_key
-                ),
+                target=await decrypt_file(catevent, file_path, temp_file_path, hex_key, hex_raw_key),
                 name="Decrypt_File",
             )
             P.start()
@@ -178,16 +169,10 @@ async def mega_downloader(megadl):  # sourcery no-metrics
             await catevent.edit(f"`{str(e)}`")
             return None
         else:
-            await catevent.edit(
-                f"**➥ file name : **`{file_name}`\n\n"
-                f"**➥ Successfully downloaded in : ** `{file_path}`.\n"
-                f"**➥ Download took :** {time_formatter(download_time)}."
-            )
+            await catevent.edit(f"**➥ file name : **`{file_name}`\n\n" f"**➥ Successfully downloaded in : ** `{file_path}`.\n" f"**➥ Download took :** {time_formatter(download_time)}.")
             return None
     else:
-        await megadl.edit(
-            "`Failed to download, " "check heroku Logs for more details.`"
-        )
+        await megadl.edit("`Failed to download, " "check heroku Logs for more details.`")
         for e in downloader.get_errors():
             LOGS.info(str(e))
     return

@@ -21,9 +21,7 @@ async def is_admin(catub, chat_id, userid):
     try:
         req_jo = await catub.get_permissions(chat_id, userid)
         chat_participant = req_jo.participant
-        if isinstance(
-            chat_participant, (ChannelParticipantCreator, ChannelParticipantAdmin)
-        ):
+        if isinstance(chat_participant, (ChannelParticipantCreator, ChannelParticipantAdmin)):
             return True
     except Exception as e:
         LOGS.info(str(e))

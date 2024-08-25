@@ -49,9 +49,7 @@ jikan = Jikan()
 
 anilistapiurl = "https://graphql.anilist.co"
 
-headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36"
-}
+headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36"}
 
 ppath = os.path.join(os.getcwd(), "temp", "anilistuser.jpg")
 anime_path = os.path.join(os.getcwd(), "temp", "animeresult.jpg")
@@ -102,9 +100,7 @@ async def anilist_usersearch(event):
     catevent = await edit_or_reply(event, "`Searching user profile in anilist...`")
     searchresult = await anilist_user(search_query)
     if len(searchresult) == 1:
-        return await edit_or_reply(
-            catevent, f"**Error while searching user profile:**\n{searchresult[0]}"
-        )
+        return await edit_or_reply(catevent, f"**Error while searching user profile:**\n{searchresult[0]}")
     downloader = SmartDL(searchresult[1], ppath, progress_bar=False)
     downloader.start(blocking=False)
     while not downloader.isFinished():
@@ -170,7 +166,7 @@ async def user(event):
     **Birthday:** `{user_birthday_formatted}`
     **Joined:** `{user_joined_date_formatted}`
     **Last Online:** `{user_last_online_formatted}`
-    
+
     **Days wasted watching Anime:** `{user['anime_stats']['days_watched']}`
     **No of completed Animes:** `{user['anime_stats']['completed']}`
     **Total No of episodes Watched:** `{user['anime_stats']['episodes_watched']}`
@@ -179,9 +175,7 @@ async def user(event):
     )
 
     caption += f"**About:** __{about_string}__"
-    await event.client.send_file(
-        event.chat_id, file=img, caption=caption, reply_to=replyto
-    )
+    await event.client.send_file(event.chat_id, file=img, caption=caption, reply_to=replyto)
     await event.delete()
 
 
@@ -200,9 +194,7 @@ async def anilist(event):
     if not search:
         return await edit_delete(event, "__which anime results should i fetch__")
     variables = {"search": search}
-    response = requests.post(
-        anilistapiurl, json={"query": airing_query, "variables": variables}
-    ).json()["data"]["Media"]
+    response = requests.post(anilistapiurl, json={"query": airing_query, "variables": variables}).json()["data"]["Media"]
     if response is None:
         return await edit_delete(event, "__Unable to find the anime.__")
     ms_g = f"**Name**: **{response['title']['romaji']}**(`{response['title']['native']}`)\n**ID**: `{response['id']}`"
@@ -237,7 +229,7 @@ async def anilist(event):
         ],
     },
 )
-async def anilist(event):  # sourcery no-metrics
+async def anilist_anime(event):  # sourcery no-metrics
     # sourcery skip: low-code-quality
     "Get info on any anime."
     reply_to = await reply_id(event)
@@ -247,9 +239,7 @@ async def anilist(event):  # sourcery no-metrics
         if reply:
             input_str = reply.text
         else:
-            return await edit_delete(
-                event, "__What should i search ? Gib me Something to Search__"
-            )
+            return await edit_delete(event, "__What should i search ? Gib me Something to Search__")
     match = input_str
     animeno = re.findall(r"-n\d+", match)
     listview = re.findall(r"-s", match)
@@ -277,9 +267,7 @@ async def anilist(event):  # sourcery no-metrics
     if not respone:
         return await edit_delete(catevent, result)
     if len(result) == 0:
-        return await edit_or_reply(
-            catevent, f"**Search query:** `{query}`\n**Result:** `No results found`"
-        )
+        return await edit_or_reply(catevent, f"**Search query:** `{query}`\n**Result:** `No results found`")
     input_str = result[0]["title"]["english"] or result[0]["title"]["romaji"]
     if myanime:
         result = await callAPI(input_str)
@@ -321,7 +309,7 @@ async def anilist(event):  # sourcery no-metrics
         await catevent.delete()
         os.remove(anime_path)
     except BaseException:
-        image = getBannerLink(first_mal_id, True)
+        image = getBannerLink(first_mal_id, True)  # noqa F821
         await event.client.send_file(
             event.chat_id,
             file=image,
@@ -353,7 +341,7 @@ async def anilist(event):  # sourcery no-metrics
         ],
     },
 )
-async def anilist(event):  # sourcery no-metrics
+async def anilist_manga(event):  # sourcery no-metrics
     # sourcery skip: low-code-quality
     "Get info on any manga."
     reply_to = await reply_id(event)
@@ -363,9 +351,7 @@ async def anilist(event):  # sourcery no-metrics
         if reply:
             input_str = reply.text
         else:
-            return await edit_delete(
-                event, "__What should i search ? Gib me Something to Search__"
-            )
+            return await edit_delete(event, "__What should i search ? Gib me Something to Search__")
     match = input_str
     animeno = re.findall(r"-n\d+", match)
     listview = re.findall(r"-s", match)
@@ -393,9 +379,7 @@ async def anilist(event):  # sourcery no-metrics
     if not respone:
         return await edit_delete(catevent, result)
     if len(result) == 0:
-        return await edit_or_reply(
-            catevent, f"**Search query:** `{query}`\n**Result:** `No results found`"
-        )
+        return await edit_or_reply(catevent, f"**Search query:** `{query}`\n**Result:** `No results found`")
     input_str = result[0]["title"]["english"] or result[0]["title"]["romaji"]
     if myanime:
         result = await callAPI(input_str)
@@ -437,7 +421,7 @@ async def anilist(event):  # sourcery no-metrics
         await catevent.delete()
         os.remove(anime_path)
     except BaseException:
-        image = getBannerLink(first_mal_id, True)
+        image = getBannerLink(first_mal_id, True)  # noqa F821
         await event.client.send_file(
             event.chat_id,
             file=image,
@@ -453,9 +437,7 @@ async def anilist(event):  # sourcery no-metrics
     command=("fillers", plugin_category),
     info={
         "header": "To get list of filler episodes.",
-        "flags": {
-            "-n": "If more than one name have same common word then to select required anime"
-        },
+        "flags": {"-n": "If more than one name have same common word then to select required anime"},
         "usage": ["{tr}fillers <anime name>", "{tr}fillers -n<number> <anime name>"],
         "examples": [
             "{tr}fillers one piece",
@@ -471,9 +453,7 @@ async def get_anime(event):
         if reply:
             input_str = reply.text
         else:
-            return await edit_delete(
-                event, "__What should i search ? Gib me Something to Search__"
-            )
+            return await edit_delete(event, "__What should i search ? Gib me Something to Search__")
     anime = re.findall(r"-n\d+", input_str)
     try:
         anime = anime[0]
@@ -485,9 +465,7 @@ async def get_anime(event):
     input_str = input_str.strip()
     result = await search_in_animefiller(input_str)
     if result == {}:
-        return await edit_or_reply(
-            event, f"**No filler episodes for the given anime**` {input_str}`"
-        )
+        return await edit_or_reply(event, f"**No filler episodes for the given anime**` {input_str}`")
     if len(result) == 1:
         response = await get_filler_episodes(result[list(result.keys())[0]])
         msg = ""
@@ -504,14 +482,14 @@ async def get_anime(event):
         msg += "`"
         return await edit_or_reply(event, msg)
     if anime == 0:
-        msg = f"**More than 1 result found for {input_str}. so try as** `{Config.COMMAND_HAND_LER}fillers -n<number> {input_str}`\n\n"
+        msg = f"**More than 1 result found for {input_str}. so try as** `{Config.COMMAND_HAND_LER}fillers -n<number> {input_str}`\n\n"  # noqa F821
         for i, an in enumerate(list(result.keys()), start=1):
             msg += f"{i}. {an}\n"
         return await edit_or_reply(event, msg)
     try:
         response = await get_filler_episodes(result[list(result.keys())[anime - 1]])
     except IndexError:
-        msg = f"**Given index for {input_str} is wrong check again for correct index and then try** `{Config.COMMAND_HAND_LER}fillers -n<index> {input_str}`\n\n"
+        msg = f"**Given index for {input_str} is wrong check again for correct index and then try** `{Config.COMMAND_HAND_LER}fillers -n<index> {input_str}`\n\n"  # noqa F821
         for i, an in enumerate(list(result.keys()), start=1):
             msg += f"{i}. {an}\n"
         return await edit_or_reply(event, msg)
@@ -549,7 +527,7 @@ async def get_anime(event):
         ],
     },
 )
-async def anilist(event):  # sourcery no-metrics
+async def anilist_character(event):  # sourcery no-metrics
     # sourcery skip: low-code-quality
     "Get info on any character."
     reply_to = await reply_id(event)
@@ -559,9 +537,7 @@ async def anilist(event):  # sourcery no-metrics
         if reply:
             input_str = reply.text
         else:
-            return await edit_delete(
-                event, "__What should i search ? Gib me Something to Search__"
-            )
+            return await edit_delete(event, "__What should i search ? Gib me Something to Search__")
     match = input_str
     animeno = re.findall(r"-n\d+", match)
     listview = re.findall(r"-s", match)
@@ -586,9 +562,7 @@ async def anilist(event):  # sourcery no-metrics
     result = await anime_json_synomsis(character_query, search_query)
     result = result["data"]["Page"]["characters"]
     if len(result) == 0:
-        return await edit_or_reply(
-            catevent, f"**Search query:** `{query}`\n**Result:** `No results found`"
-        )
+        return await edit_or_reply(catevent, f"**Search query:** `{query}`\n**Result:** `No results found`")
     if listview:
         msg = f"<b>Search Query: </b> <code>{query}</code>\n\n<b>Results:</b>\n"
         i = 1
@@ -633,15 +607,12 @@ async def anilist(event):  # sourcery no-metrics
     html_ += "<br><br>"
     html_ += f"<a href='{result['siteUrl']}'> View on anilist</a>"
 
-    synopsis_link = await post_to_telegraph(
-        result["name"]["full"], f"<code>{caption}</code>\n<br>{html_}"
-    )
+    synopsis_link = await post_to_telegraph(result["name"]["full"], f"<code>{caption}</code>\n<br>{html_}")
 
     await event.client.send_file(
         event.chat_id,
         file=result["image"]["large"],
-        caption=caption
-        + f"📖 <a href='{synopsis_link}'><b>Description</b></a> <b>&</b> <a href='{result['siteUrl']}'><b>Read More</b></a>",
+        caption=caption + f"📖 <a href='{synopsis_link}'><b>Description</b></a> <b>&</b> <a href='{result['siteUrl']}'><b>Read More</b></a>",
         parse_mode="html",
         reply_to=reply_to,
     )
@@ -673,9 +644,7 @@ async def anime_download(event):  # sourcery no-metrics
     if not search_query and reply:
         search_query = reply.text
     elif not search_query:
-        return await edit_delete(
-            event, "__What should i search ? Gib me Something to Search__"
-        )
+        return await edit_delete(event, "__What should i search ? Gib me Something to Search__")
     catevent = await edit_or_reply(event, "`Searching anime...`")
     search_query = search_query.replace(" ", "+")
     if input_str == "kaizoku":
@@ -787,9 +756,7 @@ async def whatanime(event):
     "Reverse search of anime."
     reply = await event.get_reply_message()
     if not reply:
-        return await edit_delete(
-            event, "__reply to media to reverse search that anime__."
-        )
+        return await edit_delete(event, "__reply to media to reverse search that anime__.")
     mediatype = await media_type(reply)
     if mediatype not in ["Photo", "Video", "Gif", "Sticker", "Document"]:
         return await edit_delete(
@@ -803,13 +770,11 @@ async def whatanime(event):
         file="wanime.png",
     )
     if output[1] is None:
-        return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
-        )
+        return await edit_delete(output[0], "__Unable to extract image from the replied message.__")
     file = memory_file("anime.jpg", output[1])
     try:
         response = upload_file(file)
-    except exceptions.TelegraphException as exc:
+    except exceptions.TelegraphException:
         try:
             response = upload_file(output[1])
         except exceptions.TelegraphException as exc:
@@ -817,9 +782,7 @@ async def whatanime(event):
     cat = f"https://graph.org{response[0]}"
     await output[0].edit("`Searching for result..`")
     async with aiohttp.ClientSession() as session:
-        async with session.post(
-            f"https://api.trace.moe/search?anilistInfo&url={quote_plus(cat)}"
-        ) as raw_resp0:
+        async with session.post(f"https://api.trace.moe/search?anilistInfo&url={quote_plus(cat)}") as raw_resp0:
             resp0 = await raw_resp0.json()
         framecount = resp0["frameCount"]
         error = resp0["error"]
@@ -829,17 +792,9 @@ async def whatanime(event):
         if not js0:
             return await output[0].edit("`No results found.`")
         js0 = js0[0]
-        text = (
-            f'**Titile Romaji : **`{html.escape(js0["anilist"]["title"]["romaji"])}`\n'
-        )
-        text += (
-            f'**Titile Native :** `{html.escape(js0["anilist"]["title"]["native"])}`\n'
-        )
-        text += (
-            f'**Titile English :** `{html.escape(js0["anilist"]["title"]["english"])}`\n'
-            if js0["anilist"]["title"]["english"] is not None
-            else ""
-        )
+        text = f'**Titile Romaji : **`{html.escape(js0["anilist"]["title"]["romaji"])}`\n'
+        text += f'**Titile Native :** `{html.escape(js0["anilist"]["title"]["native"])}`\n'
+        text += f'**Titile English :** `{html.escape(js0["anilist"]["title"]["english"])}`\n' if js0["anilist"]["title"]["english"] is not None else ""
         text += f'**Is Adult :** __{js0["anilist"]["isAdult"]}__\n'
         #         text += f'**File name :** __{js0["filename"]}__\n'
         text += f'**Episode :** __{html.escape(str(js0["episode"]))}__\n'
@@ -847,10 +802,7 @@ async def whatanime(event):
         text += f'**To :** __{readable_time(js0["to"])}__\n'
         percent = round(js0["similarity"] * 100, 2)
         text += f"**Similarity :** __{percent}%__\n"
-        result = (
-            f"**Searched {framecount} frames and found this as best result :**\n\n"
-            + text
-        )
+        result = f"**Searched {framecount} frames and found this as best result :**\n\n" + text
         msg = await output[0].edit(result)
         try:
             await msg.reply(

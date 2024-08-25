@@ -84,13 +84,9 @@ async def remove_background(event):
     if event.reply_to_msg_id and not input_str:
         reply_message = await event.get_reply_message()
         catevent = await edit_or_reply(event, "`Analysing this Media...`")
-        file_name = await Convert.to_image(
-            event, reply_message, dirct="./temp", file="rmbgimage.png", noedits=True
-        )
+        file_name = await Convert.to_image(event, reply_message, dirct="./temp", file="rmbgimage.png", noedits=True)
         if not file_name[1]:
-            return await edit_delete(
-                event, "**Error:** __Unable to process with this media__"
-            )
+            return await edit_delete(event, "**Error:** __Unable to process with this media__")
         response = ReTrieveFile(file_name[1])
         os.remove(file_name[1])
     elif input_str:
@@ -109,11 +105,7 @@ async def remove_background(event):
         file.write(response.content)
     await catevent.delete()
     if cmd == "srmbg":
-        file = (
-            await Convert.to_sticker(
-                catevent, remove_bg_image, file="rmbgsticker.webp", noedits=True
-            )
-        )[1]
+        file = (await Convert.to_sticker(catevent, remove_bg_image, file="rmbgsticker.webp", noedits=True))[1]
         await event.client.send_file(
             event.chat_id,
             file,

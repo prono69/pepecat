@@ -15,17 +15,11 @@ import sys
 from telethon import TelegramClient
 
 from ..core.logger import logging
-from ..sql_helper.global_collection import (
-    add_to_collectionlist,
-    del_keyword_collectionlist,
-    get_collectionlist_items,
-)
+from ..sql_helper.global_collection import add_to_collectionlist, del_keyword_collectionlist, get_collectionlist_items
 
 package_patern = re.compile(r"([\w-]+)(?:=|<|>|!)")
 github_patern = re.compile(r"(?:https?)?(?:www.)?(?:github.com/)?([\w\-.]+/[\w\-.]+)/?")
-github_raw_pattern = re.compile(
-    r"(?:https?)?(?:raw.)?(?:githubusercontent.com/)?([\w\-.]+/[\w\-.]+)/?"
-)
+github_raw_pattern = re.compile(r"(?:https?)?(?:raw.)?(?:githubusercontent.com/)?([\w\-.]+/[\w\-.]+)/?")
 trees_pattern = "https://api.github.com/repos/{}/git/trees/master"
 raw_pattern = "https://raw.githubusercontent.com/{}/master/{}"
 
@@ -68,7 +62,7 @@ async def install_pip_packages(packages):
 def run_async(func: callable):
     """Run async functions with the right event loop."""
     asyncio.get_event_loop()
-    return loop.run_until_complete(func)
+    return loop.run_until_complete(func)  # noqa F821
 
 
 async def restart_script(client: TelegramClient, sandy):

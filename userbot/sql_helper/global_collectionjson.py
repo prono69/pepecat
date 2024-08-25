@@ -38,7 +38,7 @@ def get_collection(keywoard):
 def add_collection(keywoard, json, njson=None):
     if njson is None:
         njson = {}
-    if to_check := get_collection(keywoard):
+    if to_check := get_collection(keywoard):  # noqa F841
         keyword_items = SESSION.query(Cat_GlobalCollection_Json).get(keywoard)
         SESSION.delete(keyword_items)
     keyword_items = Cat_GlobalCollection_Json(keywoard, json, njson)

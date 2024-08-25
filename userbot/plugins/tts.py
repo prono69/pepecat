@@ -7,7 +7,7 @@
 # Please see: https://github.com/TgCatUB/catuserbot/blob/master/LICENSE
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-""" Google Text to Speech
+"""Google Text to Speech
 Available Commands:
 .tts LanguageCode as reply to a message
 .tts LangaugeCode | text to speak"""
@@ -80,9 +80,7 @@ async def _(event):
         ]
 
         try:
-            t_response = subprocess.check_output(
-                command_to_execute, stderr=subprocess.STDOUT
-            )
+            subprocess.check_output(command_to_execute, stderr=subprocess.STDOUT)
         except (subprocess.CalledProcessError, NameError, FileNotFoundError) as exc:
             await catevent.edit(str(exc))
             # continue sending required_file_name
@@ -99,8 +97,6 @@ async def _(event):
             voice_note=True,
         )
         os.remove(required_file_name)
-        await edit_delete(
-            catevent, f"`Processed text {text[:20]} into voice in {ms} seconds!`"
-        )
+        await edit_delete(catevent, f"`Processed text {text[:20]} into voice in {ms} seconds!`")
     except Exception as e:
         await edit_or_reply(catevent, f"**Error:**\n`{e}`")

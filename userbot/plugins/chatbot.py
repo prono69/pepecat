@@ -16,15 +16,7 @@ from userbot import catub
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import ai_api, get_user_from_event
-from ..sql_helper.chatbot_sql import (
-    addai,
-    get_all_users,
-    get_users,
-    is_added,
-    remove_ai,
-    remove_all_users,
-    remove_users,
-)
+from ..sql_helper.chatbot_sql import addai, get_all_users, get_users, is_added, remove_ai, remove_all_users, remove_users
 
 plugin_category = "fun"
 
@@ -50,9 +42,7 @@ tired_response = [
 async def add_chatbot(event):
     "To enable ai for the replied person"
     if event.reply_to_msg_id is None:
-        return await edit_or_reply(
-            event, "`Reply to a User's message to activate ai on `"
-        )
+        return await edit_or_reply(event, "`Reply to a User's message to activate ai on `")
     catevent = await edit_or_reply(event, "`Adding ai to user...`")
     user, rank = await get_user_from_event(event, catevent, nogroup=True)
     if not user:
@@ -89,9 +79,7 @@ async def add_chatbot(event):
 async def remove_chatbot(event):
     "To stop ai for that user"
     if event.reply_to_msg_id is None:
-        return await edit_or_reply(
-            event, "Reply to a User's message to stop ai on him."
-        )
+        return await edit_or_reply(event, "Reply to a User's message to stop ai on him.")
     reply_msg = await event.get_reply_message()
     user_id = reply_msg.sender_id
     chat_id = event.chat_id
@@ -121,12 +109,10 @@ async def remove_chatbot(event):
 )
 async def delete_chatbot(event):
     "To delete ai in this chat."
-    if input_str := event.pattern_match.group(1):
+    if event.pattern_match.group(1):
         lecho = get_all_users()
         if len(lecho) == 0:
-            return await edit_delete(
-                event, "You havent enabled ai atleast for one user in any chat."
-            )
+            return await edit_delete(event, "You havent enabled ai atleast for one user in any chat.")
         try:
             remove_all_users()
         except Exception as e:
@@ -136,9 +122,7 @@ async def delete_chatbot(event):
     else:
         lecho = get_users(event.chat_id)
         if len(lecho) == 0:
-            return await edit_delete(
-                event, "You havent enabled ai atleast for one user in this chat."
-            )
+            return await edit_delete(event, "You havent enabled ai atleast for one user in this chat.")
         try:
             remove_users(event.chat_id)
         except Exception as e:
@@ -175,13 +159,9 @@ async def list_chatbot(event):  # sourcery no-metrics
         for echos in lsts:
             if echos.chat_type == "Personal":
                 if echos.user_username:
-                    private_chats += (
-                        f"☞ [{echos.user_name}](https://t.me/{echos.user_username})\n"
-                    )
+                    private_chats += f"☞ [{echos.user_name}](https://t.me/{echos.user_username})\n"
                 else:
-                    private_chats += (
-                        f"☞ [{echos.user_name}](tg://user?id={echos.user_id})\n"
-                    )
+                    private_chats += f"☞ [{echos.user_name}](tg://user?id={echos.user_id})\n"
             elif echos.user_username:
                 group_chats += f"☞ [{echos.user_name}](https://t.me/{echos.user_username}) in chat {echos.chat_name} of chat id `{echos.chat_id}`\n"
             else:
@@ -194,18 +174,12 @@ async def list_chatbot(event):  # sourcery no-metrics
     else:
         lsts = get_users(event.chat_id)
         if len(lsts) <= 0:
-            return await edit_or_reply(
-                event, "There are no ai enabled users in this chat"
-            )
+            return await edit_or_reply(event, "There are no ai enabled users in this chat")
         for echos in lsts:
             if echos.user_username:
-                private_chats += (
-                    f"☞ [{echos.user_name}](https://t.me/{echos.user_username})\n"
-                )
+                private_chats += f"☞ [{echos.user_name}](https://t.me/{echos.user_username})\n"
             else:
-                private_chats += (
-                    f"☞ [{echos.user_name}](tg://user?id={echos.user_id})\n"
-                )
+                private_chats += f"☞ [{echos.user_name}](tg://user?id={echos.user_id})\n"
         output_str = "**Ai enabled users in this chat are:**\n" + private_chats
     await edit_or_reply(event, output_str)
 
@@ -213,9 +187,7 @@ async def list_chatbot(event):  # sourcery no-metrics
 @catub.cat_cmd(incoming=True, edited=False)
 async def ai_reply(event):
     if is_added(event.chat_id, event.sender_id) and (event.message.text):
-        response = requests.get(
-            f"https://kukiapi.xyz/api/apikey={await ai_api(event)}/message={event.message.text}"
-        )
+        response = requests.get(f"https://kukiapi.xyz/api/apikey={await ai_api(event)}/message={event.message.text}")
         if response.status_code == 200:
             ai_msg = response.json()["reply"]
             await event.reply(ai_msg)

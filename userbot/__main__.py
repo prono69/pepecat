@@ -16,14 +16,7 @@ from userbot import BOTLOG_CHATID, PM_LOGGER_GROUP_ID
 from .Config import Config
 from .core.logger import logging
 from .core.session import catub
-from .utils import (
-    add_bot_to_logger_group,
-    install_externalrepo,
-    load_plugins,
-    setup_bot,
-    startupmessage,
-    verifyLoggerGroup,
-)
+from .utils import add_bot_to_logger_group, install_externalrepo, load_plugins, setup_bot, startupmessage, verifyLoggerGroup
 
 LOGS = logging.getLogger("CatUserbot")
 
@@ -45,17 +38,11 @@ async def startup_process():
     await verifyLoggerGroup()
     await load_plugins("plugins")
     await load_plugins("assistant")
-    LOGS.info(
-        "============================================================================"
-    )
+    LOGS.info("============================================================================")
     LOGS.info("||               Yay your userbot is officially working.!!!")
-    LOGS.info(
-        f"||   Congratulation, now type {cmdhr}alive to see message if catub is live"
-    )
+    LOGS.info(f"||   Congratulation, now type {cmdhr}alive to see message if catub is live")
     LOGS.info("||   If you need assistance, head to https://t.me/catuserbot_support")
-    LOGS.info(
-        "============================================================================"
-    )
+    LOGS.info("============================================================================")
     await verifyLoggerGroup()
     await add_bot_to_logger_group(BOTLOG_CHATID)
     if PM_LOGGER_GROUP_ID != -100:
@@ -67,14 +54,10 @@ async def startup_process():
 async def externalrepo():
     string = "<b>Your external repo plugins have imported.<b>\n\n"
     if Config.EXTERNAL_REPO:
-        data = await install_externalrepo(
-            Config.EXTERNAL_REPO, Config.EXTERNAL_REPOBRANCH, "xtraplugins"
-        )
+        data = await install_externalrepo(Config.EXTERNAL_REPO, Config.EXTERNAL_REPOBRANCH, "xtraplugins")
         string += f"<b>➜ Repo:  </b><a href='{data[0]}'><b>{data[1]}</b></a>\n<b>     • Imported Plugins:</b>  <code>{data[2]}</code>\n<b>     • Failed to Import:</b>  <code>{', '.join(data[3])}</code>\n\n"
     if Config.BADCAT:
-        data = await install_externalrepo(
-            Config.BADCAT_REPO, Config.BADCAT_REPOBRANCH, "badcatext"
-        )
+        data = await install_externalrepo(Config.BADCAT_REPO, Config.BADCAT_REPOBRANCH, "badcatext")
         string += f"<b>➜ Repo:  </b><a href='{data[0]}'><b>{data[1]}</b></a>\n<b>     • Imported Plugins:</b>  <code>{data[2]}</code>\n<b>     • Failed to Import:</b>  <code>{', '.join(data[3])}</code>\n\n"
     if Config.VCMODE:
         data = await install_externalrepo(Config.VC_REPO, Config.VC_REPOBRANCH, "catvc")

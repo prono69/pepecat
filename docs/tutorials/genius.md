@@ -11,6 +11,6 @@
 * Click on Save button.
 
     <figure><img src="../.gitbook/assets/genius2.jpg" alt="Page after clicking 'Save' button"><figcaption><p>Page after clicking 'Save' button</p></figcaption></figure>
-    
+
 * On This page, click on <mark style="color:blue;">Generate Access Token</mark> and Copy the token. Save the copied token in your bot's configuration file as environment variable with the following name:
   * `GENIUS_API_TOKEN`

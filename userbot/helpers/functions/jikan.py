@@ -134,7 +134,7 @@ query ($id: Int, $idMal: Int,$search: String) {
     }
     format
     status
-    type 
+    type
     description
     startDate {
       year
@@ -210,7 +210,7 @@ query ($id: Int, $idMal:Int, $search: String, $asHtml: Boolean) {
     }
     format
     status
-    type 
+    type
     description (asHtml: $asHtml)
     startDate {
       year
@@ -328,9 +328,7 @@ async def callAPI(search_str, manga=False):
 async def searchanilist(search_str, manga=False):
     typea = "MANGA" if manga else "ANIME"
     variables = {"search": search_str, "type": typea, "page": 1, "perPage": 10}
-    response = requests.post(
-        anilisturl, json={"query": anilist_query, "variables": variables}
-    )
+    response = requests.post(anilisturl, json={"query": anilist_query, "variables": variables})
     msg = ""
     jsonData = json.loads(response.text)
     res = list(jsonData.keys())
@@ -383,21 +381,13 @@ def shorten(description, info="anilist.co"):
         msg += f"\n**Description**:\n{description} [Read More]({info})"
     else:
         msg += f"\n**Description**: \n   {description}"
-    return (
-        msg.replace("<br>", "")
-        .replace("</br>", "")
-        .replace("<i>", "")
-        .replace("</i>", "")
-        .replace("__", "**")
-    )
+    return msg.replace("<br>", "").replace("</br>", "").replace("<i>", "").replace("</i>", "").replace("__", "**")
 
 
 async def anilist_user(input_str):
     "Fetch user details from anilist"
     username = {"search": input_str}
-    result = requests.post(
-        anilisturl, json={"query": user_query, "variables": username}
-    ).json()
+    result = requests.post(anilisturl, json={"query": user_query, "variables": username}).json()
     if error := result.get("errors"):
         error_sts = error[0].get("message")
         return [f"{error_sts}"]
@@ -405,7 +395,7 @@ async def anilist_user(input_str):
     stats = textwrap.dedent(
         f"""
 **User name :** [{user_data['name']}]({user_data['siteUrl']})
-**Anilist ID :** `{user_data['id']}` 
+**Anilist ID :** `{user_data['id']}`
 **Joined anilist :**`{datetime.fromtimestamp(user_data['createdAt'])}`
 **Last Updated :**`{datetime.fromtimestamp(user_data['updatedAt'])}`
 
@@ -428,9 +418,7 @@ async def anilist_user(input_str):
 async def anime_json_synomsis(query, vars_):
     """Makes a Post to https://graphql.anilist.co."""
     async with ClientSession() as session:
-        async with session.post(
-            anilisturl, json={"query": query, "variables": vars_}
-        ) as post_con:
+        async with session.post(anilisturl, json={"query": query, "variables": vars_}) as post_con:
             json_data = await post_con.json()
     return json_data
 
@@ -469,9 +457,7 @@ def getBannerLink(mal, kitsu_search=True, anilistid=0):
     }
     """
     data = {"query": query, "variables": {"idMal": int(mal)}}
-    if image := requests.post("https://graphql.anilist.co", json=data).json()["data"][
-        "Media"
-    ]["bannerImage"]:
+    if image := requests.post("https://graphql.anilist.co", json=data).json()["data"]["Media"]["bannerImage"]:
         return image
     return getPosterLink(mal)
 
@@ -481,11 +467,7 @@ async def get_anime_manga(search_str, search_type, _user_id):  # sourcery no-met
     if search_type == "anime_anime":
         variables = {"search": search_str}
         query = anime_query
-        result = json.loads(
-            (
-                requests.post(anilisturl, json={"query": query, "variables": variables})
-            ).text
-        )
+        result = json.loads((requests.post(anilisturl, json={"query": query, "variables": variables})).text)
         res = list(result.keys())
         if "errors" in res:
             return f"<b>Error</b> : <code>{result['errors'][0]['message']}</code>", None
@@ -499,11 +481,7 @@ async def get_anime_manga(search_str, search_type, _user_id):  # sourcery no-met
     elif search_type == "anime_manga":
         variables = {"search": search_str}
         query = manga_query
-        result = json.loads(
-            (
-                requests.post(anilisturl, json={"query": query, "variables": variables})
-            ).text
-        )
+        result = json.loads((requests.post(anilisturl, json={"query": query, "variables": variables})).text)
         res = list(result.keys())
         if "errors" in res:
             return f"<b>Error</b> : <code>{result['errors'][0]['message']}</code>", None
@@ -529,9 +507,7 @@ async def get_anime_manga(search_str, search_type, _user_id):  # sourcery no-met
             result[entity] = "Unknown"
     if search_type == "anime_anime":
         anime_malid = result["idMal"]
-        anime_result = await anime_json_synomsis(
-            anime_query, {"idMal": anime_malid, "asHtml": True, "type": "ANIME"}
-        )
+        anime_result = await anime_json_synomsis(anime_query, {"idMal": anime_malid, "asHtml": True, "type": "ANIME"})
         anime_data = anime_result["data"]["Media"]
         html_char = ""
         for character in anime_data["characters"]["nodes"]:
@@ -544,10 +520,7 @@ async def get_anime_manga(search_str, search_type, _user_id):  # sourcery no-met
             html_ += f"<b>Character ID</b>: {character['id']}<br>"
             html_ += f"<h4>About Character and Role:</h4>{character.get('description', 'N/A')}"
             html_char += f"{html_}<br><br>"
-        studios = "".join(
-            f"""<a href='{studio["siteUrl"]}'>• {studio["name"]}</a> """
-            for studio in anime_data["studios"]["nodes"]
-        )
+        studios = "".join(f"""<a href='{studio["siteUrl"]}'>• {studio["name"]}</a> """ for studio in anime_data["studios"]["nodes"])
 
         coverImg = anime_data.get("coverImage")["extraLarge"]
         bannerImg = anime_data.get("bannerImage")
@@ -569,14 +542,10 @@ async def get_anime_manga(search_str, search_type, _user_id):  # sourcery no-met
             html_pc += "<br><br>"
         html_pc += "<h3>More Info:</h3>"
         html_pc += f"<br><b>Studios:</b> {studios}<br>"
-        html_pc += (
-            f"<a href='https://myanimelist.net/anime/{anime_malid}'>View on MAL</a>"
-        )
+        html_pc += f"<a href='https://myanimelist.net/anime/{anime_malid}'>View on MAL</a>"
     else:
         anime_malid = result["id"]
-        anime_result = await anime_json_synomsis(
-            manga_query, {"id": anime_malid, "asHtml": True, "type": "MANGA"}
-        )
+        anime_result = await anime_json_synomsis(manga_query, {"id": anime_malid, "asHtml": True, "type": "MANGA"})
         anime_data = anime_result["data"]["Media"]
         html_char = ""
         for character in anime_data["characters"]["nodes"]:
@@ -649,10 +618,7 @@ async def get_anime_manga(search_str, search_type, _user_id):  # sourcery no-met
         )
         synopsis_link = await post_to_telegraph(
             title_h,
-            f"<img src='{title_img}' title={romaji}/>\n"
-            + f"<code>{caption}</code>\n"
-            + f"{TRAILER}\n"
-            + html_pc,
+            f"<img src='{title_img}' title={romaji}/>\n" + f"<code>{caption}</code>\n" + f"{TRAILER}\n" + html_pc,
         )
         caption += f"<b>{TRAILER}</b>\n📖 <a href='{synopsis_link}'><b>Synopsis</b></a> <b>&</b> <a href='{result['siteUrl']}'><b>Read More</b></a>"
     elif search_type == "anime_manga":
@@ -671,9 +637,7 @@ async def get_anime_manga(search_str, search_type, _user_id):  # sourcery no-met
         )
         synopsis_link = await post_to_telegraph(
             title_h,
-            f"<img src='{title_img}' title={romaji}/>\n"
-            + f"<code>{caption}</code>\n"
-            + html_pc,
+            f"<img src='{title_img}' title={romaji}/>\n" + f"<code>{caption}</code>\n" + html_pc,
         )
         caption += f"📖 <a href='{synopsis_link}'><b>Synopsis</b></a> <b>&</b> <a href='{result['siteUrl']}'><b>Read More</b></a>"
 
@@ -683,9 +647,7 @@ async def get_anime_manga(search_str, search_type, _user_id):  # sourcery no-met
 def get_poster(query):
     url_enc_name = query.replace(" ", "+")
     # Searching for query list in imdb
-    page = requests.get(
-        f"https://www.imdb.com/find?ref_=nv_sr_fn&q={url_enc_name}&s=all"
-    )
+    page = requests.get(f"https://www.imdb.com/find?ref_=nv_sr_fn&q={url_enc_name}&s=all")
     soup = bs4.BeautifulSoup(page.content, "lxml")
     odds = soup.findAll("tr", "odd")
     # Fetching the first post from search
@@ -718,11 +680,7 @@ def memory_file(name=None, contents=None, *, temp_bytes=True):
 def is_gif(file):
     # ngl this should be fixed, telethon.utils.is_gif but working
     # lazy to go to github and make an issue kek
-    return (
-        DocumentAttributeAnimated() in getattr(file, "document", file).attributes
-        if is_video(file)
-        else False
-    )
+    return DocumentAttributeAnimated() in getattr(file, "document", file).attributes if is_video(file) else False
 
 
 async def search_in_animefiller(query):
@@ -738,11 +696,7 @@ async def search_in_animefiller(query):
             cum = jk.text
             index[cum] = yum
     keys = list(index.keys())
-    return {
-        keys[i]: index[keys[i]]
-        for i in range(len(keys))
-        if query.lower() in keys[i].lower()
-    }
+    return {keys[i]: index[keys[i]] for i in range(len(keys)) if query.lower() in keys[i].lower()}
 
 
 async def get_filler_episodes(filler_id):  # sourcery no-metrics
@@ -780,9 +734,7 @@ async def get_filler_episodes(filler_id):  # sourcery no-metrics
         total_ep = ", ".join(total_no.text for total_no in total_episodes)
         filler_episodes = ", ".join(filler_no.text for filler_no in filler_ep)
         mixed_episodes = ", ".join(miixed_no.text for miixed_no in mixed_ep)
-        anime_canon_episodes = ", ".join(
-            animecanon_no.text for animecanon_no in animecanon_ep
-        )
+        anime_canon_episodes = ", ".join(animecanon_no.text for animecanon_no in animecanon_ep)
     return {
         "filler_id": filler_id,
         "total_ep": total_ep,

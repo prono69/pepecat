@@ -15,11 +15,7 @@ from userbot import catub
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
-from ..sql_helper.global_collection import (
-    add_to_collectionlist,
-    del_keyword_collectionlist,
-    get_collectionlist_items,
-)
+from ..sql_helper.global_collection import add_to_collectionlist, del_keyword_collectionlist, get_collectionlist_items
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import BOTLOG, BOTLOG_CHATID, HEROKU_APP
 
@@ -98,9 +94,7 @@ async def _(event):
         return await edit_or_reply(event, "Syntax: `.sleep time`")
     counter = int(event.pattern_match.group(1))
     if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID, f"You put the bot to sleep for {counter} seconds"
-        )
+        await event.client.send_message(BOTLOG_CHATID, f"You put the bot to sleep for {counter} seconds")
 
     event = await edit_or_reply(event, f"`ok, let me sleep for {counter} seconds`")
     sleep(counter)

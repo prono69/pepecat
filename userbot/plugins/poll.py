@@ -82,9 +82,7 @@ async def pollcreator(catpoll):
             )
             await catpoll.delete()
         except PollOptionInvalidError:
-            await edit_or_reply(
-                catpoll, "`A poll option used invalid data (the data may be too long).`"
-            )
+            await edit_or_reply(catpoll, "`A poll option used invalid data (the data may be too long).`")
         except ForbiddenError:
             await edit_or_reply(catpoll, "`This chat has forbidden the polls`")
         except Exception as e:

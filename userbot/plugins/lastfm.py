@@ -43,9 +43,7 @@ else:
 
 # =================== CONSTANT ===================
 LFM_BIO_ENABLED = "```last.fm current music to bio is now enabled.```"
-LFM_BIO_DISABLED = (
-    "```last.fm current music to bio is now disabled. Bio reverted to default.```"
-)
+LFM_BIO_DISABLED = "```last.fm current music to bio is now disabled. Bio reverted to default.```"
 LFM_BIO_RUNNING = "```last.fm current music to bio is already running.```"
 LFM_BIO_ERR = "```No option specified.```"
 LFM_LOG_ENABLED = "```last.fm logging to bot log is now enabled.```"
@@ -105,11 +103,7 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
             LASTFM_.ARTIST = playing.get_artist()
             oldsong = environ.get("oldsong", None)
             oldartist = environ.get("oldartist", None)
-            if (
-                playing is not None
-                and LASTFM_.SONG != oldsong
-                and LASTFM_.ARTIST != oldartist
-            ):
+            if playing is not None and LASTFM_.SONG != oldsong and LASTFM_.ARTIST != oldartist:
                 environ["oldsong"] = str(LASTFM_.SONG)
                 environ["oldartist"] = str(LASTFM_.ARTIST)
                 if BIO_PREFIX:
@@ -118,9 +112,7 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
                     lfmbio = f"🎧: {LASTFM_.ARTIST} - {LASTFM_.SONG}"
                 try:
                     if BOTLOG and LASTFM_.LastLog:
-                        await catub.send_message(
-                            BOTLOG_CHATID, f"Attempted to change bio to\n{lfmbio}"
-                        )
+                        await catub.send_message(BOTLOG_CHATID, f"Attempted to change bio to\n{lfmbio}")
                     await catub(UpdateProfileRequest(about=lfmbio))
                 except AboutTooLongError:
                     short_bio = f"🎧: {LASTFM_.SONG}"
@@ -129,23 +121,17 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
                 await sleep(6)
                 await catub(UpdateProfileRequest(about=DEFAULT_BIO))
                 if BOTLOG and LASTFM_.LastLog:
-                    await catub.send_message(
-                        BOTLOG_CHATID, f"Reset bio back to\n{DEFAULT_BIO}"
-                    )
+                    await catub.send_message(BOTLOG_CHATID, f"Reset bio back to\n{DEFAULT_BIO}")
         except AttributeError:
             try:
                 if user_info.about != DEFAULT_BIO:
                     await sleep(6)
                     await catub(UpdateProfileRequest(about=DEFAULT_BIO))
                     if BOTLOG and LASTFM_.LastLog:
-                        await catub.send_message(
-                            BOTLOG_CHATID, f"Reset bio back to\n{DEFAULT_BIO}"
-                        )
+                        await catub.send_message(BOTLOG_CHATID, f"Reset bio back to\n{DEFAULT_BIO}")
             except FloodWaitError as err:
                 if BOTLOG and LASTFM_.LastLog:
-                    await catub.send_message(
-                        BOTLOG_CHATID, f"Error changing bio:\n{err}"
-                    )
+                    await catub.send_message(BOTLOG_CHATID, f"Error changing bio:\n{err}")
         except (
             FloodWaitError,
             WSError,

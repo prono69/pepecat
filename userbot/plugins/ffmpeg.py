@@ -22,25 +22,13 @@ from userbot.core.logger import logging
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers import (
-    _catutils,
-    fileinfo,
-    humanbytes,
-    media_type,
-    progress,
-    readable_time,
-    reply_id,
-    take_screen_shot,
-    time_formatter,
-)
+from ..helpers import _catutils, fileinfo, humanbytes, media_type, progress, readable_time, reply_id, take_screen_shot, time_formatter
 
 plugin_category = "utils"
 
 
 thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
-FF_MPEG_DOWN_LOAD_MEDIA_PATH = os.path.join(
-    Config.TMP_DOWNLOAD_DIRECTORY, "catuserbot.media.ffmpeg"
-)
+FF_MPEG_DOWN_LOAD_MEDIA_PATH = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "catuserbot.media.ffmpeg")
 FINISHED_PROGRESS_STR = Config.FINISHED_PROGRESS_STR
 UN_FINISHED_PROGRESS_STR = Config.UNFINISHED_PROGRESS_STR
 LOGGER = logging.getLogger(__name__)
@@ -50,7 +38,7 @@ async def convert_video(video_file, output_directory, crf, total_time, bot, mess
     # https://stackoverflow.com/a/13891070/4723940
     out_put_file_name = f"{output_directory}/{str(round(time.time()))}.mp4"
     progress = f"{output_directory}/progress.txt"
-    with open(progress, "w") as f:
+    with open(progress, "w") as file:
         pass
     COMPRESSION_START_TIME = time.time()
     process = await asyncio.create_subprocess_shell(
@@ -82,22 +70,11 @@ async def convert_video(video_file, output_directory, crf, total_time, bot, mess
             percentage = math.floor(elapsed_time * 100 / total_time)
             progress_str = "📊 **Progress :** {0}%\n[{1}{2}]".format(
                 round(percentage, 2),
-                "".join(
-                    [FINISHED_PROGRESS_STR for _ in range(math.floor(percentage / 10))]
-                ),
-                "".join(
-                    [
-                        UN_FINISHED_PROGRESS_STR
-                        for _ in range(10 - math.floor(percentage / 10))
-                    ]
-                ),
+                "".join([FINISHED_PROGRESS_STR for _ in range(math.floor(percentage / 10))]),
+                "".join([UN_FINISHED_PROGRESS_STR for _ in range(10 - math.floor(percentage / 10))]),
             )
 
-            stats = (
-                f"📦️ **Compressing CRF-{crf}**\n\n"
-                f"⏰️ **ETA :** {ETA}\n\n"
-                f"{progress_str}\n"
-            )
+            stats = f"📦️ **Compressing CRF-{crf}**\n\n" f"⏰️ **ETA :** {ETA}\n\n" f"{progress_str}\n"
             with contextlib.suppress(Exception):
                 await message.edit(text=stats)
     # Wait for the subprocess to finish
@@ -105,13 +82,9 @@ async def convert_video(video_file, output_directory, crf, total_time, bot, mess
     return out_put_file_name if os.path.lexists(out_put_file_name) else None
 
 
-async def cult_small_video(
-    video_file, output_directory, start_time, end_time, out_put_file_name=None
-):
+async def cult_small_video(video_file, output_directory, start_time, end_time, out_put_file_name=None):
     # https://stackoverflow.com/a/13891070/4723940
-    out_put_file_name = out_put_file_name or os.path.join(
-        output_directory, f"{round(time.time())}.mp4"
-    )
+    out_put_file_name = out_put_file_name or os.path.join(output_directory, f"{round(time.time())}.mp4")
     process = await asyncio.create_subprocess_shell(
         # stdout must a pipe to be accessible as process.stdout
         f'ffmpeg -i """{video_file}""" -ss {start_time} -to {end_time} -async 1 -strict -2 """{out_put_file_name}"""',
@@ -157,10 +130,7 @@ async def ffmpeg_compress(event):  # sourcery skip: low-code-quality
     dlpath = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "cat.media.ffmpeg")
     if reply_message and reply_message.media:
         media = await media_type(reply_message)
-        if (
-            reply_message.media.document.mime_type.split("/")[0] != "video"
-            or media == "Sticker"
-        ):
+        if reply_message.media.document.mime_type.split("/")[0] != "video" or media == "Sticker":
             return await edit_delete(event, "`Only Video files are supported`")
         catevent = await edit_or_reply(event, "`Saving the file...`")
         try:
@@ -169,9 +139,7 @@ async def ffmpeg_compress(event):  # sourcery skip: low-code-quality
             await event.client.fast_download_file(
                 location=reply_message.document,
                 out=dl,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, catevent, c_time, "Trying to download")
-                ),
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, catevent, c_time, "Trying to download")),
             )
             dl.close()
         except Exception as e:
@@ -192,9 +160,7 @@ async def ffmpeg_compress(event):  # sourcery skip: low-code-quality
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
     cstart = datetime.now()
-    compress = await convert_video(
-        dlpath, "./temp", crf, old["duration"], catub, catevent
-    )
+    compress = await convert_video(dlpath, "./temp", crf, old["duration"], catub, catevent)
     cend = datetime.now()
     cms = (cend - cstart).seconds
     if delete:
@@ -217,9 +183,7 @@ async def ffmpeg_compress(event):  # sourcery skip: low-code-quality
                 supports_streaming=True,
                 allow_cache=False,
                 reply_to=reply_to_id,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, catevent, c_time, "Trying to upload")
-                ),
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, catevent, c_time, "Trying to upload")),
             )
             os.remove(compress)
         except Exception as e:
@@ -237,9 +201,7 @@ async def ffmpeg_compress(event):  # sourcery skip: low-code-quality
                 supports_streaming=True,
                 allow_cache=False,
                 reply_to=reply_to_id,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, catevent, c_time, "Trying to upload")
-                ),
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, catevent, c_time, "Trying to upload")),
             )
             os.remove(compress)
         except Exception as e:
@@ -260,7 +222,7 @@ async def ffmpeg_compress(event):  # sourcery skip: low-code-quality
         "usage": "{tr}ffmpegsave <reply>",
     },
 )
-async def ff_mpeg_trim_cmd(event):
+async def ff_mpeg_save_cmd(event):
     "Saves the media file in bot to trim mutliple times"
     mpath = event.pattern_match.group(1)
     if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
@@ -269,23 +231,15 @@ async def ff_mpeg_trim_cmd(event):
             if media not in ["Video", "Audio"]:
                 return await edit_delete(event, "`Only media files are supported`", 5)
             await _catutils.runcmd(f"cp -r {mpath} {FF_MPEG_DOWN_LOAD_MEDIA_PATH}")
-            return await edit_or_reply(
-                event, f"Saved file to `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}`"
-            )
+            return await edit_or_reply(event, f"Saved file to `{FF_MPEG_DOWN_LOAD_MEDIA_PATH}`")
         reply_message = await event.get_reply_message()
         if reply_message:
             if not reply_message.media:
                 return await edit_delete(event, "`Reply to a media file...`")
             start = datetime.now()
             media = await media_type(reply_message)
-            if (
-                reply_message.media.document.mime_type.split("/")[0]
-                not in ["video", "audio"]
-                or media == "Sticker"
-            ):
-                return await edit_delete(
-                    event, "`Only Video/Audio files are supported`", 5
-                )
+            if reply_message.media.document.mime_type.split("/")[0] not in ["video", "audio"] or media == "Sticker":
+                return await edit_delete(event, "`Only Video/Audio files are supported`", 5)
             catevent = await edit_or_reply(event, "`Saving the file...`")
             try:
                 c_time = time.time()
@@ -293,9 +247,7 @@ async def ff_mpeg_trim_cmd(event):
                 await event.client.fast_download_file(
                     location=reply_message.document,
                     out=dl,
-                    progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                        progress(d, t, catevent, c_time, "trying to download")
-                    ),
+                    progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, catevent, c_time, "trying to download")),
                 )
                 dl.close()
             except Exception as e:
@@ -327,7 +279,7 @@ async def ff_mpeg_trim_cmd(event):
         "examples": "{tr}vtrim 00:00 00:10",
     },
 )
-async def ff_mpeg_trim_cmd(event):
+async def ff_mpeg_vtrim_cmd(event):
     "Trims the saved media with specific given time internval and outputs as video if it is video"
     if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
         return await edit_delete(
@@ -349,9 +301,7 @@ async def ff_mpeg_trim_cmd(event):
             end_time,
         )
         if o is None:
-            return await edit_delete(
-                catevent, "**Error : **`Can't complete the process`"
-            )
+            return await edit_delete(catevent, "**Error : **`Can't complete the process`")
         try:
             c_time = time.time()
             await event.client.send_file(
@@ -362,9 +312,7 @@ async def ff_mpeg_trim_cmd(event):
                 supports_streaming=True,
                 allow_cache=False,
                 reply_to=reply_to_id,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, catevent, c_time, "trying to upload")
-                ),
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, catevent, c_time, "trying to upload")),
             )
             os.remove(o)
         except Exception as e:
@@ -374,9 +322,7 @@ async def ff_mpeg_trim_cmd(event):
         cmd, start_time = cmt
         o = await take_screen_shot(FF_MPEG_DOWN_LOAD_MEDIA_PATH, start_time)
         if o is None:
-            return await edit_delete(
-                catevent, "**Error : **`Can't complete the process`"
-            )
+            return await edit_delete(catevent, "**Error : **`Can't complete the process`")
         try:
             c_time = time.time()
             await event.client.send_file(
@@ -387,9 +333,7 @@ async def ff_mpeg_trim_cmd(event):
                 supports_streaming=True,
                 allow_cache=False,
                 reply_to=event.message.id,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, catevent, c_time, "trying to upload")
-                ),
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, catevent, c_time, "trying to upload")),
             )
             os.remove(o)
         except Exception as e:
@@ -415,7 +359,7 @@ async def ff_mpeg_trim_cmd(event):
         "examples": "{tr}atrim 00:00 00:10",
     },
 )
-async def ff_mpeg_trim_cmd(event):
+async def ff_mpeg_atrim_cmd(event):
     "Trims the saved media with specific given time internval and outputs as audio"
     if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
         return await edit_delete(
@@ -427,9 +371,7 @@ async def ff_mpeg_trim_cmd(event):
     current_message_text = event.raw_text
     cmt = current_message_text.split(" ")
     start = datetime.now()
-    out_put_file_name = os.path.join(
-        Config.TMP_DOWNLOAD_DIRECTORY, f"{round(time.time())}.mp3"
-    )
+    out_put_file_name = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, f"{round(time.time())}.mp3")
     if len(cmt) == 3:
         cmd, start_time, end_time = cmt
     else:
@@ -455,9 +397,7 @@ async def ff_mpeg_trim_cmd(event):
             supports_streaming=True,
             allow_cache=False,
             reply_to=reply_to_id,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, catevent, c_time, "trying to upload")
-            ),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, catevent, c_time, "trying to upload")),
         )
         os.remove(o)
     except Exception as e:
@@ -476,7 +416,7 @@ async def ff_mpeg_trim_cmd(event):
         "usage": "{tr}ffmpegclear",
     },
 )
-async def ff_mpeg_trim_cmd(event):
+async def ff_mpeg_clear_cmd(event):
     "Deletes the saved media so you can save new one"
     if not os.path.exists(FF_MPEG_DOWN_LOAD_MEDIA_PATH):
         await edit_delete(event, "`There is no media saved in bot for triming`")

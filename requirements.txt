@@ -26,6 +26,7 @@ markdown
 motor
 openai
 Pillow
+pre-commit
 prettytable
 psutil
 psycopg2

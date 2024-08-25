@@ -75,9 +75,7 @@ async def do_pm_permit_action(event, chat):  # sourcery no-metrics
     if PM_WARNS[str(chat.id)] >= MAX_FLOOD_IN_PMS:
         try:
             if str(chat.id) in PMMESSAGE_CACHE:
-                await event.client.delete_messages(
-                    chat.id, PMMESSAGE_CACHE[str(chat.id)]
-                )
+                await event.client.delete_messages(chat.id, PMMESSAGE_CACHE[str(chat.id)])
                 del PMMESSAGE_CACHE[str(chat.id)]
         except Exception as e:
             LOGS.info(str(e))
@@ -137,7 +135,7 @@ async def do_pm_permit_action(event, chat):  # sourcery no-metrics
             remwarns=remwarns,
         )
     elif gvarstatus("pmmenu") is None:
-        USER_BOT_NO_WARN = f"""__Hi__ {mention}__, I haven't approved you yet to personal message me. 
+        USER_BOT_NO_WARN = f"""__Hi__ {mention}__, I haven't approved you yet to personal message me.
 
 You have {warns}/{totalwarns} warns until you get blocked by the CatUserbot.
 
@@ -152,9 +150,7 @@ Don't spam my inbox. say reason and wait until my response.__"""
     PM_WARNS[str(chat.id)] += 1
     try:
         if gvarstatus("pmmenu") is None:
-            results = await event.client.inline_query(
-                Config.TG_BOT_USERNAME, "pmpermit"
-            )
+            results = await event.client.inline_query(Config.TG_BOT_USERNAME, "pmpermit")
             msg = await results[0].click(chat.id, reply_to=reply_to_id, hide_via=True)
         else:
             if PM_PIC := gvarstatus("PM_PIC"):
@@ -172,9 +168,7 @@ Don't spam my inbox. say reason and wait until my response.__"""
                     force_document=False,
                 )
             else:
-                msg = await event.client.send_message(
-                    chat.id, USER_BOT_NO_WARN, reply_to=reply_to_id
-                )
+                msg = await event.client.send_message(chat.id, USER_BOT_NO_WARN, reply_to=reply_to_id)
     except Exception as e:
         LOGS.error(e)
         msg = await event.reply(USER_BOT_NO_WARN)
@@ -220,13 +214,13 @@ async def do_pm_options_action(event, chat):
         LOGS.info(str(e))
     sql.del_collection("pmmessagecache")
     sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
-    USER_BOT_WARN_ZERO = "**If I remember correctly I mentioned in my previous message that this is not the right place for you to spam. \\\x1fThough you ignored that message.So, I simply blocked you. \\\x1fNow you can't do anything unless my master comes online and unblocks you.**"
+    USER_BOT_WARN_ZERO = "**If I remember correctly I mentioned in my previous message that this is not the right place for you to spam. \\\x1fThough you ignored that message.So, I simply blocked you. \\\x1fNow you can't do anything unless my master comes online and unblocks you.**"  # noqa E501
 
     await event.reply(USER_BOT_WARN_ZERO)
     await event.client(functions.contacts.BlockRequest(chat.id))
     the_message = f"#BLOCKED_PM\
                             \n[{get_display_name(chat)}](tg://user?id={chat.id}) is blocked\
-                            \n**Reason:** __He/She didn't opt for any provided options and kept on messaging.__"
+                            \n**Reason:** __He/She didn't opt for any provided options and kept on messaging.__"  # noqa E501
     sqllist.rm_from_list("pmoptions", chat.id)
     try:
         return await event.client.send_message(
@@ -269,13 +263,13 @@ __My master will respond when he/she comes online, if he/she wants to.__
         LOGS.info(str(e))
     sql.del_collection("pmmessagecache")
     sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
-    USER_BOT_WARN_ZERO = "**If I remember correctly I mentioned in my previous message that this is not the right place for you to spam. \\\x1fThough you ignored that message. So, I simply blocked you. \\\x1fNow you can't do anything unless my master comes online and unblocks you.**"
+    USER_BOT_WARN_ZERO = "**If I remember correctly I mentioned in my previous message that this is not the right place for you to spam. \\\x1fThough you ignored that message. So, I simply blocked you. \\\x1fNow you can't do anything unless my master comes online and unblocks you.**"  # noqa E501
 
     await event.reply(USER_BOT_WARN_ZERO)
     await event.client(functions.contacts.BlockRequest(chat.id))
     the_message = f"#BLOCKED_PM\
                 \n[{get_display_name(chat)}](tg://user?id={chat.id}) is blocked\
-                \n**Reason:** __He/She opted for enquire option but didn't wait after being told also and kept on messaging so blocked.__"
+                \n**Reason:** __He/She opted for enquire option but didn't wait after being told also and kept on messaging so blocked.__"  # noqa E501
     sqllist.rm_from_list("pmenquire", chat.id)
     try:
         return await event.client.send_message(
@@ -318,13 +312,13 @@ __My master will respond when he/she comes back online, if he/she wants to.__
         LOGS.info(str(e))
     sql.del_collection("pmmessagecache")
     sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
-    USER_BOT_WARN_ZERO = "**If I remember correctly I mentioned in my previous message that this is not the right place for you to spam. \\\x1fThough you ignored me and messaged me. So, i simply blocked you. \\\x1fNow you can't do anything unless my master comes online and unblocks you.**"
+    USER_BOT_WARN_ZERO = "**If I remember correctly I mentioned in my previous message that this is not the right place for you to spam. \\\x1fThough you ignored me and messaged me. So, i simply blocked you. \\\x1fNow you can't do anything unless my master comes online and unblocks you.**"  # noqa E501
 
     await event.reply(USER_BOT_WARN_ZERO)
     await event.client(functions.contacts.BlockRequest(chat.id))
     the_message = f"#BLOCKED_PM\
                 \n[{get_display_name(chat)}](tg://user?id={chat.id}) is blocked\
-                \n**Reason:** __He/She opted for the request option but didn't wait after being told also so blocked.__"
+                \n**Reason:** __He/She opted for the request option but didn't wait after being told also so blocked.__"  # noqa E501
     sqllist.rm_from_list("pmrequest", chat.id)
     try:
         return await event.client.send_message(
@@ -367,13 +361,13 @@ __My master will respond when he/she comes back online, if he/she wants to.__
         LOGS.info(str(e))
     sql.del_collection("pmmessagecache")
     sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
-    USER_BOT_WARN_ZERO = "**If I remember correctly I mentioned in my previous message this is not the right place for you to spam. \\\x1fThough you ignored that message. So, I simply blocked you. \\\x1fNow you can't do anything unless my master comes online and unblocks you.**"
+    USER_BOT_WARN_ZERO = "**If I remember correctly I mentioned in my previous message this is not the right place for you to spam. \\\x1fThough you ignored that message. So, I simply blocked you. \\\x1fNow you can't do anything unless my master comes online and unblocks you.**"  # noqa E501
 
     await event.reply(USER_BOT_WARN_ZERO)
     await event.client(functions.contacts.BlockRequest(chat.id))
     the_message = f"#BLOCKED_PM\
                 \n[{get_display_name(chat)}](tg://user?id={chat.id}) is blocked\
-                \n**Reason:** __He/She select opted for the chat option but didn't wait after being told also so blocked.__"
+                \n**Reason:** __He/She select opted for the chat option but didn't wait after being told also so blocked.__"  # noqa E501
     sqllist.rm_from_list("pmchat", chat.id)
     try:
         return await event.client.send_message(
@@ -395,13 +389,13 @@ async def do_pm_spam_action(event, chat):
             del PMMESSAGE_CACHE[str(chat.id)]
     except Exception as e:
         LOGS.info(str(e))
-    USER_BOT_WARN_ZERO = "**If I remember correctly I mentioned in my previous message this is not the right place for you to spam. \\\x1fThough you ignored that message. So, I simply blocked you. \\\x1fNow you can't do anything unless my master comes online and unblocks you.**"
+    USER_BOT_WARN_ZERO = "**If I remember correctly I mentioned in my previous message this is not the right place for you to spam. \\\x1fThough you ignored that message. So, I simply blocked you. \\\x1fNow you can't do anything unless my master comes online and unblocks you.**"  # noqa E501
 
     await event.reply(USER_BOT_WARN_ZERO)
     await event.client(functions.contacts.BlockRequest(chat.id))
     the_message = f"#BLOCKED_PM\
                             \n[{get_display_name(chat)}](tg://user?id={chat.id}) is blocked\
-                            \n**Reason:** he opted for spam option and messaged again."
+                            \n**Reason:** he opted for spam option and messaged again."  # noqa E501
     sqllist.rm_from_list("pmspam", chat.id)
     sql.add_collection("pmmessagecache", PMMESSAGE_CACHE, {})
     try:
@@ -474,18 +468,14 @@ async def you_dm_other(event):
         PM_WARNS = {}
     start_date = str(datetime.now().strftime("%B %d, %Y"))
     if not pmpermit_sql.is_approved(chat.id) and str(chat.id) not in PM_WARNS:
-        pmpermit_sql.approve(
-            chat.id, get_display_name(chat), start_date, chat.username, "For Outgoing"
-        )
+        pmpermit_sql.approve(chat.id, get_display_name(chat), start_date, chat.username, "For Outgoing")
         try:
             PMMESSAGE_CACHE = sql.get_collection("pmmessagecache").json
         except AttributeError:
             PMMESSAGE_CACHE = {}
         if str(chat.id) in PMMESSAGE_CACHE:
             try:
-                await event.client.delete_messages(
-                    chat.id, PMMESSAGE_CACHE[str(chat.id)]
-                )
+                await event.client.delete_messages(chat.id, PMMESSAGE_CACHE[str(chat.id)])
             except Exception as e:
                 LOGS.info(str(e))
             del PMMESSAGE_CACHE[str(chat.id)]
@@ -494,7 +484,7 @@ async def you_dm_other(event):
 
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"show_pmpermit_options")))
-async def on_plug_in_callback_query_handler(event):
+async def on_plug_in_callback_query_handler_options(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit these options are for users who messages you, not for you"
         return await event.answer(text, cache_time=0, alert=True)
@@ -526,7 +516,7 @@ __Let's make this smooth and let me know why you are here.__
 
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_enquire_something")))
-async def on_plug_in_callback_query_handler(event):
+async def on_plug_in_callback_query_handler_enquire(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit this options for user who messages you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
@@ -547,7 +537,7 @@ Then we can extend this conversation more but not right now.__"""
 
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_request_something")))
-async def on_plug_in_callback_query_handler(event):
+async def on_plug_in_callback_query_handler_request(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit this options for user who messages you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
@@ -569,7 +559,7 @@ async def on_plug_in_callback_query_handler(event):
 
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_chat_with_my_master")))
-async def on_plug_in_callback_query_handler(event):
+async def on_plug_in_callback_query_handler_master(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit these options are for users who message you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
@@ -589,7 +579,7 @@ some other time. Right now I am a little busy. when I come online and if I am fr
 
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_spam_my_master_inbox")))
-async def on_plug_in_callback_query_handler(event):
+async def on_plug_in_callback_query_handler_inbox(event):
     if event.query.user_id == event.client.uid:
         text = "Idoit these options are for users who message you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
@@ -635,16 +625,12 @@ async def pmpermit_on(event):
     if input_str == "on":
         if gvarstatus("pmpermit") is None:
             addgvar("pmpermit", "true")
-            await edit_delete(
-                event, "__Pmpermit has been enabled for your account successfully.__"
-            )
+            await edit_delete(event, "__Pmpermit has been enabled for your account successfully.__")
         else:
             await edit_delete(event, "__Pmpermit is already enabled for your account__")
     elif gvarstatus("pmpermit") is not None:
         delgvar("pmpermit")
-        await edit_delete(
-            event, "__Pmpermit has been disabled for your account successfully__"
-        )
+        await edit_delete(event, "__Pmpermit has been disabled for your account successfully__")
     else:
         await edit_delete(event, "__Pmpermit is already disabled for your account__")
 
@@ -657,7 +643,7 @@ async def pmpermit_on(event):
         "usage": "{tr}pmmenu on/off",
     },
 )
-async def pmpermit_on(event):
+async def pmpermit_menu(event):
     "Turn on/off pmmenu."
     input_str = event.pattern_match.group(1)
     if input_str == "off":
@@ -668,18 +654,12 @@ async def pmpermit_on(event):
                 "__Pmpermit Menu has been disabled for your account successfully.__",
             )
         else:
-            await edit_delete(
-                event, "__Pmpermit Menu is already disabled for your account__"
-            )
+            await edit_delete(event, "__Pmpermit Menu is already disabled for your account__")
     elif gvarstatus("pmmenu") is not None:
         delgvar("pmmenu")
-        await edit_delete(
-            event, "__Pmpermit Menu has been enabled for your account successfully__"
-        )
+        await edit_delete(event, "__Pmpermit Menu has been enabled for your account successfully__")
     else:
-        await edit_delete(
-            event, "__Pmpermit Menu is already enabled for your account__"
-        )
+        await edit_delete(event, "__Pmpermit Menu is already enabled for your account__")
 
 
 @catub.cat_cmd(
@@ -717,9 +697,7 @@ async def approve_p_m(event):  # sourcery no-metrics
         if str(user.id) in PM_WARNS:
             del PM_WARNS[str(user.id)]
         start_date = str(datetime.now().strftime("%B %d, %Y"))
-        pmpermit_sql.approve(
-            user.id, get_display_name(user), start_date, user.username, reason
-        )
+        pmpermit_sql.approve(user.id, get_display_name(user), start_date, user.username, reason)
         chat = user
         if str(chat.id) in sqllist.get_collection_list("pmspam"):
             sqllist.rm_from_list("pmspam", chat.id)
@@ -741,9 +719,7 @@ async def approve_p_m(event):  # sourcery no-metrics
             PMMESSAGE_CACHE = {}
         if str(user.id) in PMMESSAGE_CACHE:
             try:
-                await event.client.delete_messages(
-                    user.id, PMMESSAGE_CACHE[str(user.id)]
-                )
+                await event.client.delete_messages(user.id, PMMESSAGE_CACHE[str(user.id)])
             except Exception as e:
                 LOGS.info(str(e))
             del PMMESSAGE_CACHE[str(user.id)]
@@ -791,9 +767,7 @@ async def tapprove_pm(event):  # sourcery no-metrics
         PM_WARNS = sql.get_collection("pmwarns").json
     except AttributeError:
         PM_WARNS = {}
-    if (user.id not in PMPERMIT_.TEMPAPPROVED) and (
-        not pmpermit_sql.is_approved(user.id)
-    ):
+    if (user.id not in PMPERMIT_.TEMPAPPROVED) and (not pmpermit_sql.is_approved(user.id)):
         if str(user.id) in PM_WARNS:
             del PM_WARNS[str(user.id)]
         PMPERMIT_.TEMPAPPROVED.append(user.id)
@@ -818,9 +792,7 @@ async def tapprove_pm(event):  # sourcery no-metrics
             PMMESSAGE_CACHE = {}
         if str(user.id) in PMMESSAGE_CACHE:
             try:
-                await event.client.delete_messages(
-                    user.id, PMMESSAGE_CACHE[str(user.id)]
-                )
+                await event.client.delete_messages(user.id, PMMESSAGE_CACHE[str(user.id)])
             except Exception as e:
                 LOGS.info(str(e))
             del PMMESSAGE_CACHE[str(user.id)]
@@ -873,9 +845,7 @@ async def disapprove_p_m(event):
                 return
     if reason == "all":
         pmpermit_sql.disapprove_all()
-        return await edit_delete(
-            event, "__Ok! I have disapproved everyone successfully.__"
-        )
+        return await edit_delete(event, "__Ok! I have disapproved everyone successfully.__")
     if not reason:
         reason = "Not Mentioned."
     if pmpermit_sql.is_approved(user.id):
@@ -987,7 +957,7 @@ async def unblock_pm(event):
         ],
     },
 )
-async def approve_p_m(event):
+async def list_approved_func(event):
     "To see list of approved users."
     if gvarstatus("pmpermit") is None:
         return await edit_delete(

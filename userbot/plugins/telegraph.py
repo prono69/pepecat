@@ -77,9 +77,7 @@ async def _(event):
     r_message = await event.get_reply_message()
     input_str = (event.pattern_match.group(4)).strip()
     if input_str in ["media", "m"]:
-        downloaded_file_name = await event.client.download_media(
-            r_message, Config.TEMP_DIR
-        )
+        downloaded_file_name = await event.client.download_media(r_message, Config.TEMP_DIR)
         await catevent.edit(f"`Downloaded to {downloaded_file_name}`")
         if downloaded_file_name.endswith((".webp")):
             resize_image(downloaded_file_name)
@@ -107,9 +105,7 @@ async def _(event):
         if r_message.media:
             if page_content != "":
                 title_of_page = page_content
-            downloaded_file_name = await event.client.download_media(
-                r_message, Config.TEMP_DIR
-            )
+            downloaded_file_name = await event.client.download_media(r_message, Config.TEMP_DIR)
             m_list = None
             with open(downloaded_file_name, "rb") as fd:
                 m_list = fd.readlines()
@@ -121,10 +117,7 @@ async def _(event):
             response = telegraph.create_page(title_of_page, html_content=page_content)
         except Exception as e:
             LOGS.info(e)
-            title_of_page = "".join(
-                random.choice(list(string.ascii_lowercase + string.ascii_uppercase))
-                for _ in range(16)
-            )
+            title_of_page = "".join(random.choice(list(string.ascii_lowercase + string.ascii_uppercase)) for _ in range(16))
             response = telegraph.create_page(title_of_page, html_content=page_content)
         end = datetime.now()
         ms = (end - start).seconds
@@ -162,9 +155,7 @@ async def ctg(event):
         try:
             msg_flag = await conv.send_message(urls[0])
         except YouBlockedUserError:
-            await edit_or_reply(
-                catevent, "**Error:** Trying to unblock & retry, wait a sec..."
-            )
+            await edit_or_reply(catevent, "**Error:** Trying to unblock & retry, wait a sec...")
             await catub(unblock("chotamreaderbot"))
             msg_flag = await conv.send_message(urls[0])
         response = await conv.get_response()
@@ -173,7 +164,5 @@ async def ctg(event):
             await edit_or_reply(catevent, "Am I Dumb Or Am I Dumb?")
         else:
             await catevent.delete()
-            await event.client.send_message(
-                event.chat_id, response, reply_to=reply_to_id, link_preview=True
-            )
+            await event.client.send_message(event.chat_id, response, reply_to=reply_to_id, link_preview=True)
         await delete_conv(event, chat, msg_flag)

@@ -93,9 +93,7 @@ async def cpu(event):
     "shows cpu information"
     cmd = "cat /proc/cpuinfo | grep 'model name'"
     o = (await _catutils.runcmd(cmd))[0]
-    await edit_or_reply(
-        event, f"**[Cat's](tg://need_update_for_some_feature/) CPU Model:**\n{o}"
-    )
+    await edit_or_reply(event, f"**[Cat's](tg://need_update_for_some_feature/) CPU Model:**\n{o}")
 
 
 @catub.cat_cmd(

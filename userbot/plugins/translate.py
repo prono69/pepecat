@@ -42,9 +42,7 @@ async def _(event):
     elif ";" in input_str:
         lan, text = input_str.split(";")
     else:
-        return await edit_delete(
-            event, "`.tl LanguageCode` as reply to a message", time=5
-        )
+        return await edit_delete(event, "`.tl LanguageCode` as reply to a message", time=5)
     text = soft_deEmojify(text.strip())
     lan = lan.strip()
     Translator()
@@ -79,9 +77,7 @@ async def translateme(trans):
     elif textx:
         message = textx.text
     else:
-        return await edit_or_reply(
-            trans, "`Give a text or reply to a message to translate!`"
-        )
+        return await edit_or_reply(trans, "`Give a text or reply to a message to translate!`")
     TRT_LANG = gvarstatus("TRT_LANG") or "en"
     try:
         reply_text = await getTranslate(soft_deEmojify(message), dest=TRT_LANG)
@@ -130,25 +126,17 @@ async def lang(value):
     LANG = LANGUAGES[arg]
     if input_str == "trt":
         addgvar("TRT_LANG", arg)
-        await edit_or_reply(
-            value, f"**Language for Translator changed to:** `{LANG.title()}`"
-        )
+        await edit_or_reply(value, f"**Language for Translator changed to:** `{LANG.title()}`")
     elif input_str == "tocr":
         addgvar("TOCR_LANG", arg)
-        await edit_or_reply(
-            value, f"**Language for Translated Ocr changed to:** `{LANG.title()}`"
-        )
+        await edit_or_reply(value, f"**Language for Translated Ocr changed to:** `{LANG.title()}`")
     else:
         addgvar("AI_LANG", arg)
-        await edit_or_reply(
-            value, f"**Language for Chatbot is changed to:** `{LANG.title()}`"
-        )
+        await edit_or_reply(value, f"**Language for Chatbot is changed to:** `{LANG.title()}`")
     LANG = LANGUAGES[arg]
 
     if BOTLOG and input_str == "trt":
-        await value.client.send_message(
-            BOTLOG_CHATID, f"**Language for Translator changed to:** `{LANG.title()}`"
-        )
+        await value.client.send_message(BOTLOG_CHATID, f"**Language for Translator changed to:** `{LANG.title()}`")
     if BOTLOG:
         if input_str == "tocr":
             await value.client.send_message(

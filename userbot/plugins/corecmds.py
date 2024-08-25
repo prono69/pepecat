@@ -63,9 +63,7 @@ async def install(event):
                 )
             else:
                 os.remove(downloaded_file_name)
-                await edit_delete(
-                    event, "Errors! This plugin is already installed/pre-installed.", 10
-                )
+                await edit_delete(event, "Errors! This plugin is already installed/pre-installed.", 10)
         except Exception as e:
             await edit_delete(event, f"**Error:**\n`{e}`", 10)
             os.remove(downloaded_file_name)
@@ -90,9 +88,7 @@ async def load(event):
         load_module(shortname)
         await edit_delete(event, f"`Successfully loaded {shortname}`", 10)
     except Exception as e:
-        await edit_or_reply(
-            event, f"Could not load {shortname} because of the following error.\n{e}"
-        )
+        await edit_or_reply(event, f"Could not load {shortname} because of the following error.\n{e}")
 
 
 @catub.cat_cmd(
@@ -156,14 +152,12 @@ async def unload(event):
         "examples": "{tr}uninstall markdown",
     },
 )
-async def unload(event):
+async def uninstall(event):
     "To uninstall a plugin."
     shortname = event.pattern_match.group(1)
     path = plug_checker(shortname)
     if not os.path.exists(path):
-        return await edit_delete(
-            event, f"There is no plugin with path {path} to uninstall it"
-        )
+        return await edit_delete(event, f"There is no plugin with path {path} to uninstall it")
     os.remove(path)
     if shortname in CMD_LIST:
         CMD_LIST.pop(shortname)
@@ -227,8 +221,6 @@ async def app_log(event):
     elif "r" in flag:
         outfile, error = chromeDriver.get_rayso(log, file_name="logs.png")
         if outfile:
-            await catub.send_file(
-                event.chat_id, outfile, caption=linktext, force_document=True
-            )
+            await catub.send_file(event.chat_id, outfile, caption=linktext, force_document=True)
             return os.remove(outfile)
     return await edit_or_reply(event, log, deflink=True, linktext=linktext)

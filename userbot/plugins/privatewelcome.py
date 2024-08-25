@@ -16,11 +16,7 @@ from userbot import catub
 
 from ..core.managers import edit_or_reply
 from ..sql_helper import pmpermit_sql as pmpermit_sql
-from ..sql_helper.welcomesql import (
-    addwelcome_setting,
-    getcurrent_welcome_settings,
-    rmwelcome_setting,
-)
+from ..sql_helper.welcomesql import addwelcome_setting, getcurrent_welcome_settings, rmwelcome_setting
 from . import BOTLOG_CHATID
 
 plugin_category = "utils"
@@ -29,11 +25,7 @@ plugin_category = "utils"
 @catub.on(events.ChatAction)
 async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
     cws = getcurrent_welcome_settings(event.chat_id)
-    if (
-        cws
-        and (event.user_joined or event.user_added)
-        and not (await event.get_user()).bot
-    ):
+    if cws and (event.user_joined or event.user_added) and not (await event.get_user()).bot:
         a_user = await event.get_user()
         chat = await event.get_chat()
         me = await event.client.get_me()
@@ -55,9 +47,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         current_saved_welcome_message = None
         if cws:
             if cws.f_mesg_id:
-                msg_o = await event.client.get_messages(
-                    entity=BOTLOG_CHATID, ids=int(cws.f_mesg_id)
-                )
+                msg_o = await event.client.get_messages(entity=BOTLOG_CHATID, ids=int(cws.f_mesg_id))
                 file_media = msg_o.media
                 current_saved_welcome_message = msg_o.message
                 link_preview = True
@@ -67,7 +57,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         if not pmpermit_sql.is_approved(userid):
             pmpermit_sql.approve(userid, "Due to private welcome")
         await sleep(1)
-        current_message = await event.client.send_message(
+        await event.client.send_message(
             userid,
             current_saved_welcome_message.format(
                 mention=mention,
@@ -131,9 +121,7 @@ async def save_welcome(event):
                 \nCHAT ID: {event.chat_id}\
                 \nThe following message is saved as the welcome note for the {get_display_name(await event.get_chat())}, Dont delete this message !!",
             )
-            msg_o = await event.client.forward_messages(
-                entity=BOTLOG_CHATID, messages=msg, from_peer=event.chat_id, silent=True
-            )
+            msg_o = await event.client.forward_messages(entity=BOTLOG_CHATID, messages=msg, from_peer=event.chat_id, silent=True)
             msg_id = msg_o.id
         else:
             await edit_or_reply(
@@ -185,15 +173,9 @@ async def show_welcome(event):
         await edit_or_reply(event, "`No pwelcome message saved here.`")
         return
     if cws.f_mesg_id:
-        msg_o = await event.client.get_messages(
-            entity=BOTLOG_CHATID, ids=int(cws.f_mesg_id)
-        )
-        await edit_or_reply(
-            event, "`I am currently pwelcoming new users with this welcome note.`"
-        )
+        msg_o = await event.client.get_messages(entity=BOTLOG_CHATID, ids=int(cws.f_mesg_id))
+        await edit_or_reply(event, "`I am currently pwelcoming new users with this welcome note.`")
         await event.reply(msg_o.message, file=msg_o.media)
     elif cws.reply:
-        await edit_or_reply(
-            event, "`I am currently pwelcoming new users with this welcome note.`"
-        )
+        await edit_or_reply(event, "`I am currently pwelcoming new users with this welcome note.`")
         await event.reply(cws.reply, link_preview=False)

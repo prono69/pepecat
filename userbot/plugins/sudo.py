@@ -64,9 +64,7 @@ async def chat_blacklist(event):
         addgvar("sudoenable", "true")
         text = "__Enabled sudo successfully.__\n"
         if len(sudousers) != 0:
-            text += (
-                "**Bot is reloading to apply the changes. Please wait for a minute**"
-            )
+            text += "**Bot is reloading to apply the changes. Please wait for a minute**"
             msg = await edit_or_reply(
                 event,
                 text,
@@ -81,9 +79,7 @@ async def chat_blacklist(event):
         delgvar("sudoenable")
         text = "__Disabled sudo successfully.__"
         if len(sudousers) != 0:
-            text += (
-                "**Bot is reloading to apply the changes. Please wait for a minute**"
-            )
+            text += "**Bot is reloading to apply the changes. Please wait for a minute**"
             msg = await edit_or_reply(
                 event,
                 text,
@@ -184,9 +180,7 @@ async def _(event):
     except AttributeError:
         sudousers = {}
     if len(sudochats) == 0:
-        return await edit_delete(
-            event, "__There are no sudo users for your Catuserbot.__"
-        )
+        return await edit_delete(event, "__There are no sudo users for your Catuserbot.__")
     result = "**The list of sudo users for your Catuserbot are :**\n\n"
     for chat in sudochats:
         result += f"☞ **Name:** {mentionuser(sudousers[str(chat)]['chat_name'],sudousers[str(chat)]['chat_id'])}\n"
@@ -225,9 +219,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
     errors = ""
     sudocmds = sudo_enabled_cmds()
     if not input_str:
-        return await edit_or_reply(
-            event, "__Which command should i enable for sudo users . __"
-        )
+        return await edit_or_reply(event, "__Which command should i enable for sudo users . __")
     input_str = input_str.split()
     if input_str[0] == "-all":
         catevent = await edit_or_reply(event, "__Enabling all safe cmds for sudo....__")
@@ -253,9 +245,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         if len(sudocmds) > 0:
             sqllist.del_keyword_list("sudo_enabled_cmds")
     elif input_str[0] == "-full":
-        catevent = await edit_or_reply(
-            event, "__Enabling compelete sudo for users....__"
-        )
+        catevent = await edit_or_reply(event, "__Enabling compelete sudo for users....__")
         loadcmds = CMD_INFO.keys()
         if len(sudocmds) > 0:
             sqllist.del_keyword_list("sudo_enabled_cmds")
@@ -265,9 +255,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         loadcmds = []
         for plugin in input_str:
             if plugin not in PLG_INFO:
-                errors += (
-                    f"`{plugin}` __There is no such plugin in your CatUserbot__.\n"
-                )
+                errors += f"`{plugin}` __There is no such plugin in your CatUserbot__.\n"
             else:
                 loadcmds += PLG_INFO[plugin]
     else:
@@ -283,9 +271,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
     for cmd in loadcmds:
         sqllist.add_to_list("sudo_enabled_cmds", cmd)
     result = f"__Successfully enabled __ `{len(loadcmds)}` __ for CatUserbot sudo.__\n"
-    output = (
-        result + "**Bot is reloading to apply the changes. Please wait for a minute**\n"
-    )
+    output = result + "**Bot is reloading to apply the changes. Please wait for a minute**\n"
     if errors != "":
         output += "\n**Errors:**\n" + errors
     msg = await edit_or_reply(catevent, output)
@@ -320,19 +306,13 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
     errors = ""
     sudocmds = sudo_enabled_cmds()
     if not input_str:
-        return await edit_or_reply(
-            event, "__Which command should I disable for sudo users . __"
-        )
+        return await edit_or_reply(event, "__Which command should I disable for sudo users . __")
     input_str = input_str.split()
     if input_str[0] == "-all":
-        catevent = await edit_or_reply(
-            event, "__Disabling all enabled cmds for sudo....__"
-        )
+        catevent = await edit_or_reply(event, "__Disabling all enabled cmds for sudo....__")
         flagcmds = sudocmds
     elif input_str[0] == "-flag":
-        catevent = await edit_or_reply(
-            event, "__Disabling all flagged cmds for sudo.....__"
-        )
+        catevent = await edit_or_reply(event, "__Disabling all flagged cmds for sudo.....__")
         flagcmds = (
             PLG_INFO["botcontrols"]
             + PLG_INFO["autoprofile"]
@@ -356,9 +336,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         flagcmds = []
         for plugin in input_str:
             if plugin not in PLG_INFO:
-                errors += (
-                    f"`{plugin}` __There is no such plugin in your CatUserbot__.\n"
-                )
+                errors += f"`{plugin}` __There is no such plugin in your CatUserbot__.\n"
             else:
                 flagcmds += PLG_INFO[plugin]
     else:
@@ -377,9 +355,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
             count += 1
             sqllist.rm_from_list("sudo_enabled_cmds", cmd)
     result = f"__Successfully disabled __ `{count}` __ for CatUserbot sudo.__\n"
-    output = (
-        result + "**Bot is reloading to apply the changes. Please wait for a minute**\n"
-    )
+    output = result + "**Bot is reloading to apply the changes. Please wait for a minute**\n"
     if errors != "":
         output += "\n**Errors:**\n" + errors
     msg = await edit_or_reply(catevent, output)

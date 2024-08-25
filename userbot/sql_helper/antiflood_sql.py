@@ -87,9 +87,7 @@ def get_flood_limit(chat_id):
 def migrate_chat(old_chat_id, new_chat_id):
     with INSERTION_LOCK:
         if flood := SESSION.query(FloodControl).get(str(old_chat_id)):
-            ANTIFLOOD_SQL_.CHAT_FLOOD[str(new_chat_id)] = ANTIFLOOD_SQL_.CHAT_FLOOD.get(
-                str(old_chat_id), DEF_OBJ
-            )
+            ANTIFLOOD_SQL_.CHAT_FLOOD[str(new_chat_id)] = ANTIFLOOD_SQL_.CHAT_FLOOD.get(str(old_chat_id), DEF_OBJ)
             flood.chat_id = str(new_chat_id)
             SESSION.commit()
 
@@ -99,9 +97,7 @@ def migrate_chat(old_chat_id, new_chat_id):
 def __load_flood_settings():
     try:
         all_chats = SESSION.query(FloodControl).all()
-        ANTIFLOOD_SQL_.CHAT_FLOOD = {
-            chat.chat_id: (None, DEF_COUNT, chat.limit) for chat in all_chats
-        }
+        ANTIFLOOD_SQL_.CHAT_FLOOD = {chat.chat_id: (None, DEF_COUNT, chat.limit) for chat in all_chats}
     finally:
         SESSION.close()
     return ANTIFLOOD_SQL_.CHAT_FLOOD

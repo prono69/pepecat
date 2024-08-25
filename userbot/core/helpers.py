@@ -24,9 +24,7 @@ def printUser(entity: types.User) -> None:
     LOGGER.warning("Successfully logged in as {0}".format(user))
 
 
-async def get_chat_link(
-    arg: Union[types.User, types.Chat, types.Channel, NewMessage.Event], reply=None
-) -> str:
+async def get_chat_link(arg: Union[types.User, types.Chat, types.Channel, NewMessage.Event], reply=None) -> str:
     if isinstance(arg, (types.User, types.Chat, types.Channel)):
         entity = arg
     else:

@@ -56,9 +56,7 @@ async def _(event):
                     peer=created_chat_id,
                 )
             )
-            await edit_or_reply(
-                event, f"Group `{group_name}` created successfully. Join {result.link}"
-            )
+            await edit_or_reply(event, f"Group `{group_name}` created successfully. Join {result.link}")
         except Exception as e:
             await edit_delete(event, f"**Error:**\n{str(e)}")
     elif type_of_group == "c":
@@ -83,9 +81,7 @@ async def _(event):
         except Exception as e:
             await edit_delete(event, f"**Error:**\n{e}")
     elif type_of_group == "b":
-        answer = await create_supergroup(
-            group_name, event.client, Config.TG_BOT_USERNAME, descript
-        )
+        answer = await create_supergroup(group_name, event.client, Config.TG_BOT_USERNAME, descript)
         if answer[0] != "error":
             await edit_or_reply(
                 event,

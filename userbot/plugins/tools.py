@@ -68,12 +68,8 @@ async def currency(event):
     tocurrency = tocurrency.upper()
     try:
         value = float(value)
-        aresponse = await AioHttp().get_json(
-            f"https://free.currconv.com/api/v7/convert?q={fromcurrency}_{tocurrency}&compact=ultra&apiKey={Config.CURRENCY_API}"
-        )
-        symbols = await AioHttp().get_raw(
-            "https://raw.githubusercontent.com/TgCatUB/CatUserbot-Resources/master/Resources/Data/currency.py"
-        )
+        aresponse = await AioHttp().get_json(f"https://free.currconv.com/api/v7/convert?q={fromcurrency}_{tocurrency}&compact=ultra&apiKey={Config.CURRENCY_API}")
+        symbols = await AioHttp().get_raw("https://raw.githubusercontent.com/TgCatUB/CatUserbot-Resources/master/Resources/Data/currency.py")
 
         symbols = json.loads(re.sub(", *\n *}", "}", symbols.decode("utf-8")))
         try:
@@ -119,9 +115,7 @@ async def scan(event):
         try:
             flag = await conv.send_message("/start")
         except YouBlockedUserError:
-            await edit_or_reply(
-                catevent, "**Error:** Trying to unblock & retry, wait a sec..."
-            )
+            await edit_or_reply(catevent, "**Error:** Trying to unblock & retry, wait a sec...")
             await catub(unblock("VS_Robot"))
             flag = await conv.send_message("/start")
         await conv.get_response()
@@ -141,9 +135,7 @@ async def scan(event):
                 await edit_or_reply(catevent, response3.text[30:])
             else:
                 await catevent.delete()
-                await event.client.send_file(
-                    event.chat_id, response2.media, reply_to=(await reply_id(event))
-                )
+                await event.client.send_file(event.chat_id, response2.media, reply_to=(await reply_id(event)))
         await delete_conv(event, chat, flag)
 
 
@@ -266,9 +258,7 @@ async def make_qr(makeqr):
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white")
     img.save("img_file.webp", "PNG")
-    await makeqr.client.send_file(
-        makeqr.chat_id, "img_file.webp", reply_to=reply_msg_id
-    )
+    await makeqr.client.send_file(makeqr.chat_id, "img_file.webp", reply_to=reply_msg_id)
     os.remove("img_file.webp")
     await makeqr.delete()
 
@@ -355,11 +345,7 @@ async def spy(event):
     current_time = r["time_zone"]["current_time"]
 
     symbol = "₹" if country == "India" else curnative
-    language1 = (
-        f"<code>{lang1}</code>"
-        if lang1 == native
-        else f"<code>{lang1}</code> [<code>{native}</code>]"
-    )
+    language1 = f"<code>{lang1}</code>" if lang1 == native else f"<code>{lang1}</code> [<code>{native}</code>]"
 
     try:
         lang2 = f', <code>{r["languages"][1]["name"]}</code>'
@@ -420,9 +406,7 @@ async def _(event):
     input_str = event.pattern_match.group(1)
     message_id = await reply_id(event)
     if not input_str.startswith("#"):
-        return await edit_or_reply(
-            event, "**Syntax : **`.color <color_code>` example : `.color #ff0000`"
-        )
+        return await edit_or_reply(event, "**Syntax : **`.color <color_code>` example : `.color #ff0000`")
     try:
         usercolor = ImageColor.getrgb(input_str)
     except Exception as e:
@@ -460,9 +444,7 @@ async def _(event):
             xkcd_id = input_str
         else:
             xkcd_search_url = "https://relevantxkcd.appspot.com/process?"
-            queryresult = requests.get(
-                xkcd_search_url, params={"action": "xkcd", "query": quote(input_str)}
-            ).text
+            queryresult = requests.get(xkcd_search_url, params={"action": "xkcd", "query": quote(input_str)}).text
             xkcd_id = queryresult.split(" ")[2].lstrip("\n")
     if xkcd_id is None:
         xkcd_url = "https://xkcd.com/info.0.json"
@@ -487,7 +469,5 @@ Title: {}
 Alt: {}
 Day: {}
 Month: {}
-Year: {}""".format(
-        img, input_str, xkcd_link, safe_title, alt, day, month, year
-    )
+Year: {}""".format(img, input_str, xkcd_link, safe_title, alt, day, month, year)
     await catevent.edit(output_str, link_preview=True)

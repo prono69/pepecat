@@ -53,9 +53,7 @@ async def glitch(event):
         file="glitch.png",
     )
     if glitch_file[1] is None:
-        return await edit_delete(
-            glitch_file[0], "__Unable to extract image from the replied message.__"
-        )
+        return await edit_delete(glitch_file[0], "__Unable to extract image from the replied message.__")
     glitcher = ImageGlitcher()
     img = Image.open(glitch_file[1])
     if cmd:

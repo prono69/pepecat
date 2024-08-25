@@ -108,10 +108,7 @@ async def variable(event):
                 result = fp.read()
                 await edit_or_reply(
                     cat,
-                    "`[HEROKU]` ConfigVars:\n\n"
-                    "================================"
-                    f"\n```{result}```\n"
-                    "================================",
+                    "`[HEROKU]` ConfigVars:\n\n" "================================" f"\n```{result}```\n" "================================",
                 )
             os.remove("configs.json")
     elif cmd == "set":
@@ -119,18 +116,14 @@ async def variable(event):
         if not value:
             return await edit_or_reply(cat, "`.set var <ConfigVars-name> <value>`")
         if variable in heroku_var:
-            await edit_or_reply(
-                cat, f"`{variable}` **successfully changed to  ->  **`{value}`"
-            )
+            await edit_or_reply(cat, f"`{variable}` **successfully changed to  ->  **`{value}`")
             await event.client.send_message(
                 BOTLOG_CHATID,
                 f"#CONFIG_VAR  #UPDATED\n\n`{variable}` = `{value}`",
                 silent=True,
             )
         else:
-            await edit_or_reply(
-                cat, f"`{variable}`**  successfully added with value`  ->  **{value}`"
-            )
+            await edit_or_reply(cat, f"`{variable}`**  successfully added with value`  ->  **{value}`")
             await event.client.send_message(
                 BOTLOG_CHATID,
                 f"#CONFIG_VAR  #ADDED\n\n`{variable}` = `{value}`",
@@ -138,15 +131,11 @@ async def variable(event):
             )
         heroku_var[variable] = value
     elif cmd == "del":
-        cat = await edit_or_reply(
-            event, "`Getting information to deleting variable...`"
-        )
+        cat = await edit_or_reply(event, "`Getting information to deleting variable...`")
         if variable not in heroku_var:
             return await edit_or_reply(cat, f"`{variable}`**  does not exist**")
         await edit_or_reply(cat, f"`{variable}`  **successfully deleted**")
-        await event.client.send_message(
-            BOTLOG_CHATID, f"#CONFIG_VAR  #DELETED\n\n`{variable}`", silent=True
-        )
+        await event.client.send_message(BOTLOG_CHATID, f"#CONFIG_VAR  #DELETED\n\n`{variable}`", silent=True)
         del heroku_var[variable]
 
 
@@ -164,11 +153,7 @@ async def dyno_usage(dyno):
     if not app:
         return await edit_delete(dyno, Heroku)
     dyno = await edit_or_reply(dyno, "`Processing...`")
-    useragent = (
-        "Mozilla/5.0 (Linux; Android 10; SM-G975F) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/80.0.3987.149 Mobile Safari/537.36"
-    )
+    useragent = "Mozilla/5.0 (Linux; Android 10; SM-G975F) " "AppleWebKit/537.36 (KHTML, like Gecko) " "Chrome/80.0.3987.149 Mobile Safari/537.36"
     user_id = Heroku.account().id
     headers = {
         "User-Agent": useragent,
@@ -178,9 +163,7 @@ async def dyno_usage(dyno):
     path = f"/accounts/{user_id}/actions/get-quota"
     r = requests.get(heroku_api + path, headers=headers)
     if r.status_code != 200:
-        return await dyno.edit(
-            "`Error: something bad happened`\n\n" f">.`{r.reason}`\n"
-        )
+        return await dyno.edit("`Error: something bad happened`\n\n" f">.`{r.reason}`\n")
     result = r.json()
     quota = result["account_quota"]
     quota_used = result["quota_used"]
@@ -229,22 +212,20 @@ async def herokulogs(event):
     if not app:
         return await edit_delete(event, Heroku)
     data = app.get_log()
-    await edit_or_reply(
-        event, data, deflink=True, linktext="**Recent 100 lines of heroku logs: **"
-    )
+    await edit_or_reply(event, data, deflink=True, linktext="**Recent 100 lines of heroku logs: **")
 
 
 def prettyjson(obj, indent=2, maxlinelength=80):
     """Renders JSON content with indentation and line splits/concatenations to fit maxlinelength.
     Only dicts, lists and basic types are supported"""
-    items, _ = getsubitems(
+    items, _ = getsubitems(  # noqa F821
         obj,
         itemkey="",
         islast=True,
         maxlinelength=maxlinelength - indent,
         indent=indent,
     )
-    return indentitems(items, indent, level=0)
+    return indentitems(items, indent, level=0)  # noqa F821
 
 
 @catub.cat_cmd(
@@ -279,9 +260,7 @@ async def buildpack(event):
         return await edit_delete(event, "**Error::** `Give buildpack link..`")
     elif cmd == "add":
         if link in buidpacks:
-            return await edit_delete(
-                event, "**Error::** __Buildpack is already connected to this app..__"
-            )
+            return await edit_delete(event, "**Error::** __Buildpack is already connected to this app..__")
         buidpacks.append(link)
         app.update_buildpacks(buidpacks)
         return await edit_delete(
@@ -300,9 +279,7 @@ async def buildpack(event):
             event,
             "**Success:** __Buildpack removed.\nDo `.update deploy` to complete updating__",
         )
-    string = (
-        f"__**Currently available buildpacks for {Config.HEROKU_APP_NAME}:-**__\n\n"
-    )
+    string = f"__**Currently available buildpacks for {Config.HEROKU_APP_NAME}:-**__\n\n"
     for i, url in enumerate(buidpacks, start=1):
         string += f"**{i}.**   `{url}`\n\n"
     await edit_or_reply(event, string)

@@ -117,17 +117,13 @@ def manage_dir(path, num):
                 files += f"🎧`{contents}`\n"
             if str(contents).endswith((".opus")):
                 files += f"🎤`{contents}`\n"
-            elif str(contents).endswith(
-                (".mkv", ".mp4", ".webm", ".avi", ".mov", ".flv")
-            ):
+            elif str(contents).endswith((".mkv", ".mp4", ".webm", ".avi", ".mov", ".flv")):
                 files += f"🎬`{contents}`\n"
             elif str(contents).endswith((".zip", ".tar", ".tar.gz", ".rar")):
                 files += f"📚`{contents}`\n"
             elif str(contents).endswith((".py")):
                 files += f"🐍`{contents}`\n"
-            elif str(contents).endswith(
-                (".jpg", ".jpeg", ".png", ".gif", ".bmp", ".ico")
-            ):
+            elif str(contents).endswith((".jpg", ".jpeg", ".png", ".gif", ".bmp", ".ico")):
                 files += f"🏞`{contents}`\n"
             else:
                 files += f"📔`{contents}`\n"
@@ -253,11 +249,7 @@ async def send(event):
         mime_type=mime_type,
         attributes=attributes,
         force_file=False,
-        thumb=(
-            await event.client.upload_file(thumb_image_path)
-            if thumb_image_path
-            else None
-        ),
+        thumb=await event.client.upload_file(thumb_image_path) if thumb_image_path else None,
     )
     await event.edit("hi", file=media)
 

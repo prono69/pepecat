@@ -37,10 +37,7 @@ def convert_from_bytes(size):
         "header": "Botserver's speedtest by ookla.",
         "options": {
             "text": "will give output as text",
-            "image": (
-                "Will give output as image this is default option if "
-                "no input is given."
-            ),
+            "image": ("Will give output as image this is default option if " "no input is given."),
             "file": "will give output as png file.",
         },
         "usage": ["{tr}speedtest <option>", "{tr}speedtest"],
@@ -57,9 +54,7 @@ async def _(event):
         as_document = False
     elif input_str == "text":
         as_text = True
-    catevent = await edit_or_reply(
-        event, "`Calculating my internet speed. Please wait!`"
-    )
+    catevent = await edit_or_reply(event, "`Calculating my internet speed. Please wait!`")
     start = time()
     s = speedtest.Speedtest()
     s.get_best_server()

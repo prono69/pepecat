@@ -41,9 +41,7 @@ async def collage(event):
         "Animated Sticker",
         "Video",
     ]:
-        return await edit_delete(
-            event, "`The replied message media type is not supported.`"
-        )
+        return await edit_delete(event, "`The replied message media type is not supported.`")
     if catinput:
         if not catinput.isdigit():
             return await edit_delete(event, "`You input is invalid, check help`")
@@ -64,22 +62,16 @@ async def collage(event):
         catsticker = await reply.download_media(file="./temp/")
         collagefile = catsticker
     else:
-        collage_file = await Convert.to_gif(
-            event, reply, file="collage.mp4", noedits=True
-        )
+        collage_file = await Convert.to_gif(event, reply, file="collage.mp4", noedits=True)
         collagefile = collage_file[1]
     if not collagefile:
-        await edit_or_reply(
-            event, "**Error:-** __Unable to process the replied media__"
-        )
+        await edit_or_reply(event, "**Error:-** __Unable to process the replied media__")
     endfile = "./temp/collage.png"
     catcmd = f"vcsi -g {catinput}x{catinput} '{collagefile}' -o {endfile}"
     stdout, stderr = (await _catutils.runcmd(catcmd))[:2]
     if not os.path.exists(endfile) and os.path.exists(collagefile):
         os.remove(collagefile)
-        return await edit_delete(
-            event, "`Media is not supported, or try with smaller grid size`"
-        )
+        return await edit_delete(event, "`Media is not supported, or try with smaller grid size`")
     await event.client.send_file(
         event.chat_id,
         endfile,

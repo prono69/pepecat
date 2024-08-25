@@ -117,9 +117,7 @@ async def on_regex(event):
     m, s = doit(event.chat_id, event.pattern_match, await event.get_reply_message())
     if m is not None:
         s = f"{HEADER}{s}"
-        out = await event.client.send_message(
-            await event.get_input_chat(), s, reply_to=m.id
-        )
+        out = await event.client.send_message(await event.get_input_chat(), s, reply_to=m.id)
         last_msgs[event.chat_id].appendleft(out)
     elif s is not None:
         await edit_or_reply(event, s)

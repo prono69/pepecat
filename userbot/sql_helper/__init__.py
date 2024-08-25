@@ -7,7 +7,7 @@
 # Please see: https://github.com/TgCatUB/catuserbot/blob/master/LICENSE
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-import os
+import os  # noqa F401
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -21,11 +21,7 @@ LOGS = logging.getLogger(__name__)
 
 
 def start() -> scoped_session:
-    database_url = (
-        Config.DB_URI.replace("postgres:", "postgresql:")
-        if "postgres://" in Config.DB_URI
-        else Config.DB_URI
-    )
+    database_url = Config.DB_URI.replace("postgres:", "postgresql:") if "postgres://" in Config.DB_URI else Config.DB_URI
     engine = create_engine(database_url)
     BASE.metadata.bind = engine
     BASE.metadata.create_all(engine)
@@ -37,7 +33,5 @@ try:
     SESSION = start()
 except AttributeError as e:
     # this is a dirty way for the work-around required for #23
-    LOGS.error(
-        "DB_URI is not configured. Features depending on the database might have issues."
-    )
+    LOGS.error("DB_URI is not configured. Features depending on the database might have issues.")
     LOGS.error(str(e))

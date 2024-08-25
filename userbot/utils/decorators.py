@@ -56,9 +56,7 @@ def admin_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
             if command is not None:
                 cmd = reg + command
             else:
-                cmd = (
-                    (reg + pattern).replace("$", "").replace("\\", "").replace("^", "")
-                )
+                cmd = (reg + pattern).replace("$", "").replace("\\", "").replace("^", "")
             try:
                 CMD_LIST[file_test].append(cmd)
             except BaseException:
@@ -109,9 +107,7 @@ def sudo_cmd(pattern=None, command=None, **args):  # sourcery no-metrics
             if command is not None:
                 cmd = reg + command
             else:
-                cmd = (
-                    (reg + pattern).replace("$", "").replace("\\", "").replace("^", "")
-                )
+                cmd = (reg + pattern).replace("$", "").replace("\\", "").replace("^", "")
             try:
                 SUDO_LIST[file_test].append(cmd)
             except BaseException:
@@ -155,7 +151,7 @@ def errors_handler(func):
                                   \nSender ID: {str(check.sender_id)}\
                                   \n\nEvent Trigger:\n{str(check.text)}\
                                   \n\nTraceback info:\n{str(traceback.format_exc())}\
-                                  \n\nError text:\n{str(sys.exc_info()[1])}"
+                                  \n\nError text:\n{str(sys.exc_info()[1])}"  # noqa F821
             new = {
                 "error": str(sys.exc_info()[1]),
                 "date": datetime.datetime.now(),
@@ -172,10 +168,8 @@ def errors_handler(func):
             text = "**CatUserbot Error report**\n\n" + "If you wanna you can report it"
             text += f"- just forward this message {link}.\n"
             text += "Nothing is logged except the fact of error and date\n\n"
-            text += f"**Error report : ** [{new['error']}]({pastelink})"
-            await check.client.send_message(
-                Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
-            )
+            text += f"**Error report : ** [{new['error']}]({pastelink})"  # noqa F821
+            await check.client.send_message(Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False)  # noqa F821
 
     return wrapper
 

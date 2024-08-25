@@ -21,9 +21,7 @@ from . import Convert, catub, soft_deEmojify
 plugin_category = "utils"
 
 
-async def ocr_space_file(
-    filename, overlay=False, api_key=Config.OCR_SPACE_API_KEY, language="eng"
-):
+async def ocr_space_file(filename, overlay=False, api_key=Config.OCR_SPACE_API_KEY, language="eng"):
     """OCR.space API request with local file.
         Python3.5 - not tested on 2.7
     :param filename: Your file path & name.
@@ -71,31 +69,21 @@ async def ocr(event):
         os.makedirs(Config.TEMP_DIR)
     cmd = event.pattern_match.group(1)
     lang_code = event.pattern_match.group(2)
-    output_file = await Convert.to_image(
-        event, reply, dirct="./temp", file="image.png", rgb=True, noedits=True
-    )
+    output_file = await Convert.to_image(event, reply, dirct="./temp", file="image.png", rgb=True, noedits=True)
     if not output_file[1]:
-        return await edit_delete(
-            catevent, "`Couldn't find image. Are you sure you replied to image?`"
-        )
+        return await edit_delete(catevent, "`Couldn't find image. Are you sure you replied to image?`")
     test_file = await ocr_space_file(filename=output_file[1], language=lang_code)
     try:
         ParsedText = test_file["ParsedResults"][0]["ParsedText"]
     except BaseException:
-        await edit_delete(
-            catevent, "`Couldn't read it.`\n`I guess I need new glasses.`"
-        )
+        await edit_delete(catevent, "`Couldn't read it.`\n`I guess I need new glasses.`")
     else:
         if cmd == "":
-            await edit_or_reply(
-                catevent, f"**Here's what I could read from it:**\n\n`{ParsedText}`"
-            )
+            await edit_or_reply(catevent, f"**Here's what I could read from it:**\n\n`{ParsedText}`")
         if cmd == "t":
             TRT_LANG = gvarstatus("TOCR_LANG") or "en"
             try:
-                reply_text = await getTranslate(
-                    soft_deEmojify(ParsedText), dest=TRT_LANG
-                )
+                reply_text = await getTranslate(soft_deEmojify(ParsedText), dest=TRT_LANG)
             except ValueError:
                 return await edit_delete(catevent, "`Invalid destination language.`")
             source_lan = LANGUAGES[f"{reply_text.src.lower()}"]
@@ -120,5 +108,5 @@ async def ocr(event):
         "examples": "{tr}tocr eng",
     },
 )
-async def ocr(event):
+async def tocr(event):
     "To read text in media & paste with translated."

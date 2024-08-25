@@ -61,9 +61,7 @@ async def _(event):
     "To show all config values in userbot"
     cmd = "env"
     o = (await _catutils.runcmd(cmd))[0]
-    OUTPUT = (
-        f"**[Cat's](tg://need_update_for_some_feature/) Environment Module:**\n\n\n{o}"
-    )
+    OUTPUT = f"**[Cat's](tg://need_update_for_some_feature/) Environment Module:**\n\n\n{o}"
     await edit_or_reply(event, OUTPUT)
 
 
@@ -79,9 +77,7 @@ async def _(event):
     "Replied message without markdown format."
     reply = await event.get_reply_message()
     if not reply or not reply.text:
-        return await edit_delete(
-            event, "__Reply to text message to get text without markdown formating.__"
-        )
+        return await edit_delete(event, "__Reply to text message to get text without markdown formating.__")
     await edit_or_reply(event, reply.text, parse_mode=parse_pre)
 
 
@@ -103,6 +99,4 @@ async def _(event):
             result = reply.date
     else:
         result = event.date
-    await edit_or_reply(
-        event, f"**This message was posted on :** `{yaml_format(result)}`"
-    )
+    await edit_or_reply(event, f"**This message was posted on :** `{yaml_format(result)}`")

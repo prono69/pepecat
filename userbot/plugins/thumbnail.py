@@ -39,9 +39,7 @@ async def _(event):
     catevent = await edit_or_reply(event, "`Processing ...`")
     if not event.reply_to_msg_id:
         return await catevent.edit("`Reply to a photo to save custom thumbnail`")
-    downloaded_file_name = await event.client.download_media(
-        await event.get_reply_message(), Config.TMP_DOWNLOAD_DIRECTORY
-    )
+    downloaded_file_name = await event.client.download_media(await event.get_reply_message(), Config.TMP_DOWNLOAD_DIRECTORY)
     if downloaded_file_name.endswith(".mp4"):
         metadata = extractMetadata(createParser(downloaded_file_name))
         if metadata and metadata.has("duration"):
@@ -51,9 +49,7 @@ async def _(event):
     Image.open(downloaded_file_name).convert("RGB").save(thumb_image_path, "JPEG")
     # https://pillow.readthedocs.io/en/3.1.x/reference/Image.html#create-thumbnails
     os.remove(downloaded_file_name)
-    await catevent.edit(
-        "Custom video/file thumbnail saved. This image will be used in the upload, till `.clearthumb`."
-    )
+    await catevent.edit("Custom video/file thumbnail saved. This image will be used in the upload, till `.clearthumb`.")
 
 
 @catub.cat_cmd(

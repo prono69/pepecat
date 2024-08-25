@@ -36,12 +36,7 @@ from ..helpers.utils.utils import runcmd
 from ..sql_helper.globals import gvarstatus
 from . import BOT_INFO, CMD_INFO, GRP_INFO, LOADED_CMDS, PLG_INFO
 from .cmdinfo import _format_about
-from .data import (
-    _sudousers_list,
-    _vcusers_list,
-    blacklist_chats_list,
-    sudo_enabled_cmds,
-)
+from .data import _sudousers_list, _vcusers_list, blacklist_chats_list, sudo_enabled_cmds
 from .events import *
 from .fasttelethon import download_file, upload_file
 from .logger import logging
@@ -66,8 +61,7 @@ class CatUserBotClient(TelegramClient):
     def cat_cmd(
         self: TelegramClient,
         pattern: str or tuple = None,
-        info: Union[str, Dict[str, Union[str, List[str], Dict[str, str]]]]
-        or tuple = None,
+        info: Union[str, Dict[str, Union[str, List[str], Dict[str, str]]]] or tuple = None,
         groups_only: bool = False,
         private_only: bool = False,
         allow_sudo: bool = True,
@@ -105,11 +99,7 @@ class CatUserBotClient(TelegramClient):
             if command[0] not in CMD_INFO:
                 CMD_INFO[command[0]] = [_format_about(info)]
         if pattern is not None:
-            if (
-                pattern.startswith(r"\#")
-                or not pattern.startswith(r"\#")
-                and pattern.startswith(r"^")
-            ):
+            if pattern.startswith(r"\#") or not pattern.startswith(r"\#") and pattern.startswith(r"^"):
                 REGEX_.regex1 = REGEX_.regex2 = re.compile(pattern)
             else:
                 reg1 = "\\" + Config.COMMAND_HAND_LER
@@ -123,9 +113,7 @@ class CatUserBotClient(TelegramClient):
                 if groups_only and not check.is_group:
                     return await edit_delete(check, "`I don't think this is a group.`")
                 if private_only and not check.is_private:
-                    return await edit_delete(
-                        check, "`I don't think this is a personal Chat.`"
-                    )
+                    return await edit_delete(check, "`I don't think this is a personal Chat.`")
                 try:
                     await func(check)
                 except events.StopPropagation as e:
@@ -139,13 +127,9 @@ class CatUserBotClient(TelegramClient):
                 except BotInlineDisabledError:
                     await edit_delete(check, "`Turn on Inline mode for our bot`")
                 except ChatSendStickersForbiddenError:
-                    await edit_delete(
-                        check, "`I guess i can't send stickers in this chat`"
-                    )
+                    await edit_delete(check, "`I guess i can't send stickers in this chat`")
                 except BotResponseTimeoutError:
-                    await edit_delete(
-                        check, "`The bot didnt answer to your query in time`"
-                    )
+                    await edit_delete(check, "`The bot didnt answer to your query in time`")
                 except ChatSendMediaForbiddenError:
                     await edit_delete(check, "`You can't send media in this chat`")
                 except AlreadyInConversationError:
@@ -154,13 +138,9 @@ class CatUserBotClient(TelegramClient):
                         "`A conversation is already happening with the given chat. try again after some time.`",
                     )
                 except ChatSendInlineForbiddenError:
-                    await edit_delete(
-                        check, "`You can't send inline messages in this chat.`"
-                    )
+                    await edit_delete(check, "`You can't send inline messages in this chat.`")
                 except FloodWaitError as e:
-                    LOGS.error(
-                        f"A flood wait of {e.seconds} occured. wait for {e.seconds} seconds and try"
-                    )
+                    LOGS.error(f"A flood wait of {e.seconds} occured. wait for {e.seconds} seconds and try")
                     await check.delete()
                     await asyncio.sleep(e.seconds + 5)
                 except BaseException as e:
@@ -190,22 +170,13 @@ class CatUserBotClient(TelegramClient):
                         output = (await runcmd(command))[:2]
                         result = output[0] + output[1]
                         ftext += result
-                        pastelink = await paste_message(
-                            ftext, pastetype="s", markdown=False
-                        )
+                        pastelink = await paste_message(ftext, pastetype="s", markdown=False)
                         link = "[here](https://t.me/catuserbot_support)"
-                        text = (
-                            "**CatUserbot Error report**\n\n"
-                            + "If you wanna you can report it"
-                        )
+                        text = "**CatUserbot Error report**\n\n" + "If you wanna you can report it"
                         text += f"- just forward this message {link}.\n"
-                        text += (
-                            "Nothing is logged except the fact of error and date\n\n"
-                        )
+                        text += "Nothing is logged except the fact of error and date\n\n"
                         text += f"**Error report : ** [{new['error']}]({pastelink})"
-                        await check.client.send_message(
-                            Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
-                        )
+                        await check.client.send_message(Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False)
 
             from .session import catub
 
@@ -240,15 +211,9 @@ class CatUserBotClient(TelegramClient):
                         )
                     catub.add_event_handler(
                         wrapper,
-                        NewMessage(
-                            pattern=REGEX_.regex2, from_users=_vcusers_list(), **kwargs
-                        ),
+                        NewMessage(pattern=REGEX_.regex2, from_users=_vcusers_list(), **kwargs),
                     )
-                if (
-                    allow_sudo
-                    and gvarstatus("sudoenable") is not None
-                    and (command is None or command[0] in sudo_enabledcmds)
-                ):
+                if allow_sudo and gvarstatus("sudoenable") is not None and (command is None or command[0] in sudo_enabledcmds):
                     if edited:
                         catub.add_event_handler(
                             wrapper,
@@ -330,22 +295,13 @@ class CatUserBotClient(TelegramClient):
                         output = (await runcmd(command))[:2]
                         result = output[0] + output[1]
                         ftext += result
-                        pastelink = await paste_message(
-                            ftext, pastetype="s", markdown=False
-                        )
+                        pastelink = await paste_message(ftext, pastetype="s", markdown=False)
                         link = "[here](https://t.me/catuserbot_support)"
-                        text = (
-                            "**CatUserbot Error report**\n\n"
-                            + "If you wanna you can report it"
-                        )
+                        text = "**CatUserbot Error report**\n\n" + "If you wanna you can report it"
                         text += f"- just forward this message {link}.\n"
-                        text += (
-                            "Nothing is logged except the fact of error and date\n\n"
-                        )
+                        text += "Nothing is logged except the fact of error and date\n\n"
                         text += f"**Error report : ** [{new['error']}]({pastelink})"
-                        await check.client.send_message(
-                            Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
-                        )
+                        await check.client.send_message(Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False)
 
             from .session import catub
 
@@ -359,9 +315,7 @@ class CatUserBotClient(TelegramClient):
         return decorator
 
     async def get_traceback(self, exc: Exception) -> str:
-        return "".join(
-            traceback.format_exception(etype=type(exc), value=exc, tb=exc.__traceback__)
-        )
+        return "".join(traceback.format_exception(etype=type(exc), value=exc, tb=exc.__traceback__))
 
     def _kill_running_processes(self) -> None:
         """Kill all the running asyncio subprocessess"""

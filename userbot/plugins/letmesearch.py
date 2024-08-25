@@ -57,9 +57,7 @@ async def uthoob(event):
         input_str = reply.text
     if not input_str:
         return await edit_delete(event, "**ಠ∀ಠ Give me text to search..**")
-    sample_url = (
-        f"https://www.youtube.com/results?search_query={input_str.replace(' ', '+')}"
-    )
+    sample_url = f"https://www.youtube.com/results?search_query={input_str.replace(' ', '+')}"
     await edit_or_reply(event, "`Searching.....`")
     await sleep(2)
     await edit_or_reply(
@@ -84,9 +82,7 @@ async def dukdukgo(event):
         input_str = reply.text
     if not input_str:
         return await edit_delete(event, "**ಠ∀ಠ Give me text to search..**")
-    sample_url = (
-        f"https://duckduckgo.com/?q={input_str.replace(' ', '+')}&t=h_&ia=about"
-    )
+    sample_url = f"https://duckduckgo.com/?q={input_str.replace(' ', '+')}&t=h_&ia=about"
     event = await edit_or_reply(event, "`Searching.....`")
     await sleep(2)
     await edit_or_reply(
@@ -131,9 +127,7 @@ async def news(event):
 async def var(event):
     "Searches the given app name in heroku and show that app vars page link ."
     input_str = event.pattern_match.group(1)
-    sample_url = (
-        f"https://dashboard.heroku.com/apps/{input_str.replace(' ', '+')}/settings"
-    )
+    sample_url = f"https://dashboard.heroku.com/apps/{input_str.replace(' ', '+')}/settings"
     await edit_or_reply(event, "`Searching.....`")
     await sleep(2)
     await edit_or_reply(
@@ -174,9 +168,7 @@ async def dyno(event):
     "Searches the given app name in heroku and shows you dyno page link of that app."
     input_str = event.pattern_match.group(1)
     billings_url = "https://da.gd/s?url=https://dashboard.heroku.com/account/billing"
-    sample_url = (
-        f"https://da.gd/s?url=https://dashboard.heroku.com/apps/{input_str}/resources"
-    )
+    sample_url = f"https://da.gd/s?url=https://dashboard.heroku.com/apps/{input_str}/resources"
     await edit_or_reply(event, "`Searching.....`")
     await sleep(2)
     await edit_or_reply(

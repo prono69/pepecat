@@ -33,7 +33,7 @@ plugin_category = "tools"
         "examples": "{tr}getc 10 @catuserbot17",
     },
 )
-async def get_media(event):
+async def get_media_channel(event):
     catty = event.pattern_match.group(1)
     limit = int(catty.split(" ")[0])
     channel_username = str(catty.split(" ")[1])
@@ -48,18 +48,14 @@ async def get_media(event):
         if mediatype is not None:
             await event.client.download_media(msg, tempdir)
             i += 1
-            await event.edit(
-                f"Downloading Media From this Channel.\n **DOWNLOADED : **`{i}`"
-            )
+            await event.edit(f"Downloading Media From this Channel.\n **DOWNLOADED : **`{i}`")
     ps = subprocess.Popen(("ls", tempdir), stdout=subprocess.PIPE)
     output = subprocess.check_output(("wc", "-l"), stdin=ps.stdout)
     ps.wait()
     output = str(output)
     output = output.replace("b'", " ")
     output = output.replace("\\n'", " ")
-    await event.edit(
-        f"Successfully downloaded {output} number of media files from {channel_username} to tempdir"
-    )
+    await event.edit(f"Successfully downloaded {output} number of media files from {channel_username} to tempdir")
 
 
 @catub.cat_cmd(
@@ -86,15 +82,11 @@ async def get_media(event):
         if mediatype is not None:
             await event.client.download_media(msg, tempdir)
             i += 1
-            await event.edit(
-                f"Downloading Media From this Channel.\n **DOWNLOADED : **`{i}`"
-            )
+            await event.edit(f"Downloading Media From this Channel.\n **DOWNLOADED : **`{i}`")
     ps = subprocess.Popen(("ls", tempdir), stdout=subprocess.PIPE)
     output = subprocess.check_output(("wc", "-l"), stdin=ps.stdout)
     ps.wait()
     output = str(output)
     output = output.replace("b'", "")
     output = output.replace("\\n'", "")
-    await event.edit(
-        f"Successfully downloaded {output} number of media files from {channel_username} to tempdir"
-    )
+    await event.edit(f"Successfully downloaded {output} number of media files from {channel_username} to tempdir")

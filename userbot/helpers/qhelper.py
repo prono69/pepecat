@@ -189,9 +189,7 @@ async def process(msg, user, client, reply, event, replied=None):  # sourcery no
             sticker = await reply.download_media()
             file_1 = os.path.join("./temp/", "q.png")
             if sticker.endswith(("tgs")):
-                cmd = (
-                    f"lottie_convert.py --frame 0 -if lottie -of png {sticker} {file_1}"
-                )
+                cmd = f"lottie_convert.py --frame 0 -if lottie -of png {sticker} {file_1}"
                 stdout, stderr = (await _catutils.runcmd(cmd))[:2]
                 stimg = Image.open("./temp/q.png")
             else:
@@ -255,11 +253,7 @@ async def process(msg, user, client, reply, event, replied=None):  # sourcery no
             docsize = f"{str(round(reply.document.size / 1024**2, 2))} MB "
         else:
             docsize = f"{str(round(reply.document.size / 1024**3, 2))} GB "
-        docbglen = (
-            font.getsize(docsize)[0]
-            if font.getsize(docsize)[0] > font.getsize(docname)[0]
-            else font.getsize(docname)[0]
-        )
+        docbglen = font.getsize(docsize)[0] if font.getsize(docsize)[0] > font.getsize(docname)[0] else font.getsize(docname)[0]
         canvas = canvas.resize((pfpbg.width + width + docbglen, 160 + height))
         top, middle, bottom = await drawer(width + docbglen, height + 30)
         canvas.paste(pfpbg, (0, 0))
@@ -290,9 +284,7 @@ async def process(msg, user, client, reply, event, replied=None):  # sourcery no
             draw.text((space, 20), letter, font=namefallback, fill=color)
             space += namefallback.getsize(letter)[0]
     if title:
-        draw.text(
-            (canvas.width - titlewidth - 20, 25), title, font=font2, fill="#898989"
-        )
+        draw.text((canvas.width - titlewidth - 20, 25), title, font=font2, fill="#898989")
 
     # Writing all separating emojis and regular texts
     x = pfpbg.width + 30
@@ -303,32 +295,22 @@ async def process(msg, user, client, reply, event, replied=None):  # sourcery no
     for line in text:
         textcolor = "white"
         for letter in line:
-            index = (
-                msg.find(letter) if emojicount == 0 else msg.find(letter) + emojicount
-            )
+            index = msg.find(letter) if emojicount == 0 else msg.find(letter) + emojicount
             for offset, length in bold.items():
                 if index in range(offset, length):
-                    font2 = ImageFont.truetype(
-                        "./temp/Roboto-Medium.ttf", 38, encoding="utf-16"
-                    )
+                    font2 = ImageFont.truetype("./temp/Roboto-Medium.ttf", 38, encoding="utf-16")
                     textcolor = "white"
             for offset, length in italic.items():
                 if index in range(offset, length):
-                    font2 = ImageFont.truetype(
-                        "./temp/Roboto-Italic.ttf", 38, encoding="utf-16"
-                    )
+                    font2 = ImageFont.truetype("./temp/Roboto-Italic.ttf", 38, encoding="utf-16")
                     textcolor = "white"
             for offset, length in mono.items():
                 if index in range(offset, length):
-                    font2 = ImageFont.truetype(
-                        "./temp/DroidSansMono.ttf", 35, encoding="utf-16"
-                    )
+                    font2 = ImageFont.truetype("./temp/DroidSansMono.ttf", 35, encoding="utf-16")
                     textcolor = "teal"
             for offset, length in link.items():
                 if index in range(offset, length):
-                    font2 = ImageFont.truetype(
-                        "./temp/Roboto-Regular.ttf", 35, encoding="utf-16"
-                    )
+                    font2 = ImageFont.truetype("./temp/Roboto-Regular.ttf", 35, encoding="utf-16")
                     textcolor = "#59a7f6"
             if letter in emoji.UNICODE_EMOJI["en"]:
                 newemoji, mask = await emoji_fetch(letter)
@@ -423,13 +405,7 @@ async def no_photo(tot):
 
 
 async def emoji_fetch(emoji):
-    emojis = json.loads(
-        urllib.request.urlopen(
-            "https://github.com/erenmetesar/modules-repo/raw/master/emojis.txt"
-        )
-        .read()
-        .decode()
-    )
+    emojis = json.loads(urllib.request.urlopen("https://github.com/erenmetesar/modules-repo/raw/master/emojis.txt").read().decode())
     if emoji in emojis:
         img = emojis[emoji]
         return await transparent(urllib.request.urlretrieve(img, "./temp/emoji.png")[0])

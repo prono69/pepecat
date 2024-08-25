@@ -148,7 +148,9 @@ async def kar1_api(event):
 async def kar2_api(event):
     """A Wrapper for carbon.now.sh"""
     cat = await edit_or_reply(event, "📛📛📛📛📛")
-    carbon_url = "https://carbon.now.sh/?bg=rgba(239%2C40%2C44%2C1)&t=one-light&wt=none&l=application%2Ftypescript&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=14px&lh=143%25&si=false&es=2x&wm=false&code={code}"
+    carbon_url = (
+        "https://carbon.now.sh/?bg=rgba(239%2C40%2C44%2C1)&t=one-light&wt=none&l=application%2Ftypescript&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=14px&lh=143%25&si=false&es=2x&wm=false&code={code}"
+    )
 
     query = event.pattern_match.group(1)
     replied_msg = await event.get_reply_message()
@@ -244,7 +246,9 @@ async def kar3_api(event):
 async def kar4_api(event):
     """A Wrapper for carbon.now.sh"""
     cat = await edit_or_reply(event, "🌚🌚🌚🌚🌚")
-    carbon_url = "https://carbon.now.sh/?bg=rgba(29%2C40%2C104%2C1)&t=one-light&wt=none&l=application%2Ftypescript&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=14px&lh=143%25&si=false&es=2x&wm=false&code={code}"
+    carbon_url = (
+        "https://carbon.now.sh/?bg=rgba(29%2C40%2C104%2C1)&t=one-light&wt=none&l=application%2Ftypescript&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=14px&lh=143%25&si=false&es=2x&wm=false&code={code}"
+    )
 
     query = event.pattern_match.group(1)
     replied_msg = await event.get_reply_message()

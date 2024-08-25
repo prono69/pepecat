@@ -24,13 +24,7 @@ from userbot import catub
 from ..assistant.inlinefm import get_manager
 from ..Config import Config
 from ..helpers.functions import rand_key
-from ..helpers.functions.utube import (
-    download_button,
-    get_yt_video_id,
-    get_ytthumb,
-    result_formatter,
-    ytsearch_data,
-)
+from ..helpers.functions.utube import download_button, get_yt_video_id, get_ytthumb, result_formatter, ytsearch_data
 from ..plugins import mention
 from ..sql_helper.globals import gvarstatus
 from . import CMD_INFO, GRP_INFO, PLG_INFO, check_owner
@@ -44,9 +38,7 @@ tr = Config.COMMAND_HAND_LER
 def get_thumb(name=None, url=None):
     if url is None:
         url = f"https://github.com/TgCatUB/CatUserbot-Resources/blob/master/Resources/Inline/{name}?raw=true"
-    return types.InputWebDocument(
-        url=url, size=0, mime_type="image/jpeg", attributes=[]
-    )
+    return types.InputWebDocument(url=url, size=0, mime_type="image/jpeg", attributes=[])
 
 
 def main_menu():
@@ -74,12 +66,8 @@ def main_menu():
     if Config.BADCAT:
         switch_button = [
             (
-                Button.inline(
-                    f"➕ Extra ({len(GRP_INFO['extra'])})", data="extra_menu"
-                ),
-                Button.inline(
-                    f"⚰️ Useless ({len(GRP_INFO['useless'])})", data="useless_menu"
-                ),
+                Button.inline(f"➕ Extra ({len(GRP_INFO['extra'])})", data="extra_menu"),
+                Button.inline(f"⚰️ Useless ({len(GRP_INFO['useless'])})", data="useless_menu"),
             ),
             (Button.inline("🔒 Close Menu", data="close"),),
         ]
@@ -378,9 +366,7 @@ def paginate_help(
     modulo_page = page_number % max_num_pages
     if plugins:
         if len(pairs) > number_of_rows:
-            pairs = pairs[
-                modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-            ] + [
+            pairs = pairs[modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)] + [
                 (
                     Button.inline("⌫", data=f"{prefix}_prev({modulo_page})_plugin"),
                     Button.inline("⚙️ Main Menu", data="mainmenu"),
@@ -392,9 +378,7 @@ def paginate_help(
     elif len(pairs) > number_of_rows:
         if category_pgno < 0:
             category_pgno = len(pairs) + category_pgno
-        pairs = pairs[
-            modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
-        ] + [
+        pairs = pairs[modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)] + [
             (
                 Button.inline(
                     "⌫",
@@ -451,9 +435,7 @@ async def inline_handler(event):
             result = await article_builder(event, query)
             await event.answer([result] if result else None)
         elif match or match2 or match3:
-            result, old_msg, jsondata, new_msg = await hide_toll_secret(
-                event, query, match, match3
-            )
+            result, old_msg, jsondata, new_msg = await hide_toll_secret(event, query, match, match3)
             await event.answer([result] if result else None)
             if jsondata:
                 jsondata.update(new_msg)
@@ -580,27 +562,15 @@ async def hide_toll_secret(event, query, match, match3):
     except Exception:
         jsondata = False
     timestamp = int(time.time() * 2)
-    new_msg = {
-        str(timestamp): (
-            {"text": query} if match3 else {"userid": user_list, "text": query}
-        )
-    }
+    new_msg = {str(timestamp): ({"text": query} if match3 else {"userid": user_list, "text": query})}
     buttons = [Button.inline(info_type[2], data=f"{info_type[0]}_{timestamp}")]
 
     result = await build_article(
         event,
         title=f"{info_type[0].title()} message  to {sandy}.",
-        description=(
-            "Send hidden text in chat."
-            if match3
-            else f"Only he/she/they {info_type[1]} open it."
-        ),
+        description="Send hidden text in chat." if match3 else f"Only he/she/they {info_type[1]} open it.",
         thumbnail=get_thumb(f"{info_type[0]}.png"),
-        text=(
-            "✖✖✖"
-            if match3
-            else f"🔒 A whisper message to {sandy}, Only he/she can open it."
-        ),
+        text="✖✖✖" if match3 else f"🔒 A whisper message to {sandy}, Only he/she can open it.",
         buttons=buttons,
     )
     return result, old_msg, jsondata, new_msg
@@ -638,9 +608,7 @@ async def inline_popup_info(event, builder):
                 description="Search cmds & plugins\nSyntax: s",
                 text="__Get help about a plugin or cmd.\n\nMixture of .help & .s__",
                 thumb=get_thumb("search.jpg"),
-                buttons=[
-                    Button.switch_inline("Search Help", query="s al", same_peer=True)
-                ],
+                buttons=[Button.switch_inline("Search Help", query="s al", same_peer=True)],
             ),
             builder.article(
                 title="Secret",
@@ -703,7 +671,7 @@ async def inline_popup_info(event, builder):
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(b"close")))
 @check_owner
-async def on_plug_in_callback_query_handler(event):
+async def on_plug_in_callback_query_handler_close(event):
     buttons = [
         (Button.inline("Open Menu", data="mainmenu"),),
     ]
@@ -723,7 +691,7 @@ async def on_plugin_callback_query_handler(event):
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(b"(.*)_menu")))
 @check_owner
-async def on_plug_in_callback_query_handler(event):
+async def on_plug_in_callback_query_handler_menu(event):
     category = str(event.pattern_match.group(1).decode("UTF-8"))
     buttons = paginate_help(0, GRP_INFO[category], category)
     text = f"**Category: **{category}\
@@ -732,13 +700,9 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(text, buttons=buttons)
 
 
-@catub.tgbot.on(
-    CallbackQuery(
-        data=re.compile(b"back_([a-z]+)_([a-z_1-9]+)_([0-9]+)_?([a-z1-9]+)?_?([0-9]+)?")
-    )
-)
+@catub.tgbot.on(CallbackQuery(data=re.compile(b"back_([a-z]+)_([a-z_1-9]+)_([0-9]+)_?([a-z1-9]+)?_?([0-9]+)?")))
 @check_owner
-async def on_plug_in_callback_query_handler(event):
+async def on_plug_in_callback_query_handler_back(event):
     mtype = str(event.pattern_match.group(1).decode("UTF-8"))
     category = str(event.pattern_match.group(2).decode("UTF-8"))
     pgno = int(event.pattern_match.group(3).decode("UTF-8"))
@@ -766,16 +730,14 @@ async def on_plug_in_callback_query_handler(event):
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"mainmenu")))
 @check_owner
-async def on_plug_in_callback_query_handler(event):
+async def on_plug_in_callback_query_handler_mainmenu(event):
     _result = main_menu()
     await event.edit(_result[0], buttons=_result[1])
 
 
-@catub.tgbot.on(
-    CallbackQuery(data=re.compile(rb"(.*)_prev\((.+?)\)_([a-z]+)_?([a-z]+)?_?(.*)?"))
-)
+@catub.tgbot.on(CallbackQuery(data=re.compile(rb"(.*)_prev\((.+?)\)_([a-z]+)_?([a-z]+)?_?(.*)?")))
 @check_owner
-async def on_plug_in_callback_query_handler(event):
+async def on_plug_in_callback_query_handler_prev(event):
     category = str(event.pattern_match.group(1).decode("UTF-8"))
     current_page_number = int(event.data_match.group(2).decode("UTF-8"))
     htype = str(event.pattern_match.group(3).decode("UTF-8"))
@@ -802,11 +764,9 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(buttons=buttons)
 
 
-@catub.tgbot.on(
-    CallbackQuery(data=re.compile(rb"(.*)_next\((.+?)\)_([a-z]+)_?([a-z]+)?_?(.*)?"))
-)
+@catub.tgbot.on(CallbackQuery(data=re.compile(rb"(.*)_next\((.+?)\)_([a-z]+)_?([a-z]+)?_?(.*)?")))
 @check_owner
-async def on_plug_in_callback_query_handler(event):
+async def on_plug_in_callback_query_handler_next(event):
     category = str(event.pattern_match.group(1).decode("UTF-8"))
     current_page_number = int(event.data_match.group(2).decode("UTF-8"))
     htype = str(event.pattern_match.group(3).decode("UTF-8"))
@@ -830,13 +790,9 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(buttons=buttons)
 
 
-@catub.tgbot.on(
-    CallbackQuery(
-        data=re.compile(b"(.*)_cmdhelp_([a-z_1-9]+)_([0-9]+)_([a-z]+)_([0-9]+)")
-    )
-)
+@catub.tgbot.on(CallbackQuery(data=re.compile(b"(.*)_cmdhelp_([a-z_1-9]+)_([0-9]+)_([a-z]+)_([0-9]+)")))
 @check_owner
-async def on_plug_in_callback_query_handler(event):
+async def on_plug_in_callback_query_handler_cmdhelp(event):
     cmd = str(event.pattern_match.group(1).decode("UTF-8"))
     category = str(event.pattern_match.group(2).decode("UTF-8"))
     pgno = int(event.pattern_match.group(3).decode("UTF-8"))

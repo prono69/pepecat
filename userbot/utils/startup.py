@@ -23,10 +23,7 @@ from ..core.logger import logging
 from ..core.session import catub
 from ..helpers.utils import install_pip
 from ..helpers.utils.utils import runcmd
-from ..sql_helper.global_collection import (
-    del_keyword_collectionlist,
-    get_item_collectionlist,
-)
+from ..sql_helper.global_collection import del_keyword_collectionlist, get_item_collectionlist
 from ..sql_helper.globals import addgvar, gvarstatus
 from .pluginmanager import load_module
 from .tools import create_supergroup
@@ -51,10 +48,7 @@ async def setup_bot():
         for option in config.dc_options:
             if option.ip_address == catub.session.server_address:
                 if catub.session.dc_id != option.id:
-                    LOGS.warning(
-                        f"Fixed DC ID in session from {catub.session.dc_id}"
-                        f" to {option.id}"
-                    )
+                    LOGS.warning(f"Fixed DC ID in session from {catub.session.dc_id}" f" to {option.id}")
                 catub.session.set_dc(option.id, option.ip_address, option.port)
                 catub.session.save()
                 break
@@ -156,9 +150,7 @@ async def load_plugins(folder, extfolder=None):
             shortname = path1.stem
             pluginname = shortname.replace(".py", "")
             try:
-                if (pluginname not in Config.NO_LOAD) and (
-                    pluginname not in VPS_NOLOAD
-                ):
+                if (pluginname not in Config.NO_LOAD) and (pluginname not in VPS_NOLOAD):
                     flag = True
                     check = 0
                     while flag:
@@ -184,9 +176,7 @@ async def load_plugins(folder, extfolder=None):
                 if shortname not in failure:
                     failure.append(shortname)
                 os.remove(Path(f"{plugin_path}/{shortname}.py"))
-                LOGS.info(
-                    f"unable to load {shortname} because of error {e}\nBase Folder {plugin_path}"
-                )
+                LOGS.info(f"unable to load {shortname} because of error {e}\nBase Folder {plugin_path}")
     if extfolder:
         if not failure:
             failure.append("None")
@@ -202,70 +192,36 @@ async def verifyLoggerGroup():
         try:
             entity = await catub.get_entity(BOTLOG_CHATID)
             if not isinstance(entity, types.User) and not entity.creator:
-                if (
-                    entity.default_banned_rights
-                    and entity.default_banned_rights.send_messages
-                ) or not entity.admin_rights.post_messages:
-                    LOGS.info(
-                        "Permissions missing to send messages for the specified PRIVATE_GROUP_BOT_API_ID."
-                    )
-                if (
-                    entity.default_banned_rights
-                    and entity.default_banned_rights.invite_users
-                ) or not entity.admin_rights.invite_users:
-                    LOGS.info(
-                        "Permissions missing to addusers for the specified PRIVATE_GROUP_BOT_API_ID."
-                    )
+                if (entity.default_banned_rights and entity.default_banned_rights.send_messages) or not entity.admin_rights.post_messages:
+                    LOGS.info("Permissions missing to send messages for the specified PRIVATE_GROUP_BOT_API_ID.")
+                if (entity.default_banned_rights and entity.default_banned_rights.invite_users) or not entity.admin_rights.invite_users:
+                    LOGS.info("Permissions missing to addusers for the specified PRIVATE_GROUP_BOT_API_ID.")
         except ValueError:
-            LOGS.error(
-                "PRIVATE_GROUP_BOT_API_ID cannot be found. Make sure it's correct."
-            )
+            LOGS.error("PRIVATE_GROUP_BOT_API_ID cannot be found. Make sure it's correct.")
         except TypeError:
-            LOGS.error(
-                "PRIVATE_GROUP_BOT_API_ID is unsupported. Make sure it's correct."
-            )
+            LOGS.error("PRIVATE_GROUP_BOT_API_ID is unsupported. Make sure it's correct.")
         except Exception as e:
-            LOGS.error(
-                "An Exception occured upon trying to verify the PRIVATE_GROUP_BOT_API_ID.\n"
-                + str(e)
-            )
+            LOGS.error("An Exception occured upon trying to verify the PRIVATE_GROUP_BOT_API_ID.\n" + str(e))
     else:
         descript = "Don't delete this group or change to group(If you change group all your previous snips, welcome will be lost.)"
-        _, groupid = await create_supergroup(
-            "CatUserbot BotLog Group", catub, Config.TG_BOT_USERNAME, descript
-        )
+        _, groupid = await create_supergroup("CatUserbot BotLog Group", catub, Config.TG_BOT_USERNAME, descript)
         addgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
-        LOGS.info(
-            "Private Group for PRIVATE_GROUP_BOT_API_ID is created successfully and added to vars."
-        )
+        LOGS.info("Private Group for PRIVATE_GROUP_BOT_API_ID is created successfully and added to vars.")
         flag = True
     if PM_LOGGER_GROUP_ID != -100:
         try:
             entity = await catub.get_entity(PM_LOGGER_GROUP_ID)
             if not isinstance(entity, types.User) and not entity.creator:
-                if (
-                    entity.default_banned_rights
-                    and entity.default_banned_rights.send_messages
-                ) or not entity.admin_rights.post_messages:
-                    LOGS.info(
-                        "Permissions missing to send messages for the specified PM_LOGGER_GROUP_ID."
-                    )
-                if (
-                    entity.default_banned_rights
-                    and entity.default_banned_rights.invite_users
-                ) or not entity.admin_rights.invite_users:
-                    LOGS.info(
-                        "Permissions missing to addusers for the specified PM_LOGGER_GROUP_ID."
-                    )
+                if (entity.default_banned_rights and entity.default_banned_rights.send_messages) or not entity.admin_rights.post_messages:
+                    LOGS.info("Permissions missing to send messages for the specified PM_LOGGER_GROUP_ID.")
+                if (entity.default_banned_rights and entity.default_banned_rights.invite_users) or not entity.admin_rights.invite_users:
+                    LOGS.info("Permissions missing to addusers for the specified PM_LOGGER_GROUP_ID.")
         except ValueError:
             LOGS.error("PM_LOGGER_GROUP_ID cannot be found. Make sure it's correct.")
         except TypeError:
             LOGS.error("PM_LOGGER_GROUP_ID is unsupported. Make sure it's correct.")
         except Exception as e:
-            LOGS.error(
-                "An Exception occured upon trying to verify the PM_LOGGER_GROUP_ID.\n"
-                + str(e)
-            )
+            LOGS.error("An Exception occured upon trying to verify the PM_LOGGER_GROUP_ID.\n" + str(e))
     if flag:
         executable = sys.executable.replace(" ", "\\ ")
         args = [executable, "-m", "userbot"]
@@ -290,9 +246,7 @@ async def install_externalrepo(repo, branch, cfolder):
         return await catub.tgbot.send_message(BOTLOG_CHATID, errtext)
     await runcmd(gcmd)
     if not os.path.exists(cfolder):
-        LOGS.error(
-            "There was a problem in cloning the external repo. please recheck external repo link"
-        )
+        LOGS.error("There was a problem in cloning the external repo. please recheck external repo link")
         return await catub.tgbot.send_message(
             BOTLOG_CHATID,
             "There was a problem in cloning the external repo. please recheck external repo link",

@@ -45,15 +45,11 @@ async def noods(event):  # sourcery no-metrics  # sourcery skip: low-code-qualit
     if int(limit) > 10:
         return await edit_delete(event, "`Wallpaper search limit is 1-10`", 10)
     catevent = await edit_or_reply(event, "🔍 `Searching...`")
-    r = requests.get(
-        f"https://wall.alphacoders.com/search.php?search={query.replace(' ','+')}"
-    )
+    r = requests.get(f"https://wall.alphacoders.com/search.php?search={query.replace(' ','+')}")
     soup = BeautifulSoup(r.content, "lxml")
     walls = soup.find_all("img", class_="img-responsive")
     if not walls:
-        return await edit_delete(
-            catevent, f"**Can't find anything with** `{query}`", 10
-        )
+        return await edit_delete(catevent, f"**Can't find anything with** `{query}`", 10)
     i = count = 0
     piclist = []
     piclinks = []
@@ -76,9 +72,7 @@ async def noods(event):  # sourcery no-metrics  # sourcery skip: low-code-qualit
             await edit_or_reply(catevent, "📥** Downloading...**")
             pic = await wall_download(a, query)
             if pic is None:
-                return await edit_delete(
-                    catevent, "__Sorry i can't download wallpaper.__"
-                )
+                return await edit_delete(catevent, "__Sorry i can't download wallpaper.__")
             piclist.append(pic)
             piclinks.append(a)
             captionlist.append("")
@@ -86,9 +80,7 @@ async def noods(event):  # sourcery no-metrics  # sourcery skip: low-code-qualit
             i = 0
         else:
             i += 1
-        await edit_or_reply(
-            catevent, f"**📥 Downloaded : {count}/{limit}\n\n❌ Errors : {i}/5**"
-        )
+        await edit_or_reply(catevent, f"**📥 Downloaded : {count}/{limit}\n\n❌ Errors : {i}/5**")
         if count == int(limit):
             break
         if i == 5:

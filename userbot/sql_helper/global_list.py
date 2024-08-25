@@ -27,11 +27,7 @@ class CatGloballist(BASE):
         return f"<Cat global values '{self.group_id}' for {self.keywoard}>"
 
     def __eq__(self, other):
-        return (
-            isinstance(other, CatGloballist)
-            and self.keywoard == other.keywoard
-            and self.group_id == other.group_id
-        )
+        return isinstance(other, CatGloballist) and self.keywoard == other.keywoard and self.group_id == other.group_id
 
 
 CatGloballist.__table__.create(checkfirst=True)
@@ -57,13 +53,9 @@ def add_to_list(keywoard, group_id):
 
 def rm_from_list(keywoard, group_id):
     with CATGLOBALLIST_INSERTION_LOCK:
-        if broadcast_group := SESSION.query(CatGloballist).get(
-            (keywoard, str(group_id))
-        ):
+        if broadcast_group := SESSION.query(CatGloballist).get((keywoard, str(group_id))):
             if str(group_id) in GLOBALLIST_SQL_.GLOBALLIST_VALUES.get(keywoard, set()):
-                GLOBALLIST_SQL_.GLOBALLIST_VALUES.get(keywoard, set()).remove(
-                    str(group_id)
-                )
+                GLOBALLIST_SQL_.GLOBALLIST_VALUES.get(keywoard, set()).remove(str(group_id))
 
             SESSION.delete(broadcast_group)
             SESSION.commit()
@@ -80,11 +72,7 @@ def is_in_list(keywoard, group_id):
 
 def del_keyword_list(keywoard):
     with CATGLOBALLIST_INSERTION_LOCK:
-        broadcast_group = (
-            SESSION.query(CatGloballist.keywoard)
-            .filter(CatGloballist.keywoard == keywoard)
-            .delete()
-        )
+        SESSION.query(CatGloballist.keywoard).filter(CatGloballist.keywoard == keywoard).delete()
         GLOBALLIST_SQL_.GLOBALLIST_VALUES.pop(keywoard)
         SESSION.commit()
 
@@ -110,11 +98,7 @@ def num_list():
 
 def num_list_keyword(keywoard):
     try:
-        return (
-            SESSION.query(CatGloballist.keywoard)
-            .filter(CatGloballist.keywoard == keywoard)
-            .count()
-        )
+        return SESSION.query(CatGloballist.keywoard).filter(CatGloballist.keywoard == keywoard).count()
     finally:
         SESSION.close()
 
@@ -136,9 +120,7 @@ def __load_chat_lists():
         for x in all_groups:
             GLOBALLIST_SQL_.GLOBALLIST_VALUES[x.keywoard] += [x.group_id]
 
-        GLOBALLIST_SQL_.GLOBALLIST_VALUES = {
-            x: set(y) for x, y in GLOBALLIST_SQL_.GLOBALLIST_VALUES.items()
-        }
+        GLOBALLIST_SQL_.GLOBALLIST_VALUES = {x: set(y) for x, y in GLOBALLIST_SQL_.GLOBALLIST_VALUES.items()}
 
     finally:
         SESSION.close()

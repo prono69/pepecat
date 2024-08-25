@@ -71,9 +71,7 @@ async def delete_it(event):
             try:
                 await msg_src.delete()
                 if BOTLOG:
-                    await event.client.send_message(
-                        BOTLOG_CHATID, "#DEL \n`Deletion of message was successful`"
-                    )
+                    await event.client.send_message(BOTLOG_CHATID, "#DEL \n`Deletion of message was successful`")
             except rpcbaseerrors.BadRequestError:
                 if BOTLOG:
                     await event.client.send_message(
@@ -88,9 +86,7 @@ async def delete_it(event):
                 await msg_src.delete()
                 await event.delete()
                 if BOTLOG:
-                    await event.client.send_message(
-                        BOTLOG_CHATID, "#DEL \n`Deletion of message was successful`"
-                    )
+                    await event.client.send_message(BOTLOG_CHATID, "#DEL \n`Deletion of message was successful`")
             except rpcbaseerrors.BadRequestError:
                 await edit_or_reply(event, "`Well, I can't delete a message`")
     elif not input_str:
@@ -149,9 +145,7 @@ async def purge_to(event):
         to_message = await reply_id(event)
         msgs = []
         count = 0
-        async for msg in event.client.iter_messages(
-            event.chat_id, min_id=(from_message - 1), max_id=(to_message + 1)
-        ):
+        async for msg in event.client.iter_messages(event.chat_id, min_id=(from_message - 1), max_id=(to_message + 1)):
             msgs.append(msg)
             count += 1
             msgs.append(event.reply_to_msg_id)
@@ -194,9 +188,7 @@ async def purgeme(event):
         i += 1
         await message.delete()
 
-    smsg = await event.client.send_message(
-        event.chat_id, f"**Purge complete!**` Purged {count} messages.`"
-    )
+    smsg = await event.client.send_message(event.chat_id, f"**Purge complete!**` Purged {count} messages.`")
 
     if BOTLOG:
         await event.client.send_message(
@@ -356,9 +348,7 @@ async def fastpurger(event):  # sourcery no-metrics # sourcery skip: low-code-qu
                 else:
                     error += f"\n• `{ty}` __is Invalid flag.__"
         else:
-            async for msg in event.client.iter_messages(
-                chat, min_id=event.reply_to_msg_id - 1
-            ):
+            async for msg in event.client.iter_messages(chat, min_id=event.reply_to_msg_id - 1):
                 count += 1
                 msgs.append(msg)
                 if len(msgs) == 50:
@@ -370,9 +360,7 @@ async def fastpurger(event):  # sourcery no-metrics # sourcery skip: low-code-qu
         if p_type != "s" and input_str.isnumeric():
             for ty in p_type:
                 if ty in purgetype:
-                    async for msg in event.client.iter_messages(
-                        event.chat_id, limit=int(input_str), filter=purgetype[ty]
-                    ):
+                    async for msg in event.client.iter_messages(event.chat_id, limit=int(input_str), filter=purgetype[ty]):
                         count += 1
                         msgs.append(msg)
                         if len(msgs) == 50:
@@ -394,18 +382,14 @@ async def fastpurger(event):  # sourcery no-metrics # sourcery skip: low-code-qu
             cont = cont.strip()
             inputstr = inputstr.strip()
             if cont.isnumeric():
-                async for msg in event.client.iter_messages(
-                    event.chat_id, limit=int(cont), search=inputstr
-                ):
+                async for msg in event.client.iter_messages(event.chat_id, limit=int(cont), search=inputstr):
                     count += 1
                     msgs.append(msg)
                     if len(msgs) == 50:
                         await event.client.delete_messages(chat, msgs)
                         msgs = []
             else:
-                async for msg in event.client.iter_messages(
-                    event.chat_id, search=input_str
-                ):
+                async for msg in event.client.iter_messages(event.chat_id, search=input_str):
                     count += 1
                     msgs.append(msg)
                     if len(msgs) == 50:
@@ -418,9 +402,7 @@ async def fastpurger(event):  # sourcery no-metrics # sourcery skip: low-code-qu
     elif p_type is not None:
         for ty in p_type:
             if ty in purgetype:
-                async for msg in event.client.iter_messages(
-                    event.chat_id, filter=purgetype[ty]
-                ):
+                async for msg in event.client.iter_messages(event.chat_id, filter=purgetype[ty]):
                     count += 1
                     msgs.append(msg)
                     if len(msgs) == 50:
@@ -507,9 +489,7 @@ async def fast_purger(event):  # sourcery no-metrics # sourcery skip: low-code-q
     await event.delete()
     reply = await event.get_reply_message()
     if not reply or reply.sender_id is None:
-        return await edit_delete(
-            event, "**Error**\n__This cmd Works only if you reply to user message.__"
-        )
+        return await edit_delete(event, "**Error**\n__This cmd Works only if you reply to user message.__")
     if not flag:
         if input_str and p_type == "s":
             async for msg in event.client.iter_messages(

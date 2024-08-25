@@ -148,9 +148,7 @@ class ThabAi:
             if line:
                 data = json.loads(line)
                 if "utterances" in data:
-                    response_data += " ".join(
-                        utterance["text"] for utterance in data["utterances"]
-                    )
+                    response_data += " ".join(utterance["text"] for utterance in data["utterances"])
                 elif "delta" in data:
                     response_data += data["delta"]
         return response_data

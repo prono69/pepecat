@@ -48,11 +48,7 @@ def add_message_to_database(recipient, message, scheduled_time, day_of_week=None
 
 def get_messages_to_send():
     current_time = datetime.now().replace(second=0, microsecond=0)
-    result = (
-        SESSION.query(CatScheduler)
-        .filter(CatScheduler.scheduled_time == current_time)
-        .all()
-    )
+    result = SESSION.query(CatScheduler).filter(CatScheduler.scheduled_time == current_time).all()
     SESSION.close()
     return result
 
@@ -96,9 +92,7 @@ def delete_all_messages():
 
 async def send_message(recipient, message):
     with contextlib.suppress(Exception):
-        getmsg = await catub.get_messages(
-            int(message["chat"]), ids=int(message["msg_id"])
-        )
+        getmsg = await catub.get_messages(int(message["chat"]), ids=int(message["msg_id"]))
         await catub.send_message(int(recipient), getmsg)
 
 
@@ -135,9 +129,7 @@ def get_scdule_from_day(daytime):
         else:
             days_until_scheduled_day = (day_num - current_day_num) % 7
 
-        scheduled_day = current_datetime.replace(
-            hour=time_of_day.hour, minute=time_of_day.minute, second=0, microsecond=0
-        ) + timedelta(days=days_until_scheduled_day)
+        scheduled_day = current_datetime.replace(hour=time_of_day.hour, minute=time_of_day.minute, second=0, microsecond=0) + timedelta(days=days_until_scheduled_day)
 
         if scheduled_day < current_datetime:
             scheduled_day += timedelta(days=7)

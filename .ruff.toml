@@ -1,0 +1,14 @@
+lint.select = ["E", "F"]
+lint.ignore = ["F405", "F403"]
+exclude = [
+    "build",
+    "dist",
+    ".venv",
+    "bin"
+]
+line-length = 250
+
+[lint.per-file-ignores]
+"userbot/helpers/fonts.py" = ["E501"]
+"userbot/helpers/memeshelper.py" = ["E501"]
+"userbot/utils/decorators.py" = ["F821"]

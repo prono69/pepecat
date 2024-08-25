@@ -32,11 +32,7 @@ async def _(event):
     try:
         pwd = await event.client(functions.account.GetPasswordRequest())
         my_srp_password = pwd_mod.compute_check(pwd, Config.TG_2STEP_VERIFICATION_CODE)
-        await event.client(
-            functions.channels.EditCreatorRequest(
-                channel=event.chat_id, user_id=user_name, password=my_srp_password
-            )
-        )
+        await event.client(functions.channels.EditCreatorRequest(channel=event.chat_id, user_id=user_name, password=my_srp_password))
     except Exception as e:
         await event.edit(f"**Error:**\n`{e}`")
     else:

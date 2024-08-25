@@ -63,13 +63,10 @@ async def song(event):
         query = reply.message
     else:
         return await edit_or_reply(event, "`What I am Supposed to find `")
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catevent = await edit_or_reply(event, "`wi8..! I am finding your song....`")
     video_link = await yt_search(str(query))
     if not url(video_link):
-        return await catevent.edit(
-            f"Sorry!. I can't find any related video/audio for `{query}`"
-        )
+        return await catevent.edit(f"Sorry!. I can't find any related video/audio for `{query}`")
     cmd = event.pattern_match.group(1)
     q = "320k" if cmd == "320" else "128k"
     song_file, catthumb, title = await song_download(video_link, catevent, quality=q)
@@ -112,9 +109,7 @@ async def vsong(event):
     catevent = await edit_or_reply(event, "`wi8..! I am finding your song....`")
     video_link = await yt_search(str(query))
     if not url(video_link):
-        return await catevent.edit(
-            f"Sorry!. I can't find any related video/audio for `{query}`"
-        )
+        return await catevent.edit(f"Sorry!. I can't find any related video/audio for `{query}`")
     with contextlib.suppress(BaseException):
         cat = Get(cat)
         await event.client(cat)
@@ -155,9 +150,7 @@ async def shazamcmd(event):
     delete = False
     flag = event.pattern_match.group(4)
     if not reply or not mediatype or mediatype not in ["Voice", "Audio"]:
-        return await edit_delete(
-            event, "__Reply to Voice clip or Audio clip to reverse search that song.__"
-        )
+        return await edit_delete(event, "__Reply to Voice clip or Audio clip to reverse search that song.__")
     catevent = await edit_or_reply(event, "__Downloading the audio clip...__")
     name = "cat.mp3"
     try:
@@ -176,9 +169,7 @@ async def shazamcmd(event):
         track = next(recognize_generator)[1]["track"]
     except Exception as e:
         LOGS.error(e)
-        return await edit_delete(
-            catevent, f"**Error while reverse searching song:**\n__{e}__"
-        )
+        return await edit_delete(catevent, f"**Error while reverse searching song:**\n__{e}__")
 
     file = track["images"]["background"]
     title = track["share"]["subject"]

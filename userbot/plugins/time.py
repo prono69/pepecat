@@ -113,8 +113,7 @@ async def time_func(tdata):
     if Config.COUNTRY:
         await edit_or_reply(
             tdata,
-            f"`It's`  **{dtnow1}**` on `**{dtnow2}**  `here, in {Config.COUNTRY}"
-            f"({time_zone} timezone).`",
+            f"`It's`  **{dtnow1}**` on `**{dtnow2}**  `here, in {Config.COUNTRY}" f"({time_zone} timezone).`",
         )
 
 

@@ -65,17 +65,9 @@ async def check_media(reply_message):
         if reply_message.photo:
             data = reply_message.photo
         elif reply_message.document:
-            if (
-                DocumentAttributeFilename(file_name="AnimatedSticker.tgs")
-                in reply_message.media.document.attributes
-            ):
+            if DocumentAttributeFilename(file_name="AnimatedSticker.tgs") in reply_message.media.document.attributes:
                 return False
-            if (
-                reply_message.gif
-                or reply_message.video
-                or reply_message.audio
-                or reply_message.voice
-            ):
+            if reply_message.gif or reply_message.video or reply_message.audio or reply_message.voice:
                 return False
             data = reply_message.media.document
         else:
@@ -104,18 +96,14 @@ async def frybot(event):
         file="frybot.png",
     )
     if output[1] is None:
-        return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__", 10
-        )
+        return await edit_delete(output[0], "__Unable to extract image from the replied message.__", 10)
     chat = "@image_deepfrybot"
     catevent = await edit_or_reply(event, "```Processing...```")
     async with event.client.conversation(chat) as conv:
         try:
             msg_flag = await conv.send_message("/start")
         except YouBlockedUserError:
-            await edit_or_reply(
-                catevent, "**Error:** Trying to unblock & retry, wait a sec..."
-            )
+            await edit_or_reply(catevent, "**Error:** Trying to unblock & retry, wait a sec...")
             await catub(unblock("image_deepfrybot"))
             msg_flag = await conv.send_message("/start")
         await conv.get_response()
@@ -152,9 +140,7 @@ async def deepfryer(event):
         if isinstance(data, bool):
             return await edit_or_reply(event, "`I can't deep fry that!`")
     if not event.is_reply:
-        return await edit_or_reply(
-            event, "`Reply to an image or sticker to deep fry it!`"
-        )
+        return await edit_or_reply(event, "`Reply to an image or sticker to deep fry it!`")
     # download last photo (highres) as byte array
     image = io.BytesIO()
     await event.client.download_media(data, image)

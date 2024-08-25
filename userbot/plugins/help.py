@@ -92,9 +92,7 @@ async def _(event):
         outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help -c <command name>`"
     else:
         outstr = await cmdlist()
-    await edit_or_reply(
-        event, outstr, aslink=True, linktext="Total Commands of Catuserbot are :"
-    )
+    await edit_or_reply(event, outstr, aslink=True, linktext="Total Commands of Catuserbot are :")
 
 
 @catub.cat_cmd(

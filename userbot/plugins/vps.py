@@ -103,9 +103,7 @@ async def reload_codebase():
 async def variable(event):
     "Manage most of ConfigVars setting, set new var, get current var, or delete var..."
     if not os.path.exists(config):
-        return await edit_delete(
-            event, "`There no Config file , You can't use this plugin.`"
-        )
+        return await edit_delete(event, "`There no Config file , You can't use this plugin.`")
     cmd = event.pattern_match.group(1)
     if cmd == "info":
         return await edit_delete(event, dBcof.vars_info(), 60)
@@ -129,12 +127,8 @@ async def variable(event):
         for i in configs:
             if variable in i:
                 _, val = i.split("= ")
-                return await edit_or_reply(
-                    cat, "**ConfigVars**:" f"\n\n`{variable}` = `{val}`"
-                )
-        await edit_or_reply(
-            cat, "**ConfigVars**:" f"\n\n__Error:\n-> __`{variable}`__ doesn't exists__"
-        )
+                return await edit_or_reply(cat, "**ConfigVars**:" f"\n\n`{variable}` = `{val}`")
+        await edit_or_reply(cat, "**ConfigVars**:" f"\n\n__Error:\n-> __`{variable}`__ doesn't exists__")
 
     elif cmd == "set":
         cat = await edit_or_reply(event, "`Setting information...`")
@@ -157,15 +151,11 @@ async def variable(event):
             else:
                 string += i
         if match:
-            await edit_or_reply(
-                cat, f"`{variable}` **successfully changed to  ->  **`{value}`"
-            )
+            await edit_or_reply(cat, f"`{variable}` **successfully changed to  ->  **`{value}`")
             logtext = f"#UPDATED\n\n`{variable}` = `{value}`"
         else:
             string += f"    {variable} = {value}\n"
-            await edit_or_reply(
-                cat, f"`{variable}`**  successfully added with value  ->  **`{value}`"
-            )
+            await edit_or_reply(cat, f"`{variable}`**  successfully added with value  ->  **`{value}`")
             logtext = f"#ADDED\n\n`{variable}` = `{value}`"
 
     elif cmd == "del":
@@ -187,9 +177,7 @@ async def variable(event):
         with open(config, "w") as f1:
             f1.write(string)
             f1.close()
-        await event.client.send_message(
-            BOTLOG_CHATID, f"#VAR #CONFIG_VAR {logtext}", silent=True
-        )
+        await event.client.send_message(BOTLOG_CHATID, f"#VAR #CONFIG_VAR {logtext}", silent=True)
         await reload_codebase()
         await event.client.reload(cat)
 

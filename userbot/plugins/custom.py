@@ -120,13 +120,9 @@ async def del_custom(event):
         delgvar("PM_PIC")
     if input_str == "startmsg":
         if gvarstatus("START_TEXT") is None:
-            return await edit_delete(
-                event, "__You haven't customzied your start msg in bot.__"
-            )
+            return await edit_delete(event, "__You haven't customzied your start msg in bot.__")
         delgvar("START_TEXT")
-    await edit_or_reply(
-        event, f"__successfully deleted your customization of {input_str}.__"
-    )
+    await edit_or_reply(event, f"__successfully deleted your customization of {input_str}.__")
     if BOTLOG_CHATID:
         await event.client.send_message(
             BOTLOG_CHATID,

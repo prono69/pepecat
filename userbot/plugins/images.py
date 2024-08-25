@@ -45,9 +45,7 @@ async def img_sampler(event):
     else:
         query = str(event.pattern_match.group(2))
     if not query:
-        return await edit_or_reply(
-            event, "Reply to a message or pass a query to search!"
-        )
+        return await edit_or_reply(event, "Reply to a message or pass a query to search!")
     cat = await edit_or_reply(event, "`Processing...`")
     if event.pattern_match.group(1) != "":
         lim = int(event.pattern_match.group(1))

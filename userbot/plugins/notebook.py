@@ -250,9 +250,7 @@ async def write_page(event):  # sourcery skip: low-code-quality
             return await edit_delete(event, "**ಠ∀ಠ Gimmi text to write**")
         cap = None
     if cmd == "notebook":
-        text = (
-            (await catub(GetFullUserRequest(catub.uid))).full_user
-        ).about or "This is just a Sample text\n              -by Catuserbot"
+        text = ((await catub(GetFullUserRequest(catub.uid))).full_user).about or "This is just a Sample text\n              -by Catuserbot"
         cap = f"**NoteBook Configs :-**\n\n**Font:** `{font}`\n**Page:** `{list(Pages.keys())[list(Pages.values()).index(page)]}`\n**Color:** `{foreground.title()}`\n**Log:**  `{log}`"
     reply_to_id = await reply_id(event)
     text = deEmojify(text)
@@ -286,14 +284,10 @@ async def write_page(event):  # sourcery skip: low-code-quality
         transparency=0,
         album=True,
     )
-    await event.client.send_file(
-        event.chat_id, image, caption=cap, reply_to=reply_to_id
-    )
+    await event.client.send_file(event.chat_id, image, caption=cap, reply_to=reply_to_id)
     await catevent.delete()
     if log == "On" and cmd != "notebook" and BOTLOG_CHATID != event.chat_id:
-        await event.client.send_file(
-            BOTLOG_CHATID, image, caption=f"#NOTE_BOOK\n\n{cap}"
-        )
+        await event.client.send_file(BOTLOG_CHATID, image, caption=f"#NOTE_BOOK\n\n{cap}")
     for i in image:
         os.remove(i)
 
@@ -350,9 +344,7 @@ async def notebook_conf(event):  # sourcery skip: low-code-quality
             addgvar("NOTEBOOK_PAGE", Pages[input_str])
             if os.path.exists("temp/nbpage.jpg"):
                 os.remove("temp/nbpage.jpg")
-            return await edit_delete(
-                event, f"**Notebook page successfully changed to : **`{input_str}`", 20
-            )
+            return await edit_delete(event, f"**Notebook page successfully changed to : **`{input_str}`", 20)
         temp_page = "Pages"
     elif cmd == "font":
         cap = "**Available Notebook Fonts are here:-**\n\n"
@@ -362,9 +354,7 @@ async def notebook_conf(event):  # sourcery skip: low-code-quality
             addgvar("NOTEBOOK_FONT", input_str)
             if os.path.exists("temp/nbfont.ttf"):
                 os.remove("temp/nbfont.ttf")
-            return await edit_delete(
-                event, f"**Notebook font successfully changed to : **`{input_str}`", 20
-            )
+            return await edit_delete(event, f"**Notebook font successfully changed to : **`{input_str}`", 20)
         temp_page = "Fonts"
     elif cmd == "pen":
         cap = "**Available Pen Color are here:-**\n\n"
@@ -382,9 +372,7 @@ async def notebook_conf(event):  # sourcery skip: low-code-quality
         temp_page = "Colors"
     elif cmd == "log":
         if not BOTLOG:
-            return await edit_delete(
-                event, "You need to set `PRIVATE_GROUP_BOT_API_ID` in your config.", 20
-            )
+            return await edit_delete(event, "You need to set `PRIVATE_GROUP_BOT_API_ID` in your config.", 20)
         cap = "**Available log option are:-**\n\n1. `On`\n2. `Off`"
         if input_str and input_str in ["On", "Off"]:
             addgvar("NOTEBOOK_LOG", input_str)

@@ -50,41 +50,23 @@ async def app_search(event):
     query = event.pattern_match.group(1)
     reply_to_id = await reply_id(event)
     if not query:
-        return await edit_delete(
-            event, "`Enter an app name to get result from PlayStore..`"
-        )
+        return await edit_delete(event, "`Enter an app name to get result from PlayStore..`")
     await edit_or_reply(event, "`Searching!...`")
     try:
         final_name = query.replace(" ", "+")
-        page = requests.get(
-            f"https://play.google.com/store/search?q={final_name}&c=apps"
-        )
+        page = requests.get(f"https://play.google.com/store/search?q={final_name}&c=apps")
         soup = bs4.BeautifulSoup(page.content, "lxml")
-        fullapp_name = app_name = (
-            soup.find("div", "vWM94c") or soup.find("span", "DdYX5")
-        ).text
+        fullapp_name = app_name = (soup.find("div", "vWM94c") or soup.find("span", "DdYX5")).text
         dev_name = (soup.find("div", "LbQbAe") or soup.find("span", "wMUdtb")).text
-        rating = (
-            soup.find("div", "TT9eCd") or soup.find("span", "w2kbF")
-        ).text.replace("star", "")
-        app_icon = (
-            soup.find("img", "T75of bzqKMd") or soup.find("img", "T75of stzEZd")
-        )["src"].split("=s")[0]
-        app_link = (
-            "https://play.google.com"
-            + (soup.find("a", "Qfxief") or soup.find("a", "Si6A0c Gy4nib"))["href"]
-        )
-        dev_link = (
-            "https://play.google.com/store/apps/developer?id="
-            + dev_name.replace(" ", "+")
-        )
+        rating = (soup.find("div", "TT9eCd") or soup.find("span", "w2kbF")).text.replace("star", "")
+        app_icon = (soup.find("img", "T75of bzqKMd") or soup.find("img", "T75of stzEZd"))["src"].split("=s")[0]
+        app_link = "https://play.google.com" + (soup.find("a", "Qfxief") or soup.find("a", "Si6A0c Gy4nib"))["href"]
+        dev_link = "https://play.google.com/store/apps/developer?id=" + dev_name.replace(" ", "+")
         review = soup.find("div", "g1rdde")
         downloads = soup.findAll("div", "ClM7O")
         info = soup.find("div", "omXQ6c")
     except AttributeError:
-        return await edit_delete(
-            event, "No result found in search. Please enter **Valid app name**"
-        )
+        return await edit_delete(event, "No result found in search. Please enter **Valid app name**")
     downloads = f"{downloads[1].text}  downloads" if downloads else None
     info = info.text if info else None
     review = review.text if review else None
