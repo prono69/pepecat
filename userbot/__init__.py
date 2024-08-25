@@ -16,6 +16,7 @@ import heroku3
 from .Config import Config
 from .core.logger import logging
 from .core.session import catub
+from .helpers.functions.converter import Convert  # noqa F401
 from .helpers.functions.musictool import *
 from .helpers.utils.utils import runasync
 from .sql_helper.globals import gvarstatus
