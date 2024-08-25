@@ -13,11 +13,12 @@ import shutil
 
 from telethon.errors.rpcerrorlist import MediaEmptyError
 
-from userbot import catub
+from userbot import Config, catub
 
 from ..core.managers import edit_or_reply
-from ..helpers.google_image_download import googleimagesdownload
+from ..helpers.google_image_download import search_and_download_images
 from ..helpers.utils import reply_id
+from . import BOTLOG_CHATID
 
 plugin_category = "misc"
 
@@ -54,30 +55,29 @@ async def img_sampler(event):
             lim = 1
     else:
         lim = 3
-    response = googleimagesdownload()
-    # creating list of arguments
-    arguments = {
-        "keywords": query.replace(",", " "),
-        "limit": lim,
-        "format": "jpg",
-        "no_directory": "no_directory",
-    }
+
     # passing the arguments to the function
     try:
-        paths = response.download(arguments)
+        downloaded_data = search_and_download_images(query, Config.GOOGLE_CONSOLE_API_KEY, Config.GOOGLE_CSE_ID, lim)
     except Exception as e:
         return await cat.edit(f"Error: \n`{e}`")
 
-    lst = paths[0][query.replace(",", " ")]
+    lst = downloaded_data.paths
 
     try:
         await event.client.send_file(event.chat_id, lst, reply_to=reply_to_id)
     except TypeError as e:
-        print(paths[1])
+        print(lst)
         return await cat.edit(f"Error: \n`{e}`")
     except MediaEmptyError:
         for i in lst:
             with contextlib.suppress(MediaEmptyError):
                 await event.client.send_file(event.chat_id, i, reply_to=reply_to_id)
+
     shutil.rmtree(os.path.dirname(os.path.abspath(lst[0])))
+    if len(downloaded_data.error) > 0:
+        await catub.send_message(
+            BOTLOG_CHATID,
+            f"**Error:** while fetching images\n`{', '.join(downloaded_data.error)}`",
+        )
     await cat.delete()

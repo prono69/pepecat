@@ -6,7 +6,12 @@ exclude = [
     ".venv",
     "bin"
 ]
+
+lint.fixable = ["ALL"]
+lint.unfixable = ["F401"]
+
 line-length = 250
+
 
 [lint.per-file-ignores]
 "userbot/helpers/fonts.py" = ["E501"]

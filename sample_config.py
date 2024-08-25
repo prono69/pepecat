@@ -160,6 +160,10 @@ class Config(object):
     BADCAT_REPOBRANCH = os.environ.get("BADCAT_REPOBRANCH", "badcat")
     VC_REPO = os.environ.get("VC_REPO", "https://github.com/TgCatUB/CatVCPlayer")
     VC_REPOBRANCH = os.environ.get("VC_REPOBRANCH", "test")
+    # get it from https://console.cloud.google.com/
+    GOOGLE_CONSOLE_API_KEY = os.environ.get("GOOGLE_CONSOLE_API_KEY", "")
+    # get it from https://programmablesearchengine.google.com/cse/all
+    GOOGLE_CSE_ID = os.environ.get("GOOGLE_CSE_ID", "")
 
 
 class Production(Config):
