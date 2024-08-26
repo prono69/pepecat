@@ -134,7 +134,7 @@ async def img_api_func(event):
         LOGS.error(downloaded_data)
         await catub.send_message(
             BOTLOG_CHATID,
-            f"**Error:** while fetching images\n`{', '.join(downloaded_data["errors"])}`",
+            f"**Error: **while fetching images\n`{', '.join(downloaded_data['errors'])}`",
         )
 
     await cat.delete()

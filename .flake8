@@ -1,0 +1,8 @@
+[flake8]
+max-line-length = 250
+
+ignore = F403, F405, W604, E231
+
+exclude =
+    bin/
+    docs/
