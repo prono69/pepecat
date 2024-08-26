@@ -42,7 +42,7 @@ plugin_category = "fun"
 # modified and developed by @mrconfused , @jisan7509
 
 
-combot_stickers_url = "https://combot.org/telegram/stickers?q="
+combot_stickers_url = "https://combot.org/stickers?q="
 
 EMOJI_SEN = [
     "Можно отправить несколько смайлов в одном сообщении, однако мы рекомендуем использовать не больше одного или двух на каждый стикер.",
@@ -834,17 +834,20 @@ async def cb_sticker(event):
     if not split:
         return await edit_delete(event, "`Provide some name to search for pack.`", 5)
     catevent = await edit_or_reply(event, "`Searching sticker packs....`")
+
     scraper = cloudscraper.create_scraper()
     text = scraper.get(combot_stickers_url + split).text
     soup = bs(text, "lxml")
-    results = soup.find_all("div", {"class": "sticker-pack__header"})
+    results = soup.find_all("a", {"class": "stickerset__title"})
+
     if not results:
         return await edit_delete(catevent, "`No results found :(.`", 5)
     reply = f"**Sticker packs found for {split} are :**"
+
     for pack in results:
-        if pack.button:
-            packtitle = (pack.find("div", "sticker-pack__title")).get_text()
-            packlink = (pack.a).get("href")
-            packid = (pack.button).get("data-popup")
-            reply += f"\n **• ID: **`{packid}`\n [{packtitle}]({packlink})"
+        packtitle = (pack).get_text()
+        packlink = (pack).get("href")
+        print(packlink)
+        reply += f"\n • [{packtitle}](https://t.me/addstickers/{packlink.split("/")[-1]})"
+
     await catevent.edit(reply)
