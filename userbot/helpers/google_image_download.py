@@ -26,13 +26,13 @@ def create_directories(main_directory, dir_name):
 
 
 def google_crawl_images(query, num_images=3):
-    subDir = f"{query.replace(" ","_")}_{random.randint(1000,9999)}"
+    sub_dir = f"{query.replace(' ','_')}_{random.randint(1000,9999)}"
 
-    sub_directory = create_directories("downloads", subDir)
+    sub_directory = create_directories("downloads", sub_dir)
 
-    google_Crawler = GoogleImageCrawler(storage={"root_dir": sub_directory})
+    google_crawler = GoogleImageCrawler(storage={"root_dir": sub_directory})
 
-    google_Crawler.crawl(keyword=query, max_num=num_images)
+    google_crawler.crawl(keyword=query, max_num=num_images)
 
     files = os.listdir(sub_directory)
 
@@ -52,10 +52,10 @@ def search_and_download_images(query, api_key, cse_id, num_images=3):
         print("No image results found.")
         return
 
-    subDir = f"{query.replace(" ","_")}_{random.randint(1000,9999)}"
+    sub_dir = f"{query.replace(' ', '_')}_{random.randint(1000,9999)}"
 
     # Create a directory for the images
-    sub_directory = create_directories("downloads", subDir)
+    sub_directory = create_directories("downloads", sub_dir)
 
     errors = []
     download_paths = []
