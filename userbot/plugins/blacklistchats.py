@@ -25,7 +25,7 @@ LOGS = logging.getLogger(__name__)
 
 
 @catub.cat_cmd(
-    pattern="chatblacklist (on|off)$",
+    pattern=r"chatblacklist (on|off)$",
     command=("chatblacklist", plugin_category),
     info={
         "header": "To enable and disable chats blacklist.",
@@ -75,7 +75,7 @@ async def chat_blacklist(event):
 
 
 @catub.cat_cmd(
-    pattern="addblkchat(s)?(?:\s|$)([\s\S]*)",
+    pattern=r"addblkchat(s)?(?:\s|$)([\s\S]*)",
     command=("addblkchat", plugin_category),
     info={
         "header": "To add chats to blacklist.",
@@ -150,7 +150,7 @@ async def add_blacklist_chat(event):
 
 
 @catub.cat_cmd(
-    pattern="rmblkchat(s)?(?:\s|$)([\s\S]*)",
+    pattern=r"rmblkchat(s)?(?:\s|$)([\s\S]*)",
     command=("rmblkchat", plugin_category),
     info={
         "header": "To remove chats to blacklist.",
@@ -212,7 +212,7 @@ async def rm_blacklist_chat(event):
 
 
 @catub.cat_cmd(
-    pattern="listblkchats$",
+    pattern=r"listblkchats$",
     command=("listblkchats", plugin_category),
     info={
         "header": "To list all blacklisted chats.",

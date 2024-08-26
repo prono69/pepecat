@@ -27,7 +27,7 @@ thumb_image_path = Config.TMP_DOWNLOAD_DIRECTORY + "/thumb_image.jpg"
 
 
 @catub.cat_cmd(
-    pattern="savethumb$",
+    pattern=r"savethumb$",
     command=("savethumb", plugin_category),
     info={
         "header": "To save replied image as temporary thumb.",
@@ -53,7 +53,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="clearthumb$",
+    pattern=r"clearthumb$",
     command=("clearthumb", plugin_category),
     info={
         "header": "To delete thumb image.",
@@ -70,7 +70,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="getthumb$",
+    pattern=r"getthumb$",
     command=("getthumb", plugin_category),
     info={
         "header": "To get thumbnail of given video or gives your present thumbnail.",

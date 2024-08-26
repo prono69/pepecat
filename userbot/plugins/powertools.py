@@ -24,7 +24,7 @@ plugin_category = "tools"
 
 
 @catub.cat_cmd(
-    pattern="restart$",
+    pattern=r"restart$",
     command=("restart", plugin_category),
     info={
         "header": "Restarts the bot !!",
@@ -60,7 +60,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="shutdown$",
+    pattern=r"shutdown$",
     command=("shutdown", plugin_category),
     info={
         "header": "Shutdowns the bot !!",
@@ -80,7 +80,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="sleep( [0-9]+)?$",
+    pattern=r"sleep( [0-9]+)?$",
     command=("sleep", plugin_category),
     info={
         "header": "Userbot will stop working for the mentioned time.",
@@ -102,7 +102,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="notify (on|off)$",
+    pattern=r"notify (on|off)$",
     command=("notify", plugin_category),
     info={
         "header": "To update the your chat after restart or reload .",

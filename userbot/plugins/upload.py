@@ -136,7 +136,7 @@ async def upload(path, event, udir_event, catflag=None):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="upload( -f)? ([\s\S]*)",
+    pattern=r"upload( -f)? ([\s\S]*)",
     command=("upload", plugin_category),
     info={
         "header": "To upload files from server to telegram",

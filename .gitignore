@@ -106,3 +106,8 @@ config.py
 # mypy
 .mypy_cache/
 *.bak
+
+CatTgbot.session
+CatTgbot.session-journal
+xtraplugins/
+userbot/cache/ytsearch.json

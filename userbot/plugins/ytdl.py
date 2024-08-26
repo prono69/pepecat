@@ -132,7 +132,7 @@ async def fix_attributes(path, info_dict: dict, supports_streaming: bool = False
 
 
 @catub.cat_cmd(
-    pattern="yta(?:\s|$)([\s\S]*)",
+    pattern=r"yta(?:\s|$)([\s\S]*)",
     command=("yta", plugin_category),
     info={
         "header": "To download audio from many sites like Youtube, Facebook, Instagram, etc.",
@@ -212,7 +212,7 @@ async def download_audio(event):  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="ytv(?:\s|$)([\s\S]*)",
+    pattern=r"ytv(?:\s|$)([\s\S]*)",
     command=("ytv", plugin_category),
     info={
         "header": "To download video from many sites like Youtube, Facebook, Instagram",
@@ -278,7 +278,7 @@ async def download_video(event):
 
 
 @catub.cat_cmd(
-    pattern="insta(?: |$)([\s\S]*)",
+    pattern=r"insta(?: |$)([\s\S]*)",
     command=("insta", plugin_category),
     info={
         "header": "To download instagram video/photo",
@@ -369,7 +369,7 @@ async def insta_dl(event):
 
 
 @catub.cat_cmd(
-    pattern="yts(?: |$)(\d*)? ?([\s\S]*)",
+    pattern=r"yts(?: |$)(\d*)? ?([\s\S]*)",
     command=("yts", plugin_category),
     info={
         "header": "To search youtube videos",

@@ -23,7 +23,7 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="sg(|u)(?:\s|$)([\s\S]*)",
+    pattern=r"sg(|u)(?:\s|$)([\s\S]*)",
     command=("sg", plugin_category),
     info={
         "header": "To get name history of the user.",

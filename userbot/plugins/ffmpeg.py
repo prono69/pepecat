@@ -51,10 +51,10 @@ async def convert_video(video_file, output_directory, crf, total_time, bot, mess
         await asyncio.sleep(3)
         with open("./temp/progress.txt", "r+") as file:
             text = file.read()
-            frame = re.findall("frame=(\d+)", text)
-            time_in_us = re.findall("out_time_ms=(\d+)", text)
-            progress = re.findall("progress=(\w+)", text)
-            speed = re.findall("speed=(\d+\.?\d*)", text)
+            frame = re.findall(r"frame=(\d+)", text)
+            time_in_us = re.findall(r"out_time_ms=(\d+)", text)
+            progress = re.findall(r"progress=(\w+)", text)
+            speed = re.findall(r"speed=(\d+\.?\d*)", text)
             frame = int(frame[-1]) if len(frame) else 1
             speed = speed[-1] if len(speed) else 1
             time_in_us = time_in_us[-1] if len(time_in_us) else 1
@@ -97,7 +97,7 @@ async def cult_small_video(video_file, output_directory, start_time, end_time, o
 
 
 @catub.cat_cmd(
-    pattern="(|f)compress(?:\s|$)([\s\S]*)",
+    pattern=r"(|f)compress(?:\s|$)([\s\S]*)",
     command=("compress", plugin_category),
     info={
         "header": "Compress the video file.",
@@ -214,7 +214,7 @@ async def ffmpeg_compress(event):  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="ffmpegsave(?:\s|$)([\s\S]*)",
+    pattern=r"ffmpegsave(?:\s|$)([\s\S]*)",
     command=("ffmpegsave", plugin_category),
     info={
         "header": "Saves the media file in bot to trim mutliple times",
@@ -269,7 +269,7 @@ async def ff_mpeg_save_cmd(event):
 
 
 @catub.cat_cmd(
-    pattern="vtrim(?:\s|$)([\s\S]*)",
+    pattern=r"vtrim(?:\s|$)([\s\S]*)",
     command=("vtrim", plugin_category),
     info={
         "header": "Trims the saved media with specific given time internval and outputs as video if it is video",
@@ -347,7 +347,7 @@ async def ff_mpeg_vtrim_cmd(event):
 
 
 @catub.cat_cmd(
-    pattern="atrim(?:\s|$)([\s\S]*)",
+    pattern=r"atrim(?:\s|$)([\s\S]*)",
     command=("atrim", plugin_category),
     info={
         "header": "Trims the saved media with specific given time internval and outputs as audio",
@@ -408,7 +408,7 @@ async def ff_mpeg_atrim_cmd(event):
 
 
 @catub.cat_cmd(
-    pattern="ffmpegclear$",
+    pattern=r"ffmpegclear$",
     command=("ffmpegclear", plugin_category),
     info={
         "header": "Deletes the saved media so you can save new one",

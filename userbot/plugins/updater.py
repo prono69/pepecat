@@ -167,7 +167,7 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
 
 
 @catub.cat_cmd(
-    pattern="update(| now)?$",
+    pattern=r"update(| now)?$",
     command=("update", plugin_category),
     info={
         "header": "To update userbot.",
@@ -239,7 +239,7 @@ async def upstream(event):
 
 
 @catub.cat_cmd(
-    pattern="update deploy$",
+    pattern=r"update deploy$",
 )
 async def update_deploy(event):
     if ENV:
@@ -280,7 +280,7 @@ async def update_deploy(event):
 
 
 @catub.cat_cmd(
-    pattern="(good|bad)cat$",
+    pattern=r"(good|bad)cat$",
     command=("switch", plugin_category),
     info={
         "header": "To switch between goodcat & badcat(For extra nsfw and gali).",

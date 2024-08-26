@@ -228,7 +228,7 @@ async def fetch_info(chat, event):  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="admins(?:\s|$)([\s\S]*)",
+    pattern=r"admins(?:\s|$)([\s\S]*)",
     command=("admins", plugin_category),
     info={
         "header": "To get list of admins.",
@@ -274,7 +274,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="bots(?:\s|$)([\s\S]*)",
+    pattern=r"bots(?:\s|$)([\s\S]*)",
     command=("bots", plugin_category),
     info={
         "header": "To get list of bots.",
@@ -309,7 +309,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="users(?:\s|$)([\s\S]*)",
+    pattern=r"users(?:\s|$)([\s\S]*)",
     command=("users", plugin_category),
     info={
         "header": "To get list of users.",
@@ -353,7 +353,7 @@ async def get_users(show):
 
 
 @catub.cat_cmd(
-    pattern="chatinfo(?:\s|$)([\s\S]*)",
+    pattern=r"chatinfo(?:\s|$)([\s\S]*)",
     command=("chatinfo", plugin_category),
     info={
         "header": "To get Group details.",
@@ -382,7 +382,7 @@ async def info(event):
 
 
 @catub.cat_cmd(
-    pattern="grpstat(s)?(?:\s|$)([\s\S]*)",
+    pattern=r"grpstat(s)?(?:\s|$)([\s\S]*)",
     command=("grpstats", plugin_category),
     info={
         "header": "To get stats of the group.",

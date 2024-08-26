@@ -30,7 +30,7 @@ plugin_category = "misc"
 
 
 @catub.cat_cmd(
-    pattern="reddit(?:\s|$)([\s\S]*)",
+    pattern=r"reddit(?:\s|$)([\s\S]*)",
     command=("reddit", plugin_category),
     info={
         "header": "get a random reddit post.",

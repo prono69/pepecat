@@ -21,7 +21,7 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="clone(?:\s|$)([\s\S]*)",
+    pattern=r"clone(?:\s|$)([\s\S]*)",
     command=("clone", plugin_category),
     info={
         "header": "To clone account of mentiond user or replied user",
@@ -65,7 +65,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="revert$",
+    pattern=r"revert$",
     command=("revert", plugin_category),
     info={
         "header": "To revert back to your original name , bio and profile pic",

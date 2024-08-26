@@ -136,7 +136,7 @@ def manage_dir(path, num):
 
 
 # BACK
-@catub.tgbot.on(CallbackQuery(pattern="fmback"))
+@catub.tgbot.on(CallbackQuery(pattern=r"fmback"))
 @check_owner
 async def back(event):
     path = PATH[0]
@@ -152,7 +152,7 @@ async def back(event):
 
 
 # UP
-@catub.tgbot.on(CallbackQuery(pattern="fmup_(.*)"))
+@catub.tgbot.on(CallbackQuery(pattern=r"fmup_(.*)"))
 @check_owner
 async def up(event):
     num = event.pattern_match.group(1).decode("UTF-8")
@@ -167,7 +167,7 @@ async def up(event):
 
 
 # DOWN
-@catub.tgbot.on(CallbackQuery(pattern="fmdown_(.*)"))
+@catub.tgbot.on(CallbackQuery(pattern=r"fmdown_(.*)"))
 @check_owner
 async def down(event):
     num = event.pattern_match.group(1).decode("UTF-8")
@@ -182,7 +182,7 @@ async def down(event):
 
 
 # FORTH
-@catub.tgbot.on(CallbackQuery(pattern="fmforth_(.*)"))
+@catub.tgbot.on(CallbackQuery(pattern=r"fmforth_(.*)"))
 @check_owner
 async def forth(event):
     npath = event.pattern_match.group(1).decode("UTF-8")
@@ -199,7 +199,7 @@ async def forth(event):
 
 
 # REMOVE
-@catub.tgbot.on(CallbackQuery(pattern="fmrem_(.*)"))
+@catub.tgbot.on(CallbackQuery(pattern=r"fmrem_(.*)"))
 @check_owner
 async def remove(event):
     fn, num = (event.pattern_match.group(1).decode("UTF-8")).split("|", 1)
@@ -223,7 +223,7 @@ async def remove(event):
 
 
 # SEND
-@catub.tgbot.on(CallbackQuery(pattern="fmsend"))
+@catub.tgbot.on(CallbackQuery(pattern=r"fmsend"))
 @check_owner
 async def send(event):
     path = PATH[0]
@@ -255,7 +255,7 @@ async def send(event):
 
 
 # CUT
-@catub.tgbot.on(CallbackQuery(pattern="fmcut_(.*)"))
+@catub.tgbot.on(CallbackQuery(pattern=r"fmcut_(.*)"))
 @check_owner
 async def cut(event):
     f, n = (event.pattern_match.group(1).decode("UTF-8")).split("|", 1)
@@ -284,7 +284,7 @@ async def cut(event):
 
 
 # COPY
-@catub.tgbot.on(CallbackQuery(pattern="fmcopy_(.*)"))
+@catub.tgbot.on(CallbackQuery(pattern=r"fmcopy_(.*)"))
 @check_owner
 async def copy(event):
     f, n = (event.pattern_match.group(1).decode("UTF-8")).split("|", 1)
@@ -313,7 +313,7 @@ async def copy(event):
 
 
 # PASTE
-@catub.tgbot.on(CallbackQuery(pattern="fmpaste_(.*)"))
+@catub.tgbot.on(CallbackQuery(pattern=r"fmpaste_(.*)"))
 @check_owner
 async def paste(event):
     n = event.pattern_match.group(1).decode("UTF-8")

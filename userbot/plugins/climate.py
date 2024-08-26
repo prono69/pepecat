@@ -55,7 +55,7 @@ def sun(unix, ctimezone):
 
 
 @catub.cat_cmd(
-    pattern="climate(?:\s|$)([\s\S]*)",
+    pattern=r"climate(?:\s|$)([\s\S]*)",
     command=("climate", plugin_category),
     info={
         "header": "To get the weather report of a city.",
@@ -137,7 +137,7 @@ async def get_weather(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="setcity(?:\s|$)([\s\S]*)",
+    pattern=r"setcity(?:\s|$)([\s\S]*)",
     command=("setcity", plugin_category),
     info={
         "header": "To set default city for climate cmd",
@@ -180,7 +180,7 @@ async def set_default_city(event):
 
 
 @catub.cat_cmd(
-    pattern="weather(?:\s|$)([\s\S]*)",
+    pattern=r"weather(?:\s|$)([\s\S]*)",
     command=("weather", plugin_category),
     info={
         "header": "To get the weather report of a city.",
@@ -201,7 +201,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="wttr(?:\s|$)([\s\S]*)",
+    pattern=r"wttr(?:\s|$)([\s\S]*)",
     command=("wttr", plugin_category),
     info={
         "header": "To get the weather report of a city.",

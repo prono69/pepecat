@@ -761,8 +761,8 @@ async def glists(gdrive):
             query = f"'{parents}' in parents and (name contains '*')"
         else:
             query = f"'{parents}' in parents and (name contains '{name}')"
-    elif re.search("-p ([\s\S]*)", checker):
-        parents = re.search("-p ([\s\S]*)", checker)[1]
+    elif re.search(r"-p ([\s\S]*)", checker):
+        parents = re.search(r"-p ([\s\S]*)", checker)[1]
         name = checker.split("-p")[0].strip()
         query = f"'{parents}' in parents and (name contains '{name}')"
     else:
@@ -830,7 +830,7 @@ async def glists(gdrive):
 
 
 @catub.cat_cmd(
-    pattern="gauth$",
+    pattern=r"gauth$",
     command=("gauth", plugin_category),
     info={
         "header": "To authenciate gdrive credentials.",
@@ -884,7 +884,7 @@ async def generate_credentials(gdrive):
         r = conv.wait_event(events.NewMessage(outgoing=True, chats=BOTLOG_CHATID))
         r = await r
         code = r.message.message.strip()
-        if getcode := re.search("(.*)(4\/.*)(&.*)", code):
+        if getcode := re.search(r"(.*)(4\/.*)(&.*)", code):
             code = getcode[2]
         else:
             await edit_or_reply(gdrive, "Given link is wrong. recheck your link")
@@ -907,7 +907,7 @@ async def generate_credentials(gdrive):
 
 
 @catub.cat_cmd(
-    pattern="greset",
+    pattern=r"greset",
     command=("greset", plugin_category),
     info={
         "header": "To reset gdrive credentials.",
@@ -927,7 +927,7 @@ async def reset_credentials(gdrive):
 
 
 @catub.cat_cmd(
-    pattern="glist(?: |$)(-l \d+)?(?: |$)?([\s\S]*)?(?: |$)",
+    pattern=r"glist(?: |$)(-l \d+)?(?: |$)?([\s\S]*)?(?: |$)",
     command=("glist", plugin_category),
     info={
         "header": "Get list of folders and files with default size 50",
@@ -952,7 +952,7 @@ async def catlists(gdrive):
 
 
 @catub.cat_cmd(
-    pattern="gdf (mkdir|rm|info) ([\s\S]*)",
+    pattern=r"gdf (mkdir|rm|info) ([\s\S]*)",
     command=("gdf", plugin_category),
     info={
         "header": "Google Drive folder/file management",
@@ -1100,7 +1100,7 @@ async def google_drive_managers(gdrive):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="gabort$",
+    pattern=r"gabort$",
     command=("gabort", plugin_category),
     info={
         "header": "Abort process uploading or downloading process.",
@@ -1125,7 +1125,7 @@ async def cancel_process(gdrive):
 
 
 @catub.cat_cmd(
-    pattern="ugd(?:\s|$)([\s\S]*)",
+    pattern=r"ugd(?:\s|$)([\s\S]*)",
     command=("ugd", plugin_category),
     info={
         "header": "upload files/folders to gdrive.",
@@ -1272,7 +1272,7 @@ async def google_drive(gdrive):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="gclear$",
+    pattern=r"gclear$",
     command=("gclear", plugin_category),
     info={
         "header": "to clear the temparary upload directory.",
@@ -1304,7 +1304,7 @@ async def clear_upload_folder(gdrive):
 
 
 @catub.cat_cmd(
-    pattern="gset(?:\s|$)([\s\S]*)",
+    pattern=r"gset(?:\s|$)([\s\S]*)",
     command=("gset", plugin_category),
     info={
         "header": "To set temparary parent id.",
@@ -1340,7 +1340,7 @@ async def set_upload_folder(gdrive):
 
 
 @catub.cat_cmd(
-    pattern="gdown ?(-u)? ([\s\S]*)",
+    pattern=r"gdown ?(-u)? ([\s\S]*)",
     command=("gdown", plugin_category),
     info={
         "header": "To download files form gdrive.",
@@ -1388,7 +1388,7 @@ async def g_download(event):
 
 
 @catub.cat_cmd(
-    pattern="gshare ([\s\S]*)",
+    pattern=r"gshare ([\s\S]*)",
     command=("gshare", plugin_category),
     info={
         "header": "To share the team drive files.",

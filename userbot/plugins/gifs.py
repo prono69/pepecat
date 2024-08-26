@@ -19,7 +19,7 @@ plugin_category = "Extra"
 
 
 @catub.cat_cmd(
-    pattern="gifs(?:\s|$)([\s\S]*)",
+    pattern=r"gifs(?:\s|$)([\s\S]*)",
     command=("gifs", plugin_category),
     info={
         "header": "Sends random gifs",

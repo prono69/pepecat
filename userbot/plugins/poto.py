@@ -19,7 +19,7 @@ name = "Profile Photos"
 
 
 @catub.cat_cmd(
-    pattern="poto(?:\s|$)([\s\S]*)",
+    pattern=r"poto(?:\s|$)([\s\S]*)",
     command=("poto", plugin_category),
     info={
         "header": "To get user or group profile pic.",
@@ -81,7 +81,7 @@ async def potocmd(event):
 
 
 @catub.cat_cmd(
-    pattern="blur(?:\s|$)([\s\S]*)",
+    pattern=r"blur(?:\s|$)([\s\S]*)",
     command=("blur", plugin_category),
     info={
         "header": "To blur picture.",

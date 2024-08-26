@@ -81,7 +81,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="savepwel(?:\s|$)([\s\S]*)",
+    pattern=r"savepwel(?:\s|$)([\s\S]*)",
     command=("savepwel", plugin_category),
     info={
         "header": "To welcome user(sends welcome message to here private messages).",
@@ -142,7 +142,7 @@ async def save_welcome(event):
 
 
 @catub.cat_cmd(
-    pattern="clearpwel$",
+    pattern=r"clearpwel$",
     command=("clearpwel", plugin_category),
     info={
         "header": "To turn off private welcome message.",
@@ -159,7 +159,7 @@ async def del_welcome(event):
 
 
 @catub.cat_cmd(
-    pattern="listpwel$",
+    pattern=r"listpwel$",
     command=("listpwel", plugin_category),
     info={
         "header": "To check current private welcome message in group.",

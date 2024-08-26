@@ -65,7 +65,7 @@ def inline_button_aricle(method):
 
 
 @catub.cat_cmd(
-    pattern="ibutton(?:\s|$)([\s\S]*)",
+    pattern=r"ibutton(?:\s|$)([\s\S]*)",
     command=("ibutton", plugin_category),
     info={
         "header": "To create button posts via inline",
@@ -93,7 +93,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="cbutton(?:\s|$)([\s\S]*)",
+    pattern=r"cbutton(?:\s|$)([\s\S]*)",
     command=("cbutton", plugin_category),
     info={
         "header": "To create button posts",

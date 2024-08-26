@@ -46,7 +46,7 @@ plugin_category = "bot"
 
 
 @catub.cat_cmd(
-    pattern="iytdl(?:\s|$)([\s\S]*)",
+    pattern=r"iytdl(?:\s|$)([\s\S]*)",
     command=("iytdl", plugin_category),
     info={
         "header": "ytdl with inline buttons.",
@@ -86,7 +86,7 @@ async def iytdl_inline(event):
         await catevent.edit("`Sorry!. Can't find any results`")
 
 
-@catub.tgbot.on(CallbackQuery(data=re.compile(b"^ytdl_download_(.*)_([\d]+|mkv|mp4|mp3)(?:_(a|v))?")))
+@catub.tgbot.on(CallbackQuery(data=re.compile(rb"^ytdl_download_(.*)_([\d]+|mkv|mp4|mp3)(?:_(a|v))?")))
 @check_owner
 async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
     yt_code = str(c_q.pattern_match.group(1).decode("UTF-8")) if c_q.pattern_match.group(1) is not None else None

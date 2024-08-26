@@ -79,7 +79,7 @@ async def reload_codebase():
 
 
 @catub.cat_cmd(
-    pattern="(set|get|del|info) var(?:\s|$)([\s\S]*)",
+    pattern=r"(set|get|del|info) var(?:\s|$)([\s\S]*)",
     command=("var", plugin_category),
     info={
         "header": "To manage config vars.",
@@ -183,7 +183,7 @@ async def variable(event):
 
 
 @catub.cat_cmd(
-    pattern="(re|clean)load$",
+    pattern=r"(re|clean)load$",
     command=("reload", plugin_category),
     info={
         "header": "To reload your bot in vps/ similar to restart",

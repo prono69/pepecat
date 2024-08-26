@@ -98,7 +98,7 @@ async def log_tagged_messages(event):
 
 
 @catub.cat_cmd(
-    pattern="save(?:\s|$)([\s\S]*)",
+    pattern=r"save(?:\s|$)([\s\S]*)",
     command=("save", plugin_category),
     info={
         "header": "To log the replied message to bot log group so you can check later.",
@@ -129,7 +129,7 @@ async def log(log_text):
 
 
 @catub.cat_cmd(
-    pattern="log$",
+    pattern=r"log$",
     command=("log", plugin_category),
     info={
         "header": "To turn on logging of messages from that chat.",
@@ -149,7 +149,7 @@ async def set_log_p_m(event):
 
 
 @catub.cat_cmd(
-    pattern="nolog$",
+    pattern=r"nolog$",
     command=("nolog", plugin_category),
     info={
         "header": "To turn off logging of messages from that chat.",
@@ -169,7 +169,7 @@ async def set_no_log_p_m(event):
 
 
 @catub.cat_cmd(
-    pattern="pmlog (on|off)$",
+    pattern=r"pmlog (on|off)$",
     command=("pmlog", plugin_category),
     info={
         "header": "To turn on or turn off logging of Private messages in pmlogger group.",
@@ -208,7 +208,7 @@ async def set_pmlog(event):
 
 
 @catub.cat_cmd(
-    pattern="grplog (on|off)$",
+    pattern=r"grplog (on|off)$",
     command=("grplog", plugin_category),
     info={
         "header": "To turn on or turn off group tags logging in pmlogger group.",

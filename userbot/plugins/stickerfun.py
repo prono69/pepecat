@@ -48,7 +48,7 @@ def file_checker(template):
 
 
 @catub.cat_cmd(
-    pattern="(?:st|sttxt)(?:\s|$)([\s\S]*)",
+    pattern=r"(?:st|sttxt)(?:\s|$)([\s\S]*)",
     command=("sttxt", plugin_category),
     info={
         "header": "Anime that makes your writing fun.",
@@ -71,7 +71,7 @@ async def waifu(animu):
 
 
 @catub.cat_cmd(
-    pattern="stcr(?:\s|$)([\s\S]*)",
+    pattern=r"stcr(?:\s|$)([\s\S]*)",
     command=("stcr", plugin_category),
     info={
         "header": "your text as sticker.",
@@ -118,7 +118,7 @@ async def sticklet(event):
 
 
 @catub.cat_cmd(
-    pattern="honk(?:\s|$)([\s\S]*)",
+    pattern=r"honk(?:\s|$)([\s\S]*)",
     command=("honk", plugin_category),
     info={
         "header": "Make honk say anything.",
@@ -142,7 +142,7 @@ async def honk(event):
 
 
 @catub.cat_cmd(
-    pattern="twt(?:\s|$)([\s\S]*)",
+    pattern=r"twt(?:\s|$)([\s\S]*)",
     command=("twt", plugin_category),
     info={
         "header": "Make a cool tweet of your account",
@@ -166,7 +166,7 @@ async def twt(event):
 
 
 @catub.cat_cmd(
-    pattern="glax(|r)(?:\s|$)([\s\S]*)",
+    pattern=r"glax(|r)(?:\s|$)([\s\S]*)",
     command=("glax", plugin_category),
     info={
         "header": "Make glax the dragon scream your text.",
@@ -201,7 +201,7 @@ async def glax(event):
 
 
 @catub.cat_cmd(
-    pattern="(|b)quby(?:\s|$)([\s\S]*)",
+    pattern=r"(|b)quby(?:\s|$)([\s\S]*)",
     command=("quby", plugin_category),
     info={
         "header": "Make doge say anything.",
@@ -281,7 +281,7 @@ async def quby(event):
 
 
 @catub.cat_cmd(
-    pattern="(|b)(blob|kirby)(?:\s|$)([\s\S]*)",
+    pattern=r"(|b)(blob|kirby)(?:\s|$)([\s\S]*)",
     command=("blob", plugin_category),
     info={
         "header": "Give the sticker on background.",
@@ -341,7 +341,7 @@ async def knife(event):
 
 
 @catub.cat_cmd(
-    pattern="doge(?:\s|$)([\s\S]*)",
+    pattern=r"doge(?:\s|$)([\s\S]*)",
     command=("doge", plugin_category),
     info={
         "header": "Make doge say anything.",
@@ -409,7 +409,7 @@ async def doge(event):
 
 
 @catub.cat_cmd(
-    pattern="(|h)penguin(?:\s|$)([\s\S]*)",
+    pattern=r"(|h)penguin(?:\s|$)([\s\S]*)",
     command=("penguin", plugin_category),
     info={
         "header": "To make penguin meme sticker. ",
@@ -467,7 +467,7 @@ async def penguin(event):
 
 
 @catub.cat_cmd(
-    pattern="(|h)gandhi(?:\s|$)([\s\S]*)",
+    pattern=r"(|h)gandhi(?:\s|$)([\s\S]*)",
     command=("gandhi", plugin_category),
     info={
         "header": "Make gandhi text sticker.",

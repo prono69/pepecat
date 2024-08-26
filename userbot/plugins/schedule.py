@@ -27,7 +27,7 @@ plugin_category = "tools"
 
 
 @catub.cat_cmd(
-    pattern="(auto|)schedule(?:\s|$)([\s\S]*)",
+    pattern=r"(auto|)schedule(?:\s|$)([\s\S]*)",
     command=("schedule", plugin_category),
     info={
         "header": "Schedule message to a perticulater day and time.",
@@ -94,7 +94,7 @@ async def schedule(event):
 
 
 @catub.cat_cmd(
-    pattern="autoschedule$",
+    pattern=r"autoschedule$",
     command=("autoschedule", plugin_category),
     info={
         "header": "Schedule message in loop everyday.",
@@ -120,7 +120,7 @@ async def autoschedule(event):
 
 
 @catub.cat_cmd(
-    pattern="myschedule(?:\s|$)([\s\S]*)",
+    pattern=r"myschedule(?:\s|$)([\s\S]*)",
     command=("myschedule", plugin_category),
     info={
         "header": "Get all active schedule tasks list.",

@@ -17,7 +17,7 @@ from . import catmemes
 plugin_category = "extra"
 
 # ===========================================================================================
-S = "..... (¯`v´¯)♥️\n" ".......•.¸.•´\n" "....¸.•´  🅷🅸\n" "... (   BABYy\n" "☻/ \n" "/▌✿🌷✿\n" "/ \     \|/\n"
+S = r"..... (¯`v´¯)♥️\n" r".......•.¸.•´\n" r"....¸.•´  🅷🅸\n" r"... (   BABYy\n" r"☻/ \n" r"/▌✿🌷✿\n" r"/ \     \|/\n"
 
 
 U = (
@@ -58,7 +58,7 @@ X = ".......🦋🦋........🦋🦋\n" "...🦋.........🦋🦋.......🦋\n" 
 
 
 @catub.cat_cmd(
-    pattern="baby$",
+    pattern=r"baby$",
     command=("baby", plugin_category),
     info={
         "header": "Hi Baby art",
@@ -71,7 +71,7 @@ async def baby(event):
 
 
 @catub.cat_cmd(
-    pattern="hbd(?:\s|$)([\s\S]*)",
+    pattern=r"hbd(?:\s|$)([\s\S]*)",
     command=("hbd", plugin_category),
     info={
         "header": "Happy birthday art.",
@@ -86,12 +86,12 @@ async def hbd(event):
         text = ""
     await edit_or_reply(
         event,
-        f"▃▃▃▃▃▃▃▃▃▃▃\n┊ ┊ ┊ ┊ ┊ ┊\n┊ ┊ ┊ ┊ ˚✩ ⋆｡˚ ✩\n┊ ┊ ┊ ✫\n┊ ┊ ✧🎂🍰🍫🍭\n┊ ┊ ✯\n┊ . ˚ ˚✩\n........♥️♥️..........♥️♥️\n.....♥️........♥️..♥️........♥️\n...♥️.............♥️............♥️\n......♥️.....Happy.......♥️__\n...........♥️..............♥️__\n................♥️.....♥️__\n......................♥️__\n...............♥️......♥️__\n..........♥️...............♥️__\n.......♥️..Birthday....♥️\n.....♥️..........♥️..........♥️__\n.....♥️.......♥️_♥️.......♥️__\n.........♥️♥️........♥️♥️.....\n.............................................\n..... (¯`v´¯)♥️\n.......•.¸.•´STAY BLESSED\n....¸.•´      LOVE&FUN\n... (   YOU DESERVE\n☻/ THEM A LOT\n/▌✿🌷✿\n/ \     \|/\n▃▃▃▃▃▃▃▃▃▃▃\n\n{text}",  # noqa E501
+        rf"▃▃▃▃▃▃▃▃▃▃▃\n┊ ┊ ┊ ┊ ┊ ┊\n┊ ┊ ┊ ┊ ˚✩ ⋆｡˚ ✩\n┊ ┊ ┊ ✫\n┊ ┊ ✧🎂🍰🍫🍭\n┊ ┊ ✯\n┊ . ˚ ˚✩\n........♥️♥️..........♥️♥️\n.....♥️........♥️..♥️........♥️\n...♥️.............♥️............♥️\n......♥️.....Happy.......♥️__\n...........♥️..............♥️__\n................♥️.....♥️__\n......................♥️__\n...............♥️......♥️__\n..........♥️...............♥️__\n.......♥️..Birthday....♥️\n.....♥️..........♥️..........♥️__\n.....♥️.......♥️_♥️.......♥️__\n.........♥️♥️........♥️♥️.....\n.............................................\n..... (¯`v´¯)♥️\n.......•.¸.•´STAY BLESSED\n....¸.•´      LOVE&FUN\n... (   YOU DESERVE\n☻/ THEM A LOT\n/▌✿🌷✿\n/ \     \|/\n▃▃▃▃▃▃▃▃▃▃▃\n\n{text}",  # noqa E501
     )
 
 
 @catub.cat_cmd(
-    pattern="thanks$",
+    pattern=r"thanks$",
     command=("thanks", plugin_category),
     info={
         "header": "Thanks art.",
@@ -104,7 +104,7 @@ async def gn(event):
 
 
 @catub.cat_cmd(
-    pattern="gm$",
+    pattern=r"gm$",
     command=("gm", plugin_category),
     info={
         "header": "Good morning random strings.",
@@ -118,7 +118,7 @@ async def morning(morning):
 
 
 @catub.cat_cmd(
-    pattern="gnoon$",
+    pattern=r"gnoon$",
     command=("gnoon", plugin_category),
     info={
         "header": "Good afternoon random strings.",
@@ -132,7 +132,7 @@ async def noon(noon):
 
 
 @catub.cat_cmd(
-    pattern="gn$",
+    pattern=r"gn$",
     command=("gn", plugin_category),
     info={
         "header": "Good night random strings.",
@@ -146,7 +146,7 @@ async def night(night):
 
 
 @catub.cat_cmd(
-    pattern="gmg$",
+    pattern=r"gmg$",
     command=("gmg", plugin_category),
     info={
         "header": "Good morning art.",
@@ -162,7 +162,7 @@ async def gmg(event):
 
 
 @catub.cat_cmd(
-    pattern="gmg2$",
+    pattern=r"gmg2$",
     command=("gmg2", plugin_category),
     info={
         "header": "Good morning art.",
@@ -178,7 +178,7 @@ async def gmg2(event):
 
 
 @catub.cat_cmd(
-    pattern="gmg3$",
+    pattern=r"gmg3$",
     command=("gmg3", plugin_category),
     info={
         "header": "Good morning art.",
@@ -191,7 +191,7 @@ async def gmg3(event):
 
 
 @catub.cat_cmd(
-    pattern="gnt$",
+    pattern=r"gnt$",
     command=("gnt", plugin_category),
     info={
         "header": "Good night art.",
@@ -207,7 +207,7 @@ async def gnt(event):
 
 
 @catub.cat_cmd(
-    pattern="gnt2$",
+    pattern=r"gnt2$",
     command=("gnt2", plugin_category),
     info={
         "header": "Good night art.",
@@ -223,7 +223,7 @@ async def gnt2(event):
 
 
 @catub.cat_cmd(
-    pattern="gnt3$",
+    pattern=r"gnt3$",
     command=("gnt3", plugin_category),
     info={
         "header": "Good night art.",
@@ -239,7 +239,7 @@ async def gnt3(event):
 
 
 @catub.cat_cmd(
-    pattern="hi(?:\s|$)([\s\S]*)",
+    pattern=r"hi(?:\s|$)([\s\S]*)",
     command=("hi", plugin_category),
     info={
         "header": "Hi text art.",
@@ -262,7 +262,7 @@ async def hi(event):
 
 
 @catub.cat_cmd(
-    pattern="cheer$",
+    pattern=r"cheer$",
     command=("cheer", plugin_category),
     info={
         "header": "Cheer text art.",
@@ -278,7 +278,7 @@ async def cheer(event):
 
 
 @catub.cat_cmd(
-    pattern="getwell$",
+    pattern=r"getwell$",
     command=("getwell", plugin_category),
     info={
         "header": "Get Well art.",
@@ -291,7 +291,7 @@ async def getwell(event):
 
 
 @catub.cat_cmd(
-    pattern="luck$",
+    pattern=r"luck$",
     command=("luck", plugin_category),
     info={
         "header": "luck art.",
@@ -304,7 +304,7 @@ async def luck(event):
 
 
 @catub.cat_cmd(
-    pattern="sprinkle$",
+    pattern=r"sprinkle$",
     command=("sprinkle", plugin_category),
     info={
         "header": "sprinkle art.",

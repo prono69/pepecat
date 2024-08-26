@@ -44,7 +44,7 @@ def get_warp_length(width):
 
 
 @catub.cat_cmd(
-    pattern="qpic(?:\s|$)([\s\S]*)",
+    pattern=r"qpic(?:\s|$)([\s\S]*)",
     command=("qpic", plugin_category),
     info={
         "header": "Makes quote pic.",
@@ -140,7 +140,7 @@ async def q_pic(event):  # sourcery no-metrics  # sourcery skip: low-code-qualit
 
 
 @catub.cat_cmd(
-    pattern="(q|rq|fq|frq)(?:\s|$)([\s\S]*)",
+    pattern=r"(q|rq|fq|frq)(?:\s|$)([\s\S]*)",
     command=("q", plugin_category),
     info={
         "header": "Makes your message as sticker quote.",
@@ -202,7 +202,7 @@ async def stickerchat(catquotes):
 
 
 @catub.cat_cmd(
-    pattern="qbot(?:\s|$)([\s\S]*)",
+    pattern=r"qbot(?:\s|$)([\s\S]*)",
     command=("qbot", plugin_category),
     info={
         "header": "Makes your message as sticker quote by @quotlybot",

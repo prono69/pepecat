@@ -51,7 +51,7 @@ UNBAN_RIGHTS = ChatBannedRights(
 
 
 @catub.cat_cmd(
-    pattern="gban(?:\s|$)([\s\S]*)",
+    pattern=r"gban(?:\s|$)([\s\S]*)",
     command=("gban", plugin_category),
     info={
         "header": "To ban user in every group where you are admin.",
@@ -125,7 +125,7 @@ async def catgban(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="ungban(?:\s|$)([\s\S]*)",
+    pattern=r"ungban(?:\s|$)([\s\S]*)",
     command=("ungban", plugin_category),
     info={
         "header": "To unban the person from every group where you are admin.",
@@ -196,7 +196,7 @@ async def cat_un_gban(event):
 
 
 @catub.cat_cmd(
-    pattern="listgban$",
+    pattern=r"listgban$",
     command=("listgban", plugin_category),
     info={
         "header": "Shows you the list of all gbanned users by you.",
@@ -219,7 +219,7 @@ async def gablist(event):
 
 
 @catub.cat_cmd(
-    pattern="gmute(?:\s|$)([\s\S]*)",
+    pattern=r"gmute(?:\s|$)([\s\S]*)",
     command=("gmute", plugin_category),
     info={
         "header": "To mute a person in all groups where you are admin.",
@@ -282,7 +282,7 @@ async def startgmute(event):
 
 
 @catub.cat_cmd(
-    pattern="ungmute(?:\s|$)([\s\S]*)",
+    pattern=r"ungmute(?:\s|$)([\s\S]*)",
     command=("ungmute", plugin_category),
     info={
         "header": "To unmute the person in all groups where you were admin.",
@@ -345,7 +345,7 @@ async def watcher(event):
 
 
 @catub.cat_cmd(
-    pattern="gkick(?:\s|$)([\s\S]*)",
+    pattern=r"gkick(?:\s|$)([\s\S]*)",
     command=("gkick", plugin_category),
     info={
         "header": "kicks the person in all groups where you are admin.",

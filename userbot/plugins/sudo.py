@@ -46,7 +46,7 @@ def get_key(val):
 
 
 @catub.cat_cmd(
-    pattern="sudo (on|off)$",
+    pattern=r"sudo (on|off)$",
     command=("sudo", plugin_category),
     info={
         "header": "To enable or disable sudo of your Catuserbot.",
@@ -94,7 +94,7 @@ async def chat_blacklist(event):
 
 
 @catub.cat_cmd(
-    pattern="addsudo(?:\s|$)([\s\S]*)",
+    pattern=r"addsudo(?:\s|$)([\s\S]*)",
     command=("addsudo", plugin_category),
     info={
         "header": "To add user as your sudo.",
@@ -134,7 +134,7 @@ async def add_sudo_user(event):
 
 
 @catub.cat_cmd(
-    pattern="delsudo(?:\s|$)([\s\S]*)",
+    pattern=r"delsudo(?:\s|$)([\s\S]*)",
     command=("delsudo", plugin_category),
     info={
         "header": "To remove user from your sudo.",
@@ -165,7 +165,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="vsudo$",
+    pattern=r"vsudo$",
     command=("vsudo", plugin_category),
     info={
         "header": "To list users for whom you are sudo.",
@@ -192,7 +192,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="addscmd(s)?(?:\s|$)([\s\S]*)",
+    pattern=r"addscmd(s)?(?:\s|$)([\s\S]*)",
     command=("addscmd", plugin_category),
     info={
         "header": "To enable cmds for sudo users.",
@@ -279,7 +279,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="rmscmd(s)?(?:\s|$)([\s\S]*)?",
+    pattern=r"rmscmd(s)?(?:\s|$)([\s\S]*)?",
     command=("rmscmd", plugin_category),
     info={
         "header": "To disable given cmds for sudo.",
@@ -363,7 +363,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="vscmds( -d)?$",
+    pattern=r"vscmds( -d)?$",
     command=("vscmds", plugin_category),
     info={
         "header": "To show list of enabled cmds for sudo.",

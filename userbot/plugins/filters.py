@@ -72,7 +72,7 @@ async def filter_incoming_handler(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="filter (.*)",
+    pattern=r"filter (.*)",
     command=("filter", plugin_category),
     info={
         "header": "To save filter for the given keyword.",
@@ -137,7 +137,7 @@ async def add_new_filter(event):
 
 
 @catub.cat_cmd(
-    pattern="filters$",
+    pattern=r"filters$",
     command=("filters", plugin_category),
     info={
         "header": "To list all filters in that chat.",
@@ -162,7 +162,7 @@ async def on_snip_list(event):
 
 
 @catub.cat_cmd(
-    pattern="stop ([\s\S]*)",
+    pattern=r"stop ([\s\S]*)",
     command=("stop", plugin_category),
     info={
         "header": "To delete that filter . so if user send that keyword bot will not reply",
@@ -179,7 +179,7 @@ async def remove_a_filter(event):
 
 
 @catub.cat_cmd(
-    pattern="rmfilters$",
+    pattern=r"rmfilters$",
     command=("rmfilters", plugin_category),
     info={
         "header": "To delete all filters in that group.",

@@ -37,7 +37,7 @@ def text_draw(font_name, font_size, img, text, width, hight, fill="white"):
 
 
 @catub.cat_cmd(
-    pattern="app ([\s\S]*)",
+    pattern=r"app ([\s\S]*)",
     command=("app", plugin_category),
     info={
         "header": "To search any app in playstore",

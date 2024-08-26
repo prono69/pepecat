@@ -87,7 +87,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="savewelcome(?:\s|$)([\s\S]*)",
+    pattern=r"savewelcome(?:\s|$)([\s\S]*)",
     command=("savewelcome", plugin_category),
     info={
         "header": "To welcome new users in chat.",
@@ -147,7 +147,7 @@ async def save_welcome(event):
 
 
 @catub.cat_cmd(
-    pattern="clearwelcome$",
+    pattern=r"clearwelcome$",
     command=("clearwelcome", plugin_category),
     info={
         "header": "To turn off welcome message in group.",
@@ -164,7 +164,7 @@ async def del_welcome(event):
 
 
 @catub.cat_cmd(
-    pattern="listwelcome$",
+    pattern=r"listwelcome$",
     command=("listwelcome", plugin_category),
     info={
         "header": "To check current welcome message in group.",
@@ -186,7 +186,7 @@ async def show_welcome(event):
 
 
 @catub.cat_cmd(
-    pattern="cleanwelcome (on|off)$",
+    pattern=r"cleanwelcome (on|off)$",
     command=("cleanwelcome", plugin_category),
     info={
         "header": "To turn off or turn on of deleting previous welcome message.",

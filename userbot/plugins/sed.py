@@ -99,7 +99,7 @@ async def on_edit(event):
 
 
 @catub.cat_cmd(
-    pattern="^s/((?:\\/|[^/])+)/((?:\\/|[^/])*)(/.*)?",
+    pattern=r"^s/((?:\\/|[^/])+)/((?:\\/|[^/])*)(/.*)?",
     command=("sed", plugin_category),
     info={
         "header": "Replaces a word or words with other words.",

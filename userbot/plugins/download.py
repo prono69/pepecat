@@ -38,7 +38,7 @@ async def _get_file_name(path: pathlib.Path, full: bool = True) -> str:
 
 
 @catub.cat_cmd(
-    pattern="d(own)?l(oad)?(?:\s|$)([\s\S]*)",
+    pattern=r"d(own)?l(oad)?(?:\s|$)([\s\S]*)",
     command=("download", plugin_category),
     info={
         "header": "To download the replied telegram file",
@@ -165,7 +165,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="d(own)?l(oad)?to(?:\s|$)([\s\S]*)",
+    pattern=r"d(own)?l(oad)?to(?:\s|$)([\s\S]*)",
     command=("dlto", plugin_category),
     info={
         "header": "To download the replied telegram file to specific directory",

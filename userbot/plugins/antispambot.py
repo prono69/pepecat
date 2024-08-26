@@ -86,7 +86,7 @@ if Config.ANTISPAMBOT_BAN:
 
 
 @catub.cat_cmd(
-    pattern="cascheck$",
+    pattern=r"cascheck$",
     command=("cascheck", plugin_category),
     info={
         "header": "To check the users who are banned in cas",
@@ -129,7 +129,7 @@ async def caschecker(event):
 
 
 @catub.cat_cmd(
-    pattern="spamcheck$",
+    pattern=r"spamcheck$",
     command=("spamcheck", plugin_category),
     info={
         "header": "To check the users who are banned in spamwatch",

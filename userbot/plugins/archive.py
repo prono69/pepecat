@@ -37,7 +37,7 @@ def zipdir(dirName):
 
 
 @catub.cat_cmd(
-    pattern="zip(?:\s|$)([\s\S]*)",
+    pattern=r"zip(?:\s|$)([\s\S]*)",
     command=("zip", plugin_category),
     info={
         "header": "To compress the file/folders",
@@ -74,7 +74,7 @@ async def zip_file(event):
 
 
 @catub.cat_cmd(
-    pattern="tar(?:\s|$)([\s\S]*)",
+    pattern=r"tar(?:\s|$)([\s\S]*)",
     command=("tar", plugin_category),
     info={
         "header": "To compress the file/folders to tar file",
@@ -112,7 +112,7 @@ async def tar_file(event):
 
 
 @catub.cat_cmd(
-    pattern="unzip(?:\s|$)([\s\S]*)",
+    pattern=r"unzip(?:\s|$)([\s\S]*)",
     command=("unzip", plugin_category),
     info={
         "header": "To unpack the given zip file",
@@ -188,7 +188,7 @@ async def unzip_file(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="untar(?:\s|$)([\s\S]*)",
+    pattern=r"untar(?:\s|$)([\s\S]*)",
     command=("untar", plugin_category),
     info={
         "header": "To unpack the given tar file",

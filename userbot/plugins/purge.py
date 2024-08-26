@@ -51,7 +51,7 @@ purgetype = {
 
 
 @catub.cat_cmd(
-    pattern="del(\s*| \d+)$",
+    pattern=r"del(\s*| \d+)$",
     command=("del", plugin_category),
     info={
         "header": "To delete replied message.",
@@ -94,7 +94,7 @@ async def delete_it(event):
 
 
 @catub.cat_cmd(
-    pattern="purgefrom$",
+    pattern=r"purgefrom$",
     command=("purgefrom", plugin_category),
     info={
         "header": "To mark the replied message as starting message of purge list.",
@@ -117,7 +117,7 @@ async def purge_from(event):
 
 
 @catub.cat_cmd(
-    pattern="purgeto$",
+    pattern=r"purgeto$",
     command=("purgeto", plugin_category),
     info={
         "header": "To mark the replied message as end message of purge list.",
@@ -168,7 +168,7 @@ async def purge_to(event):
 
 
 @catub.cat_cmd(
-    pattern="purgeme",
+    pattern=r"purgeme",
     command=("purgeme", plugin_category),
     info={
         "header": "To purge your latest messages.",
@@ -201,7 +201,7 @@ async def purgeme(event):
 
 # TODO: only sticker messages.
 @catub.cat_cmd(
-    pattern="purge(?:\s|$)([\s\S]*)",
+    pattern=r"purge(?:\s|$)([\s\S]*)",
     command=("purge", plugin_category),
     info={
         "header": "To purge messages from the replied message.",
@@ -445,7 +445,7 @@ async def fastpurger(event):  # sourcery no-metrics # sourcery skip: low-code-qu
 
 
 @catub.cat_cmd(
-    pattern="upurge( -a)?(?:\s|$)([\s\S]*)",
+    pattern=r"upurge( -a)?(?:\s|$)([\s\S]*)",
     command=("upurge", plugin_category),
     info={
         "header": "To purge messages from the replied message of replied user.",

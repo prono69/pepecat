@@ -47,7 +47,7 @@ def heroku_app():
 
 
 @catub.cat_cmd(
-    pattern="(set|get|del|info) var(?:\s|$)([\s\S]*)",
+    pattern=r"(set|get|del|info) var(?:\s|$)([\s\S]*)",
     command=("var", plugin_category),
     info={
         "header": "To manage config vars.",
@@ -140,7 +140,7 @@ async def variable(event):
 
 
 @catub.cat_cmd(
-    pattern="usage$",
+    pattern=r"usage$",
     command=("usage", plugin_category),
     info={
         "header": "To Check dyno usage of userbot and also to know how much left.",
@@ -199,7 +199,7 @@ async def dyno_usage(dyno):
 
 
 @catub.cat_cmd(
-    pattern="herokulogs$",
+    pattern=r"herokulogs$",
     command=("herokulogs", plugin_category),
     info={
         "header": "To get recent 100 lines logs from heroku.",
@@ -229,7 +229,7 @@ def prettyjson(obj, indent=2, maxlinelength=80):
 
 
 @catub.cat_cmd(
-    pattern="(|add|del)buildpack(?:\s|$)([\s\S]*)",
+    pattern=r"(|add|del)buildpack(?:\s|$)([\s\S]*)",
     command=("buildpack", plugin_category),
     info={
         "header": "To manage heroku buildpacks.",

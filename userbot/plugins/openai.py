@@ -25,7 +25,7 @@ SIZE = ["256", "512", "1024"]
 
 
 @catub.cat_cmd(
-    pattern="gpt(?:\s|$)([\s\S]*)",
+    pattern=r"gpt(?:\s|$)([\s\S]*)",
     command=("gpt", plugin_category),
     info={
         "header": "Generate GPT response with prompt",
@@ -113,7 +113,7 @@ async def gpt_response_with_prompt(event):
 
 
 @catub.cat_cmd(
-    pattern="dalle(?:\s|$)([\s\S]*)",
+    pattern=r"dalle(?:\s|$)([\s\S]*)",
     command=("dalle", plugin_category),
     info={
         "header": "Generate image using DALL-E",

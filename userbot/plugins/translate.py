@@ -20,7 +20,7 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="tl ([\s\S]*)",
+    pattern=r"tl ([\s\S]*)",
     command=("tl", plugin_category),
     info={
         "header": "To translate the text to required language.",
@@ -57,7 +57,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="trt(?: |$)([\s\S]*)",
+    pattern=r"trt(?: |$)([\s\S]*)",
     command=("trt", plugin_category),
     info={
         "header": "To translate the text to required language.",
@@ -96,7 +96,7 @@ async def translateme(trans):
 
 
 @catub.cat_cmd(
-    pattern="lang (ai|trt|tocr) ([\s\S]*)",
+    pattern=r"lang (ai|trt|tocr) ([\s\S]*)",
     command=("lang", plugin_category),
     info={
         "header": "To set language for trt/ai command.",

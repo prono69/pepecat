@@ -29,7 +29,7 @@ LOGS = logging.getLogger(__name__)
 
 
 @catub.cat_cmd(
-    pattern="msgto(?:\s|$)([\s\S]*)",
+    pattern=r"msgto(?:\s|$)([\s\S]*)",
     command=("msgto", plugin_category),
     info={
         "header": "To message to person or to a chat.",
@@ -70,7 +70,7 @@ async def catbroadcast_msg(event):
 
 
 @catub.cat_cmd(
-    pattern="addto(?:\s|$)([\s\S]*)",
+    pattern=r"addto(?:\s|$)([\s\S]*)",
     command=("addto", plugin_category),
     info={
         "header": "Will add the specific chat to the mentioned category",
@@ -117,7 +117,7 @@ async def catbroadcast_add(event):
 
 
 @catub.cat_cmd(
-    pattern="list(?:\s|$)([\s\S]*)",
+    pattern=r"list(?:\s|$)([\s\S]*)",
     command=("list", plugin_category),
     info={
         "header": "will show the list of all chats in the given category",
@@ -164,7 +164,7 @@ async def catbroadcast_list(event):
 
 
 @catub.cat_cmd(
-    pattern="listall$",
+    pattern=r"listall$",
     command=("listall", plugin_category),
     info={
         "header": "Will show the list of all category names.",
@@ -187,7 +187,7 @@ async def catbroadcast_list_all(event):
 
 
 @catub.cat_cmd(
-    pattern="sendto(?:\s|$)([\s\S]*)",
+    pattern=r"sendto(?:\s|$)([\s\S]*)",
     command=("sendto", plugin_category),
     info={
         "header": "will send the replied message to all chats in the given category",
@@ -250,7 +250,7 @@ async def catbroadcast_send_to(event):
 
 
 @catub.cat_cmd(
-    pattern="fwdto(?:\s|$)([\s\S]*)",
+    pattern=r"fwdto(?:\s|$)([\s\S]*)",
     command=("fwdto", plugin_category),
     info={
         "header": "Will forward the replied message to all chats in the given category",
@@ -313,7 +313,7 @@ async def catbroadcast_fwd_to(event):
 
 
 @catub.cat_cmd(
-    pattern="rmfrom(?:\s|$)([\s\S]*)",
+    pattern=r"rmfrom(?:\s|$)([\s\S]*)",
     command=("rmfrom", plugin_category),
     info={
         "header": "Will remove the specific chat to the mentioned category",
@@ -361,7 +361,7 @@ async def catbroadcast_remove(event):
 
 
 @catub.cat_cmd(
-    pattern="frmfrom(?:\s|$)([\s\S]*)",
+    pattern=r"frmfrom(?:\s|$)([\s\S]*)",
     command=("frmfrom", plugin_category),
     info={
         "header": " To force remove the given chat from a category.",
@@ -430,7 +430,7 @@ async def force_remove_from(event):
 
 
 @catub.cat_cmd(
-    pattern="delc(?:\s|$)([\s\S]*)",
+    pattern=r"delc(?:\s|$)([\s\S]*)",
     command=("delc", plugin_category),
     info={
         "header": "To Deletes the category completely from database",

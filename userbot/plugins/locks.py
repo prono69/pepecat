@@ -32,7 +32,7 @@ plugin_category = "admin"
 
 
 @catub.cat_cmd(
-    pattern="lock ([\s\S]*)",
+    pattern=r"lock ([\s\S]*)",
     command=("lock", plugin_category),
     info={
         "header": "To lock the given permission for entire group.",
@@ -194,7 +194,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="unlock ([\s\S]*)",
+    pattern=r"unlock ([\s\S]*)",
     command=("unlock", plugin_category),
     info={
         "header": "To unlock the given permission for entire group.",
@@ -356,7 +356,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="locks$",
+    pattern=r"locks$",
     command=("locks", plugin_category),
     info={
         "header": "To see the active locks in the current group",
@@ -414,7 +414,7 @@ async def _(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="plock ([\s\S]*)",
+    pattern=r"plock ([\s\S]*)",
     command=("plock", plugin_category),
     info={
         "header": "To lock the given permission for replied person only.",
@@ -619,7 +619,7 @@ async def _(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="punlock ([\s\S]*)",
+    pattern=r"punlock ([\s\S]*)",
     command=("punlock", plugin_category),
     info={
         "header": "To unlock the given permission for replied person only.",
@@ -836,7 +836,7 @@ async def _(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="uperm(?:\s|$)([\s\S]*)",
+    pattern=r"uperm(?:\s|$)([\s\S]*)",
     command=("uperm", plugin_category),
     info={
         "header": "To get permissions of replied user or mentioned user in that group.",

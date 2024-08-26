@@ -269,7 +269,7 @@ async def add_to_pack(
 
 
 @catub.cat_cmd(
-    pattern="kang(?:\s|$)([\s\S]*)",
+    pattern=r"kang(?:\s|$)([\s\S]*)",
     command=("kang", plugin_category),
     info={
         "header": "To kang a sticker.",
@@ -438,7 +438,7 @@ async def kang(args):  # sourcery no-metrics  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="pkang(?:\s|$)([\s\S]*)",
+    pattern=r"pkang(?:\s|$)([\s\S]*)",
     command=("pkang", plugin_category),
     info={
         "header": "To kang entire sticker sticker.",
@@ -614,7 +614,7 @@ async def pack_kang(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="vas$",
+    pattern=r"vas$",
     command=("vas", plugin_category),
     info={
         "header": "Converts video/gif to animated sticker",
@@ -680,7 +680,7 @@ async def pussycat(event):
 
 
 @catub.cat_cmd(
-    pattern="gridpack(?:\s|$)([\s\S]*)",
+    pattern=r"gridpack(?:\s|$)([\s\S]*)",
     command=("gridpack", plugin_category),
     info={
         "header": "To split the replied image and make sticker pack.",
@@ -773,7 +773,7 @@ async def pic2packcmd(event):
 
 
 @catub.cat_cmd(
-    pattern="stkrinfo$",
+    pattern=r"stkrinfo$",
     command=("stkrinfo", plugin_category),
     info={
         "header": "To get information about a sticker pick.",
@@ -820,7 +820,7 @@ async def get_pack_info(event):
 
 
 @catub.cat_cmd(
-    pattern="stickers ?([\s\S]*)",
+    pattern=r"stickers ?([\s\S]*)",
     command=("stickers", plugin_category),
     info={
         "header": "To get list of sticker packs with given name.",

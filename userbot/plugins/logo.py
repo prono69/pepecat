@@ -67,7 +67,7 @@ def random_loader(Font, Color, Background, collection):
 
 
 @catub.cat_cmd(
-    pattern="(|f|s)logo(?: |$)([\s\S]*)",
+    pattern=r"(|f|s)logo(?: |$)([\s\S]*)",
     command=("logo", plugin_category),
     info={
         "header": "Make a logo in image or sticker",
@@ -200,7 +200,7 @@ async def very(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="(|c)lbg(?:\s|$)([\s\S]*)",
+    pattern=r"(|c)lbg(?:\s|$)([\s\S]*)",
     command=("lbg", plugin_category),
     info={
         "header": "Change the background of logo",
@@ -244,7 +244,7 @@ async def bad(event):
 
 
 @catub.cat_cmd(
-    pattern="lf(|c|s|h|w|sc|sw)(?:\s|$)([\s\S]*)",
+    pattern=r"lf(|c|s|h|w|sc|sw)(?:\s|$)([\s\S]*)",
     command=("lf", plugin_category),
     info={
         "header": "Change text style for logo.",
@@ -368,7 +368,7 @@ async def pussy(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="(g|d|r)lvar(?:\s|$)([\s\S]*)",
+    pattern=r"(g|d|r)lvar(?:\s|$)([\s\S]*)",
     command=("lvar", plugin_category),
     info={
         "header": "Manage values which set for logo",

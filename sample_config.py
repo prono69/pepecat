@@ -164,6 +164,8 @@ class Config(object):
     GOOGLE_CONSOLE_API_KEY = os.environ.get("GOOGLE_CONSOLE_API_KEY", "")
     # get it from https://programmablesearchengine.google.com/cse/all
     GOOGLE_CSE_ID = os.environ.get("GOOGLE_CSE_ID", "")
+    # this is strictly for development purpose dont touch this value
+    LOAD_ONLY = os.environ.get("LOAD_ONLY", [])
 
 
 class Production(Config):

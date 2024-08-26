@@ -73,7 +73,7 @@ async def fetch_info(replied_user, event):
 
 
 @catub.cat_cmd(
-    pattern="userinfo(?:\s|$)([\s\S]*)",
+    pattern=r"userinfo(?:\s|$)([\s\S]*)",
     command=("userinfo", plugin_category),
     info={
         "header": "Gets information of an user such as restrictions ban by spamwatch or cas.",
@@ -144,7 +144,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="whois(?:\s|$)([\s\S]*)",
+    pattern=r"whois(?:\s|$)([\s\S]*)",
     command=("whois", plugin_category),
     info={
         "header": "Gets info of an user.",
@@ -183,7 +183,7 @@ async def who(event):
 
 
 @catub.cat_cmd(
-    pattern="link(?:\s|$)([\s\S]*)",
+    pattern=r"link(?:\s|$)([\s\S]*)",
     command=("link", plugin_category),
     info={
         "header": "Generates a link to the user's PM .",

@@ -26,7 +26,7 @@ def get_size(inputbytes, suffix="B"):
 
 
 @catub.cat_cmd(
-    pattern="spc$",
+    pattern=r"spc$",
     command=("spc", plugin_category),
     info={
         "header": "To show system specification.",
@@ -82,7 +82,7 @@ async def psu(event):
 
 
 @catub.cat_cmd(
-    pattern="cpu$",
+    pattern=r"cpu$",
     command=("cpu", plugin_category),
     info={
         "header": "To show cpu information.",
@@ -97,7 +97,7 @@ async def cpu(event):
 
 
 @catub.cat_cmd(
-    pattern="sysd$",
+    pattern=r"sysd$",
     command=("sysd", plugin_category),
     info={
         "header": "Shows system information using neofetch",

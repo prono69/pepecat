@@ -23,7 +23,7 @@ extractor = URLExtract()
 
 
 @catub.cat_cmd(
-    pattern="custom (pmpermit|pmpic|pmblock|startmsg)$",
+    pattern=r"custom (pmpermit|pmpic|pmblock|startmsg)$",
     command=("custom", plugin_category),
     info={
         "header": "To customize your CatUserbot.",
@@ -87,7 +87,7 @@ async def custom(event):
 
 
 @catub.cat_cmd(
-    pattern="delcustom (pmpermit|pmpic|pmblock|startmsg)$",
+    pattern=r"delcustom (pmpermit|pmpic|pmblock|startmsg)$",
     command=("delcustom", plugin_category),
     info={
         "header": "To delete costomization of your CatUserbot.",

@@ -276,7 +276,7 @@ async def autopfp_start():
 
 
 @catub.cat_cmd(
-    pattern="batmanpfp$",
+    pattern=r"batmanpfp$",
     command=("batmanpfp", plugin_category),
     info={
         "header": "Changes profile pic with random batman pics every 1 minute",
@@ -297,7 +297,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="thorpfp$",
+    pattern=r"thorpfp$",
     command=("thorpfp", plugin_category),
     info={
         "header": "Changes profile pic with random thor pics every 1 minute",
@@ -318,7 +318,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="autopic ?([\s\S]*)",
+    pattern=r"autopic ?([\s\S]*)",
     command=("autopic", plugin_category),
     info={
         "header": "Changes profile pic every 1 minute with the custom pic with time",
@@ -365,7 +365,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="digitalpfp$",
+    pattern=r"digitalpfp$",
     command=("digitalpfp", plugin_category),
     info={
         "header": "Updates your profile pic every 1 minute with time on it",
@@ -389,7 +389,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="bloom$",
+    pattern=r"bloom$",
     command=("bloom", plugin_category),
     info={
         "header": "Changes profile pic every 1 minute with the random colour pic with time on it",
@@ -421,7 +421,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="c(ustom)?pfp(?: |$)([\s\S]*)",
+    pattern=r"c(ustom)?pfp(?: |$)([\s\S]*)",
     command=("custompfp", plugin_category),
     info={
         "header": "Set Your Custom pfps",
@@ -493,7 +493,7 @@ async def useless(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="autoname$",
+    pattern=r"autoname$",
     command=("autoname", plugin_category),
     info={
         "header": "Changes your name with time",
@@ -512,7 +512,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="autobio$",
+    pattern=r"autobio$",
     command=("autobio", plugin_category),
     info={
         "header": "Changes your bio with time",
@@ -531,7 +531,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="end ([\s\S]*)",
+    pattern=r"end ([\s\S]*)",
     command=("end", plugin_category),
     info={
         "header": "To stop the functions of autoprofile",

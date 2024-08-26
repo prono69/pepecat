@@ -24,7 +24,7 @@ plugin_category = "tools"
 
 
 @catub.cat_cmd(
-    pattern="exec(?:\s|$)([\s\S]*)",
+    pattern=r"exec(?:\s|$)([\s\S]*)",
     command=("exec", plugin_category),
     info={
         "header": "To Execute terminal commands in a subprocess.",
@@ -59,7 +59,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="eval(?:\s|$)([\s\S]*)",
+    pattern=r"eval(?:\s|$)([\s\S]*)",
     command=("eval", plugin_category),
     info={
         "header": "To Execute python script/statements in a subprocess.",
@@ -72,7 +72,7 @@ async def _(event):
     cmd = "".join(event.message.message.split(maxsplit=1)[1:])
     if not cmd:
         return await edit_delete(event, "`What should i run ?..`")
-    cmd = cmd.replace("sendmessage", "send_message").replace("sendfile", "send_file").replace("editmessage", "edit_message")
+    cmd = cmd.replace("send_message", "send_message").replace("send_file", "send_file").replace("edit_message", "edit_message")
     catevent = await edit_or_reply(event, "`Running ...`")
     old_stderr = sys.stderr
     old_stdout = sys.stdout
@@ -117,7 +117,7 @@ async def aexec(code, smessatatus):
 
 
 @catub.cat_cmd(
-    pattern="inspect ([\s\S]*)",
+    pattern=r"inspect ([\s\S]*)",
     command=("inspect", plugin_category),
     info={
         "header": "To search any function/plugin/class",

@@ -30,7 +30,7 @@ GIT_TEMP_DIR = "./temp/"
 
 
 @catub.cat_cmd(
-    pattern="repo$",
+    pattern=r"repo$",
     command=("repo", plugin_category),
     info={
         "header": "Source code link of userbot",
@@ -49,7 +49,7 @@ async def source(e):
 
 
 @catub.cat_cmd(
-    pattern="github( -l(\d+))? ([\s\S]*)",
+    pattern=r"github( -l(\d+))? ([\s\S]*)",
     command=("github", plugin_category),
     info={
         "header": "Shows the information about an user on GitHub of given username",
@@ -113,7 +113,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="commit$",
+    pattern=r"commit$",
     command=("commit", plugin_category),
     info={
         "header": "To commit the replied plugin to github.",

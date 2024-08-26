@@ -368,9 +368,9 @@ async def formatJSON(outData, manga=False):
     msg += f"\n**Popularity** : {jsonData['popularity']}"
     # https://t.me/catuserbot_support/19496
     cat = f"{jsonData['description']}"
-    msg += " __" + re.sub("<br>", "\n", cat) + "__"
-    msg = re.sub("<b>", "__**", msg)
-    msg = re.sub("</b>", "**__", msg)
+    msg += " __" + re.sub(r"<br>", "\n", cat) + "__"
+    msg = re.sub(r"<b>", "__**", msg)
+    msg = re.sub(r"</b>", "**__", msg)
     return msg
 
 

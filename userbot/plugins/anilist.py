@@ -58,7 +58,7 @@ plugin_category = "extra"
 
 
 @catub.cat_cmd(
-    pattern="aq$",
+    pattern=r"aq$",
     command=("aq", plugin_category),
     info={
         "header": "Get random Anime quotes.",
@@ -79,7 +79,7 @@ async def anime_quote(event):
 
 
 @catub.cat_cmd(
-    pattern="aluser(?:\s|$)([\s\S]*)",
+    pattern=r"aluser(?:\s|$)([\s\S]*)",
     command=("aluser", plugin_category),
     info={
         "header": "Search User profiles in anilist.",
@@ -116,7 +116,7 @@ async def anilist_usersearch(event):
 
 
 @catub.cat_cmd(
-    pattern="mal(?:\s|$)([\s\S]*)",
+    pattern=r"mal(?:\s|$)([\s\S]*)",
     command=("mal", plugin_category),
     info={
         "header": "Search profiles of MAL.",
@@ -180,7 +180,7 @@ async def user(event):
 
 
 @catub.cat_cmd(
-    pattern="airing(?:\s|$)([\s\S]*)",
+    pattern=r"airing(?:\s|$)([\s\S]*)",
     command=("airing", plugin_category),
     info={
         "header": "Shows you the time left for the new episode of current running anime show.",
@@ -209,7 +209,7 @@ async def anilist(event):
 
 
 @catub.cat_cmd(
-    pattern="anime(?:\s|$)([\s\S]*)",
+    pattern=r"anime(?:\s|$)([\s\S]*)",
     command=("anime", plugin_category),
     info={
         "header": "search anime.",
@@ -321,7 +321,7 @@ async def anilist_anime(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="manga(?:\s|$)([\s\S]*)",
+    pattern=r"manga(?:\s|$)([\s\S]*)",
     command=("manga", plugin_category),
     info={
         "header": "search manga.",
@@ -433,7 +433,7 @@ async def anilist_manga(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="fillers(?:\s|$)([\s\S]*)",
+    pattern=r"fillers(?:\s|$)([\s\S]*)",
     command=("fillers", plugin_category),
     info={
         "header": "To get list of filler episodes.",
@@ -509,7 +509,7 @@ async def get_anime(event):
 
 
 @catub.cat_cmd(
-    pattern="char(?:\s|$)([\s\S]*)",
+    pattern=r"char(?:\s|$)([\s\S]*)",
     command=("char", plugin_category),
     info={
         "header": "search character.",
@@ -619,7 +619,7 @@ async def anilist_character(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="a(kaizoku|kayo|indi)(?: |$)([\S\s]*)",
+    pattern=r"a(kaizoku|kayo|indi)(?: |$)([\S\s]*)",
     command=("akaizoku", plugin_category),
     info={
         "header": "Shows you anime download link.",
@@ -695,7 +695,7 @@ async def anime_download(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="upcoming$",
+    pattern=r"upcoming$",
     command=("upcoming", plugin_category),
     info={
         "header": "Shows you upcoming anime's.",
@@ -717,7 +717,7 @@ async def upcoming(event):
 
 
 @catub.cat_cmd(
-    pattern="aschedule(?: |$)([\S\s]*)",
+    pattern=r"aschedule(?: |$)([\S\s]*)",
     command=("aschedule", plugin_category),
     info={
         "header": "Shows you animes to be aired on that day.",
@@ -742,7 +742,7 @@ async def aschedule_fetch(event):
 
 
 @catub.cat_cmd(
-    pattern="w(hat)?anime$",
+    pattern=r"w(hat)?anime$",
     command=("whatanime", plugin_category),
     info={
         "header": "Reverse search of anime.",

@@ -21,7 +21,7 @@ plugin_category = "admin"
 
 
 @catub.cat_cmd(
-    pattern="warn(?:\s|$)([\s\S]*)",
+    pattern=r"warn(?:\s|$)([\s\S]*)",
     command=("warn", plugin_category),
     info={
         "header": "To warn a user.",
@@ -53,7 +53,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="warns",
+    pattern=r"warns",
     command=("warns", plugin_category),
     info={
         "header": "To get users warns list.",
@@ -82,7 +82,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="r(eset)?warns$",
+    pattern=r"r(eset)?warns$",
     command=("resetwarns", plugin_category),
     info={
         "header": "To reset warns of the replied user",

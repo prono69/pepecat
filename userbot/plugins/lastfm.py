@@ -145,7 +145,7 @@ async def get_curr_track(lfmbio):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="lastfm$",
+    pattern=r"lastfm$",
     command=("lastfm", plugin_category),
     info={
         "header": "To fetch scrobble data from last.fm",
@@ -192,7 +192,7 @@ async def last_fm(lastFM):
 
 
 @catub.cat_cmd(
-    pattern="lastbio (on|off)",
+    pattern=r"lastbio (on|off)",
     command=("lastbio", plugin_category),
     info={
         "header": "To Enable or Disable the last.fm current playing to bio",
@@ -225,7 +225,7 @@ async def lastbio(lfmbio):
 
 
 @catub.cat_cmd(
-    pattern="lastlog (on|off)",
+    pattern=r"lastlog (on|off)",
     command=("lastlog", plugin_category),
     info={
         "header": "To Enable or Disable the last.fm current playing to bot log group",

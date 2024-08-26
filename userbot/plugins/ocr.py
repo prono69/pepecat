@@ -50,7 +50,7 @@ async def ocr_space_file(filename, overlay=False, api_key=Config.OCR_SPACE_API_K
 
 
 @catub.cat_cmd(
-    pattern="(|t)ocr(?:\s|$)([\s\S]*)",
+    pattern=r"(|t)ocr(?:\s|$)([\s\S]*)",
     command=("ocr", plugin_category),
     info={
         "header": "To read text in image/gif/sticker/video and print it.",
@@ -98,7 +98,7 @@ async def ocr(event):
 
 
 @catub.cat_cmd(
-    pattern="tocr",
+    pattern=r"tocr",
     command=("tocr", plugin_category),
     info={
         "header": "To read text in image/gif/sticker/video and print it with its translation.",

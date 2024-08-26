@@ -18,7 +18,7 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="collage(?:\s|$)([\s\S]*)",
+    pattern=r"collage(?:\s|$)([\s\S]*)",
     command=("collage", plugin_category),
     info={
         "header": "To create collage from still images extracted from video/gif.",

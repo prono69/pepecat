@@ -149,7 +149,7 @@ def ms_converter(millis):
 
 
 @catub.cat_cmd(
-    pattern="spsetup$",
+    pattern=r"spsetup$",
     command=("spsetup", plugin_category),
     info={
         "header": "Setup for Spotify Auth",
@@ -431,7 +431,7 @@ async def sp_var_check(event):
 
 
 @catub.cat_cmd(
-    pattern="spbio$",
+    pattern=r"spbio$",
     command=("spbio", plugin_category),
     info={
         "header": "To Enable or Disable the spotify current playing to bio",
@@ -640,7 +640,7 @@ async def spotify_inline_article():
 
 
 @catub.cat_cmd(
-    pattern="spnow$",
+    pattern=r"spnow$",
     command=("spnow", plugin_category),
     info={
         "header": "To fetch scrobble data from spotify",
@@ -666,7 +666,7 @@ async def spotify_player(event):
 
 
 @catub.cat_cmd(
-    pattern="spinfo$",
+    pattern=r"spinfo$",
     command=("spinfo", plugin_category),
     info={
         "header": "To fetch Info of current spotify user",
@@ -702,7 +702,7 @@ async def spotify_info(event):
 
 
 @catub.cat_cmd(
-    pattern="sprecent$",
+    pattern=r"sprecent$",
     command=("sprecent", plugin_category),
     info={
         "header": "To fetch list of recently played songs",
@@ -725,7 +725,7 @@ async def spotify_recent(event):
 
 
 @catub.cat_cmd(
-    pattern="(i|)now(?:\s|$)([\s\S]*)",
+    pattern=r"(i|)now(?:\s|$)([\s\S]*)",
     command=("now", plugin_category),
     info={
         "header": "To get song from spotify",

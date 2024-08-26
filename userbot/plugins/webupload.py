@@ -27,11 +27,11 @@ plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
 
 
-link_regex = re.compile("((https?):((//)|(\\\\))+([\w\d:#@%/;$()~_?\+-=\\\.&](#!)?)*)", re.DOTALL)
+link_regex = re.compile(r"((https?):((//)|(\\\\))+([\w\d:#@%/;$()~_?\+-=\\\.&](#!)?)*)", re.DOTALL)
 
 
 @catub.cat_cmd(
-    pattern="labstack(?:\s|$)([\s\S]*)",
+    pattern=r"labstack(?:\s|$)([\s\S]*)",
     command=("labstack", plugin_category),
     info={
         "header": "To upload media to labstack.",
@@ -84,7 +84,7 @@ async def labstack(event):
 
 
 @catub.cat_cmd(
-    pattern="webupload ?(.+?|) --(fileio|anonfiles|transfer|filebin|anonymousfiles|bayfiles)",
+    pattern=r"webupload ?(.+?|) --(fileio|anonfiles|transfer|filebin|anonymousfiles|bayfiles)",
     command=("webupload", plugin_category),
     info={
         "header": "To upload media to some online media sharing platforms.",

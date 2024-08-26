@@ -32,7 +32,7 @@ botusername = Config.TG_BOT_USERNAME
 cmhd = Config.COMMAND_HAND_LER
 
 
-@catub.bot_cmd(pattern="^/help$", from_users=Config.OWNER_ID)
+@catub.bot_cmd(pattern=r"^/help$", from_users=Config.OWNER_ID)
 async def bot_help(event):
     await event.reply(
         f"""The commands in the bot are:
@@ -57,7 +57,7 @@ async def bot_help(event):
     )
 
 
-@catub.bot_cmd(pattern="^/broadcast$", from_users=Config.OWNER_ID)
+@catub.bot_cmd(pattern=r"^/broadcast$", from_users=Config.OWNER_ID)
 async def bot_broadcast(event):
     replied = await event.get_reply_message()
     if not replied:
@@ -111,7 +111,7 @@ async def bot_broadcast(event):
 
 
 @catub.cat_cmd(
-    pattern="bot_users$",
+    pattern=r"bot_users$",
     command=("bot_users", plugin_category),
     info={
         "header": "To get users list who started bot.",
@@ -130,7 +130,7 @@ async def ban_starters(event):
     await edit_or_reply(event, msg)
 
 
-@catub.bot_cmd(pattern="^/ban\\s+([\\s\\S]*)", from_users=Config.OWNER_ID)
+@catub.bot_cmd(pattern=r"^/ban\\s+([\\s\\S]*)", from_users=Config.OWNER_ID)
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
@@ -157,7 +157,7 @@ async def ban_botpms(event):
     await event.reply(msg)
 
 
-@catub.bot_cmd(pattern="^/unban(?:\\s|$)([\\s\\S]*)", from_users=Config.OWNER_ID)
+@catub.bot_cmd(pattern=r"^/unban(?:\\s|$)([\\s\\S]*)", from_users=Config.OWNER_ID)
 async def unban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
@@ -180,7 +180,7 @@ async def unban_botpms(event):
 
 
 @catub.cat_cmd(
-    pattern="bblist$",
+    pattern=r"bblist$",
     command=("bblist", plugin_category),
     info={
         "header": "To get users list who are banned in bot.",
@@ -200,7 +200,7 @@ async def baned_list(event):
 
 
 @catub.cat_cmd(
-    pattern="bot_antif (on|off)$",
+    pattern=r"bot_antif (on|off)$",
     command=("bot_antif", plugin_category),
     info={
         "header": "To enable or disable bot antiflood.",

@@ -42,7 +42,7 @@ async def all_groups_id(cat):
 
 
 @catub.cat_cmd(
-    pattern="frwd$",
+    pattern=r"frwd$",
     command=("frwd", plugin_category),
     info={
         "header": "To get view counter for the message. that is will delete old message and send new message where you can see how any people saw your message",
@@ -72,7 +72,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="resend$",
+    pattern=r"resend$",
     command=("resend", plugin_category),
     info={
         "header": "To resend the message again. Useful to remove forword tag",
@@ -100,7 +100,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="fpost ([\s\S]*)",
+    pattern=r"fpost ([\s\S]*)",
     command=("fpost", plugin_category),
     info={
         "header": "Split the word and forwards each letter from previous messages in that group",

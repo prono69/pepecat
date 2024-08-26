@@ -149,8 +149,11 @@ async def load_plugins(folder, extfolder=None):
             path1 = Path(f.name)
             shortname = path1.stem
             pluginname = shortname.replace(".py", "")
+
+            conditionForLoadingPlugins = pluginname in Config.LOAD_ONLY if len(Config.LOAD_ONLY) else ((pluginname not in Config.NO_LOAD) and (pluginname not in VPS_NOLOAD))
+
             try:
-                if (pluginname not in Config.NO_LOAD) and (pluginname not in VPS_NOLOAD):
+                if conditionForLoadingPlugins:
                     flag = True
                     check = 0
                     while flag:
@@ -170,12 +173,9 @@ async def load_plugins(folder, extfolder=None):
                                 failure.append(shortname)
                             if check > 5:
                                 break
-                else:
-                    os.remove(Path(f"{plugin_path}/{shortname}.py"))
             except Exception as e:
                 if shortname not in failure:
                     failure.append(shortname)
-                os.remove(Path(f"{plugin_path}/{shortname}.py"))
                 LOGS.info(f"unable to load {shortname} because of error {e}\nBase Folder {plugin_path}")
     if extfolder:
         if not failure:

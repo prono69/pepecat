@@ -35,7 +35,7 @@ def plug_checker(plugin):
 
 
 @catub.cat_cmd(
-    pattern="install(?:\s|$)([\s\S]*)",
+    pattern=r"install(?:\s|$)([\s\S]*)",
     command=("install", plugin_category),
     info={
         "header": "To install an external plugin.",
@@ -70,7 +70,7 @@ async def install(event):
 
 
 @catub.cat_cmd(
-    pattern="load(?:\s|$)([\s\S]*)",
+    pattern=r"load(?:\s|$)([\s\S]*)",
     command=("load", plugin_category),
     info={
         "header": "To load a plugin again. if you have unloaded it",
@@ -92,7 +92,7 @@ async def load(event):
 
 
 @catub.cat_cmd(
-    pattern="send(?:\s|$)([\s\S]*)",
+    pattern=r"send(?:\s|$)([\s\S]*)",
     command=("send", plugin_category),
     info={
         "header": "To upload a plugin file to telegram chat",
@@ -122,7 +122,7 @@ async def send(event):
 
 
 @catub.cat_cmd(
-    pattern="unload(?:\s|$)([\s\S]*)",
+    pattern=r"unload(?:\s|$)([\s\S]*)",
     command=("unload", plugin_category),
     info={
         "header": "To unload a plugin temporarily.",
@@ -142,7 +142,7 @@ async def unload(event):
 
 
 @catub.cat_cmd(
-    pattern="uninstall(?:\s|$)([\s\S]*)",
+    pattern=r"uninstall(?:\s|$)([\s\S]*)",
     command=("uninstall", plugin_category),
     info={
         "header": "To uninstall a plugin temporarily.",
@@ -177,7 +177,7 @@ async def uninstall(event):
 
 
 @catub.cat_cmd(
-    pattern="logs(?:\s|$)([\s\S]*)",
+    pattern=r"logs(?:\s|$)([\s\S]*)",
     command=("logs", plugin_category),
     info={
         "header": "To send the log of catub",

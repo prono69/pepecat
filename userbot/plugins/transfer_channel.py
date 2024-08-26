@@ -18,7 +18,7 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="otransfer ([\s\S]*)",
+    pattern=r"otransfer ([\s\S]*)",
     command=("otransfer", plugin_category),
     info={
         "header": "To transfer channel ownership.",

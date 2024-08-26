@@ -27,7 +27,7 @@ plugin_category = "tools"
 
 
 @catub.cat_cmd(
-    pattern="gs ([\s\S]*)",
+    pattern=r"gs ([\s\S]*)",
     command=("gs", plugin_category),
     info={
         "header": "Google search command.",
@@ -110,7 +110,7 @@ async def gsearch(q_event):
 
 
 @catub.cat_cmd(
-    pattern="gis ([\s\S]*)",
+    pattern=r"gis ([\s\S]*)",
     command=("gis", plugin_category),
     info={
         "header": "Google search in image format",
@@ -123,7 +123,7 @@ async def gis(event):
 
 
 @catub.cat_cmd(
-    pattern="grs$",
+    pattern=r"grs$",
     command=("grs", plugin_category),
     info={
         "header": "Google reverse search command.",
@@ -136,7 +136,7 @@ async def grs(event):
 
 
 @catub.cat_cmd(
-    pattern="(grs|reverse)(?:\s|$)([\s\S]*)",
+    pattern=r"(grs|reverse)(?:\s|$)([\s\S]*)",
     command=("reverse", plugin_category),
     info={
         "header": "Google reverse search command.",
@@ -220,7 +220,7 @@ async def reverse(event):
 
 
 @catub.cat_cmd(
-    pattern="google(?:\s|$)([\s\S]*)",
+    pattern=r"google(?:\s|$)([\s\S]*)",
     command=("google", plugin_category),
     info={
         "header": "To get link for google search",

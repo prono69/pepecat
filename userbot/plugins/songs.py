@@ -41,7 +41,7 @@ SONG_SENDING_STRING = "<code>yeah..! i found something wi8..🥰...</code>"
 
 
 @catub.cat_cmd(
-    pattern="song(320)?(?:\s|$)([\s\S]*)",
+    pattern=r"song(320)?(?:\s|$)([\s\S]*)",
     command=("song", plugin_category),
     info={
         "header": "To get songs from youtube.",
@@ -86,7 +86,7 @@ async def song(event):
 
 
 @catub.cat_cmd(
-    pattern="vsong(?:\s|$)([\s\S]*)",
+    pattern=r"vsong(?:\s|$)([\s\S]*)",
     command=("vsong", plugin_category),
     info={
         "header": "To get video songs from youtube.",
@@ -129,7 +129,7 @@ async def vsong(event):
 
 
 @catub.cat_cmd(
-    pattern="(s(ha)?z(a)?m)(?:\s|$)([\s\S]*)",
+    pattern=r"(s(ha)?z(a)?m)(?:\s|$)([\s\S]*)",
     command=("shazam", plugin_category),
     info={
         "header": "To reverse search song.",
@@ -205,7 +205,7 @@ async def shazamcmd(event):
 
 
 @catub.cat_cmd(
-    pattern="song2(?:\s|$)([\s\S]*)",
+    pattern=r"song2(?:\s|$)([\s\S]*)",
     command=("song2", plugin_category),
     info={
         "header": "To search songs and upload to telegram",

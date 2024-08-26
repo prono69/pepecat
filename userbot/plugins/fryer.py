@@ -76,7 +76,7 @@ async def check_media(reply_message):
 
 
 @catub.cat_cmd(
-    pattern="frybot",
+    pattern=r"frybot",
     command=("frybot", plugin_category),
     info={
         "header": "Fries the given sticker or image.",
@@ -118,7 +118,7 @@ async def frybot(event):
 
 
 @catub.cat_cmd(
-    pattern="deepfry(?: |$)([1-9])?",
+    pattern=r"deepfry(?: |$)([1-9])?",
     command=("deepfry", plugin_category),
     info={
         "header": "image fryer",

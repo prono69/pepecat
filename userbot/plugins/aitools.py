@@ -21,7 +21,7 @@ plugin_category = "tools"
 
 
 @catub.cat_cmd(
-    pattern="genimg(?:\s|$)([\s\S]*)",
+    pattern=r"genimg(?:\s|$)([\s\S]*)",
     command=("genimg", plugin_category),
     info={
         "header": "Create beautiful artwork using the power of AI.",
@@ -82,7 +82,7 @@ async def gen_img(odi):
 
 
 @catub.cat_cmd(
-    pattern="gentxt(?:\s|$)([\s\S]*)",
+    pattern=r"gentxt(?:\s|$)([\s\S]*)",
     command=("gentxt", plugin_category),
     info={
         "header": "Generate GPT response with prompt using the power of AI.",

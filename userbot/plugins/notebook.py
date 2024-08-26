@@ -214,7 +214,7 @@ def notebook_values(page, font):  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="(write|notebook)(?:\s|$)([\s\S]*)",
+    pattern=r"(write|notebook)(?:\s|$)([\s\S]*)",
     command=("write", plugin_category),
     info={
         "header": "To write down your text in notebook.",
@@ -293,7 +293,7 @@ async def write_page(event):  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="notebook$",
+    pattern=r"notebook$",
     command=("notebook", plugin_category),
     info={
         "header": "To show your notebook configs.",
@@ -306,7 +306,7 @@ async def notebook(event):
 
 
 @catub.cat_cmd(
-    pattern="nb(page|font|pen|log)(?:\s|$)([\s\S]*)",
+    pattern=r"nb(page|font|pen|log)(?:\s|$)([\s\S]*)",
     command=("nb", plugin_category),
     info={
         "header": "Change configuration of notebook",

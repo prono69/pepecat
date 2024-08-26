@@ -612,7 +612,7 @@ async def on_plug_in_callback_query_handler_inbox(event):
 
 
 @catub.cat_cmd(
-    pattern="pmguard (on|off)$",
+    pattern=r"pmguard (on|off)$",
     command=("pmguard", plugin_category),
     info={
         "header": "To turn on or turn off pmpermit.",
@@ -636,7 +636,7 @@ async def pmpermit_on(event):
 
 
 @catub.cat_cmd(
-    pattern="pmmenu (on|off)$",
+    pattern=r"pmmenu (on|off)$",
     command=("pmmenu", plugin_category),
     info={
         "header": "To turn on or turn off pmmenu.",
@@ -663,7 +663,7 @@ async def pmpermit_menu(event):
 
 
 @catub.cat_cmd(
-    pattern="(a|approve)(?:\s|$)([\s\S]*)",
+    pattern=r"(a|approve)(?:\s|$)([\s\S]*)",
     command=("approve", plugin_category),
     info={
         "header": "To approve user to direct message you.",
@@ -735,7 +735,7 @@ async def approve_p_m(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="t(emp)?(a|approve)(?:\s|$)([\s\S]*)",
+    pattern=r"t(emp)?(a|approve)(?:\s|$)([\s\S]*)",
     command=("tapprove", plugin_category),
     info={
         "header": "To approve user to direct message you for temporarily.",
@@ -813,7 +813,7 @@ async def tapprove_pm(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="(da|disapprove)(?:\s|$)([\s\S]*)",
+    pattern=r"(da|disapprove)(?:\s|$)([\s\S]*)",
     command=("disapprove", plugin_category),
     info={
         "header": "To disapprove user to direct message you.",
@@ -868,7 +868,7 @@ async def disapprove_p_m(event):
 
 
 @catub.cat_cmd(
-    pattern="block(?:\s|$)([\s\S]*)",
+    pattern=r"block(?:\s|$)([\s\S]*)",
     command=("block", plugin_category),
     info={
         "header": "To block user to direct message you.",
@@ -919,7 +919,7 @@ async def block_p_m(event):
 
 
 @catub.cat_cmd(
-    pattern="unblock(?:\s|$)([\s\S]*)",
+    pattern=r"unblock(?:\s|$)([\s\S]*)",
     command=("unblock", plugin_category),
     info={
         "header": "To unblock a user.",
@@ -948,7 +948,7 @@ async def unblock_pm(event):
 
 
 @catub.cat_cmd(
-    pattern="l(ist)?a(pproved)?$",
+    pattern=r"l(ist)?a(pproved)?$",
     command=("listapproved", plugin_category),
     info={
         "header": "To see list of approved users.",

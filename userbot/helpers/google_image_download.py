@@ -4,6 +4,7 @@ import time
 
 import requests
 from googleapiclient.discovery import build
+from icrawler.builtin import GoogleImageCrawler
 
 
 def create_directories(main_directory, dir_name):
@@ -22,6 +23,20 @@ def create_directories(main_directory, dir_name):
         if e.errno != 17:
             raise
     return
+
+
+def google_crawl_images(query, num_images=3):
+    subDir = f"{query.replace(" ","_")}_{random.randint(1000,9999)}"
+
+    sub_directory = create_directories("downloads", subDir)
+
+    google_Crawler = GoogleImageCrawler(storage={"root_dir": sub_directory})
+
+    google_Crawler.crawl(keyword=query, max_num=num_images)
+
+    files = os.listdir(sub_directory)
+
+    return list(map(lambda path: os.path.join(sub_directory, path), files))
 
 
 def search_and_download_images(query, api_key, cse_id, num_images=3):
@@ -43,6 +58,7 @@ def search_and_download_images(query, api_key, cse_id, num_images=3):
     sub_directory = create_directories("downloads", subDir)
 
     errors = []
+    download_paths = []
 
     for i, item in enumerate(res["items"]):
         try:
@@ -62,6 +78,7 @@ def search_and_download_images(query, api_key, cse_id, num_images=3):
                 # Save the image
                 with open(f"{sub_directory}/image_{i+1}{file_extension}", "wb") as file:
                     file.write(response.content)
+                download_paths.append(f"{sub_directory}/image_{i+1}{file_extension}")
                 print(f"Downloaded: image_{i+1}{file_extension}")
             else:
                 print(f"Failed to download image {i+1}")
@@ -70,6 +87,16 @@ def search_and_download_images(query, api_key, cse_id, num_images=3):
             errors.append(f"An error occurred while downloading image {i+1}: {e}")
 
     return {
-        "download_path": sub_directory,
+        "download_path": download_paths,
+        "folder": sub_directory,
         "errors": errors,
     }
+
+
+# ------------- Main Program -------------#
+def main():
+    google_crawl_images("catuserbot")
+
+
+if __name__ == "__main__":
+    main()

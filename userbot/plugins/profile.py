@@ -39,7 +39,7 @@ USERNAME_TAKEN = "```This username is already taken.```"
 
 
 @catub.cat_cmd(
-    pattern="pbio ([\s\S]*)",
+    pattern=r"pbio ([\s\S]*)",
     command=("pbio", plugin_category),
     info={
         "header": "To set bio for this account.",
@@ -57,7 +57,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="pname ([\s\S]*)",
+    pattern=r"pname ([\s\S]*)",
     command=("pname", plugin_category),
     info={
         "header": "To set/change name for this account.",
@@ -79,7 +79,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="ppic$",
+    pattern=r"ppic$",
     command=("ppic", plugin_category),
     info={
         "header": "To set profile pic for this account.",
@@ -125,7 +125,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="pusername ([\s\S]*)",
+    pattern=r"pusername ([\s\S]*)",
     command=("pusername", plugin_category),
     info={
         "header": "To set/update username for this account.",
@@ -145,7 +145,7 @@ async def update_username(event):
 
 
 @catub.cat_cmd(
-    pattern="count$",
+    pattern=r"count$",
     command=("count", plugin_category),
     info={
         "header": "To get your profile stats for this account.",
@@ -189,7 +189,7 @@ async def count(event):
 
 
 @catub.cat_cmd(
-    pattern="delpfp ?([\s\S]*)",
+    pattern=r"delpfp ?([\s\S]*)",
     command=("delpfp", plugin_category),
     info={
         "header": "To delete profile pic for this account.",
@@ -220,7 +220,7 @@ async def remove_profilepic(delpfp):
 
 
 @catub.cat_cmd(
-    pattern="myusernames$",
+    pattern=r"myusernames$",
     command=("myusernames", plugin_category),
     info={
         "header": "To list public channels or groups created by this account.",

@@ -7,15 +7,13 @@
 # Please see: https://github.com/TgCatUB/catuserbot/blob/master/LICENSE
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-import random
 
-import requests
 from telethon.utils import get_display_name
 
 from userbot import catub
 
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers import ai_api, get_user_from_event
+from ..helpers import get_user_from_event
 from ..sql_helper.chatbot_sql import addai, get_all_users, get_users, is_added, remove_ai, remove_all_users, remove_users
 
 plugin_category = "fun"
@@ -32,7 +30,7 @@ tired_response = [
 
 
 @catub.cat_cmd(
-    pattern="addai$",
+    pattern=r"addai$",
     command=("addai", plugin_category),
     info={
         "header": "To add ai chatbot to replied account.",
@@ -69,7 +67,7 @@ async def add_chatbot(event):
 
 
 @catub.cat_cmd(
-    pattern="rmai$",
+    pattern=r"rmai$",
     command=("rmai", plugin_category),
     info={
         "header": "To stop ai for that user messages.",
@@ -95,7 +93,7 @@ async def remove_chatbot(event):
 
 
 @catub.cat_cmd(
-    pattern="delai( -a)?",
+    pattern=r"delai( -a)?",
     command=("delai", plugin_category),
     info={
         "header": "To delete ai in this chat.",
@@ -132,7 +130,7 @@ async def delete_chatbot(event):
 
 
 @catub.cat_cmd(
-    pattern="listai( -a)?$",
+    pattern=r"listai( -a)?$",
     command=("listai", plugin_category),
     info={
         "header": "shows the list of users for whom you enabled ai",
@@ -184,12 +182,12 @@ async def list_chatbot(event):  # sourcery no-metrics
     await edit_or_reply(event, output_str)
 
 
-@catub.cat_cmd(incoming=True, edited=False)
-async def ai_reply(event):
-    if is_added(event.chat_id, event.sender_id) and (event.message.text):
-        response = requests.get(f"https://kukiapi.xyz/api/apikey={await ai_api(event)}/message={event.message.text}")
-        if response.status_code == 200:
-            ai_msg = response.json()["reply"]
-            await event.reply(ai_msg)
-        else:
-            await event.reply(random.choice(tired_response))
+# @catub.cat_cmd(incoming=True, edited=False)
+# async def ai_reply(event):
+#     if is_added(event.chat_id, event.sender_id) and (event.message.text):
+#         response = requests.get(f"https://kukiapi.xyz/api/apikey={await ai_api(event)}/message={event.message.text}")
+#         if response.status_code == 200:
+#             ai_msg = response.json()["reply"]
+#             await event.reply(ai_msg)
+#         else:
+#             await event.reply(random.choice(tired_response))

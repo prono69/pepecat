@@ -32,7 +32,7 @@ if Config.BADCAT:
 
 
 @catub.cat_cmd(
-    pattern="ping( -a|$)",
+    pattern=r"ping( -a|$)",
     command=("ping", plugin_category),
     info={
         "header": "check how long it takes to ping your userbot",

@@ -17,7 +17,7 @@ plugin_category = "extra"
 
 
 @catub.cat_cmd(
-    pattern="(tagall|all)(?:\s|$)([\s\S]*)",
+    pattern=r"(tagall|all)(?:\s|$)([\s\S]*)",
     command=("tagall", plugin_category),
     info={
         "header": "tags recent 50 persons in the group may not work for all",
@@ -40,7 +40,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="report$",
+    pattern=r"report$",
     command=("report", plugin_category),
     info={
         "header": "To tags admins in group.",
@@ -60,7 +60,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="men ([\s\S]*)",
+    pattern=r"men ([\s\S]*)",
     command=("mention", plugin_category),
     info={
         "header": "Tags that person with the given custom text.",

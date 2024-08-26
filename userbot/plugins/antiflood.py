@@ -56,7 +56,7 @@ because he reached the defined flood limit.""",
 
 
 @catub.cat_cmd(
-    pattern="setflood(?:\s|$)([\s\S]*)",
+    pattern=r"setflood(?:\s|$)([\s\S]*)",
     command=("setflood", plugin_category),
     info={
         "header": "To setup antiflood in a group",

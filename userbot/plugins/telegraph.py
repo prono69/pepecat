@@ -41,7 +41,7 @@ def resize_image(image):
 
 
 @catub.cat_cmd(
-    pattern="(t(ele)?g(raph)?) ?(m|t|media|text)(?:\s|$)([\s\S]*)",
+    pattern=r"(t(ele)?g(raph)?) ?(m|t|media|text)(?:\s|$)([\s\S]*)",
     command=("telegraph", plugin_category),
     info={
         "header": "To get telegraph link.",
@@ -130,7 +130,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="ctg(?: |$)([\s\S]*)",
+    pattern=r"ctg(?: |$)([\s\S]*)",
     command=("ctg", plugin_category),
     info={
         "header": "Reply to link To get link preview using telegrah.s.",

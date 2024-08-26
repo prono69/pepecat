@@ -20,7 +20,7 @@ LOGS = logging.getLogger(__name__)
 
 
 @catub.cat_cmd(
-    pattern="(get_id|id)(?:\s|$)([\s\S]*)",
+    pattern=r"(get_id|id)(?:\s|$)([\s\S]*)",
     command=("id", plugin_category),
     info={
         "header": "To get id of the group or user.",

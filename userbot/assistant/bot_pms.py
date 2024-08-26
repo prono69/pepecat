@@ -69,7 +69,7 @@ async def check_bot_started_users(user, event):
 
 
 @catub.bot_cmd(
-    pattern=f"^/start({botusername})?([\s]+)?$",
+    pattern=rf"^/start({botusername})?([\s]+)?$",
     incoming=True,
     func=lambda e: e.is_private,
 )
@@ -296,7 +296,7 @@ async def handler(event):
                 LOGS.error(str(e))
 
 
-@catub.bot_cmd(pattern="^/uinfo$", from_users=Config.OWNER_ID)
+@catub.bot_cmd(pattern=r"^/uinfo$", from_users=Config.OWNER_ID)
 async def bot_uninfo(event):
     reply_to = await reply_id(event)
     if not reply_to:

@@ -38,7 +38,7 @@ def download_carbon(driver, url):
 
 
 @catub.cat_cmd(
-    pattern="carbon(?:\s|$)([\s\S]*)",
+    pattern=r"carbon(?:\s|$)([\s\S]*)",
     command=("carbon", plugin_category),
     info={
         "header": "Carbon generators for given text (Fixed style)",
@@ -89,7 +89,7 @@ async def carbon_api(event):
 
 
 @catub.cat_cmd(
-    pattern="kar1(?:\s|$)([\s\S]*)",
+    pattern=r"kar1(?:\s|$)([\s\S]*)",
     command=("kar1", plugin_category),
     info={
         "header": "Carbon generators for given text (Fixed style)",
@@ -135,7 +135,7 @@ async def kar1_api(event):
 
 
 @catub.cat_cmd(
-    pattern="kar2(?:\s|$)([\s\S]*)",
+    pattern=r"kar2(?:\s|$)([\s\S]*)",
     command=("kar2", plugin_category),
     info={
         "header": "Carbon generators for given text (Fixed style)",
@@ -185,7 +185,7 @@ async def kar2_api(event):
 
 
 @catub.cat_cmd(
-    pattern="kar3(?:\s|$)([\s\S]*)",
+    pattern=r"kar3(?:\s|$)([\s\S]*)",
     command=("kar3", plugin_category),
     info={
         "header": "Carbon generators for given text (Fixed style)",
@@ -233,7 +233,7 @@ async def kar3_api(event):
 
 
 @catub.cat_cmd(
-    pattern="kar4(?:\s|$)([\s\S]*)",
+    pattern=r"kar4(?:\s|$)([\s\S]*)",
     command=("kar4", plugin_category),
     info={
         "header": "Carbon generators for given text (Fixed style)",
@@ -282,7 +282,7 @@ async def kar4_api(event):
 
 
 @catub.cat_cmd(
-    pattern="kargb(?:\s|$)([\s\S]*)",
+    pattern=r"kargb(?:\s|$)([\s\S]*)",
     command=("kargb", plugin_category),
     info={
         "header": "Carbon generators for given text (random from some selected themes)",

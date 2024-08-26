@@ -18,7 +18,7 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="dns(?:\s|$)([\s\S]*)",
+    pattern=r"dns(?:\s|$)([\s\S]*)",
     command=("dns", plugin_category),
     info={
         "header": "To get Domain Name System(dns) of the given link.",
@@ -48,7 +48,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="short(?:\s|$)([\s\S]*)",
+    pattern=r"short(?:\s|$)([\s\S]*)",
     command=("short", plugin_category),
     info={
         "header": "To short the given url.",
@@ -80,7 +80,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="unshort(?:\s|$)([\s\S]*)",
+    pattern=r"unshort(?:\s|$)([\s\S]*)",
     command=("unshort", plugin_category),
     info={
         "header": "To unshort the given dagb shorten url.",
@@ -117,7 +117,7 @@ async def _(event):
 
 # By Priyam Kalra
 @catub.cat_cmd(
-    pattern="hl(?:\s|$)([\s\S]*)",
+    pattern=r"hl(?:\s|$)([\s\S]*)",
     command=("hl", plugin_category),
     info={
         "header": "To hide the url with white spaces using hyperlink.",

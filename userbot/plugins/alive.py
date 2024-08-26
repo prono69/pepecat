@@ -31,7 +31,7 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="alive$",
+    pattern=r"alive$",
     command=("alive", plugin_category),
     info={
         "header": "To check bot's alive status",
@@ -108,7 +108,7 @@ def catalive_text():
 
 
 @catub.cat_cmd(
-    pattern="ialive$",
+    pattern=r"ialive$",
     command=("ialive", plugin_category),
     info={
         "header": "To check bot's alive status via inline mode",

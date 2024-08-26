@@ -23,7 +23,7 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="stt$",
+    pattern=r"stt$",
     command=("stt", plugin_category),
     info={
         "header": "speech to text module.",
