@@ -847,6 +847,6 @@ async def cb_sticker(event):
     for pack in results:
         packtitle = (pack).get_text()
         packlink = (pack).get("href")
-        reply += f"\n • [{packtitle}](https://t.me/addstickers/{packlink.split('/')[-1]})"
+        reply += f"• [{packtitle}](https://t.me/addstickers/{packlink.split('/')[-1]}) \n"
 
     await catevent.edit(reply)
