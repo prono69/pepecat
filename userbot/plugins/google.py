@@ -1,4 +1,4 @@
-""" Reverse search image and Google search """
+"""Reverse search image and Google search"""
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~# CatUserBot #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Copyright (C) 2020-2023 by TgCatUB@Github.
@@ -25,6 +25,115 @@ from ..helpers.google_tools import GooglePic, chromeDriver
 from ..helpers.utils import reply_id
 
 plugin_category = "tools"
+
+
+@catub.cat_cmd(
+    pattern="gs ([\s\S]*)",
+    command=("gs", plugin_category),
+    info={
+        "header": "Google search command.",
+        "flags": {
+            "-l": "for number of search results.",
+            "-p": "for choosing which page results should be showed.",
+        },
+        "usage": [
+            "{tr}gs <flags> <query>",
+            "{tr}gs <query>",
+        ],
+        "examples": [
+            "{tr}gs catuserbot",
+            "{tr}gs -l6 catuserbot",
+            "{tr}gs -p2 catuserbot",
+            "{tr}gs -p2 -l7 catuserbot",
+        ],
+    },
+)
+async def gsearch(q_event):
+    "Google search command."
+    catevent = await edit_or_reply(q_event, "`searching........`")
+    match = q_event.pattern_match.group(1)
+    page = re.findall(r"-p\d+", match)
+    lim = re.findall(r"-l\d+", match)
+    try:
+        page = page[0]
+        page = page.replace("-p", "")
+        match = match.replace(f"-p{page}", "")
+    except IndexError:
+        page = 1
+    try:
+        lim = lim[0]
+        lim = lim.replace("-l", "")
+        match = match.replace(f"-l{lim}", "")
+        lim = int(lim)
+        if lim <= 0:
+            lim = 5
+    except IndexError:
+        lim = 5
+    #     smatch = urllib.parse.quote_plus(match)
+    smatch = match.replace(" ", "+")
+    search_args = str(smatch), page
+    gsearch = GoogleSearch()
+    bsearch = BingSearch()
+    ysearch = YahooSearch()
+    try:
+        gresults = await gsearch.async_search(*search_args)
+    except NoResultsOrTrafficError:
+        try:
+            gresults = await bsearch.async_search(*search_args)
+        except NoResultsOrTrafficError:
+            try:
+                gresults = await ysearch.async_search(*search_args)
+            except Exception as e:
+                return await edit_delete(catevent, f"**Error:**\n`{e}`", time=10)
+    msg = ""
+    for i in range(lim):
+        if i > len(gresults["links"]):
+            break
+        try:
+            title = gresults["titles"][i]
+            link = gresults["links"][i]
+            desc = gresults["descriptions"][i]
+            msg += f"👉[{title}]({link})\n`{desc}`\n\n"
+        except IndexError:
+            break
+    await edit_or_reply(
+        catevent,
+        "**Search Query:**\n`" + match + "`\n\n**Results:**\n" + msg,
+        link_preview=False,
+        aslink=True,
+        linktext=f"**The search results for the query **__{match}__ **are** :",
+    )
+    if BOTLOG:
+        await q_event.client.send_message(
+            BOTLOG_CHATID,
+            f"Google Search query `{match}` was executed successfully",
+        )
+
+
+@catub.cat_cmd(
+    pattern="gis ([\s\S]*)",
+    command=("gis", plugin_category),
+    info={
+        "header": "Google search in image format",
+        "usage": "{tr}gis <query>",
+        "examples": "{tr}gis cat",
+    },
+)
+async def gis(event):
+    "To search in google and send result in picture."
+
+
+@catub.cat_cmd(
+    pattern="grs$",
+    command=("grs", plugin_category),
+    info={
+        "header": "Google reverse search command.",
+        "description": "Reverse search replied media in google and shows results.",
+        "usage": "{tr}grs",
+    },
+)
+async def grs(event):
+    "Google Reverse Search"
 
 
 @catub.cat_cmd(
@@ -145,112 +254,3 @@ async def google_search(event):
     results = await event.client.inline_query("@StickerizerBot", query)
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     await event.delete()
-
-
-@catub.cat_cmd(
-    pattern="gs ([\s\S]*)",
-    command=("gs", plugin_category),
-    info={
-        "header": "Google search command.",
-        "flags": {
-            "-l": "for number of search results.",
-            "-p": "for choosing which page results should be showed.",
-        },
-        "usage": [
-            "{tr}gs <flags> <query>",
-            "{tr}gs <query>",
-        ],
-        "examples": [
-            "{tr}gs catuserbot",
-            "{tr}gs -l6 catuserbot",
-            "{tr}gs -p2 catuserbot",
-            "{tr}gs -p2 -l7 catuserbot",
-        ],
-    },
-)
-async def gsearch(q_event):
-    "Google search command."
-    catevent = await edit_or_reply(q_event, "`searching........`")
-    match = q_event.pattern_match.group(1)
-    page = re.findall(r"-p\d+", match)
-    lim = re.findall(r"-l\d+", match)
-    try:
-        page = page[0]
-        page = page.replace("-p", "")
-        match = match.replace(f"-p{page}", "")
-    except IndexError:
-        page = 1
-    try:
-        lim = lim[0]
-        lim = lim.replace("-l", "")
-        match = match.replace(f"-l{lim}", "")
-        lim = int(lim)
-        if lim <= 0:
-            lim = 5
-    except IndexError:
-        lim = 5
-    #     smatch = urllib.parse.quote_plus(match)
-    smatch = match.replace(" ", "+")
-    search_args = str(smatch), page
-    gsearch = GoogleSearch()
-    bsearch = BingSearch()
-    ysearch = YahooSearch()
-    try:
-        gresults = await gsearch.async_search(*search_args)
-    except NoResultsOrTrafficError:
-        try:
-            gresults = await bsearch.async_search(*search_args)
-        except NoResultsOrTrafficError:
-            try:
-                gresults = await ysearch.async_search(*search_args)
-            except Exception as e:
-                return await edit_delete(catevent, f"**Error:**\n`{e}`", time=10)
-    msg = ""
-    for i in range(lim):
-        if i > len(gresults["links"]):
-            break
-        try:
-            title = gresults["titles"][i]
-            link = gresults["links"][i]
-            desc = gresults["descriptions"][i]
-            msg += f"👉[{title}]({link})\n`{desc}`\n\n"
-        except IndexError:
-            break
-    await edit_or_reply(
-        catevent,
-        "**Search Query:**\n`" + match + "`\n\n**Results:**\n" + msg,
-        link_preview=False,
-        aslink=True,
-        linktext=f"**The search results for the query **__{match}__ **are** :",
-    )
-    if BOTLOG:
-        await q_event.client.send_message(
-            BOTLOG_CHATID,
-            f"Google Search query `{match}` was executed successfully",
-        )
-
-
-@catub.cat_cmd(
-    pattern="gis ([\s\S]*)",
-    command=("gis", plugin_category),
-    info={
-        "header": "Google search in image format",
-        "usage": "{tr}gis <query>",
-        "examples": "{tr}gis cat",
-    },
-)
-async def gis(event):
-    "To search in google and send result in picture."
-
-
-@catub.cat_cmd(
-    pattern="grs$",
-    command=("grs", plugin_category),
-    info={
-        "header": "Google reverse search command.",
-        "description": "Reverse search replied media in google and shows results.",
-        "usage": "{tr}grs",
-    },
-)
-async def grs(event):
-    "Google Reverse Search"
