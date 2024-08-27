@@ -18,6 +18,7 @@ heroku3
 html-telegraph-poster
 httpx[http2]
 humanize
+icrawler
 jikanpy
 justwatch
 lottie
@@ -26,6 +27,7 @@ markdown
 motor
 openai
 Pillow==9.5.0
+pre-commit
 prettytable
 psutil
 psycopg2

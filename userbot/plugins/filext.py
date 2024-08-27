@@ -18,7 +18,7 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="filext(?:\s|$)([\s\S]*)",
+    pattern=r"filext(?:\s|$)([\s\S]*)",
     command=("filext", plugin_category),
     info={
         "header": "Shows you the detailed information of given extension type.",

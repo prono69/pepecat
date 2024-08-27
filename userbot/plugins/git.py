@@ -21,7 +21,6 @@ from ..Config import Config
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import reply_id
-from . import reply_id
 
 LOGS = logging.getLogger(os.path.basename(__name__))
 ppath = os.path.join(os.getcwd(), "temp", "githubuser.jpg")
@@ -31,7 +30,7 @@ GIT_TEMP_DIR = "./temp/"
 
 
 @catub.cat_cmd(
-    pattern="repo$",
+    pattern=r"repo$",
     command=("repo", plugin_category),
     info={
         "header": "Source code link of userbot",
@@ -50,7 +49,7 @@ async def source(e):
 
 
 @catub.cat_cmd(
-    pattern="github( -l(\d+))? ([\s\S]*)",
+    pattern=r"github( -l(\d+))? ([\s\S]*)",
     command=("github", plugin_category),
     info={
         "header": "Shows the information about an user on GitHub of given username",
@@ -95,9 +94,7 @@ async def _(event):
                 \n📊 **Public Repos** : `{public_repos}`\
                 \n📄 **Public Gists** : `{public_gists}`\
                 \n🔗 **Profile Created** : `{created_at}`\
-                \n✏️ **Profile Updated** : `{updated_at}`".format(
-                username=username, **result
-            )
+                \n✏️ **Profile Updated** : `{updated_at}`".format(username=username, **result)
 
             if repos:
                 REPLY += "\n🔍 **Some Repos** : " + " | ".join(repos)
@@ -116,7 +113,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="commit$",
+    pattern=r"commit$",
     command=("commit", plugin_category),
     info={
         "header": "To commit the replied plugin to github.",
@@ -129,22 +126,16 @@ async def _(event):
 async def download(event):
     "To commit the replied plugin to github."
     if Config.GITHUB_ACCESS_TOKEN is None:
-        return await edit_delete(
-            event, "`Please ADD Proper Access Token from github.com`", 5
-        )
+        return await edit_delete(event, "`Please ADD Proper Access Token from github.com`", 5)
     if Config.GIT_REPO_NAME is None:
-        return await edit_delete(
-            event, "`Please ADD Proper Github Repo Name of your userbot`", 5
-        )
+        return await edit_delete(event, "`Please ADD Proper Github Repo Name of your userbot`", 5)
     mone = await edit_or_reply(event, "`Processing ...`")
     if not os.path.isdir(GIT_TEMP_DIR):
         os.makedirs(GIT_TEMP_DIR)
     start = datetime.now()
     reply_message = await event.get_reply_message()
     if not reply_message or not reply_message.media:
-        return await edit_delete(
-            event, "__Reply to a file which you want to commit in your github.__"
-        )
+        return await edit_delete(event, "__Reply to a file which you want to commit in your github.__")
     try:
         downloaded_file_name = await event.client.download_media(reply_message.media)
     except Exception as e:
@@ -178,15 +169,11 @@ async def git_commit(file_name, mone):
         file_name = f"userbot/plugins/{file_name}"
         LOGS.info(file_name)
         try:
-            repo.create_file(
-                file_name, "Uploaded New Plugin", commit_data, branch="master"
-            )
+            repo.create_file(file_name, "Uploaded New Plugin", commit_data, branch="master")
             LOGS.info("Committed File")
             ccess = Config.GIT_REPO_NAME
             ccess = ccess.strip()
-            await mone.edit(
-                f"`Commited On Your Github Repo`\n\n[Your PLUGINS](https://github.com/{ccess}/tree/master/userbot/plugins/)"
-            )
+            await mone.edit(f"`Commited On Your Github Repo`\n\n[Your PLUGINS](https://github.com/{ccess}/tree/master/userbot/plugins/)")
         except BaseException:
             LOGS.info("Cannot Create Plugin")
             await mone.edit("Cannot Upload Plugin")

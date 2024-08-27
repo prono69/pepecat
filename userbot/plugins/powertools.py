@@ -15,11 +15,7 @@ from userbot import catub
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
-from ..sql_helper.global_collection import (
-    add_to_collectionlist,
-    del_keyword_collectionlist,
-    get_collectionlist_items,
-)
+from ..sql_helper.global_collection import add_to_collectionlist, del_keyword_collectionlist, get_collectionlist_items
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import BOTLOG, BOTLOG_CHATID, HEROKU_APP
 
@@ -28,7 +24,7 @@ plugin_category = "tools"
 
 
 @catub.cat_cmd(
-    pattern="restart$",
+    pattern=r"restart$",
     command=("restart", plugin_category),
     info={
         "header": "Restarts the bot !!",
@@ -64,7 +60,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="shutdown$",
+    pattern=r"shutdown$",
     command=("shutdown", plugin_category),
     info={
         "header": "Shutdowns the bot !!",
@@ -84,7 +80,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="sleep( [0-9]+)?$",
+    pattern=r"sleep( [0-9]+)?$",
     command=("sleep", plugin_category),
     info={
         "header": "Userbot will stop working for the mentioned time.",
@@ -98,9 +94,7 @@ async def _(event):
         return await edit_or_reply(event, "Syntax: `.sleep time`")
     counter = int(event.pattern_match.group(1))
     if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID, f"You put the bot to sleep for {counter} seconds"
-        )
+        await event.client.send_message(BOTLOG_CHATID, f"You put the bot to sleep for {counter} seconds")
 
     event = await edit_or_reply(event, f"`ok, let me sleep for {counter} seconds`")
     sleep(counter)
@@ -108,7 +102,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="notify (on|off)$",
+    pattern=r"notify (on|off)$",
     command=("notify", plugin_category),
     info={
         "header": "To update the your chat after restart or reload .",

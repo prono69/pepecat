@@ -55,7 +55,7 @@ def sun(unix, ctimezone):
 
 
 @catub.cat_cmd(
-    pattern="climate(?:\s|$)([\s\S]*)",
+    pattern=r"climate(?:\s|$)([\s\S]*)",
     command=("climate", plugin_category),
     info={
         "header": "To get the weather report of a city.",
@@ -71,16 +71,10 @@ async def get_weather(event):  # sourcery no-metrics
     # sourcery skip: low-code-quality
     "To get the weather report of a city."
     if not Config.OPEN_WEATHER_MAP_APPID:
-        return await edit_or_reply(
-            event, "`Get an API key from` https://openweathermap.org/ `first.`"
-        )
+        return await edit_or_reply(event, "`Get an API key from` https://openweathermap.org/ `first.`")
     input_str = "".join(event.text.split(maxsplit=1)[1:])
     CITY = input_str or gvarstatus("DEFCITY") or "Delhi"
-    timezone_countries = {
-        timezone: country
-        for country, timezones in c_tz.items()
-        for timezone in timezones
-    }
+    timezone_countries = {timezone: country for country, timezones in c_tz.items() for timezone in timezones}
     if "," in CITY:
         newcity = CITY.split(",")
         if len(newcity[1]) == 2:
@@ -143,7 +137,7 @@ async def get_weather(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="setcity(?:\s|$)([\s\S]*)",
+    pattern=r"setcity(?:\s|$)([\s\S]*)",
     command=("setcity", plugin_category),
     info={
         "header": "To set default city for climate cmd",
@@ -158,16 +152,10 @@ async def get_weather(event):  # sourcery no-metrics
 async def set_default_city(event):
     "To set default city for climate/weather cmd"
     if not Config.OPEN_WEATHER_MAP_APPID:
-        return await edit_or_reply(
-            event, "`Get an API key from` https://openweathermap.org/ `first.`"
-        )
+        return await edit_or_reply(event, "`Get an API key from` https://openweathermap.org/ `first.`")
     input_str = event.pattern_match.group(1)
     CITY = input_str or gvarstatus("DEFCITY") or "Delhi"
-    timezone_countries = {
-        timezone: country
-        for country, timezones in c_tz.items()
-        for timezone in timezones
-    }
+    timezone_countries = {timezone: country for country, timezones in c_tz.items() for timezone in timezones}
     if "," in CITY:
         newcity = CITY.split(",")
         if len(newcity[1]) == 2:
@@ -192,7 +180,7 @@ async def set_default_city(event):
 
 
 @catub.cat_cmd(
-    pattern="weather(?:\s|$)([\s\S]*)",
+    pattern=r"weather(?:\s|$)([\s\S]*)",
     command=("weather", plugin_category),
     info={
         "header": "To get the weather report of a city.",
@@ -213,7 +201,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="wttr(?:\s|$)([\s\S]*)",
+    pattern=r"wttr(?:\s|$)([\s\S]*)",
     command=("wttr", plugin_category),
     info={
         "header": "To get the weather report of a city.",
@@ -235,9 +223,7 @@ async def _(event):
         response_api_zero = await session.get(sample_url.format(input_str))
         response_api = await response_api_zero.read()
         with io.BytesIO(response_api) as out_file:
-            await event.reply(
-                f"**City : **`{input_str}`", file=out_file, reply_to=reply_to_id
-            )
+            await event.reply(f"**City : **`{input_str}`", file=out_file, reply_to=reply_to_id)
     try:
         await event.delete()
     except Exception as e:

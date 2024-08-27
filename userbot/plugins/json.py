@@ -17,7 +17,7 @@ plugin_category = "tools"
 
 # yaml_format is ported from uniborg
 @catub.cat_cmd(
-    pattern="json$",
+    pattern=r"json$",
     command=("json", plugin_category),
     info={
         "header": "To get details of that message in json format.",
@@ -32,7 +32,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="yaml$",
+    pattern=r"yaml$",
     command=("yaml", plugin_category),
     info={
         "header": "To get details of that message in yaml format.",

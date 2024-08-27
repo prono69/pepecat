@@ -19,7 +19,7 @@ name = "Profile Photos"
 
 
 @catub.cat_cmd(
-    pattern="poto(?:\s|$)([\s\S]*)",
+    pattern=r"poto(?:\s|$)([\s\S]*)",
     command=("poto", plugin_category),
     info={
         "header": "To get user or group profile pic.",
@@ -48,9 +48,7 @@ async def potocmd(event):
     if not uid.strip():
         uid = 1
         if uid > (len(photos)):
-            return await edit_delete(
-                event, "`No photo found of this NIBBA / NIBBI. Now u Die!`"
-            )
+            return await edit_delete(event, "`No photo found of this NIBBA / NIBBI. Now u Die!`")
         send_photos = await event.client.download_media(photos[uid - 1])
         await event.client.send_file(event.chat_id, send_photos)
     elif uid.strip() == "all":
@@ -69,17 +67,13 @@ async def potocmd(event):
         try:
             uid = int(uid)
             if uid <= 0:
-                await edit_or_reply(
-                    event, "```number Invalid!``` **Are you Comedy Me ?**"
-                )
+                await edit_or_reply(event, "```number Invalid!``` **Are you Comedy Me ?**")
                 return
         except BaseException:
             await edit_or_reply(event, "`Are you comedy me ?`")
             return
         if uid > (len(photos)):
-            return await edit_delete(
-                event, "`No photo found of this NIBBA / NIBBI. Now u Die!`"
-            )
+            return await edit_delete(event, "`No photo found of this NIBBA / NIBBI. Now u Die!`")
 
         send_photos = await event.client.download_media(photos[uid - 1])
         await event.client.send_file(event.chat_id, send_photos)
@@ -87,7 +81,7 @@ async def potocmd(event):
 
 
 @catub.cat_cmd(
-    pattern="blur(?:\s|$)([\s\S]*)",
+    pattern=r"blur(?:\s|$)([\s\S]*)",
     command=("blur", plugin_category),
     info={
         "header": "To blur picture.",
@@ -98,7 +92,7 @@ async def potocmd(event):
         ],
     },
 )
-async def potocmd(event):
+async def blur_func(event):
     "To blur pic"
     reply_to_id = await reply_id(event)
     rinp = event.pattern_match.group(1)

@@ -27,11 +27,7 @@ class BlackListFilters(BASE):
         return f"<Blacklist filter '{self.trigger}' for {self.chat_id}>"
 
     def __eq__(self, other):
-        return (
-            isinstance(other, BlackListFilters)
-            and self.chat_id == other.chat_id
-            and self.trigger == other.trigger
-        )
+        return isinstance(other, BlackListFilters) and self.chat_id == other.chat_id and self.trigger == other.trigger
 
 
 BlackListFilters.__table__.create(checkfirst=True)
@@ -58,12 +54,8 @@ def add_to_blacklist(chat_id, trigger):
 
 def rm_from_blacklist(chat_id, trigger):
     with BLACKLIST_FILTER_INSERTION_LOCK:
-        if blacklist_filt := SESSION.query(BlackListFilters).get(
-            (str(chat_id), trigger)
-        ):
-            if trigger in BLACKLIST_SQL_.CHAT_BLACKLISTS.get(
-                str(chat_id), set()
-            ):  # sanity check
+        if blacklist_filt := SESSION.query(BlackListFilters).get((str(chat_id), trigger)):
+            if trigger in BLACKLIST_SQL_.CHAT_BLACKLISTS.get(str(chat_id), set()):  # sanity check
                 BLACKLIST_SQL_.CHAT_BLACKLISTS.get(str(chat_id), set()).remove(trigger)
 
             SESSION.delete(blacklist_filt)
@@ -87,11 +79,7 @@ def num_blacklist_filters():
 
 def num_blacklist_chat_filters(chat_id):
     try:
-        return (
-            SESSION.query(BlackListFilters.chat_id)
-            .filter(BlackListFilters.chat_id == str(chat_id))
-            .count()
-        )
+        return SESSION.query(BlackListFilters.chat_id).filter(BlackListFilters.chat_id == str(chat_id)).count()
     finally:
         SESSION.close()
 
@@ -113,9 +101,7 @@ def __load_chat_blacklists():
         for x in all_filters:
             BLACKLIST_SQL_.CHAT_BLACKLISTS[x.chat_id] += [x.trigger]
 
-        BLACKLIST_SQL_.CHAT_BLACKLISTS = {
-            x: set(y) for x, y in BLACKLIST_SQL_.CHAT_BLACKLISTS.items()
-        }
+        BLACKLIST_SQL_.CHAT_BLACKLISTS = {x: set(y) for x, y in BLACKLIST_SQL_.CHAT_BLACKLISTS.items()}
 
     finally:
         SESSION.close()

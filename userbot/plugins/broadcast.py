@@ -1,4 +1,4 @@
-""" Broadcast your message to saved chatlist """
+"""Broadcast your message to saved chatlist"""
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~# CatUserBot #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Copyright (C) 2020-2023 by TgCatUB@Github.
@@ -29,7 +29,7 @@ LOGS = logging.getLogger(__name__)
 
 
 @catub.cat_cmd(
-    pattern="msgto(?:\s|$)([\s\S]*)",
+    pattern=r"msgto(?:\s|$)([\s\S]*)",
     command=("msgto", plugin_category),
     info={
         "header": "To message to person or to a chat.",
@@ -41,16 +41,14 @@ LOGS = logging.getLogger(__name__)
         "examples": "{tr}msgto @catuserbotot just a testmessage",
     },
 )
-async def catbroadcast_add(event):
+async def catbroadcast_msg(event):
     "To message to person or to a chat."
     user, reason = await get_user_from_event(event)
     reply = await event.get_reply_message()
     if not user:
         return
     if not reason and not reply:
-        return await edit_delete(
-            event, "__What should i send to the person. reply to msg or give text__"
-        )
+        return await edit_delete(event, "__What should i send to the person. reply to msg or give text__")
     if reply and reason and user.id != reply.sender_id:
         if BOTLOG:
             msg = await event.client.send_message(BOTLOG_CHATID, reason)
@@ -72,7 +70,7 @@ async def catbroadcast_add(event):
 
 
 @catub.cat_cmd(
-    pattern="addto(?:\s|$)([\s\S]*)",
+    pattern=r"addto(?:\s|$)([\s\S]*)",
     command=("addto", plugin_category),
     info={
         "header": "Will add the specific chat to the mentioned category",
@@ -90,7 +88,7 @@ async def catbroadcast_add(event):
             parse_mode=_format.parse_pre,
         )
     keyword = catinput_str.lower()
-    if check := sql.is_in_broadcastlist(keyword, event.chat_id):
+    if sql.is_in_broadcastlist(keyword, event.chat_id):
         return await edit_delete(
             event,
             f"This chat is already in this category {keyword}",
@@ -119,7 +117,7 @@ async def catbroadcast_add(event):
 
 
 @catub.cat_cmd(
-    pattern="list(?:\s|$)([\s\S]*)",
+    pattern=r"list(?:\s|$)([\s\S]*)",
     command=("list", plugin_category),
     info={
         "header": "will show the list of all chats in the given category",
@@ -145,9 +143,7 @@ async def catbroadcast_list(event):
             parse_mode=_format.parse_pre,
         )
     chats = sql.get_chat_broadcastlist(keyword)
-    catevent = await edit_or_reply(
-        event, f"Fetching info of the category {keyword}", parse_mode=_format.parse_pre
-    )
+    catevent = await edit_or_reply(event, f"Fetching info of the category {keyword}", parse_mode=_format.parse_pre)
     resultlist = f"**The category '{keyword}' have '{no_of_chats}' chats and these are listed below :**\n\n"
     errorlist = ""
     for chat in chats:
@@ -168,14 +164,14 @@ async def catbroadcast_list(event):
 
 
 @catub.cat_cmd(
-    pattern="listall$",
+    pattern=r"listall$",
     command=("listall", plugin_category),
     info={
         "header": "Will show the list of all category names.",
         "usage": "{tr}listall",
     },
 )
-async def catbroadcast_list(event):
+async def catbroadcast_list_all(event):
     "To list all the category names."
     if sql.num_broadcastlist_chats() == 0:
         return await edit_delete(
@@ -191,7 +187,7 @@ async def catbroadcast_list(event):
 
 
 @catub.cat_cmd(
-    pattern="sendto(?:\s|$)([\s\S]*)",
+    pattern=r"sendto(?:\s|$)([\s\S]*)",
     command=("sendto", plugin_category),
     info={
         "header": "will send the replied message to all chats in the given category",
@@ -199,7 +195,7 @@ async def catbroadcast_list(event):
         "examples": "{tr}sendto test",
     },
 )
-async def catbroadcast_send(event):
+async def catbroadcast_send_to(event):
     "To send the message to all chats in the mentioned category."
     catinput_str = event.pattern_match.group(1)
     if not catinput_str:
@@ -254,7 +250,7 @@ async def catbroadcast_send(event):
 
 
 @catub.cat_cmd(
-    pattern="fwdto(?:\s|$)([\s\S]*)",
+    pattern=r"fwdto(?:\s|$)([\s\S]*)",
     command=("fwdto", plugin_category),
     info={
         "header": "Will forward the replied message to all chats in the given category",
@@ -262,7 +258,7 @@ async def catbroadcast_send(event):
         "examples": "{tr}fwdto test",
     },
 )
-async def catbroadcast_send(event):
+async def catbroadcast_fwd_to(event):
     "To forward the message to all chats in the mentioned category."
     catinput_str = event.pattern_match.group(1)
     if not catinput_str:
@@ -317,7 +313,7 @@ async def catbroadcast_send(event):
 
 
 @catub.cat_cmd(
-    pattern="rmfrom(?:\s|$)([\s\S]*)",
+    pattern=r"rmfrom(?:\s|$)([\s\S]*)",
     command=("rmfrom", plugin_category),
     info={
         "header": "Will remove the specific chat to the mentioned category",
@@ -365,7 +361,7 @@ async def catbroadcast_remove(event):
 
 
 @catub.cat_cmd(
-    pattern="frmfrom(?:\s|$)([\s\S]*)",
+    pattern=r"frmfrom(?:\s|$)([\s\S]*)",
     command=("frmfrom", plugin_category),
     info={
         "header": " To force remove the given chat from a category.",
@@ -374,7 +370,7 @@ async def catbroadcast_remove(event):
         "examples": "{tr}frmfrom test -100123456",
     },
 )
-async def catbroadcast_remove(event):
+async def force_remove_from(event):
     "To force remove the given chat from a category."
     catinput_str = event.pattern_match.group(1)
     if not catinput_str:
@@ -434,7 +430,7 @@ async def catbroadcast_remove(event):
 
 
 @catub.cat_cmd(
-    pattern="delc(?:\s|$)([\s\S]*)",
+    pattern=r"delc(?:\s|$)([\s\S]*)",
     command=("delc", plugin_category),
     info={
         "header": "To Deletes the category completely from database",

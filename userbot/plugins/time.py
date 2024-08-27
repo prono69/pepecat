@@ -52,7 +52,7 @@ async def get_tz(con):
 
 
 @catub.cat_cmd(
-    pattern="time(?:\s|$)([\s\S]*)(?<![0-9])(?: |$)([0-9]+)?",
+    pattern=r"time(?:\s|$)([\s\S]*)(?<![0-9])(?: |$)([0-9]+)?",
     command=("time", plugin_category),
     info={
         "header": "To get current time of a paticular country",
@@ -113,13 +113,12 @@ async def time_func(tdata):
     if Config.COUNTRY:
         await edit_or_reply(
             tdata,
-            f"`It's`  **{dtnow1}**` on `**{dtnow2}**  `here, in {Config.COUNTRY}"
-            f"({time_zone} timezone).`",
+            f"`It's`  **{dtnow1}**` on `**{dtnow2}**  `here, in {Config.COUNTRY}" f"({time_zone} timezone).`",
         )
 
 
 @catub.cat_cmd(
-    pattern="(s|p|c)time(?:\s|$)([\s\S]*)",
+    pattern=r"(s|p|c)time(?:\s|$)([\s\S]*)",
     command=("stime", plugin_category),
     info={
         "header": "To show current time.",

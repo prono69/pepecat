@@ -23,12 +23,7 @@ from ..sql_helper.bot_blacklists import check_is_black_list, get_all_bl_users
 from ..sql_helper.bot_starters import del_starter_from_db, get_all_starters
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import BOTLOG, BOTLOG_CHATID
-from .botmanagers import (
-    ban_user_from_bot,
-    get_user_and_reason,
-    progress_str,
-    unban_user_from_bot,
-)
+from .botmanagers import ban_user_from_bot, get_user_and_reason, progress_str, unban_user_from_bot
 
 LOGS = logging.getLogger(__name__)
 
@@ -37,7 +32,7 @@ botusername = Config.TG_BOT_USERNAME
 cmhd = Config.COMMAND_HAND_LER
 
 
-@catub.bot_cmd(pattern="^/help$", from_users=Config.OWNER_ID)
+@catub.bot_cmd(pattern=r"^/help$", from_users=Config.OWNER_ID)
 async def bot_help(event):
     await event.reply(
         f"""The commands in the bot are:
@@ -62,7 +57,7 @@ async def bot_help(event):
     )
 
 
-@catub.bot_cmd(pattern="^/broadcast$", from_users=Config.OWNER_ID)
+@catub.bot_cmd(pattern=r"^/broadcast$", from_users=Config.OWNER_ID)
 async def bot_broadcast(event):
     replied = await event.get_reply_message()
     if not replied:
@@ -79,9 +74,7 @@ async def bot_broadcast(event):
         return await event.reply("`Errors ocured while fetching users list.`")
     for user in users:
         try:
-            await event.client.send_message(
-                int(user.user_id), "🔊 You received a **new** Broadcast."
-            )
+            await event.client.send_message(int(user.user_id), "🔊 You received a **new** Broadcast.")
             await event.client.send_message(int(user.user_id), replied)
             await asyncio.sleep(0.8)
         except FloodWaitError as e:
@@ -91,9 +84,7 @@ async def bot_broadcast(event):
         except Exception as e:
             LOGS.error(str(e))
             if BOTLOG:
-                await event.client.send_message(
-                    BOTLOG_CHATID, f"**Error while broadcasting**\n`{e}`"
-                )
+                await event.client.send_message(BOTLOG_CHATID, f"**Error while broadcasting**\n`{e}`")
 
         else:
             count += 1
@@ -115,14 +106,12 @@ async def bot_broadcast(event):
     b_info = f"🔊  Successfully broadcasted message to ➜  <b>{count} users.</b>"
     if blocked_users:
         b_info += f"\n🚫  <b>{len(blocked_users)} users</b> blocked your bot recently, so have been removed."
-    b_info += (
-        f"\n⏳  <code>Process took: {time_formatter((end_ - start_).seconds)}</code>."
-    )
+    b_info += f"\n⏳  <code>Process took: {time_formatter((end_ - start_).seconds)}</code>."
     await br_cast.edit(b_info, parse_mode="html")
 
 
 @catub.cat_cmd(
-    pattern="bot_users$",
+    pattern=r"bot_users$",
     command=("bot_users", plugin_category),
     info={
         "header": "To get users list who started bot.",
@@ -141,18 +130,14 @@ async def ban_starters(event):
     await edit_or_reply(event, msg)
 
 
-@catub.bot_cmd(pattern="^/ban\\s+([\\s\\S]*)", from_users=Config.OWNER_ID)
+@catub.bot_cmd(pattern=r"^/ban\\s+([\\s\\S]*)", from_users=Config.OWNER_ID)
 async def ban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
     if not user_id:
-        return await event.client.send_message(
-            event.chat_id, "`I can't find user to ban`", reply_to=reply_to
-        )
+        return await event.client.send_message(event.chat_id, "`I can't find user to ban`", reply_to=reply_to)
     if not reason:
-        return await event.client.send_message(
-            event.chat_id, "`To ban the user provide reason first`", reply_to=reply_to
-        )
+        return await event.client.send_message(event.chat_id, "`To ban the user provide reason first`", reply_to=reply_to)
     try:
         user = await event.client.get_entity(user_id)
         user_id = user.id
@@ -172,14 +157,12 @@ async def ban_botpms(event):
     await event.reply(msg)
 
 
-@catub.bot_cmd(pattern="^/unban(?:\\s|$)([\\s\\S]*)", from_users=Config.OWNER_ID)
-async def ban_botpms(event):
+@catub.bot_cmd(pattern=r"^/unban(?:\\s|$)([\\s\\S]*)", from_users=Config.OWNER_ID)
+async def unban_botpms(event):
     user_id, reason = await get_user_and_reason(event)
     reply_to = await reply_id(event)
     if not user_id:
-        return await event.client.send_message(
-            event.chat_id, "`I can't find user to unban`", reply_to=reply_to
-        )
+        return await event.client.send_message(event.chat_id, "`I can't find user to unban`", reply_to=reply_to)
     try:
         user = await event.client.get_entity(user_id)
         user_id = user.id
@@ -197,7 +180,7 @@ async def ban_botpms(event):
 
 
 @catub.cat_cmd(
-    pattern="bblist$",
+    pattern=r"bblist$",
     command=("bblist", plugin_category),
     info={
         "header": "To get users list who are banned in bot.",
@@ -205,7 +188,7 @@ async def ban_botpms(event):
         "usage": "{tr}bblist",
     },
 )
-async def ban_starters(event):
+async def baned_list(event):
     "To get list of users who are banned in bot."
     ulist = get_all_bl_users()
     if len(ulist) == 0:
@@ -217,7 +200,7 @@ async def ban_starters(event):
 
 
 @catub.cat_cmd(
-    pattern="bot_antif (on|off)$",
+    pattern=r"bot_antif (on|off)$",
     command=("bot_antif", plugin_category),
     info={
         "header": "To enable or disable bot antiflood.",

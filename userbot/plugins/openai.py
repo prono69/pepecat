@@ -13,12 +13,7 @@ import os
 from userbot import catub
 
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.chatbot import (
-    del_convo,
-    generate_dalle_image,
-    generate_edited_response,
-    generate_gpt_response,
-)
+from ..helpers.chatbot import del_convo, generate_dalle_image, generate_edited_response, generate_gpt_response
 from ..helpers.utils import reply_id
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 
@@ -30,7 +25,7 @@ SIZE = ["256", "512", "1024"]
 
 
 @catub.cat_cmd(
-    pattern="gpt(?:\s|$)([\s\S]*)",
+    pattern=r"gpt(?:\s|$)([\s\S]*)",
     command=("gpt", plugin_category),
     info={
         "header": "Generate GPT response with prompt",
@@ -90,15 +85,13 @@ async def gpt_response_with_prompt(event):
     elif "-s" in text:
         flag = text.replace("-s", "").strip()
         if not flag:
-            return await edit_delete(
-                event, "__Pass the system message along with flag.__"
-            )
+            return await edit_delete(event, "__Pass the system message along with flag.__")
         addgvar("SYSTEM_MESSAGE", flag)
         del_convo(chat_id)
         return await edit_delete(event, f"__System message changed to :__\n\n`{flag}`")
 
     elif "-ds" in text:
-        if SYSTEM_MESSAGE := gvarstatus("SYSTEM_MESSAGE") or None:
+        if gvarstatus("SYSTEM_MESSAGE"):
             del_convo(chat_id)
             delgvar("SYSTEM_MESSAGE")
             return await edit_delete(event, "__System message cleared.__")
@@ -120,7 +113,7 @@ async def gpt_response_with_prompt(event):
 
 
 @catub.cat_cmd(
-    pattern="dalle(?:\s|$)([\s\S]*)",
+    pattern=r"dalle(?:\s|$)([\s\S]*)",
     command=("dalle", plugin_category),
     info={
         "header": "Generate image using DALL-E",
@@ -175,9 +168,7 @@ async def dalle_image_generation(event):
         flag = int(text.replace("-n", "").strip())
         if flag > 0 and flag <= 10:
             addgvar("DALLE_LIMIT", flag)
-            return await edit_delete(
-                event, f"__Output limit for Dall-E changed to : **{flag}**__"
-            )
+            return await edit_delete(event, f"__Output limit for Dall-E changed to : **{flag}**__")
         return await edit_delete(event, "__Input a value between 1-10.__")
 
     # Flag to generate a media via editing a media
@@ -188,9 +179,7 @@ async def dalle_image_generation(event):
             text = text.replace("-e", "").strip()
             photos, captions = await generate_dalle_image(text, reply, event, "e")
         else:
-            photos, captions = await generate_dalle_image(
-                "Random Variations", reply, event, "v"
-            )
+            photos, captions = await generate_dalle_image("Random Variations", reply, event, "v")
 
     # If no flag then generate from text
     else:

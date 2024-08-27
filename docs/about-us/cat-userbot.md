@@ -40,8 +40,3 @@ Catuserbot is an open-source project, and contributions are welcome. You can con
 * 📝 Improving documentation
 
 To contribute to the project, you can fork the repository, make your changes, and submit a pull request. If you find Catuserbot useful, please consider giving us a ⭐.
-
-
-
-
-

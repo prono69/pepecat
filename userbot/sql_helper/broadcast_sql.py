@@ -27,11 +27,7 @@ class CatBroadcast(BASE):
         return f"<Cat Broadcast channels '{self.group_id}' for {self.keywoard}>"
 
     def __eq__(self, other):
-        return (
-            isinstance(other, CatBroadcast)
-            and self.keywoard == other.keywoard
-            and self.group_id == other.group_id
-        )
+        return isinstance(other, CatBroadcast) and self.keywoard == other.keywoard and self.group_id == other.group_id
 
 
 CatBroadcast.__table__.create(checkfirst=True)
@@ -58,13 +54,9 @@ def add_to_broadcastlist(keywoard, group_id):
 
 def rm_from_broadcastlist(keywoard, group_id):
     with CATBROADCAST_INSERTION_LOCK:
-        if broadcast_group := SESSION.query(CatBroadcast).get(
-            (keywoard, str(group_id))
-        ):
+        if broadcast_group := SESSION.query(CatBroadcast).get((keywoard, str(group_id))):
             if str(group_id) in BROADCAST_SQL_.BROADCAST_CHANNELS.get(keywoard, set()):
-                BROADCAST_SQL_.BROADCAST_CHANNELS.get(keywoard, set()).remove(
-                    str(group_id)
-                )
+                BROADCAST_SQL_.BROADCAST_CHANNELS.get(keywoard, set()).remove(str(group_id))
 
             SESSION.delete(broadcast_group)
             SESSION.commit()
@@ -82,11 +74,7 @@ def is_in_broadcastlist(keywoard, group_id):
 
 def del_keyword_broadcastlist(keywoard):
     with CATBROADCAST_INSERTION_LOCK:
-        broadcast_group = (
-            SESSION.query(CatBroadcast.keywoard)
-            .filter(CatBroadcast.keywoard == keywoard)
-            .delete()
-        )
+        SESSION.query(CatBroadcast.keywoard).filter(CatBroadcast.keywoard == keywoard).delete()
         BROADCAST_SQL_.BROADCAST_CHANNELS.pop(keywoard)
         SESSION.commit()
 
@@ -112,11 +100,7 @@ def num_broadcastlist():
 
 def num_broadcastlist_chat(keywoard):
     try:
-        return (
-            SESSION.query(CatBroadcast.keywoard)
-            .filter(CatBroadcast.keywoard == keywoard)
-            .count()
-        )
+        return SESSION.query(CatBroadcast.keywoard).filter(CatBroadcast.keywoard == keywoard).count()
     finally:
         SESSION.close()
 
@@ -138,9 +122,7 @@ def __load_chat_broadcastlists():
         for x in all_groups:
             BROADCAST_SQL_.BROADCAST_CHANNELS[x.keywoard] += [x.group_id]
 
-        BROADCAST_SQL_.BROADCAST_CHANNELS = {
-            x: set(y) for x, y in BROADCAST_SQL_.BROADCAST_CHANNELS.items()
-        }
+        BROADCAST_SQL_.BROADCAST_CHANNELS = {x: set(y) for x, y in BROADCAST_SQL_.BROADCAST_CHANNELS.items()}
 
     finally:
         SESSION.close()

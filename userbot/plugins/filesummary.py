@@ -38,7 +38,7 @@ def weird_division(n, d):
 
 
 @catub.cat_cmd(
-    pattern="chatfs(?:\s|$)([\s\S]*)",
+    pattern=r"chatfs(?:\s|$)([\s\S]*)",
     command=("chatfs", plugin_category),
     info={
         "header": "Shows you the complete media/file summary of the that group.",
@@ -83,10 +83,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         f"<code>Counting files and file size of </code><b>{link}</b>\n<code>This may take some time also depends on number of group messages</code>",
         parse_mode="HTML",
     )
-    media_dict = {
-        m: {"file_size": 0, "count": 0, "max_size": 0, "max_file_link": ""}
-        for m in TYPES
-    }
+    media_dict = {m: {"file_size": 0, "count": 0, "max_size": 0, "max_file_link": ""} for m in TYPES}
     async for message in event.client.iter_messages(entity=entity, limit=None):
         msg_count += 1
         media = await media_type(message)
@@ -96,13 +93,9 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
             if message.file.size > media_dict[media]["max_size"]:
                 media_dict[media]["max_size"] = message.file.size
                 if type(chatdata).__name__ == "Channel":
-                    media_dict[media][
-                        "max_file_link"
-                    ] = f"https://t.me/c/{chatdata.id}/{message.id}"  # pylint: disable=line-too-long
+                    media_dict[media]["max_file_link"] = f"https://t.me/c/{chatdata.id}/{message.id}"  # pylint: disable=line-too-long
                 else:
-                    media_dict[media][
-                        "max_file_link"
-                    ] = f"tg://openmessage?user_id={chatdata.id}&message_id={message.id}"  # pylint: disable=line-too-long
+                    media_dict[media]["max_file_link"] = f"tg://openmessage?user_id={chatdata.id}&message_id={message.id}"  # pylint: disable=line-too-long
             totalsize += message.file.size
             totalcount += 1
     for mediax in TYPES:
@@ -117,16 +110,10 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
             largest += f"  •  <b><a href='{media_dict[mediax]['max_file_link']}'>{mediax}</a>  : </b><code>{humanbytes(media_dict[mediax]['max_size'])}</code>\n"
     endtime = int(time.monotonic())
     avghubytes = humanbytes(weird_division(totalsize, totalcount))
-    avgruntime = (
-        f"{str(round(weird_division(endtime - starttime, totalcount) * 1000, 2))} ms"
-    )
+    avgruntime = f"{str(round(weird_division(endtime - starttime, totalcount) * 1000, 2))} ms"
     totalstring = f"<code><b>Total files : </b>       | {totalcount}\nTotal file size :    | {humanbytes(totalsize)}\nAvg. file size :     | {avghubytes}\n</code>"
 
-    runtime = (
-        f"{str(round((endtime - starttime) / 60, 2))} minutes"
-        if endtime - starttime >= 120
-        else f"{str(endtime - starttime)} seconds"
-    )
+    runtime = f"{str(round((endtime - starttime) / 60, 2))} minutes" if endtime - starttime >= 120 else f"{str(endtime - starttime)} seconds"
     runtimestring = f"<code>Runtime :            | {runtime}\
                     \nRuntime per file :   | {avgruntime}\
                     \n</code>"
@@ -141,7 +128,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="userfs(?:\s|$)([\s\S]*)",
+    pattern=r"userfs(?:\s|$)([\s\S]*)",
     command=("userfs", plugin_category),
     info={
         "header": "Shows you the complete media/file summary of the that user in that group.",
@@ -181,9 +168,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
     try:
         chatdata = await event.client.get_entity(entity)
     except Exception as e:
-        return await edit_delete(
-            event, f"<b>Error : </b><code>{e}</code>", 5, parse_mode="HTML"
-        )
+        return await edit_delete(event, f"<b>Error : </b><code>{e}</code>", 5, parse_mode="HTML")
 
     try:
         userdata = await event.client.get_entity(userentity)
@@ -208,13 +193,8 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         parse_mode="HTML",
     )
 
-    media_dict = {
-        m: {"file_size": 0, "count": 0, "max_size": 0, "max_file_link": ""}
-        for m in TYPES
-    }
-    async for message in event.client.iter_messages(
-        entity=entity, limit=None, from_user=userentity
-    ):
+    media_dict = {m: {"file_size": 0, "count": 0, "max_size": 0, "max_file_link": ""} for m in TYPES}
+    async for message in event.client.iter_messages(entity=entity, limit=None, from_user=userentity):
         msg_count += 1
         media = await media_type(message)
         if media is not None:
@@ -223,13 +203,9 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
             if message.file.size > media_dict[media]["max_size"]:
                 media_dict[media]["max_size"] = message.file.size
                 if type(chatdata).__name__ == "Channel":
-                    media_dict[media][
-                        "max_file_link"
-                    ] = f"https://t.me/c/{chatdata.id}/{message.id}"
+                    media_dict[media]["max_file_link"] = f"https://t.me/c/{chatdata.id}/{message.id}"
                 else:
-                    media_dict[media][
-                        "max_file_link"
-                    ] = f"tg://openmessage?user_id={chatdata.id}&message_id={message.id}"
+                    media_dict[media]["max_file_link"] = f"tg://openmessage?user_id={chatdata.id}&message_id={message.id}"
             totalsize += message.file.size
             totalcount += 1
     for mediax in TYPES:
@@ -244,16 +220,10 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
             largest += f"  •  <b><a href='{media_dict[mediax]['max_file_link']}'>{mediax}</a>  : </b><code>{humanbytes(media_dict[mediax]['max_size'])}</code>\n"
     endtime = int(time.monotonic())
     avghubytes = humanbytes(weird_division(totalsize, totalcount))
-    avgruntime = (
-        f"{str(round(weird_division(endtime - starttime, totalcount) * 1000, 2))} ms"
-    )
+    avgruntime = f"{str(round(weird_division(endtime - starttime, totalcount) * 1000, 2))} ms"
     totalstring = f"<code><b>Total files : </b>       | {totalcount}\nTotal file size :    | {humanbytes(totalsize)}\nAvg. file size :     | {avghubytes}\n</code>"
 
-    runtime = (
-        f"{str(round((endtime - starttime) / 60, 2))} minutes"
-        if endtime - starttime >= 120
-        else f"{str(endtime - starttime)} seconds"
-    )
+    runtime = f"{str(round((endtime - starttime) / 60, 2))} minutes" if endtime - starttime >= 120 else f"{str(endtime - starttime)} seconds"
     runtimestring = f"<code>Runtime :            | {runtime}\
                     \nRuntime per file :   | {avgruntime}\
                     \n</code>"

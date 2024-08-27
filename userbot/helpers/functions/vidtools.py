@@ -7,7 +7,7 @@
 # Please see: https://github.com/TgCatUB/catuserbot/blob/master/LICENSE
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-import logging
+
 import os
 import random
 from typing import Optional
@@ -79,12 +79,8 @@ async def invert_frames(image, w, h, outframes):
     return outframes
 
 
-async def take_screen_shot(
-    video_file: str, duration: int, path: str = ""
-) -> Optional[str]:
-    thumb_image_path = path or os.path.join(
-        "./temp/", f"{os.path.basename(video_file)}.jpg"
-    )
+async def take_screen_shot(video_file: str, duration: int, path: str = "") -> Optional[str]:
+    thumb_image_path = path or os.path.join("./temp/", f"{os.path.basename(video_file)}.jpg")
     command = f"ffmpeg -hide_banner -loglevel quiet -ss {duration} -i '{video_file}' -vframes 1 '{thumb_image_path}' -y"
     err = (await runcmd(command))[1]
     if err:

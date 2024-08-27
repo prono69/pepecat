@@ -25,7 +25,7 @@ plugin_category = "tools"
 
 
 @catub.cat_cmd(
-    pattern="hash ([\s\S]*)",
+    pattern=r"hash ([\s\S]*)",
     command=("hash", plugin_category),
     info={
         "header": "Find the md5, sha1, sha256, sha512 of the string when written into a txt file.",
@@ -62,7 +62,7 @@ async def gethash(hash_q):
 
 
 @catub.cat_cmd(
-    pattern="hbase (en|de) ([\s\S]*)",
+    pattern=r"hbase (en|de) ([\s\S]*)",
     command=("hbase", plugin_category),
     info={
         "header": "Find the base64 encoding or decoding of the given string.",
@@ -96,24 +96,16 @@ async def endecrypt(event):
                 downloaded_file_name = await event.client.download_media(
                     reply,
                     Config.TMP_DOWNLOAD_DIRECTORY,
-                    progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                        progress(d, t, catevent, c_time, "trying to download")
-                    ),
+                    progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, catevent, c_time, "trying to download")),
                 )
                 catevent = await edit_or_reply(event, "`Encoding ...`")
                 with open(downloaded_file_name, "rb") as image_file:
                     result = base64.b64encode(image_file.read()).decode("utf-8")
                 os.remove(downloaded_file_name)
-        await edit_or_reply(
-            catevent, result, file_name="encodedfile.txt", caption="It's Encoded"
-        )
+        await edit_or_reply(catevent, result, file_name="encodedfile.txt", caption="It's Encoded")
     else:
         try:
-            lething = str(
-                base64.b64decode(
-                    bytes(event.pattern_match.group(2), "utf-8"), validate=True
-                )
-            )[2:]
+            lething = str(base64.b64decode(bytes(event.pattern_match.group(2), "utf-8"), validate=True))[2:]
             await edit_or_reply(event, "**Decoded text :**\n`" + lething[:-1] + "`")
         except Exception as e:
             await edit_delete(event, f"**Error:**\n__{e}__")

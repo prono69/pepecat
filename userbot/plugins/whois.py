@@ -30,9 +30,7 @@ LOGS = logging.getLogger(__name__)
 async def fetch_info(replied_user, event):
     """Get details from the User object."""
     FullUser = (await event.client(GetFullUserRequest(replied_user.id))).full_user
-    replied_user_profile_photos = await event.client(
-        GetUserPhotosRequest(user_id=replied_user.id, offset=42, max_id=0, limit=80)
-    )
+    replied_user_profile_photos = await event.client(GetUserPhotosRequest(user_id=replied_user.id, offset=42, max_id=0, limit=80))
     replied_user_profile_photos_count = "User haven't set profile pic"
     dc_id = "Can't get dc id"
     with contextlib.suppress(AttributeError):
@@ -53,11 +51,7 @@ async def fetch_info(replied_user, event):
         Config.TMP_DOWNLOAD_DIRECTORY + str(user_id) + ".jpg",
         download_big=True,
     )
-    first_name = (
-        first_name.replace("\u2060", "")
-        if first_name
-        else ("This User has no First Name")
-    )
+    first_name = first_name.replace("\u2060", "") if first_name else ("This User has no First Name")
     full_name = full_name or first_name
     username = f"@{username}" if username else "This User has no Username"
     user_bio = user_bio or "This User has no About"
@@ -79,7 +73,7 @@ async def fetch_info(replied_user, event):
 
 
 @catub.cat_cmd(
-    pattern="userinfo(?:\s|$)([\s\S]*)",
+    pattern=r"userinfo(?:\s|$)([\s\S]*)",
     command=("userinfo", plugin_category),
     info={
         "header": "Gets information of an user such as restrictions ban by spamwatch or cas.",
@@ -150,7 +144,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="whois(?:\s|$)([\s\S]*)",
+    pattern=r"whois(?:\s|$)([\s\S]*)",
     command=("whois", plugin_category),
     info={
         "header": "Gets info of an user.",
@@ -189,7 +183,7 @@ async def who(event):
 
 
 @catub.cat_cmd(
-    pattern="link(?:\s|$)([\s\S]*)",
+    pattern=r"link(?:\s|$)([\s\S]*)",
     command=("link", plugin_category),
     info={
         "header": "Generates a link to the user's PM .",

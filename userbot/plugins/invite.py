@@ -17,7 +17,7 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="invite ([\s\S]*)",
+    pattern=r"invite ([\s\S]*)",
     command=("invite", plugin_category),
     info={
         "header": "Add the given user/users to the group where u used the command.",
@@ -33,22 +33,14 @@ async def _(event):
         # https://lonamiwebs.github.io/Telethon/methods/messages/add_chat_user.html
         for user_id in to_add_users.split(" "):
             try:
-                await event.client(
-                    functions.messages.AddChatUserRequest(
-                        chat_id=event.chat_id, user_id=user_id, fwd_limit=1000000
-                    )
-                )
+                await event.client(functions.messages.AddChatUserRequest(chat_id=event.chat_id, user_id=user_id, fwd_limit=1000000))
             except Exception as e:
                 return await edit_delete(event, f"`{str(e)}`", 5)
     else:
         # https://lonamiwebs.github.io/Telethon/methods/channels/invite_to_channel.html
         for user_id in to_add_users.split(" "):
             try:
-                await event.client(
-                    functions.channels.InviteToChannelRequest(
-                        channel=event.chat_id, users=[user_id]
-                    )
-                )
+                await event.client(functions.channels.InviteToChannelRequest(channel=event.chat_id, users=[user_id]))
             except Exception as e:
                 return await edit_delete(event, f"`{e}`", 5)
 

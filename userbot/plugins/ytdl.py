@@ -21,16 +21,7 @@ from telethon.utils import get_attributes
 from urlextract import URLExtract
 from wget import download
 from yt_dlp import YoutubeDL
-from yt_dlp.utils import (
-    ContentTooShortError,
-    DownloadError,
-    ExtractorError,
-    GeoRestrictedError,
-    MaxDownloadsReached,
-    PostProcessingError,
-    UnavailableVideoError,
-    XAttrMetadataError,
-)
+from yt_dlp.utils import ContentTooShortError, DownloadError, ExtractorError, GeoRestrictedError, MaxDownloadsReached, PostProcessingError, UnavailableVideoError, XAttrMetadataError
 
 from ..Config import Config
 from ..core import pool
@@ -78,9 +69,7 @@ async def ytdl_down(event, opts, url):
     except ContentTooShortError:
         await event.edit("`The download content was too short.`")
     except GeoRestrictedError:
-        await event.edit(
-            "`Video is not available from your geographic location due to geographic restrictions imposed by a website.`"
-        )
+        await event.edit("`Video is not available from your geographic location due to geographic restrictions imposed by a website.`")
     except MaxDownloadsReached:
         await event.edit("`Max-downloads limit has been reached.`")
     except PostProcessingError:
@@ -96,9 +85,7 @@ async def ytdl_down(event, opts, url):
     return ytdl_data
 
 
-async def fix_attributes(
-    path, info_dict: dict, supports_streaming: bool = False, round_message: bool = False
-) -> list:
+async def fix_attributes(path, info_dict: dict, supports_streaming: bool = False, round_message: bool = False) -> list:
     """Avoid multiple instances of an attribute."""
     new_attributes = []
     video = False
@@ -113,9 +100,7 @@ async def fix_attributes(
     attributes, mime_type = get_attributes(path)
     if suffix == "mp3":
         title = str(info_dict.get("title", info_dict.get("id", "Unknown title")))
-        audio = types.DocumentAttributeAudio(
-            duration=duration, voice=None, title=title, performer=uploader
-        )
+        audio = types.DocumentAttributeAudio(duration=duration, voice=None, title=title, performer=uploader)
     elif suffix == "mp4":
         width = int(info_dict.get("width", 0))
         height = int(info_dict.get("height", 0))
@@ -141,20 +126,13 @@ async def fix_attributes(
     new_attributes.extend(
         attr
         for attr in attributes
-        if (
-            isinstance(attr, types.DocumentAttributeAudio)
-            and not audio
-            or not isinstance(attr, types.DocumentAttributeAudio)
-            and not video
-            or not isinstance(attr, types.DocumentAttributeAudio)
-            and not isinstance(attr, types.DocumentAttributeVideo)
-        )
+        if (isinstance(attr, types.DocumentAttributeAudio) and not audio or not isinstance(attr, types.DocumentAttributeAudio) and not video or not isinstance(attr, types.DocumentAttributeAudio) and not isinstance(attr, types.DocumentAttributeVideo))
     )
     return new_attributes, mime_type
 
 
 @catub.cat_cmd(
-    pattern="yta(?:\s|$)([\s\S]*)",
+    pattern=r"yta(?:\s|$)([\s\S]*)",
     command=("yta", plugin_category),
     info={
         "header": "To download audio from many sites like Youtube, Facebook, Instagram, etc.",
@@ -175,9 +153,7 @@ async def download_audio(event):  # sourcery skip: low-code-quality
     reply_to_id = await reply_id(event)
     for url in urls:
         try:
-            vid_data = YoutubeDL({"no-playlist": True}).extract_info(
-                url, download=False
-            )
+            vid_data = YoutubeDL({"no-playlist": True}).extract_info(url, download=False)
         except ExtractorError:
             vid_data = {"title": url, "uploader": "Catuserbot", "formats": []}
         startTime = time()
@@ -200,11 +176,7 @@ async def download_audio(event):  # sourcery skip: low-code-quality
         attributes, mime_type = get_attributes(str(_fpath))
         ul = io.open(pathlib.Path(_fpath), "rb")
         if thumb_pic is None:
-            thumb_pic = str(
-                await pool.run_in_thread(download)(
-                    await get_ytthumb(get_yt_video_id(url))
-                )
-            )
+            thumb_pic = str(await pool.run_in_thread(download)(await get_ytthumb(get_yt_video_id(url))))
         uploaded = await event.client.fast_upload_file(
             file=ul,
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
@@ -240,7 +212,7 @@ async def download_audio(event):  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="ytv(?:\s|$)([\s\S]*)",
+    pattern=r"ytv(?:\s|$)([\s\S]*)",
     command=("ytv", plugin_category),
     info={
         "header": "To download video from many sites like Youtube, Facebook, Instagram",
@@ -279,16 +251,10 @@ async def download_video(event):
             )
             ul = io.open(f, "rb")
             c_time = time()
-            attributes, mime_type = await fix_attributes(
-                f, ytdl_data, supports_streaming=True
-            )
+            attributes, mime_type = await fix_attributes(f, ytdl_data, supports_streaming=True)
             uploaded = await event.client.fast_upload_file(
                 file=ul,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(
-                        d, t, catevent, c_time, "Upload :", file_name=ytdl_data["title"]
-                    )
-                ),
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, catevent, c_time, "Upload :", file_name=ytdl_data["title"])),
             )
             ul.close()
             media = types.InputMediaUploadedDocument(
@@ -312,7 +278,7 @@ async def download_video(event):
 
 
 @catub.cat_cmd(
-    pattern="insta(?: |$)([\s\S]*)",
+    pattern=r"insta(?: |$)([\s\S]*)",
     command=("insta", plugin_category),
     info={
         "header": "To download instagram video/photo",
@@ -331,9 +297,7 @@ async def insta_dl(event):
     if not link:
         return await edit_delete(event, "**ಠ∀ಠ Give me link to search..**", 10)
     if "instagram.com" not in link:
-        return await edit_delete(
-            event, "` I need a Instagram link to download it's Video...`(*_*)", 10
-        )
+        return await edit_delete(event, "` I need a Instagram link to download it's Video...`(*_*)", 10)
     # v1 = "@instasave_bot"
     # v1 = "@IgGramBot"
     v1 = "Fullsavebot"
@@ -405,7 +369,7 @@ async def insta_dl(event):
 
 
 @catub.cat_cmd(
-    pattern="yts(?: |$)(\d*)? ?([\s\S]*)",
+    pattern=r"yts(?: |$)(\d*)? ?([\s\S]*)",
     command=("yts", plugin_category),
     info={
         "header": "To search youtube videos",
@@ -424,9 +388,7 @@ async def yt_search(event):
     else:
         query = str(event.pattern_match.group(2))
     if not query:
-        return await edit_delete(
-            event, "`Reply to a message or pass a query to search!`"
-        )
+        return await edit_delete(event, "`Reply to a message or pass a query to search!`")
     video_q = await edit_or_reply(event, "`Searching...`")
     if event.pattern_match.group(1) != "":
         lim = int(event.pattern_match.group(1))

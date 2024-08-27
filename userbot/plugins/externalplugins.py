@@ -22,9 +22,7 @@ plugin_category = "tools"
 if Config.PLUGIN_CHANNEL:
 
     async def install():
-        documentss = await catub.get_messages(
-            Config.PLUGIN_CHANNEL, None, filter=InputMessagesFilterDocument
-        )
+        documentss = await catub.get_messages(Config.PLUGIN_CHANNEL, None, filter=InputMessagesFilterDocument)
         total = int(documentss.total)
         for module in range(total):
             plugin_to_install = documentss[module].id

@@ -82,12 +82,7 @@ def readable_time(seconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     print(type(minutes))
-    return (
-        (f"{int(days)} day(s), " if days else "")
-        + (f"{check(hours)}:" if hours else "00:")
-        + (f"{check(minutes)}:" if minutes else "00:")
-        + str((check(seconds)) if seconds else "00")
-    )
+    return (f"{int(days)} day(s), " if days else "") + (f"{check(hours)}:" if hours else "00:") + (f"{check(minutes)}:" if minutes else "00:") + str((check(seconds)) if seconds else "00")
 
 
 def human_to_bytes(size: str) -> int:
@@ -151,29 +146,15 @@ async def progress(
             status = "Unknown"
         progress_str = "`{0}` | `[{1}{2}] {3}%`".format(
             status,
-            "".join(
-                Config.FINISHED_PROGRESS_STR for _ in range(math.floor(percentage / 5))
-            ),
-            "".join(
-                Config.UNFINISHED_PROGRESS_STR
-                for _ in range(20 - math.floor(percentage / 5))
-            ),
+            "".join(Config.FINISHED_PROGRESS_STR for _ in range(math.floor(percentage / 5))),
+            "".join(Config.UNFINISHED_PROGRESS_STR for _ in range(20 - math.floor(percentage / 5))),
             round(percentage, 2),
         )
 
-        tmp = (
-            f"{progress_str}\n"
-            f"`{humanbytes(current)} of {humanbytes(total)}"
-            f" @ {humanbytes(speed)}`\n"
-            f"**ETA :**` {time_formatter(eta)}`\n"
-            f"**Duration :** `{time_formatter(elapsed_time)}`"
-        )
+        tmp = f"{progress_str}\n" f"`{humanbytes(current)} of {humanbytes(total)}" f" @ {humanbytes(speed)}`\n" f"**ETA :**` {time_formatter(eta)}`\n" f"**Duration :** `{time_formatter(elapsed_time)}`"
         if tmp != oldtmp:
             if file_name:
-                await gdrive.edit(
-                    f"**{prog_type}**\n\n"
-                    f"**File Name : **`{file_name}`**\nStatus**\n{tmp}"
-                )
+                await gdrive.edit(f"**{prog_type}**\n\n" f"**File Name : **`{file_name}`**\nStatus**\n{tmp}")
             else:
                 await gdrive.edit(f"**{prog_type}**\n\n" f"**Status**\n{tmp}")
             oldtmp = tmp

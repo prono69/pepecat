@@ -22,16 +22,12 @@ class Config(object):
     # Get this value by running python3 stringsetup.py or https://repl.it/@sandeep1709/generatestringsession
     STRING_SESSION = os.environ.get("STRING_SESSION", None)
     # Telegram BOT Token and bot username from @BotFather
-    TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN") or os.environ.get(
-        "TG_BOT_TOKEN_BF_HER", None
-    )
+    TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN") or os.environ.get("TG_BOT_TOKEN_BF_HER", None)
     TG_BOT_USERNAME = None
     # get this value from http://www.timezoneconverter.com/cgi-bin/findzone.tzc
     TZ = os.environ.get("TZ", "Asia/Kolkata")
     # set this with required cat repo link
-    UPSTREAM_REPO = os.environ.get(
-        "UPSTREAM_REPO", "https://github.com/TgCatUB/catuserbot"
-    )
+    UPSTREAM_REPO = os.environ.get("UPSTREAM_REPO", "https://github.com/TgCatUB/catuserbot")
     # External plugins repo
     EXTERNAL_REPO = os.environ.get("EXTERNAL_REPO", None)
     if bool(EXTERNAL_REPO and (EXTERNAL_REPO.lower() != "false")):
@@ -63,11 +59,7 @@ class Config(object):
     # Owner id to show profile link of given id as owner
     OWNER_ID = int(os.environ.get("OWNER_ID") or 0)
     # set this with group id so it keeps notifying about your tagged messages or pms
-    PM_LOGGER_GROUP_ID = int(
-        os.environ.get("PM_LOGGER_GROUP_ID")
-        or os.environ.get("PM_LOGGR_BOT_API_ID")
-        or 0
-    )
+    PM_LOGGER_GROUP_ID = int(os.environ.get("PM_LOGGER_GROUP_ID") or os.environ.get("PM_LOGGR_BOT_API_ID") or 0)
 
     # Custom vars for userbot
     # set this will channel id of your custom plugins
@@ -75,9 +67,7 @@ class Config(object):
     # set this value with your required name for telegraph plugin
     TELEGRAPH_SHORT_NAME = os.environ.get("TELEGRAPH_SHORT_NAME", "catuserbot")
     # for custom thumb image set this with your required thumb telegraoh link
-    THUMB_IMAGE = os.environ.get(
-        "THUMB_IMAGE", "https://graph.org/file/ca95524e4734b0d5461b5.jpg"
-    )
+    THUMB_IMAGE = os.environ.get("THUMB_IMAGE", "https://graph.org/file/ca95524e4734b0d5461b5.jpg")
     # specify NO_LOAD with plugin names for not loading in userbot
     NO_LOAD = list(os.environ.get("NO_LOAD", "").split())
     # specify command handler that should be used for the plugins
@@ -148,14 +138,10 @@ class Config(object):
     # specify LOAD and NO_LOAD
     LOAD = []
     # warn mode for anti flood
-    ANTI_FLOOD_WARN_MODE = ChatBannedRights(
-        until_date=None, view_messages=None, send_messages=True
-    )
+    ANTI_FLOOD_WARN_MODE = ChatBannedRights(until_date=None, view_messages=None, send_messages=True)
     CHROME_BIN = os.environ.get("CHROME_BIN", "/app/.apt/usr/bin/google-chrome")
     # for sed plugin
-    GROUP_REG_SED_EX_BOT_S = os.environ.get(
-        "GROUP_REG_SED_EX_BOT_S", r"(regex|moku|BananaButler_|rgx|l4mR)bot"
-    )
+    GROUP_REG_SED_EX_BOT_S = os.environ.get("GROUP_REG_SED_EX_BOT_S", r"(regex|moku|BananaButler_|rgx|l4mR)bot")
     # time.py
     COUNTRY = str(os.environ.get("COUNTRY", ""))
     TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
@@ -174,6 +160,12 @@ class Config(object):
     BADCAT_REPOBRANCH = os.environ.get("BADCAT_REPOBRANCH", "badcat")
     VC_REPO = os.environ.get("VC_REPO", "https://github.com/TgCatUB/CatVCPlayer")
     VC_REPOBRANCH = os.environ.get("VC_REPOBRANCH", "test")
+    # get it from https://console.cloud.google.com/
+    GOOGLE_CONSOLE_API_KEY = os.environ.get("GOOGLE_CONSOLE_API_KEY", "")
+    # get it from https://programmablesearchengine.google.com/cse/all
+    GOOGLE_CSE_ID = os.environ.get("GOOGLE_CSE_ID", "")
+    # this is strictly for development purpose dont touch this value
+    LOAD_ONLY = os.environ.get("LOAD_ONLY", [])
 
 
 class Production(Config):

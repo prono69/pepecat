@@ -25,7 +25,7 @@ LOGS = logging.getLogger(__name__)
 
 
 @catub.cat_cmd(
-    pattern="chatblacklist (on|off)$",
+    pattern=r"chatblacklist (on|off)$",
     command=("chatblacklist", plugin_category),
     info={
         "header": "To enable and disable chats blacklist.",
@@ -45,9 +45,7 @@ async def chat_blacklist(event):
         addgvar("blacklist_chats", "true")
         text = "__From now on, your CatUserbot doesn't work in the chats stored in database.__"
         if len(blkchats) != 0:
-            text += (
-                "**Bot is reloading to apply the changes. Please wait for a minute**"
-            )
+            text += "**Bot is reloading to apply the changes. Please wait for a minute**"
             msg = await edit_or_reply(
                 event,
                 text,
@@ -62,9 +60,7 @@ async def chat_blacklist(event):
         delgvar("blacklist_chats")
         text = "__Your CatUserbot is as free as a bird.It works in Every Chat .__"
         if len(blkchats) != 0:
-            text += (
-                "**Bot is reloading to apply the changes. Please wait for a minute**"
-            )
+            text += "**Bot is reloading to apply the changes. Please wait for a minute**"
             msg = await edit_or_reply(
                 event,
                 text,
@@ -79,7 +75,7 @@ async def chat_blacklist(event):
 
 
 @catub.cat_cmd(
-    pattern="addblkchat(s)?(?:\s|$)([\s\S]*)",
+    pattern=r"addblkchat(s)?(?:\s|$)([\s\S]*)",
     command=("addblkchat", plugin_category),
     info={
         "header": "To add chats to blacklist.",
@@ -119,9 +115,7 @@ async def add_blacklist_chat(event):
                     "date": date,
                 }
                 blacklistchats[str(chat.id)] = chatdata
-                result += (
-                    f"successfully added {get_display_name(chat)} to blacklist chats.\n"
-                )
+                result += f"successfully added {get_display_name(chat)} to blacklist chats.\n"
             except Exception as e:
                 errors += f"**While adding the {chatid}** - __{e}__\n"
     else:
@@ -139,9 +133,7 @@ async def add_blacklist_chat(event):
                     "date": date,
                 }
                 blacklistchats[str(chat.id)] = chatdata
-                result += (
-                    f"successfully added {get_display_name(chat)} to blacklist chats.\n"
-                )
+                result += f"successfully added {get_display_name(chat)} to blacklist chats.\n"
         except Exception as e:
             errors += f"**While adding the {chatid}** - __{e}__\n"
     sql.del_collection("blacklist_chats_list")
@@ -158,7 +150,7 @@ async def add_blacklist_chat(event):
 
 
 @catub.cat_cmd(
-    pattern="rmblkchat(s)?(?:\s|$)([\s\S]*)",
+    pattern=r"rmblkchat(s)?(?:\s|$)([\s\S]*)",
     command=("rmblkchat", plugin_category),
     info={
         "header": "To remove chats to blacklist.",
@@ -171,7 +163,7 @@ async def add_blacklist_chat(event):
         ],
     },
 )
-async def add_blacklist_chat(event):
+async def rm_blacklist_chat(event):
     "To remove chats from blacklisted chats."
     input_str = event.pattern_match.group(2)
     errors = ""
@@ -189,9 +181,7 @@ async def add_blacklist_chat(event):
                 if chatid in blkchats:
                     chatname = blacklistchats[str(chatid)]["chat_name"]
                     del blacklistchats[str(chatid)]
-                    result += (
-                        f"successfully removed {chatname} from blacklisted chats.\n"
-                    )
+                    result += f"successfully removed {chatname} from blacklisted chats.\n"
                 else:
                     errors += f"the given id {chatid} doesn't exists in your database. That is it hasn't been blacklisted.\n"
             except Exception as e:
@@ -222,7 +212,7 @@ async def add_blacklist_chat(event):
 
 
 @catub.cat_cmd(
-    pattern="listblkchats$",
+    pattern=r"listblkchats$",
     command=("listblkchats", plugin_category),
     info={
         "header": "To list all blacklisted chats.",
@@ -232,7 +222,7 @@ async def add_blacklist_chat(event):
         ],
     },
 )
-async def add_blacklist_chat(event):
+async def list_blacklist_chat(event):
     "To show list of chats which are blacklisted."
     blkchats = blacklist_chats_list()
     try:
@@ -240,9 +230,7 @@ async def add_blacklist_chat(event):
     except AttributeError:
         blacklistchats = {}
     if len(blkchats) == 0:
-        return await edit_delete(
-            event, "__There are no blacklisted chats in your bot.__"
-        )
+        return await edit_delete(event, "__There are no blacklisted chats in your bot.__")
     result = "**The list of blacklisted chats are :**\n\n"
     for chat in blkchats:
         result += f"☞ {blacklistchats[str(chat)]['chat_name']}\n"

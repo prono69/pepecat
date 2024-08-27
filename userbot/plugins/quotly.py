@@ -44,7 +44,7 @@ def get_warp_length(width):
 
 
 @catub.cat_cmd(
-    pattern="qpic(?:\s|$)([\s\S]*)",
+    pattern=r"qpic(?:\s|$)([\s\S]*)",
     command=("qpic", plugin_category),
     info={
         "header": "Makes quote pic.",
@@ -71,32 +71,18 @@ async def q_pic(event):  # sourcery no-metrics  # sourcery skip: low-code-qualit
     elif reply and reply.raw_text:
         text = reply.raw_text
     else:
-        return await edit_delete(
-            event, "__Provide input along with cmd or reply to text message.__"
-        )
+        return await edit_delete(event, "__Provide input along with cmd or reply to text message.__")
     text = soft_deEmojify(text)
     catevent = await edit_or_reply(event, "__Making Quote pic....__")
     file_check(re=False, me=False, mo=False, it=False)
     mediatype = await media_type(reply)
-    if (
-        (not reply)
-        or (not mediatype)
-        or (mediatype not in ["Photo", "Sticker"])
-        or (
-            mediatype == "Sticker"
-            and reply.document.mime_type == "application/i-tgsticker"
-        )
-    ):
+    if (not reply) or (not mediatype) or (mediatype not in ["Photo", "Sticker"]) or (mediatype == "Sticker" and reply.document.mime_type == "application/i-tgsticker"):
         user = reply.sender_id if reply else event.client.uid
         pfp = await event.client.download_profile_photo(user)
     else:
-        imag = await Convert.to_image(
-            event, reply, dirct="./temp", file="quotly.png", noedits=True
-        )
+        imag = await Convert.to_image(event, reply, dirct="./temp", file="quotly.png", noedits=True)
         if imag[1] is None:
-            return await edit_delete(
-                imag[0], "__Unable to extract image from the replied message.__"
-            )
+            return await edit_delete(imag[0], "__Unable to extract image from the replied message.__")
         user = event.client.uid
         pfp = imag[1]
     try:
@@ -107,14 +93,10 @@ async def q_pic(event):  # sourcery no-metrics  # sourcery skip: low-code-qualit
     if not pfp:
         pfp = "profilepic.jpg"
         with open(pfp, "wb") as f:
-            f.write(
-                requests.get("https://graph.org/file/1fd74fa4a4dbf1655f3ec.jpg").content
-            )
+            f.write(requests.get("https://graph.org/file/1fd74fa4a4dbf1655f3ec.jpg").content)
     text = "\n".join(textwrap.wrap(text, 25))
     text = f"“{text}„"
-    textf = (
-        "./temp/ArialUnicodeMS.ttf" if await fontTest(text[0]) else "./temp/Quivira.otf"
-    )
+    textf = "./temp/ArialUnicodeMS.ttf" if await fontTest(text[0]) else "./temp/Quivira.otf"
     textfont = ImageFont.truetype(textf, 50)
     img = Image.open(pfp)
     if black:
@@ -131,11 +113,7 @@ async def q_pic(event):  # sourcery no-metrics  # sourcery skip: low-code-qualit
     draw.text((x, y), text=text, font=textfont, fill="#ffffff", align="center")
     if user is not None:
         usrname = get_display_name(user)
-        namef = (
-            "./temp/ArialUnicodeMS.ttf"
-            if await fontTest(usrname[0])
-            else "./temp/Quivira.otf"
-        )
+        namef = "./temp/ArialUnicodeMS.ttf" if await fontTest(usrname[0]) else "./temp/Quivira.otf"
         namefont = ImageFont.truetype(namef, 50)
         credit = "\n".join(wrap(f"by {usrname}", int(get_warp_length(w / 2.5))))
         tw, th = draw.textsize(text=credit, font=namefont)
@@ -162,7 +140,7 @@ async def q_pic(event):  # sourcery no-metrics  # sourcery skip: low-code-qualit
 
 
 @catub.cat_cmd(
-    pattern="(q|rq|fq|frq)(?:\s|$)([\s\S]*)",
+    pattern=r"(q|rq|fq|frq)(?:\s|$)([\s\S]*)",
     command=("q", plugin_category),
     info={
         "header": "Makes your message as sticker quote.",
@@ -186,9 +164,7 @@ async def stickerchat(catquotes):
     mediatype = None
     if cmd in ["rq", "q", "frq"]:
         if not reply:
-            return await edit_or_reply(
-                catquotes, "`I cant quote the message . reply to a message`"
-            )
+            return await edit_or_reply(catquotes, "`I cant quote the message . reply to a message`")
         fetchmsg = reply.message
         mediatype = await media_type(reply)
     if cmd == "rq":
@@ -202,11 +178,7 @@ async def stickerchat(catquotes):
     catevent = await edit_or_reply(catquotes, "`Making quote...`")
     if cmd in ["rq", "q"]:
         try:
-            user = (
-                await catquotes.client.get_entity(reply.forward.sender)
-                if reply.fwd_from
-                else reply.sender
-            )
+            user = await catquotes.client.get_entity(reply.forward.sender) if reply.fwd_from else reply.sender
         except TypeError:
             user = Forward_Lock(reply.fwd_from.from_name)
     else:
@@ -217,26 +189,20 @@ async def stickerchat(catquotes):
         if not fetchmsg and reply:
             fetchmsg = reply.message
         if not fetchmsg:
-            return await edit_or_reply(
-                catquotes, "`I cant quote the message . no text is given`"
-            )
-    res, catmsg = await process(
-        fetchmsg, user, catquotes.client, reply, catquotes, repliedreply
-    )
+            return await edit_or_reply(catquotes, "`I cant quote the message . no text is given`")
+    res, catmsg = await process(fetchmsg, user, catquotes.client, reply, catquotes, repliedreply)
     if not res:
         return
     outfi = os.path.join("./temp", "sticker.png")
     catmsg.save(outfi)
-    endfi = await Convert.to_sticker(
-        catquotes, outfi, file="stickerchat.webp", noedits=True
-    )
+    endfi = await Convert.to_sticker(catquotes, outfi, file="stickerchat.webp", noedits=True)
     await catquotes.client.send_file(catquotes.chat_id, endfi[1], reply_to=reply)
     await catevent.delete()
     os.remove(endfi[1])
 
 
 @catub.cat_cmd(
-    pattern="qbot(?:\s|$)([\s\S]*)",
+    pattern=r"qbot(?:\s|$)([\s\S]*)",
     command=("qbot", plugin_category),
     info={
         "header": "Makes your message as sticker quote by @quotlybot",
@@ -260,40 +226,26 @@ async def _(event):
         ):
             if message.id != event.id:
                 messages_id.append(message.id)
-    elif (
-        reply
-        and (not input_str or not input_str.isnumeric())
-        and input_str
-        or not reply
-        and input_str
-    ):
+    elif reply and (not input_str or not input_str.isnumeric()) and input_str or not reply and input_str:
         message = input_str
     elif reply and (not input_str or not input_str.isnumeric()) and not input_str:
         messages_id.append(reply.id)
     else:
-        return await edit_delete(
-            event, "`Either reply to message or give input to function properly`"
-        )
+        return await edit_delete(event, "`Either reply to message or give input to function properly`")
     chat = "@QuotLyBot"
     catevent = await edit_or_reply(event, "```Making a Quote```")
     async with event.client.conversation(chat) as conv:
         try:
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=1031952739)
-            )
+            response = conv.wait_event(events.NewMessage(incoming=True, from_users=1031952739))
             if messages_id != []:
                 await event.client.forward_messages(chat, messages_id, event.chat_id)
             elif message != "":
                 await event.client.send_message(conv.chat_id, message)
             else:
-                return await edit_delete(
-                    catevent, "`I guess you have used a invalid syntax`"
-                )
+                return await edit_delete(catevent, "`I guess you have used a invalid syntax`")
             response = await response
         except YouBlockedUserError:
             return await catevent.edit("```Please unblock me (@QuotLyBot) u Nigga```")
         await event.client.send_read_acknowledge(conv.chat_id)
         await catevent.delete()
-        await event.client.send_message(
-            event.chat_id, response.message, reply_to=reply_to
-        )
+        await event.client.send_message(event.chat_id, response.message, reply_to=reply_to)

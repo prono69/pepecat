@@ -9,7 +9,7 @@
 
 FROM catub/core:bullseye
 
-# Working directory 
+# Working directory
 WORKDIR /userbot
 
 # Timezone

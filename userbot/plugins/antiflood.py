@@ -19,9 +19,7 @@ from . import catub, edit_or_reply
 plugin_category = "admin"
 CHAT_FLOOD = sql.__load_flood_settings()
 
-ANTI_FLOOD_WARN_MODE = ChatBannedRights(
-    until_date=None, view_messages=None, send_messages=True
-)
+ANTI_FLOOD_WARN_MODE = ChatBannedRights(until_date=None, view_messages=None, send_messages=True)
 
 
 @catub.cat_cmd(incoming=True, groups_only=True)
@@ -37,11 +35,7 @@ async def _(event):
     if not should_ban:
         return
     try:
-        await event.client(
-            EditBannedRequest(
-                event.chat_id, event.message.sender_id, ANTI_FLOOD_WARN_MODE
-            )
-        )
+        await event.client(EditBannedRequest(event.chat_id, event.message.sender_id, ANTI_FLOOD_WARN_MODE))
     except Exception as e:
         no_admin_privilege_message = await event.client.send_message(
             entity=event.chat_id,
@@ -50,9 +44,7 @@ async def _(event):
         )
 
         await asyncio.sleep(4)
-        await no_admin_privilege_message.edit(
-            "This is useless SPAM dude. Stop this, enjoy the chat buddy "
-        )
+        await no_admin_privilege_message.edit("This is useless SPAM dude. Stop this, enjoy the chat buddy ")
     else:
         await event.client.send_message(
             entity=event.chat_id,
@@ -64,7 +56,7 @@ because he reached the defined flood limit.""",
 
 
 @catub.cat_cmd(
-    pattern="setflood(?:\s|$)([\s\S]*)",
+    pattern=r"setflood(?:\s|$)([\s\S]*)",
     command=("setflood", plugin_category),
     info={
         "header": "To setup antiflood in a group",

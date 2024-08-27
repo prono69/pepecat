@@ -27,7 +27,7 @@ def get_size(inputbytes, suffix="B"):
 
 
 @catub.cat_cmd(
-    pattern="spc$",
+    pattern=r"spc$",
     command=("spc", plugin_category),
     info={
         "header": "To show system specification.",
@@ -83,7 +83,7 @@ async def psu(event):
 
 
 @catub.cat_cmd(
-    pattern="cpu$",
+    pattern=r"cpu$",
     command=("cpu", plugin_category),
     info={
         "header": "To show cpu information.",
@@ -94,13 +94,11 @@ async def cpu(event):
     "shows cpu information"
     cmd = "cat /proc/cpuinfo | grep 'model name'"
     o = (await _catutils.runcmd(cmd))[0]
-    await edit_or_reply(
-        event, f"**[Cat's](tg://need_update_for_some_feature/) CPU Model:**\n{o}"
-    )
+    await edit_or_reply(event, f"**[Cat's](tg://need_update_for_some_feature/) CPU Model:**\n{o}")
 
 
 @catub.cat_cmd(
-    pattern="(sysd|neofetch)$",
+    pattern=r"sysd$",
     command=("sysd", plugin_category),
     info={
         "header": "Shows system information using neofetch",
@@ -117,12 +115,12 @@ async def sysdetails(sysd):
         neo = neo + " --off"
     a, b, c, d = await _catutils.runcmd(neo)
     ressult = str(a) + str(b)
-    result = re.sub("\x1B\[[0-9;\?]*[a-zA-Z]", "", ressult)
+    result = re.sub(r"\x1b\[[0-9;\?]*[a-zA-Z]", "", ressult)
     await edit_or_reply(catevent, f"**Neofetch Result:**\n```{result}```")
 
 
 @catub.cat_cmd(
-    pattern="neofetch",
+    pattern=r"neofetch",
     command=("neofetch", plugin_category),
     info={
         "header": "Shows system info using neoefetch with logo",

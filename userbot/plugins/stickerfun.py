@@ -27,14 +27,7 @@ from PIL import Image, ImageDraw, ImageFont
 from userbot import Convert, catub
 
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.functions import (
-    clippy,
-    deEmojify,
-    hide_inlinebot,
-    higlighted_text,
-    soft_deEmojify,
-    waifutxt,
-)
+from ..helpers.functions import clippy, deEmojify, hide_inlinebot, higlighted_text, soft_deEmojify, waifutxt
 from ..helpers.utils import reply_id
 
 plugin_category = "fun"
@@ -55,7 +48,7 @@ def file_checker(template):
 
 
 @catub.cat_cmd(
-    pattern="(?:st|sttxt)(?:\s|$)([\s\S]*)",
+    pattern=r"(?:st|sttxt)(?:\s|$)([\s\S]*)",
     command=("sttxt", plugin_category),
     info={
         "header": "Anime that makes your writing fun.",
@@ -71,16 +64,14 @@ async def waifu(animu):
         if animu.is_reply:
             text = (await animu.get_reply_message()).message
         else:
-            return await edit_or_reply(
-                animu, "`You haven't written any article, Waifu is going away.`"
-            )
+            return await edit_or_reply(animu, "`You haven't written any article, Waifu is going away.`")
     text = deEmojify(text)
     await animu.delete()
     await waifutxt(text, animu.chat_id, reply_to_id, animu.client)
 
 
 @catub.cat_cmd(
-    pattern="stcr(?:\s|$)([\s\S]*)",
+    pattern=r"stcr(?:\s|$)([\s\S]*)",
     command=("stcr", plugin_category),
     info={
         "header": "your text as sticker.",
@@ -105,18 +96,14 @@ async def sticklet(event):
     image = Image.new("RGBA", (512, 512), (255, 255, 255, 0))
     draw = ImageDraw.Draw(image)
     fontsize = 230
-    json = requests.get(
-        "https://raw.githubusercontent.com/TgCatUB/CatUserbot-Resources/master/Resources/StickerFun/resources.txt"
-    ).json()
+    json = requests.get("https://raw.githubusercontent.com/TgCatUB/CatUserbot-Resources/master/Resources/StickerFun/resources.txt").json()
     FONT_FILE = requests.get(random.choice(json["fonts"]))
     font = ImageFont.truetype(BytesIO(FONT_FILE.content), size=fontsize)
     while draw.multiline_textsize(sticktext, font=font) > (512, 512):
         fontsize -= 3
         font = ImageFont.truetype(BytesIO(FONT_FILE.content), size=fontsize)
     width, height = draw.multiline_textsize(sticktext, font=font)
-    draw.multiline_text(
-        ((512 - width) / 2, (512 - height) / 2), sticktext, font=font, fill=(RGB)
-    )
+    draw.multiline_text(((512 - width) / 2, (512 - height) / 2), sticktext, font=font, fill=(RGB))
     image_stream = BytesIO()
     image_stream.name = "catuserbot.webp"
     image.save(image_stream, "WebP")
@@ -131,7 +118,7 @@ async def sticklet(event):
 
 
 @catub.cat_cmd(
-    pattern="honk(?:\s|$)([\s\S]*)",
+    pattern=r"honk(?:\s|$)([\s\S]*)",
     command=("honk", plugin_category),
     info={
         "header": "Make honk say anything.",
@@ -148,16 +135,14 @@ async def honk(event):
         if event.is_reply:
             text = (await event.get_reply_message()).message
         else:
-            return await edit_delete(
-                event, "__What is honk supposed to say? Give some text.__"
-            )
+            return await edit_delete(event, "__What is honk supposed to say? Give some text.__")
     text = soft_deEmojify(text)
     await event.delete()
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
 
 
 @catub.cat_cmd(
-    pattern="twt(?:\s|$)([\s\S]*)",
+    pattern=r"twt(?:\s|$)([\s\S]*)",
     command=("twt", plugin_category),
     info={
         "header": "Make a cool tweet of your account",
@@ -174,16 +159,14 @@ async def twt(event):
         if event.is_reply:
             text = (await event.get_reply_message()).message
         else:
-            return await edit_delete(
-                event, "__What am I supposed to Tweet? Give some text.__"
-            )
+            return await edit_delete(event, "__What am I supposed to Tweet? Give some text.__")
     text = soft_deEmojify(text)
     await event.delete()
     await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id)
 
 
 @catub.cat_cmd(
-    pattern="glax(|r)(?:\s|$)([\s\S]*)",
+    pattern=r"glax(|r)(?:\s|$)([\s\S]*)",
     command=("glax", plugin_category),
     info={
         "header": "Make glax the dragon scream your text.",
@@ -211,18 +194,14 @@ async def glax(event):
         if event.is_reply:
             text = (await event.get_reply_message()).message
         else:
-            return await edit_delete(
-                event, "What is glax supposed to scream? Give text.."
-            )
+            return await edit_delete(event, "What is glax supposed to scream? Give text..")
     text = soft_deEmojify(text)
     await event.delete()
-    await hide_inlinebot(
-        event.client, bot_name, text, event.chat_id, reply_to_id, c_lick=c_lick
-    )
+    await hide_inlinebot(event.client, bot_name, text, event.chat_id, reply_to_id, c_lick=c_lick)
 
 
 @catub.cat_cmd(
-    pattern="(|b)quby(?:\s|$)([\s\S]*)",
+    pattern=r"(|b)quby(?:\s|$)([\s\S]*)",
     command=("quby", plugin_category),
     info={
         "header": "Make doge say anything.",
@@ -247,13 +226,9 @@ async def quby(event):
     if not text and event.is_reply:
         text = (await event.get_reply_message()).message
     if not text:
-        return await edit_delete(
-            event, "__What is quby supposed to say? Give some text.__"
-        )
+        return await edit_delete(event, "__What is quby supposed to say? Give some text.__")
     await edit_delete(event, "`Wait, processing.....`")
-    temp_name, fontname = file_checker(
-        "https://graph.org/file/09f4df5a129758a2e1c9c.jpg"
-    )
+    temp_name, fontname = file_checker("https://graph.org/file/09f4df5a129758a2e1c9c.jpg")
     lines = 3
     text = soft_deEmojify(text)
     if len(text) < 80:
@@ -295,12 +270,8 @@ async def quby(event):
             stroke_width=1,
         )
     if cmd == "b":
-        cat = (
-            await Convert.to_sticker(event, file[0], file="quby.webp", noedits=True)
-        )[1]
-        await event.client.send_file(
-            event.chat_id, cat, reply_to=reply_to_id, force_document=False
-        )
+        cat = (await Convert.to_sticker(event, file[0], file="quby.webp", noedits=True))[1]
+        await event.client.send_file(event.chat_id, cat, reply_to=reply_to_id, force_document=False)
     else:
         await clippy(event.client, file[0], event.chat_id, reply_to_id)
     await event.delete()
@@ -310,7 +281,7 @@ async def quby(event):
 
 
 @catub.cat_cmd(
-    pattern="(|b)(blob|kirby)(?:\s|$)([\s\S]*)",
+    pattern=r"(|b)(blob|kirby)(?:\s|$)([\s\S]*)",
     command=("blob", plugin_category),
     info={
         "header": "Give the sticker on background.",
@@ -335,17 +306,14 @@ async def knife(event):
     if not text and event.is_reply:
         text = (await event.get_reply_message()).message
     if not text:
-        return await edit_delete(
-            event, "__What is blob supposed to say? Give some text.__"
-        )
+        return await edit_delete(event, "__What is blob supposed to say? Give some text.__")
     await edit_delete(event, "`Wait, processing.....`")
-    temp_name, fontname = file_checker(
-        "https://graph.org/file/2188367c8c5f43c36aa59.jpg"
-    )
+    temp_name, fontname = file_checker("https://graph.org/file/2188367c8c5f43c36aa59.jpg")
     text = soft_deEmojify(text)
     if len(text) < 50:
         font = 90
         wrap = 2
+
         position = (250, -450)
     else:
         font = 60
@@ -362,12 +330,8 @@ async def knife(event):
         direction="upwards",
     )
     if cmd == "b":
-        cat = (
-            await Convert.to_sticker(event, file[0], file="knife.webp", noedits=True)
-        )[1]
-        await event.client.send_file(
-            event.chat_id, cat, reply_to=reply_to_id, force_document=False
-        )
+        cat = (await Convert.to_sticker(event, file[0], file="knife.webp", noedits=True))[1]
+        await event.client.send_file(event.chat_id, cat, reply_to=reply_to_id, force_document=False)
     else:
         await clippy(event.client, file[0], event.chat_id, reply_to_id)
     await event.delete()
@@ -377,7 +341,7 @@ async def knife(event):
 
 
 @catub.cat_cmd(
-    pattern="doge(?:\s|$)([\s\S]*)",
+    pattern=r"doge(?:\s|$)([\s\S]*)",
     command=("doge", plugin_category),
     info={
         "header": "Make doge say anything.",
@@ -392,17 +356,11 @@ async def doge(event):
     if not text and event.is_reply:
         text = (await event.get_reply_message()).message
     if not text:
-        return await edit_delete(
-            event, "__What is doge supposed to say? Give some text.__"
-        )
+        return await edit_delete(event, "__What is doge supposed to say? Give some text.__")
     await edit_delete(event, "`Wait, processing.....`")
     text = soft_deEmojify(text)
-    temp_name, fontname = file_checker(
-        "https://graph.org/file/6f621b9782d9c925bd6c4.jpg"
-    )
-    font, wrap, lines, ls = (
-        (90, 1.9, 5, "-75") if len(text) < 140 else (70, 1.3, 6, "-55")
-    )
+    temp_name, fontname = file_checker("https://graph.org/file/6f621b9782d9c925bd6c4.jpg")
+    font, wrap, lines, ls = (90, 1.9, 5, "-75") if len(text) < 140 else (70, 1.3, 6, "-55")
     file, txt = higlighted_text(
         temp_name,
         text,
@@ -443,9 +401,7 @@ async def doge(event):
             stroke_fill="black",
         )
     cat = (await Convert.to_sticker(event, file[0], file="doge.webp", noedits=True))[1]
-    await event.client.send_file(
-        event.chat_id, cat, reply_to=reply_to_id, force_document=False
-    )
+    await event.client.send_file(event.chat_id, cat, reply_to=reply_to_id, force_document=False)
     await event.delete()
     for files in (temp_name, file[0]):
         if files and os.path.exists(files):
@@ -453,7 +409,7 @@ async def doge(event):
 
 
 @catub.cat_cmd(
-    pattern="(|h)penguin(?:\s|$)([\s\S]*)",
+    pattern=r"(|h)penguin(?:\s|$)([\s\S]*)",
     command=("penguin", plugin_category),
     info={
         "header": "To make penguin meme sticker. ",
@@ -478,20 +434,12 @@ async def penguin(event):
     if not text and event.is_reply:
         text = (await event.get_reply_message()).message
     if not text:
-        return await edit_delete(
-            event, "What is penguin supposed to say? Give some text."
-        )
+        return await edit_delete(event, "What is penguin supposed to say? Give some text.")
     await edit_delete(event, "Wait, processing.....")
-    temp_name, fontname = file_checker(
-        "https://graph.org/file/ee1fc91bbaef2cc808c7c.png"
-    )
+    temp_name, fontname = file_checker("https://graph.org/file/ee1fc91bbaef2cc808c7c.png")
     text = soft_deEmojify(text)
     font, wrap, lines = (90, 4, 5) if len(text) < 50 else (70, 4.5, 7)
-    bg, fg, alpha, ls, lines = (
-        ("black", "white", 255, "-30", lines - 2)
-        if cmd == "h"
-        else ("white", "black", 0, "-60", lines)
-    )
+    bg, fg, alpha, ls, lines = ("black", "white", 255, "-30", lines - 2) if cmd == "h" else ("white", "black", 0, "-60", lines)
     file, _ = higlighted_text(
         temp_name,
         text,
@@ -510,12 +458,8 @@ async def penguin(event):
         stroke_width=1,
         stroke_fill=fg,
     )
-    cat = (await Convert.to_sticker(event, file[0], file="penguin.webp", noedits=True))[
-        1
-    ]
-    await event.client.send_file(
-        event.chat_id, cat, reply_to=reply_to_id, force_document=False
-    )
+    cat = (await Convert.to_sticker(event, file[0], file="penguin.webp", noedits=True))[1]
+    await event.client.send_file(event.chat_id, cat, reply_to=reply_to_id, force_document=False)
     await event.delete()
     for files in (temp_name, file[0]):
         if files and os.path.exists(files):
@@ -523,7 +467,7 @@ async def penguin(event):
 
 
 @catub.cat_cmd(
-    pattern="(|h)gandhi(?:\s|$)([\s\S]*)",
+    pattern=r"(|h)gandhi(?:\s|$)([\s\S]*)",
     command=("gandhi", plugin_category),
     info={
         "header": "Make gandhi text sticker.",
@@ -548,20 +492,12 @@ async def gandhi(event):
     if not text and event.is_reply:
         text = (await event.get_reply_message()).message
     if not text:
-        return await edit_delete(
-            event, "What is gandhi supposed to write? Give some text."
-        )
+        return await edit_delete(event, "What is gandhi supposed to write? Give some text.")
     await edit_delete(event, "Wait, processing.....")
-    temp_name, fontname = file_checker(
-        "https://graph.org/file/3bebc56ee82cce4f300ce.jpg"
-    )
+    temp_name, fontname = file_checker("https://graph.org/file/3bebc56ee82cce4f300ce.jpg")
     text = soft_deEmojify(text)
     font, wrap, lines = (90, 3, 5) if len(text) < 75 else (70, 2.8, 7)
-    bg, fg, alpha, ls, lines = (
-        ("white", "black", 255, "-30", lines - 1)
-        if cmd == "h"
-        else ("black", "white", 0, "-60", lines)
-    )
+    bg, fg, alpha, ls, lines = ("white", "black", 255, "-30", lines - 1) if cmd == "h" else ("black", "white", 0, "-60", lines)
     file, _ = higlighted_text(
         temp_name,
         text,
@@ -580,12 +516,8 @@ async def gandhi(event):
         stroke_width=1,
         stroke_fill=fg,
     )
-    cat = (await Convert.to_sticker(event, file[0], file="gandhi.webp", noedits=True))[
-        1
-    ]
-    await event.client.send_file(
-        event.chat_id, cat, reply_to=reply_to_id, force_document=False
-    )
+    cat = (await Convert.to_sticker(event, file[0], file="gandhi.webp", noedits=True))[1]
+    await event.client.send_file(event.chat_id, cat, reply_to=reply_to_id, force_document=False)
     await event.delete()
     for files in (temp_name, file[0]):
         if files and os.path.exists(files):

@@ -38,7 +38,7 @@ async def _get_file_name(path: pathlib.Path, full: bool = True) -> str:
 
 
 @catub.cat_cmd(
-    pattern="d(own)?l(oad)?(?:\s|$)([\s\S]*)",
+    pattern=r"d(own)?l(oad)?(?:\s|$)([\s\S]*)",
     command=("download", plugin_category),
     info={
         "header": "To download the replied telegram file",
@@ -89,42 +89,27 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
             file_name = downloads / name
         file_name.parent.mkdir(parents=True, exist_ok=True)
         c_time = time.time()
-        if (
-            not reply.document
-            and reply.photo
-            and file_name
-            and file_name.suffix
-            or not reply.document
-            and not reply.photo
-        ):
+        if not reply.document and reply.photo and file_name and file_name.suffix or not reply.document and not reply.photo:
             await reply.download_media(
                 file=file_name.absolute(),
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to download")
-                ),
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, mone, c_time, "trying to download")),
             )
         elif not reply.document:
             file_name = await reply.download_media(
                 file=downloads,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to download")
-                ),
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, mone, c_time, "trying to download")),
             )
         else:
             dl = io.FileIO(file_name.absolute(), "a")
             await event.client.fast_download_file(
                 location=reply.document,
                 out=dl,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to download")
-                ),
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, mone, c_time, "trying to download")),
             )
             dl.close()
         end = datetime.now()
         ms = (end - start).seconds
-        await mone.edit(
-            f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded to :- **  `{os.path.relpath(file_name,os.getcwd())}`\n   "
-        )
+        await mone.edit(f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded to :- **  `{os.path.relpath(file_name,os.getcwd())}`\n   ")
     elif input_str:
         start = datetime.now()
         if "|" in input_str:
@@ -172,9 +157,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         end = datetime.now()
         ms = (end - start).seconds
         if downloader.isSuccessful():
-            await mone.edit(
-                f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded file location :- ** `{os.path.relpath(downloaded_file_name,os.getcwd())}`"
-            )
+            await mone.edit(f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded file location :- ** `{os.path.relpath(downloaded_file_name,os.getcwd())}`")
         else:
             await mone.edit(f"Incorrect URL\n {input_str}")
     else:
@@ -182,7 +165,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="d(own)?l(oad)?to(?:\s|$)([\s\S]*)",
+    pattern=r"d(own)?l(oad)?to(?:\s|$)([\s\S]*)",
     command=("dlto", plugin_category),
     info={
         "header": "To download the replied telegram file to specific directory",
@@ -216,9 +199,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
             "Reply to media file to download it to bot server",
             parse_mode=_format.parse_pre,
         )
-    mone = await edit_or_reply(
-        event, "Downloading the file ...", parse_mode=_format.parse_pre
-    )
+    mone = await edit_or_reply(event, "Downloading the file ...", parse_mode=_format.parse_pre)
     start = datetime.now()
     for attr in getattr(reply.document, "attributes", []):
         if isinstance(attr, types.DocumentAttributeFilename):
@@ -244,39 +225,24 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         file_name = location / name
     file_name.parent.mkdir(parents=True, exist_ok=True)
     c_time = time.time()
-    if (
-        not reply.document
-        and reply.photo
-        and file_name
-        and file_name.suffix
-        or not reply.document
-        and not reply.photo
-    ):
+    if not reply.document and reply.photo and file_name and file_name.suffix or not reply.document and not reply.photo:
         await reply.download_media(
             file=file_name.absolute(),
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, mone, c_time, "trying to download")
-            ),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, mone, c_time, "trying to download")),
         )
     elif not reply.document:
         file_name = await reply.download_media(
             file=location,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, mone, c_time, "trying to download")
-            ),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, mone, c_time, "trying to download")),
         )
     else:
         dl = io.FileIO(file_name.absolute(), "a")
         await event.client.fast_download_file(
             location=reply.document,
             out=dl,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, mone, c_time, "trying to download")
-            ),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, mone, c_time, "trying to download")),
         )
         dl.close()
     end = datetime.now()
     ms = (end - start).seconds
-    await mone.edit(
-        f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded to :- **  `{os.path.relpath(file_name,os.getcwd())}`\n   "
-    )
+    await mone.edit(f"**•  Downloaded in {ms} seconds.**\n**•  Downloaded to :- **  `{os.path.relpath(file_name,os.getcwd())}`\n   ")

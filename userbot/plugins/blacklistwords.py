@@ -45,7 +45,7 @@ async def on_new_message(event):
 
 
 @catub.cat_cmd(
-    pattern="addblacklist(?:\s|$)([\s\S]*)",
+    pattern=r"addblacklist(?:\s|$)([\s\S]*)",
     command=("addblacklist", plugin_category),
     info={
         "header": "To add blacklist words to database",
@@ -61,9 +61,7 @@ async def on_new_message(event):
 async def _(event):
     "To add blacklist words to database"
     text = event.pattern_match.group(1)
-    to_blacklist = list(
-        {trigger.strip() for trigger in text.split("\n") if trigger.strip()}
-    )
+    to_blacklist = list({trigger.strip() for trigger in text.split("\n") if trigger.strip()})
 
     for trigger in to_blacklist:
         sql.add_to_blacklist(event.chat_id, trigger.lower())
@@ -74,7 +72,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="rmblacklist(?:\s|$)([\s\S]*)",
+    pattern=r"rmblacklist(?:\s|$)([\s\S]*)",
     command=("rmblacklist", plugin_category),
     info={
         "header": "To remove blacklist words from database",
@@ -90,20 +88,13 @@ async def _(event):
 async def _(event):
     "To Remove Blacklist Words from Database."
     text = event.pattern_match.group(1)
-    to_unblacklist = list(
-        {trigger.strip() for trigger in text.split("\n") if trigger.strip()}
-    )
-    successful = sum(
-        bool(sql.rm_from_blacklist(event.chat_id, trigger.lower()))
-        for trigger in to_unblacklist
-    )
-    await edit_or_reply(
-        event, f"Removed {successful} / {len(to_unblacklist)} from the blacklist"
-    )
+    to_unblacklist = list({trigger.strip() for trigger in text.split("\n") if trigger.strip()})
+    successful = sum(bool(sql.rm_from_blacklist(event.chat_id, trigger.lower())) for trigger in to_unblacklist)
+    await edit_or_reply(event, f"Removed {successful} / {len(to_unblacklist)} from the blacklist")
 
 
 @catub.cat_cmd(
-    pattern="listblacklist$",
+    pattern=r"listblacklist$",
     command=("listblacklist", plugin_category),
     info={
         "header": "To show the black list words",

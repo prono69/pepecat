@@ -16,7 +16,7 @@ plugin_category = "tools"
 
 
 @catub.cat_cmd(
-    pattern="suicide$",
+    pattern=r"suicide$",
     command=("suicide", plugin_category),
     info={
         "header": "Deletes all the files and folder in the current directory.",
@@ -33,7 +33,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="plugins$",
+    pattern=r"plugins$",
     command=("plugins", plugin_category),
     info={
         "header": "To list all plugins in userbot.",
@@ -49,7 +49,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="env$",
+    pattern=r"env$",
     command=("env", plugin_category),
     info={
         "header": "To list all environment values in userbot.",
@@ -61,14 +61,12 @@ async def _(event):
     "To show all config values in userbot"
     cmd = "env"
     o = (await _catutils.runcmd(cmd))[0]
-    OUTPUT = (
-        f"**[Cat's](tg://need_update_for_some_feature/) Environment Module:**\n\n\n{o}"
-    )
+    OUTPUT = f"**[Cat's](tg://need_update_for_some_feature/) Environment Module:**\n\n\n{o}"
     await edit_or_reply(event, OUTPUT)
 
 
 @catub.cat_cmd(
-    pattern="noformat$",
+    pattern=r"noformat$",
     command=("noformat", plugin_category),
     info={
         "header": "To get replied message without markdown formating.",
@@ -79,14 +77,12 @@ async def _(event):
     "Replied message without markdown format."
     reply = await event.get_reply_message()
     if not reply or not reply.text:
-        return await edit_delete(
-            event, "__Reply to text message to get text without markdown formating.__"
-        )
+        return await edit_delete(event, "__Reply to text message to get text without markdown formating.__")
     await edit_or_reply(event, reply.text, parse_mode=parse_pre)
 
 
 @catub.cat_cmd(
-    pattern="when$",
+    pattern=r"when$",
     command=("when", plugin_category),
     info={
         "header": "To get date and time of message when it posted.",
@@ -103,6 +99,4 @@ async def _(event):
             result = reply.date
     else:
         result = event.date
-    await edit_or_reply(
-        event, f"**This message was posted on :** `{yaml_format(result)}`"
-    )
+    await edit_or_reply(event, f"**This message was posted on :** `{yaml_format(result)}`")

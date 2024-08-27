@@ -25,12 +25,7 @@ from ..core.session import tgbot
 from ..helpers import reply_id
 from ..helpers.utils import _format
 from ..sql_helper.bot_blacklists import check_is_black_list
-from ..sql_helper.bot_pms_sql import (
-    add_user_to_db,
-    get_user_id,
-    get_user_logging,
-    get_user_reply,
-)
+from ..sql_helper.bot_pms_sql import add_user_to_db, get_user_id, get_user_logging, get_user_reply
 from ..sql_helper.bot_starters import add_starter_to_db, get_starter_details
 from ..sql_helper.globals import delgvar, gvarstatus
 from . import BOTLOG, BOTLOG_CHATID
@@ -74,7 +69,7 @@ async def check_bot_started_users(user, event):
 
 
 @catub.bot_cmd(
-    pattern=f"^/start({botusername})?([\s]+)?$",
+    pattern=rf"^/start({botusername})?([\s]+)?$",
     incoming=True,
     func=lambda e: e.is_private,
 )
@@ -193,21 +188,15 @@ async def bot_pms(event):  # sourcery no-metrics
         if user_id is not None:
             try:
                 if event.media:
-                    msg = await event.client.send_file(
-                        user_id, event.media, caption=event.text, reply_to=reply_msg
-                    )
+                    msg = await event.client.send_file(user_id, event.media, caption=event.text, reply_to=reply_msg)
                 else:
-                    msg = await event.client.send_message(
-                        user_id, event.text, reply_to=reply_msg, link_preview=False
-                    )
+                    msg = await event.client.send_message(user_id, event.text, reply_to=reply_msg, link_preview=False)
             except UserIsBlockedError:
                 return await event.reply("𝗧𝗵𝗶𝘀 𝗯𝗼𝘁 𝘄𝗮𝘀 𝗯𝗹𝗼𝗰𝗸𝗲𝗱 𝗯𝘆 𝘁𝗵𝗲 𝘂𝘀𝗲𝗿. ❌")
             except Exception as e:
                 return await event.reply(f"**Error:**\n`{e}`")
             try:
-                add_user_to_db(
-                    reply_to, user_name, user_id, reply_msg, event.id, msg.id
-                )
+                add_user_to_db(reply_to, user_name, user_id, reply_msg, event.id, msg.id)
             except Exception as e:
                 LOGS.error(str(e))
                 if BOTLOG:
@@ -261,9 +250,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
                     break
             if result_id != 0:
                 try:
-                    await event.client.edit_message(
-                        user_id, result_id, event.text, file=event.media
-                    )
+                    await event.client.edit_message(user_id, result_id, event.text, file=event.media)
                 except Exception as e:
                     LOGS.error(str(e))
 
@@ -287,11 +274,7 @@ async def handler(event):
                     LOGS.error(str(e))
         if users_1 is not None:
             reply_msg = next(
-                (
-                    user.message_id
-                    for user in users_1
-                    if user.chat_id != Config.OWNER_ID
-                ),
+                (user.message_id for user in users_1 if user.chat_id != Config.OWNER_ID),
                 None,
             )
 
@@ -313,8 +296,8 @@ async def handler(event):
                 LOGS.error(str(e))
 
 
-@catub.bot_cmd(pattern="^/uinfo$", from_users=Config.OWNER_ID)
-async def bot_start(event):
+@catub.bot_cmd(pattern=r"^/uinfo$", from_users=Config.OWNER_ID)
+async def bot_uninfo(event):
     reply_to = await reply_id(event)
     if not reply_to:
         return await event.reply("Reply to a message to get message info")
@@ -325,17 +308,13 @@ async def bot_start(event):
     )
     users = get_user_id(reply_to)
     if users is None:
-        return await info_msg.edit(
-            "**ERROR:** \n`Sorry !, Can't Find this user in my database :(`"
-        )
+        return await info_msg.edit("**ERROR:** \n`Sorry !, Can't Find this user in my database :(`")
     for usr in users:
         user_id = int(usr.chat_id)
         user_name = usr.first_name
         break
     if user_id is None:
-        return await info_msg.edit(
-            "**ERROR:** \n`Sorry !, Can't Find this user in my database :(`"
-        )
+        return await info_msg.edit("**ERROR:** \n`Sorry !, Can't Find this user in my database :(`")
     uinfo = f"This message was sent by 👤 {_format.mentionuser(user_name , user_id)}\
             \n**First Name:** {user_name}\
             \n**User ID:** `{user_id}`"
@@ -385,10 +364,7 @@ async def send_flood_alert(user_) -> None:  # sourcery skip: low-code-quality
     if found:
         if flood_count >= FloodConfig.AUTOBAN:
             if user_.id in Config.SUDO_USERS:
-                sudo_spam = (
-                    f"**Sudo User** {_format.mentionuser(user_.first_name , user_.id)}:\n  ID: {user_.id}\n\n"
-                    "Is Flooding your bot !, Check `.help delsudo` to remove the user from Sudo."
-                )
+                sudo_spam = f"**Sudo User** {_format.mentionuser(user_.first_name , user_.id)}:\n  ID: {user_.id}\n\n" "Is Flooding your bot !, Check `.help delsudo` to remove the user from Sudo."
                 if BOTLOG:
                     await catub.tgbot.send_message(BOTLOG_CHATID, sudo_spam)
             else:

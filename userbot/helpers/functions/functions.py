@@ -115,9 +115,7 @@ async def age_verification(event, reply_to_id):
     ALLOW_NSFW = gvarstatus("ALLOW_NSFW") or "False"
     if ALLOW_NSFW.lower() == "true":
         return False
-    results = await event.client.inline_query(
-        Config.TG_BOT_USERNAME, "age_verification_alert"
-    )
+    results = await event.client.inline_query(Config.TG_BOT_USERNAME, "age_verification_alert")
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     await event.delete()
     return True
@@ -244,15 +242,11 @@ def format_image(filename):
     w, h = img.size
     if w != h:
         _min, _max = min(w, h), max(w, h)
-        bg = img.crop(
-            ((w - _min) // 2, (h - _min) // 2, (w + _min) // 2, (h + _min) // 2)
-        )
+        bg = img.crop(((w - _min) // 2, (h - _min) // 2, (w + _min) // 2, (h + _min) // 2))
         bg = bg.filter(ImageFilter.GaussianBlur(5))
         bg = bg.resize((_max, _max))
         img_new = Image.new("RGBA", (_max, _max), (255, 255, 255, 0))
-        img_new.paste(
-            bg, ((img_new.width - bg.width) // 2, (img_new.height - bg.height) // 2)
-        )
+        img_new.paste(bg, ((img_new.width - bg.width) // 2, (img_new.height - bg.height) // 2))
         img_new.paste(img, ((img_new.width - w) // 2, (img_new.height - h) // 2))
         img = img_new
     img.save(filename)
@@ -331,11 +325,7 @@ def higlighted_text(
     templait = Image.open(input_img)
     # resize image
     raw_width, raw_height = templait.size
-    resized_width, resized_height = (
-        (1024, int(1024 * raw_height / raw_width))
-        if raw_width > raw_height
-        else (int(1024 * raw_width / raw_height), 1024)
-    )
+    resized_width, resized_height = (1024, int(1024 * raw_height / raw_width)) if raw_width > raw_height else (int(1024 * raw_width / raw_height), 1024)
     if font_name is None:
         font_name = "userbot/helpers/styles/impact.ttf"
     font = ImageFont.truetype(font_name, font_size)
@@ -363,9 +353,7 @@ def higlighted_text(
         if direction == "upwards":
             list_text.reverse()
             operator = "-"
-            hight = (
-                resized_height - (text_height + int(text_height / 1.2)) + extra_height
-            )
+            hight = resized_height - (text_height + int(text_height / 1.2)) + extra_height
         else:
             operator = "+"
         for i, items in enumerate(list_text):
@@ -382,9 +370,7 @@ def higlighted_text(
                 width_align = "(mask_size-x)"
             color = ImageColor.getcolor(background, "RGBA")
             if transparency == 0:
-                mask_img = Image.new(
-                    "RGBA", (x, y), (color[0], color[1], color[2], 0)
-                )  # background
+                mask_img = Image.new("RGBA", (x, y), (color[0], color[1], color[2], 0))  # background
                 mask_draw = ImageDraw.Draw(mask_img)
                 mask_draw.text(
                     (25, 8),
@@ -395,9 +381,7 @@ def higlighted_text(
                     stroke_fill=stroke_fill,
                 )
             else:
-                mask_img = Image.new(
-                    "RGBA", (x, y), (color[0], color[1], color[2], transparency)
-                )  # background
+                mask_img = Image.new("RGBA", (x, y), (color[0], color[1], color[2], transparency))  # background
                 # put text on mask
                 mask_draw = ImageDraw.Draw(mask_img)
                 mask_draw.text(

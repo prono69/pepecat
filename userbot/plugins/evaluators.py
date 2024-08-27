@@ -1,4 +1,4 @@
-""" Tools for lazy devs """
+"""Tools for lazy devs"""
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~# CatUserBot #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Copyright (C) 2020-2023 by TgCatUB@Github.
@@ -24,7 +24,7 @@ plugin_category = "tools"
 
 
 @catub.cat_cmd(
-    pattern="exec(?:\s|$)([\s\S]*)",
+    pattern=r"exec(?:\s|$)([\s\S]*)",
     command=("exec", plugin_category),
     info={
         "header": "To Execute terminal commands in a subprocess.",
@@ -38,9 +38,7 @@ async def _(event):
     if not cmd:
         return await edit_delete(event, "`What should i execute?..`")
     catevent = await edit_or_reply(event, "`Executing.....`")
-    process = await asyncio.create_subprocess_shell(
-        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-    )
+    process = await asyncio.create_subprocess_shell(cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
     stdout, stderr = await process.communicate()
     result = str(stdout.decode().strip()) + str(stderr.decode().strip())
     catuser = await event.client.get_me()
@@ -57,13 +55,11 @@ async def _(event):
         linktext=f"**•  Exec : **\n```{cmd}``` \n\n**•  Result : **\n",
     )
     if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID, f"**Terminal command executed successfully:**\n\n```{cmd}```"
-        )
+        await event.client.send_message(BOTLOG_CHATID, f"**Terminal command executed successfully:**\n\n```{cmd}```")
 
 
 @catub.cat_cmd(
-    pattern="eval(?:\s|$)([\s\S]*)",
+    pattern=r"eval(?:\s|$)([\s\S]*)",
     command=("eval", plugin_category),
     info={
         "header": "To Execute python script/statements in a subprocess.",
@@ -76,11 +72,7 @@ async def _(event):
     cmd = "".join(event.message.message.split(maxsplit=1)[1:])
     if not cmd:
         return await edit_delete(event, "`What should i run ?..`")
-    cmd = (
-        cmd.replace("sendmessage", "send_message")
-        .replace("sendfile", "send_file")
-        .replace("editmessage", "edit_message")
-    )
+    cmd = cmd.replace("send_message", "send_message").replace("send_file", "send_file").replace("edit_message", "edit_message")
     catevent = await edit_or_reply(event, "`Running ...`")
     old_stderr = sys.stderr
     old_stdout = sys.stdout
@@ -104,9 +96,7 @@ async def _(event):
         evaluation = stdout
     else:
         evaluation = "Success"
-    final_output = (
-        f"**•  Eval : **\n```{cmd}``` \n\n**•  Result : **\n```{evaluation}``` \n"
-    )
+    final_output = f"**•  Eval : **\n```{cmd}``` \n\n**•  Result : **\n```{evaluation}``` \n"
     await edit_or_reply(
         catevent,
         text=final_output,
@@ -114,29 +104,20 @@ async def _(event):
         linktext=f"**•  Eval : **\n```{cmd}``` \n\n**•  Result : **\n",
     )
     if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID, f"**Eval command executed successfully:**\n\n```{cmd}```"
-        )
+        await event.client.send_message(BOTLOG_CHATID, f"**Eval command executed successfully:**\n\n```{cmd}```")
 
 
 async def aexec(code, smessatatus):
     message = event = smessatatus
-    p = lambda _x: print(_format.yaml_format(_x))
+    p = lambda _x: print(_format.yaml_format(_x))  # noqa E731
     reply = await event.get_reply_message()
-    exec(
-        (
-            "async def __aexec(message, event , reply, client, p, chat): "
-            + "".join(f"\n {l}" for l in code.split("\n"))
-        )
-    )
+    exec(("async def __aexec(message, event , reply, client, p, chat): " + "".join(f"\n {line}" for line in code.split("\n"))))
 
-    return await locals()["__aexec"](
-        message, event, reply, message.client, p, message.chat_id
-    )
+    return await locals()["__aexec"](message, event, reply, message.client, p, message.chat_id)
 
 
 @catub.cat_cmd(
-    pattern="inspect ([\s\S]*)",
+    pattern=r"inspect ([\s\S]*)",
     command=("inspect", plugin_category),
     info={
         "header": "To search any function/plugin/class",

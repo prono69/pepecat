@@ -25,7 +25,7 @@ plugin_category = "tools"
 
 
 @catub.cat_cmd(
-    pattern="ls(?:\s|$)([\s\S]*)",
+    pattern=r"ls(?:\s|$)([\s\S]*)",
     command=("ls", plugin_category),
     info={
         "header": "To list all files and folders.",
@@ -61,15 +61,11 @@ async def ls(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
                     files += f"🎵`{contents}`\n"
                 if str(contents).endswith((".opus")):
                     files += f"🎙`{contents}`\n"
-                elif str(contents).endswith(
-                    (".mkv", ".mp4", ".webm", ".avi", ".mov", ".flv")
-                ):
+                elif str(contents).endswith((".mkv", ".mp4", ".webm", ".avi", ".mov", ".flv")):
                     files += f"🎞`{contents}`\n"
                 elif str(contents).endswith((".zip", ".tar", ".tar.gz", ".rar")):
                     files += f"🗜`{contents}`\n"
-                elif str(contents).endswith(
-                    (".jpg", ".jpeg", ".png", ".gif", ".bmp", ".ico")
-                ):
+                elif str(contents).endswith((".jpg", ".jpeg", ".png", ".gif", ".bmp", ".ico")):
                     files += f"🖼`{contents}`\n"
                 else:
                     files += f"📄`{contents}`\n"
@@ -115,7 +111,7 @@ async def ls(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="rem(?:\s|$)([\s\S]*)",
+    pattern=r"rem(?:\s|$)([\s\S]*)",
     command=("rem", plugin_category),
     info={
         "header": "To delete a file or folder from the server",
@@ -147,7 +143,7 @@ async def rem(event):
 
 
 @catub.cat_cmd(
-    pattern="mkdir(?:\s|$)([\s\S]*)",
+    pattern=r"mkdir(?:\s|$)([\s\S]*)",
     command=("mkdir", plugin_category),
     info={
         "header": "To create a new directory.",
@@ -172,9 +168,7 @@ async def make_dir(event):
             f"Already a directory named {original} exists",
         )
         return
-    mone = await edit_or_reply(
-        event, "creating the directory ...", parse_mode=_format.parse_pre
-    )
+    mone = await edit_or_reply(event, "creating the directory ...", parse_mode=_format.parse_pre)
     await asyncio.sleep(2)
     try:
         await _catutils.runcmd(f"mkdir {original}")
@@ -184,7 +178,7 @@ async def make_dir(event):
 
 
 @catub.cat_cmd(
-    pattern="cpto(?:\s|$)([\s\S]*)",
+    pattern=r"cpto(?:\s|$)([\s\S]*)",
     command=("cpto", plugin_category),
     info={
         "header": "To copy a file from one directory to other directory",
@@ -218,9 +212,7 @@ async def copy(event):
             f"there is no such directory or file with the name `{original}` check again",
         )
         return
-    mone = await edit_or_reply(
-        event, "copying the file ...", parse_mode=_format.parse_pre
-    )
+    mone = await edit_or_reply(event, "copying the file ...", parse_mode=_format.parse_pre)
     await asyncio.sleep(2)
     try:
         await _catutils.runcmd(f"cp -r {original} {location}")
@@ -230,7 +222,7 @@ async def copy(event):
 
 
 @catub.cat_cmd(
-    pattern="mvto(?:\s|$)([\s\S]*)",
+    pattern=r"mvto(?:\s|$)([\s\S]*)",
     command=("mvto", plugin_category),
     info={
         "header": "To move a file from one directory to other directory.",
@@ -263,9 +255,7 @@ async def move(event):
             event,
             f"there is no such directory or file with the name `{original}` check again",
         )
-    mone = await edit_or_reply(
-        event, "Moving the file ...", parse_mode=_format.parse_pre
-    )
+    mone = await edit_or_reply(event, "Moving the file ...", parse_mode=_format.parse_pre)
     await asyncio.sleep(2)
     try:
         shutil.move(original, location)

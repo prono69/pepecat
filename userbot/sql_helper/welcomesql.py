@@ -38,9 +38,7 @@ def getwelcome(chat_id):
 
 def getcurrent_welcome_settings(chat_id):
     try:
-        return (
-            SESSION.query(JoinWelcome).filter(JoinWelcome.chat_id == str(chat_id)).one()
-        )
+        return SESSION.query(JoinWelcome).filter(JoinWelcome.chat_id == str(chat_id)).one()
     except BaseException:
         return None
     finally:

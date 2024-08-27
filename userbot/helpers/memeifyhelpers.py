@@ -87,9 +87,7 @@ async def cat_meme(CNG_FONTS, topString, bottomString, filename, endname):
     # draw outlines
     # there may be a better way
     outlineRange = fontSize // 15
-    for x, y in itertools.product(
-        range(-outlineRange, outlineRange + 1), range(-outlineRange, outlineRange + 1)
-    ):
+    for x, y in itertools.product(range(-outlineRange, outlineRange + 1), range(-outlineRange, outlineRange + 1)):
         draw.text(
             (topTextPosition[0] + x, topTextPosition[1] + y),
             topString,
@@ -109,9 +107,7 @@ async def cat_meme(CNG_FONTS, topString, bottomString, filename, endname):
 
 async def cat_meeme(upper_text, lower_text, CNG_FONTS, picture_name, endname):
     main_image = catimage(filename=picture_name)
-    main_image.resize(
-        1024, int(((main_image.height * 1.0) / (main_image.width * 1.0)) * 1024.0)
-    )
+    main_image.resize(1024, int(((main_image.height * 1.0) / (main_image.width * 1.0)) * 1024.0))
     upper_text = "\n".join(wrap(upper_text, get_warp_length(main_image.width))).upper()
     lower_text = "\n".join(wrap(lower_text, get_warp_length(main_image.width))).upper()
     lower_margin = MARGINS[lower_text.count("\n")]
@@ -125,9 +121,7 @@ async def cat_meeme(upper_text, lower_text, CNG_FONTS, picture_name, endname):
     if upper_text:
         text_draw.text((main_image.width) // 2, 80, upper_text)
     if lower_text:
-        text_draw.text(
-            (main_image.width) // 2, main_image.height - lower_margin, lower_text
-        )
+        text_draw.text((main_image.width) // 2, main_image.height - lower_margin, lower_text)
     text_draw(main_image)
     main_image.save(filename=endname)
 
@@ -140,6 +134,4 @@ async def silently_send_message(conv, text):
 
 
 async def thumb_from_audio(audio_path, output):
-    await _catutils.runcmd(
-        f"ffmpeg -i {audio_path} -filter:v scale=500:500 -an {output}"
-    )
+    await _catutils.runcmd(f"ffmpeg -i {audio_path} -filter:v scale=500:500 -an {output}")

@@ -114,9 +114,7 @@ async def upload(path, event, udir_event, catflag=None):  # sourcery no-metrics
         ul = io.open(f, "rb")
         uploaded = await event.client.fast_upload_file(
             file=ul,
-            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, event, c_time, "trying to upload", file_name=fname)
-            ),
+            progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, event, c_time, "trying to upload", file_name=fname)),
         )
         ul.close()
         media = types.InputMediaUploadedDocument(
@@ -138,7 +136,7 @@ async def upload(path, event, udir_event, catflag=None):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="upload( -f)? ([\s\S]*)",
+    pattern=r"upload( -f)? ([\s\S]*)",
     command=("upload", plugin_category),
     info={
         "header": "To upload files from server to telegram",

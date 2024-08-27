@@ -22,15 +22,7 @@ from userbot import Convert, catub
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import asciiart, cat_meeme, cat_meme, media_type
-from ..helpers.functions import (
-    add_frame,
-    crop,
-    flip_image,
-    grayscale,
-    invert_colors,
-    mirror_file,
-    solarize,
-)
+from ..helpers.functions import add_frame, crop, flip_image, grayscale, invert_colors, mirror_file, solarize
 from ..helpers.utils import reply_id
 from ..sql_helper.globals import addgvar, gvarstatus
 
@@ -39,10 +31,7 @@ plugin_category = "fun"
 
 def random_color():
     number_of_colors = 2
-    return [
-        "#" + "".join(random.choice("0123456789ABCDEF") for _ in range(6))
-        for _ in range(number_of_colors)
-    ]
+    return ["#" + "".join(random.choice("0123456789ABCDEF") for _ in range(6)) for _ in range(number_of_colors)]
 
 
 FONTS = "1. `ProductSans-BoldItalic.ttf`\n2. `ProductSans-Light.ttf`\n3. `RoadRage-Regular.ttf`\n4. `digital.ttf`\n5. `impact.ttf`"
@@ -56,7 +45,7 @@ font_list = [
 
 
 @catub.cat_cmd(
-    pattern="pframe(f|-f)?$",
+    pattern=r"pframe(f|-f)?$",
     command=("pframe", plugin_category),
     info={
         "header": "Adds frame for the replied image.",
@@ -84,13 +73,9 @@ async def maccmd(event):  # sourcery no-metrics
     args = event.pattern_match.group(1)
     force = bool(args)
     try:
-        imag = await Convert.to_image(
-            catevent, reply, dirct="./temp", file="pframe.png", noedits=True
-        )
+        imag = await Convert.to_image(catevent, reply, dirct="./temp", file="pframe.png", noedits=True)
         if imag[1] is None:
-            return await edit_delete(
-                imag[0], "__Unable to extract image from the replied message.__"
-            )
+            return await edit_delete(imag[0], "__Unable to extract image from the replied message.__")
         image = Image.open(imag[1])
     except Exception as e:
         return await edit_delete(catevent, f"**Error in identifying image:**\n__{e}__")
@@ -102,9 +87,9 @@ async def maccmd(event):  # sourcery no-metrics
         img.paste(image, (0, 0), image)
         newimg = Image.new("RGBA", (wid, hgt))
         for N in range(wid):
-            for O in range(hgt):
-                if img.getpixel((N, O)) != (0, 0, 0, 0):
-                    newimg.putpixel((N, O), (0, 0, 0))
+            for o_code in range(hgt):
+                if img.getpixel((N, o_code)) != (0, 0, 0, 0):
+                    newimg.putpixel((N, o_code), (0, 0, 0))
     else:
         img.paste(image, (0, 0))
         newimg = Image.new("RGBA", (wid, hgt), "black")
@@ -115,27 +100,17 @@ async def maccmd(event):  # sourcery no-metrics
         newimg,
     )
     temp = temp.filter(ImageFilter.GaussianBlur(scale * 5))
-    temp.paste(
-        img, ((temp.width - img.width) // 2, (temp.height - img.height) // 2), img
-    )
+    temp.paste(img, ((temp.width - img.width) // 2, (temp.height - img.height) // 2), img)
     output = io.BytesIO()
-    output.name = (
-        "-".join(
-            "".join(random.choice(string.hexdigits) for _ in range(event))
-            for event in [5, 4, 3, 2, 1]
-        )
-        + ".png"
-    )
+    output.name = "-".join("".join(random.choice(string.hexdigits) for _ in range(event)) for event in [5, 4, 3, 2, 1]) + ".png"
     temp.save(output, "PNG")
     output.seek(0)
-    await event.client.send_file(
-        event.chat_id, output, reply_to=reply, force_document=force
-    )
+    await event.client.send_file(event.chat_id, output, reply_to=reply, force_document=force)
     await catevent.delete()
 
 
 @catub.cat_cmd(
-    pattern="(mmf|mms)(?:\s|$)([\s\S]*)",
+    pattern=r"(mmf|mms)(?:\s|$)([\s\S]*)",
     command=("mmf", plugin_category),
     info={
         "header": "To write text on stickers or images.",
@@ -165,9 +140,7 @@ async def memes(event):
     catid = await reply_id(event)
     san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not catinput:
-        return await edit_delete(
-            event, "`what should i write on that u idiot give text to memify`"
-        )
+        return await edit_delete(event, "`what should i write on that u idiot give text to memify`")
     if ";" in catinput:
         top, bottom = catinput.split(";", 1)
     else:
@@ -175,13 +148,9 @@ async def memes(event):
         bottom = ""
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    output = await Convert.to_image(
-        event, reply, dirct="./temp", file="mmf.png", rgb=True
-    )
+    output = await Convert.to_image(event, reply, dirct="./temp", file="mmf.png", rgb=True)
     if output[1] is None:
-        return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
-        )
+        return await edit_delete(output[0], "__Unable to extract image from the replied message.__")
     with contextlib.suppress(BaseException):
         san = Get(san)
         await event.client(san)
@@ -196,12 +165,8 @@ async def memes(event):
     else:
         await cat_meeme(top, bottom, CNG_FONTS, meme_file, meme)
     if cmd != "mmf":
-        meme = (await Convert.to_sticker(event, meme, file="memes.webp", noedits=True))[
-            1
-        ]
-    await event.client.send_file(
-        event.chat_id, meme, reply_to=catid, force_document=False
-    )
+        meme = (await Convert.to_sticker(event, meme, file="memes.webp", noedits=True))[1]
+    await event.client.send_file(event.chat_id, meme, reply_to=catid, force_document=False)
     await output[0].delete()
     for files in (meme, meme_file):
         if files and os.path.exists(files):
@@ -209,7 +174,7 @@ async def memes(event):
 
 
 @catub.cat_cmd(
-    pattern="cfont(?:\s|$)([\s\S]*)",
+    pattern=r"cfont(?:\s|$)([\s\S]*)",
     command=("cfont", plugin_category),
     info={
         "header": "Change the font style use for memify.To get font list use cfont command as it is without input.",
@@ -217,7 +182,7 @@ async def memes(event):
         "examples": "{tr}cfont RoadRage-Regular.ttf",
     },
 )
-async def lang(event):
+async def cfont_lang(event):
     "Change the font style use for memify."
     input_str = event.pattern_match.group(1)
     if not input_str:
@@ -234,7 +199,7 @@ async def lang(event):
 
 
 @catub.cat_cmd(
-    pattern="ascii(?:\s|$)([\s\S]*)",
+    pattern=r"ascii(?:\s|$)([\s\S]*)",
     command=("ascii", plugin_category),
     info={
         "header": "To get ascii image of replied image.",
@@ -245,7 +210,7 @@ async def lang(event):
         ],
     },
 )
-async def memes(event):
+async def ascii_memes(event):
     "To get ascii image of replied image."
     catinput = event.pattern_match.group(1)
     reply = await event.get_reply_message()
@@ -263,28 +228,20 @@ async def memes(event):
         file="ascii.png",
     )
     if output[1] is None:
-        return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
-        )
+        return await edit_delete(output[0], "__Unable to extract image from the replied message.__")
     meme_file = output[1]
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         jisanidea = True
     with contextlib.suppress(BaseException):
         san = Get(san)
         await event.client(san)
-    outputfile = (
-        os.path.join("./temp", "ascii_file.webp")
-        if jisanidea
-        else os.path.join("./temp", "ascii_file.jpg")
-    )
+    outputfile = os.path.join("./temp", "ascii_file.webp") if jisanidea else os.path.join("./temp", "ascii_file.jpg")
     c_list = random_color()
     color1 = c_list[0]
     color2 = c_list[1]
     bgcolor = catinput or "#080808"
     asciiart(meme_file, 0.3, 1.9, outputfile, color1, color2, bgcolor)
-    await event.client.send_file(
-        event.chat_id, outputfile, reply_to=catid, force_document=False
-    )
+    await event.client.send_file(event.chat_id, outputfile, reply_to=catid, force_document=False)
     await output[0].delete()
     for files in (outputfile, meme_file):
         if files and os.path.exists(files):
@@ -292,14 +249,14 @@ async def memes(event):
 
 
 @catub.cat_cmd(
-    pattern="invert$",
+    pattern=r"invert$",
     command=("invert", plugin_category),
     info={
         "header": "To invert colours of given image or sticker.",
         "usage": "{tr}invert",
     },
 )
-async def memes(event):
+async def invert_memes(event):
     reply = await event.get_reply_message()
     if not (reply and (reply.media)):
         await edit_or_reply(event, "`Reply to supported Media...`")
@@ -316,24 +273,16 @@ async def memes(event):
         file="invert.png",
     )
     if output[1] is None:
-        return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
-        )
+        return await edit_delete(output[0], "__Unable to extract image from the replied message.__")
     meme_file = output[1]
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         jisanidea = True
     with contextlib.suppress(BaseException):
         san = Get(san)
         await event.client(san)
-    outputfile = (
-        os.path.join("./temp", "invert.webp")
-        if jisanidea
-        else os.path.join("./temp", "invert.jpg")
-    )
+    outputfile = os.path.join("./temp", "invert.webp") if jisanidea else os.path.join("./temp", "invert.jpg")
     await invert_colors(meme_file, outputfile)
-    await event.client.send_file(
-        event.chat_id, outputfile, force_document=False, reply_to=catid
-    )
+    await event.client.send_file(event.chat_id, outputfile, force_document=False, reply_to=catid)
     await output[0].delete()
     for files in (outputfile, meme_file):
         if files and os.path.exists(files):
@@ -341,14 +290,14 @@ async def memes(event):
 
 
 @catub.cat_cmd(
-    pattern="solarize$",
+    pattern=r"solarize$",
     command=("solarize", plugin_category),
     info={
         "header": "To sun burn the colours of given image or sticker.",
         "usage": "{tr}solarize",
     },
 )
-async def memes(event):
+async def solarize_memes(event):
     "Sun burn of image."
     reply = await event.get_reply_message()
     if not reply:
@@ -365,24 +314,16 @@ async def memes(event):
         file="solarize.png",
     )
     if output[1] is None:
-        return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
-        )
+        return await edit_delete(output[0], "__Unable to extract image from the replied message.__")
     meme_file = output[1]
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         jisanidea = True
     with contextlib.suppress(BaseException):
         san = Get(san)
         await event.client(san)
-    outputfile = (
-        os.path.join("./temp", "solarize.webp")
-        if jisanidea
-        else os.path.join("./temp", "solarize.jpg")
-    )
+    outputfile = os.path.join("./temp", "solarize.webp") if jisanidea else os.path.join("./temp", "solarize.jpg")
     await solarize(meme_file, outputfile)
-    await event.client.send_file(
-        event.chat_id, outputfile, force_document=False, reply_to=catid
-    )
+    await event.client.send_file(event.chat_id, outputfile, force_document=False, reply_to=catid)
     await output[0].delete()
     for files in (outputfile, meme_file):
         if files and os.path.exists(files):
@@ -390,14 +331,14 @@ async def memes(event):
 
 
 @catub.cat_cmd(
-    pattern="mirror$",
+    pattern=r"mirror$",
     command=("mirror", plugin_category),
     info={
         "header": "shows you the reflection of the media file.",
         "usage": "{tr}mirror",
     },
 )
-async def memes(event):
+async def mirror_memes(event):
     "shows you the reflection of the media file"
     reply = await event.get_reply_message()
     if not reply:
@@ -414,24 +355,16 @@ async def memes(event):
         file="irotate.png",
     )
     if output[1] is None:
-        return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
-        )
+        return await edit_delete(output[0], "__Unable to extract image from the replied message.__")
     meme_file = output[1]
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         jisanidea = True
     with contextlib.suppress(BaseException):
         san = Get(san)
         await event.client(san)
-    outputfile = (
-        os.path.join("./temp", "mirror_file.webp")
-        if jisanidea
-        else os.path.join("./temp", "mirror_file.jpg")
-    )
+    outputfile = os.path.join("./temp", "mirror_file.webp") if jisanidea else os.path.join("./temp", "mirror_file.jpg")
     await mirror_file(meme_file, outputfile)
-    await event.client.send_file(
-        event.chat_id, outputfile, force_document=False, reply_to=catid
-    )
+    await event.client.send_file(event.chat_id, outputfile, force_document=False, reply_to=catid)
     await output[0].delete()
     for files in (outputfile, meme_file):
         if files and os.path.exists(files):
@@ -439,14 +372,14 @@ async def memes(event):
 
 
 @catub.cat_cmd(
-    pattern="flip$",
+    pattern=r"flip$",
     command=("flip", plugin_category),
     info={
         "header": "shows you the upside down image of the given media file.",
         "usage": "{tr}flip",
     },
 )
-async def memes(event):
+async def flip_memes(event):
     "shows you the upside down image of the given media file"
     reply = await event.get_reply_message()
     if not reply:
@@ -463,24 +396,16 @@ async def memes(event):
         file="flip.png",
     )
     if output[1] is None:
-        return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
-        )
+        return await edit_delete(output[0], "__Unable to extract image from the replied message.__")
     meme_file = output[1]
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         jisanidea = True
     with contextlib.suppress(BaseException):
         san = Get(san)
         await event.client(san)
-    outputfile = (
-        os.path.join("./temp", "flip_image.webp")
-        if jisanidea
-        else os.path.join("./temp", "flip_image.jpg")
-    )
+    outputfile = os.path.join("./temp", "flip_image.webp") if jisanidea else os.path.join("./temp", "flip_image.jpg")
     await flip_image(meme_file, outputfile)
-    await event.client.send_file(
-        event.chat_id, outputfile, force_document=False, reply_to=catid
-    )
+    await event.client.send_file(event.chat_id, outputfile, force_document=False, reply_to=catid)
     await output[0].delete()
     for files in (outputfile, meme_file):
         if files and os.path.exists(files):
@@ -488,14 +413,14 @@ async def memes(event):
 
 
 @catub.cat_cmd(
-    pattern="gray$",
+    pattern=r"gray$",
     command=("gray", plugin_category),
     info={
         "header": "makes your media file to black and white.",
         "usage": "{tr}gray",
     },
 )
-async def memes(event):
+async def gray_memes(event):
     "makes your media file to black and white"
     reply = await event.get_reply_message()
     if not reply:
@@ -512,24 +437,16 @@ async def memes(event):
         file="gray.png",
     )
     if output[1] is None:
-        return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
-        )
+        return await edit_delete(output[0], "__Unable to extract image from the replied message.__")
     meme_file = output[1]
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         jisanidea = True
     with contextlib.suppress(BaseException):
         san = Get(san)
         await event.client(san)
-    outputfile = (
-        os.path.join("./temp", "grayscale.webp")
-        if jisanidea
-        else os.path.join("./temp", "grayscale.jpg")
-    )
+    outputfile = os.path.join("./temp", "grayscale.webp") if jisanidea else os.path.join("./temp", "grayscale.jpg")
     await grayscale(meme_file, outputfile)
-    await event.client.send_file(
-        event.chat_id, outputfile, force_document=False, reply_to=catid
-    )
+    await event.client.send_file(event.chat_id, outputfile, force_document=False, reply_to=catid)
     await output[0].delete()
     for files in (outputfile, meme_file):
         if files and os.path.exists(files):
@@ -537,14 +454,14 @@ async def memes(event):
 
 
 @catub.cat_cmd(
-    pattern="zoom ?([\s\S]*)",
+    pattern=r"zoom ?([\s\S]*)",
     command=("zoom", plugin_category),
     info={
         "header": "zooms your media file,",
         "usage": ["{tr}zoom", "{tr}zoom range"],
     },
 )
-async def memes(event):
+async def zoom_memes(event):
     "zooms your media file."
     catinput = event.pattern_match.group(1)
     catinput = int(catinput) if catinput else 50
@@ -563,28 +480,20 @@ async def memes(event):
         file="zoom.png",
     )
     if output[1] is None:
-        return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
-        )
+        return await edit_delete(output[0], "__Unable to extract image from the replied message.__")
     meme_file = output[1]
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         jisanidea = True
     with contextlib.suppress(BaseException):
         san = Get(san)
         await event.client(san)
-    outputfile = (
-        os.path.join("./temp", "zoomimage.webp")
-        if jisanidea
-        else os.path.join("./temp", "zoomimage.jpg")
-    )
+    outputfile = os.path.join("./temp", "zoomimage.webp") if jisanidea else os.path.join("./temp", "zoomimage.jpg")
     try:
         await crop(meme_file, outputfile, catinput)
     except Exception as e:
         return await output[0].edit(f"`{e}`")
     try:
-        await event.client.send_file(
-            event.chat_id, outputfile, force_document=False, reply_to=catid
-        )
+        await event.client.send_file(event.chat_id, outputfile, force_document=False, reply_to=catid)
     except Exception as e:
         return await output[0].edit(f"`{e}`")
     await output[0].delete()
@@ -594,7 +503,7 @@ async def memes(event):
 
 
 @catub.cat_cmd(
-    pattern="frame ?([\s\S]*)",
+    pattern=r"frame ?([\s\S]*)",
     command=("frame", plugin_category),
     info={
         "header": "make a frame for your media file.",
@@ -602,7 +511,7 @@ async def memes(event):
         "usage": ["{tr}frame", "{tr}frame range", "{tr}frame range ; fill"],
     },
 )
-async def memes(event):
+async def frame_memes(event):
     "make a frame for your media file"
     catinput = event.pattern_match.group(1)
     if not catinput:
@@ -631,28 +540,20 @@ async def memes(event):
         file="framed.png",
     )
     if output[1] is None:
-        return await edit_delete(
-            output[0], "__Unable to extract image from the replied message.__"
-        )
+        return await edit_delete(output[0], "__Unable to extract image from the replied message.__")
     meme_file = output[1]
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         jisanidea = True
     with contextlib.suppress(BaseException):
         san = Get(san)
         await event.client(san)
-    outputfile = (
-        os.path.join("./temp", "framed.webp")
-        if jisanidea
-        else os.path.join("./temp", "framed.jpg")
-    )
+    outputfile = os.path.join("./temp", "framed.webp") if jisanidea else os.path.join("./temp", "framed.jpg")
     try:
         await add_frame(meme_file, outputfile, catinput, colr)
     except Exception as e:
         return await output[0].edit(f"`{e}`")
     try:
-        await event.client.send_file(
-            event.chat_id, outputfile, force_document=False, reply_to=catid
-        )
+        await event.client.send_file(event.chat_id, outputfile, force_document=False, reply_to=catid)
     except Exception as e:
         return await output[0].edit(f"`{e}`")
     await event.delete()

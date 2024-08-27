@@ -35,12 +35,8 @@ async def edit_or_reply(
         parse_mode = parse_mode or "md"
         if event.sender_id in sudo_users:
             if reply_to:
-                return await reply_to.reply(
-                    text, parse_mode=parse_mode, link_preview=link_preview
-                )
-            return await event.reply(
-                text, parse_mode=parse_mode, link_preview=link_preview
-            )
+                return await reply_to.reply(text, parse_mode=parse_mode, link_preview=link_preview)
+            return await event.reply(text, parse_mode=parse_mode, link_preview=link_preview)
         await event.edit(text, parse_mode=parse_mode, link_preview=link_preview)
         return event
     if not noformat:
@@ -79,16 +75,8 @@ async def edit_delete(event, text, time=None, parse_mode=None, link_preview=None
     time = time or 10
     if event.sender_id in sudo_users:
         reply_to = await event.get_reply_message()
-        catevent = (
-            await reply_to.reply(text, link_preview=link_preview, parse_mode=parse_mode)
-            if reply_to
-            else await event.reply(
-                text, link_preview=link_preview, parse_mode=parse_mode
-            )
-        )
+        catevent = await reply_to.reply(text, link_preview=link_preview, parse_mode=parse_mode) if reply_to else await event.reply(text, link_preview=link_preview, parse_mode=parse_mode)
     else:
-        catevent = await event.edit(
-            text, link_preview=link_preview, parse_mode=parse_mode
-        )
+        catevent = await event.edit(text, link_preview=link_preview, parse_mode=parse_mode)
     await asyncio.sleep(time)
     return await catevent.delete()

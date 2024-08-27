@@ -84,7 +84,7 @@ def text_chunk_list(query, bits=29900):
 
 
 @catub.cat_cmd(
-    pattern="rayso(?:\s|$)([\s\S]*)",
+    pattern=r"rayso(?:\s|$)([\s\S]*)",
     command=("rayso", plugin_category),
     info={
         "header": "Create beautiful images of your code",
@@ -124,9 +124,7 @@ async def rayso_by_pro_odi(event):  # By @feelded
     if checker and checker[0].lower() in MODES:
         addgvar("RAYSO_MODES", checker[0].lower())
         if checker[0] == query and not rquery:
-            return await edit_delete(
-                catevent, f"`Theme Mode changed to {query.title()}.`"
-            )
+            return await edit_delete(catevent, f"`Theme Mode changed to {query.title()}.`")
         query = checker[1] if len(checker) > 1 else None
 
     # Themes List
@@ -164,12 +162,8 @@ async def rayso_by_pro_odi(event):  # By @feelded
     text_list = text_chunk_list(text, 28000)
     user = (await catub.get_me()).first_name
     for i, text in enumerate(text_list, start=1):
-        await edit_or_reply(
-            catevent, f"**⏳ Pasting on image : {i}/{len(text_list)} **"
-        )
-        outfile, error = chromeDriver.get_rayso(
-            text, file_name=f"rayso{i}.png", title=user, theme=theme, darkMode=darkMode
-        )
+        await edit_or_reply(catevent, f"**⏳ Pasting on image : {i}/{len(text_list)} **")
+        outfile, error = chromeDriver.get_rayso(text, file_name=f"rayso{i}.png", title=user, theme=theme, darkMode=darkMode)
         if error:
             return await edit_delete(catevent, error)
         files.append(outfile)
@@ -191,7 +185,7 @@ async def rayso_by_pro_odi(event):  # By @feelded
 
 
 @catub.cat_cmd(
-    pattern="pcode(?:\s|$)([\s\S]*)",
+    pattern=r"pcode(?:\s|$)([\s\S]*)",
     command=("pcode", plugin_category),
     info={
         "header": "Will paste the entire text on the blank white image.",
@@ -252,7 +246,7 @@ async def paste_img(event):
 
 
 @catub.cat_cmd(
-    pattern="(d|p|s|n)?(paste|neko)(?:\s|$)([\S\s]*)",
+    pattern=r"(d|p|s|n)?(paste|neko)(?:\s|$)([\S\s]*)",
     command=("paste", plugin_category),
     info={
         "header": "To paste text to a paste bin.",
@@ -343,7 +337,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="g(et)?paste(?:\s|$)([\s\S]*)",
+    pattern=r"g(et)?paste(?:\s|$)([\s\S]*)",
     command=("getpaste", plugin_category),
     info={
         "header": "To paste text into telegram from pastebin link.",
@@ -359,12 +353,7 @@ async def get_dogbin_content(event):
     if not url and textx.text:
         urls = extractor.find_urls(textx.text)
         for iurl in urls:
-            if (
-                ("pasty" in iurl)
-                or ("spaceb" in iurl)
-                or ("nekobin" in iurl)
-                or ("catbin" in iurl)
-            ):
+            if ("pasty" in iurl) or ("spaceb" in iurl) or ("nekobin" in iurl) or ("catbin" in iurl):
                 url = iurl
                 break
     if not url:
@@ -387,23 +376,17 @@ async def get_dogbin_content(event):
     try:
         resp.raise_for_status()
     except requests.exceptions.HTTPError as HTTPErr:
-        return await catevent.edit(
-            f"**Request returned an unsuccessful status code.**\n\n__{str(HTTPErr)}__"
-        )
+        return await catevent.edit(f"**Request returned an unsuccessful status code.**\n\n__{str(HTTPErr)}__")
     except requests.exceptions.Timeout as TimeoutErr:
         return await catevent.edit(f"**Request timed out.**__{str(TimeoutErr)}__")
     except requests.exceptions.TooManyRedirects as RedirectsErr:
-        return await catevent.edit(
-            (
-                f"**Request exceeded the configured number of maximum redirections.**__{str(RedirectsErr)}__"
-            )
-        )
+        return await catevent.edit((f"**Request exceeded the configured number of maximum redirections.**__{str(RedirectsErr)}__"))
     reply_text = f"**Fetched dogbin URL content successfully!**\n\n**Content:** \n```{resp.text}```"
     await edit_or_reply(catevent, reply_text)
 
 
 @catub.cat_cmd(
-    pattern="paster(?:\s|$)([\s\S]*)",
+    pattern=r"paster(?:\s|$)([\s\S]*)",
     command=("paster", plugin_category),
     info={
         "header": "Create a instant view or a paste it in telegraph file.",
@@ -446,9 +429,7 @@ async def _(event):
     await catevent.edit("`Making instant view...`")
     async with event.client.conversation(chat) as conv:
         try:
-            response = conv.wait_event(
-                MessageEdited(incoming=True, from_users=conv.chat_id), timeout=10
-            )
+            response = conv.wait_event(MessageEdited(incoming=True, from_users=conv.chat_id), timeout=10)
             await event.client.send_message(chat, url)
             response = await response
         except YouBlockedUserError:

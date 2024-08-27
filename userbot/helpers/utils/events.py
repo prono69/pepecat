@@ -10,11 +10,7 @@
 import base64
 import contextlib
 
-from telethon.errors import (
-    ChannelInvalidError,
-    ChannelPrivateError,
-    ChannelPublicGroupNaError,
-)
+from telethon.errors import ChannelInvalidError, ChannelPrivateError, ChannelPublicGroupNaError
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.functions.messages import GetFullChatRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest as Get
@@ -54,9 +50,7 @@ async def get_chatinfo(event, match, catevent):
             await catevent.edit("`Invalid channel/group`")
             return None
         except ChannelPrivateError:
-            await catevent.edit(
-                "`This is a private channel/group or I am banned from there`"
-            )
+            await catevent.edit("`This is a private channel/group or I am banned from there`")
             return None
         except ChannelPublicGroupNaError:
             await catevent.edit("`The given Channel or Supergroup doesn't exist`")
@@ -122,9 +116,7 @@ async def get_user_from_event(
             return user_obj, extra
         if not args:
             if not noedits:
-                await edit_delete(
-                    catevent, "`Pass the user's username, id or reply!`", 5
-                )
+                await edit_delete(catevent, "`Pass the user's username, id or reply!`", 5)
             return None, None
     except Exception as e:
         LOGS.error(str(e))

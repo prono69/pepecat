@@ -39,7 +39,7 @@ USERNAME_TAKEN = "```This username is already taken.```"
 
 
 @catub.cat_cmd(
-    pattern="pbio ([\s\S]*)",
+    pattern=r"pbio ([\s\S]*)",
     command=("pbio", plugin_category),
     info={
         "header": "To set bio for this account.",
@@ -57,7 +57,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="pname ([\s\S]*)",
+    pattern=r"pname ([\s\S]*)",
     command=("pname", plugin_category),
     info={
         "header": "To set/change name for this account.",
@@ -72,18 +72,14 @@ async def _(event):
     if ";" in names:
         first_name, last_name = names.split(";", 1)
     try:
-        await event.client(
-            functions.account.UpdateProfileRequest(
-                first_name=first_name, last_name=last_name
-            )
-        )
+        await event.client(functions.account.UpdateProfileRequest(first_name=first_name, last_name=last_name))
         await edit_delete(event, "`My name was changed successfully`")
     except Exception as e:
         await edit_or_reply(event, f"**Error:**\n`{e}`")
 
 
 @catub.cat_cmd(
-    pattern="ppic$",
+    pattern=r"ppic$",
     command=("ppic", plugin_category),
     info={
         "header": "To set profile pic for this account.",
@@ -93,16 +89,12 @@ async def _(event):
 async def _(event):
     "To set profile pic for this account."
     reply_message = await event.get_reply_message()
-    catevent = await edit_or_reply(
-        event, "`Downloading Profile Picture to my local ...`"
-    )
+    catevent = await edit_or_reply(event, "`Downloading Profile Picture to my local ...`")
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     photo = None
     try:
-        photo = await event.client.download_media(
-            reply_message, Config.TMP_DOWNLOAD_DIRECTORY
-        )
+        photo = await event.client.download_media(reply_message, Config.TMP_DOWNLOAD_DIRECTORY)
     except Exception as e:
         await catevent.edit(str(e))
     else:
@@ -121,17 +113,11 @@ async def _(event):
                 catpic = await event.client.upload_file(photo)
                 catvideo = None
             try:
-                await event.client(
-                    functions.photos.UploadProfilePhotoRequest(
-                        file=catpic, video=catvideo, video_start_ts=0.01
-                    )
-                )
+                await event.client(functions.photos.UploadProfilePhotoRequest(file=catpic, video=catvideo, video_start_ts=0.01))
             except Exception as e:
                 await catevent.edit(f"**Error:**\n`{e}`")
             else:
-                await edit_or_reply(
-                    catevent, "`My profile picture was successfully changed`"
-                )
+                await edit_or_reply(catevent, "`My profile picture was successfully changed`")
     try:
         os.remove(photo)
     except Exception as e:
@@ -139,7 +125,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="pusername ([\s\S]*)",
+    pattern=r"pusername ([\s\S]*)",
     command=("pusername", plugin_category),
     info={
         "header": "To set/update username for this account.",
@@ -159,7 +145,7 @@ async def update_username(event):
 
 
 @catub.cat_cmd(
-    pattern="count$",
+    pattern=r"count$",
     command=("count", plugin_category),
     info={
         "header": "To get your profile stats for this account.",
@@ -203,7 +189,7 @@ async def count(event):
 
 
 @catub.cat_cmd(
-    pattern="delpfp ?([\s\S]*)",
+    pattern=r"delpfp ?([\s\S]*)",
     command=("delpfp", plugin_category),
     info={
         "header": "To delete profile pic for this account.",
@@ -220,9 +206,7 @@ async def remove_profilepic(delpfp):
         lim = int(group)
     else:
         lim = 1
-    pfplist = await delpfp.client(
-        GetUserPhotosRequest(user_id=delpfp.sender_id, offset=0, max_id=0, limit=lim)
-    )
+    pfplist = await delpfp.client(GetUserPhotosRequest(user_id=delpfp.sender_id, offset=0, max_id=0, limit=lim))
     input_photos = [
         InputPhoto(
             id=sep.id,
@@ -232,13 +216,11 @@ async def remove_profilepic(delpfp):
         for sep in pfplist.photos
     ]
     await delpfp.client(DeletePhotosRequest(id=input_photos))
-    await edit_delete(
-        delpfp, f"`Successfully deleted {len(input_photos)} profile picture(s).`"
-    )
+    await edit_delete(delpfp, f"`Successfully deleted {len(input_photos)} profile picture(s).`")
 
 
 @catub.cat_cmd(
-    pattern="myusernames$",
+    pattern=r"myusernames$",
     command=("myusernames", plugin_category),
     info={
         "header": "To list public channels or groups created by this account.",
@@ -248,8 +230,5 @@ async def remove_profilepic(delpfp):
 async def _(event):
     "To list all public channels and groups."
     result = await event.client(GetAdminedPublicChannelsRequest())
-    output_str = "**Your current reserved usernames are:**\n" + "".join(
-        f" - {channel_obj.title} @{channel_obj.username} \n"
-        for channel_obj in result.chats
-    )
+    output_str = "**Your current reserved usernames are:**\n" + "".join(f" - {channel_obj.title} @{channel_obj.username} \n" for channel_obj in result.chats)
     await edit_or_reply(event, output_str)

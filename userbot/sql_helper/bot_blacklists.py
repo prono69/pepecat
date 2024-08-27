@@ -34,9 +34,7 @@ class Bot_BlackList(BASE):
 Bot_BlackList.__table__.create(checkfirst=True)
 
 
-def add_user_to_bl(
-    chat_id: int, first_name: str, username: str, reason: str, date: str
-):
+def add_user_to_bl(chat_id: int, first_name: str, username: str, reason: str, date: str):
     """add the user to the blacklist"""
     to_check = check_is_black_list(chat_id)
     if not to_check:

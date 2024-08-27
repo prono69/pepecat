@@ -7,9 +7,9 @@
 # Please see: https://github.com/TgCatUB/catuserbot/blob/master/LICENSE
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-from . import fonts
-from . import memeshelper as catmemes
-from .aiohttp_helper import AioHttp
+from . import fonts  # noqa F401
+from . import memeshelper as catmemes  # noqa F401
+from .aiohttp_helper import AioHttp  # noqa F401
 from .utils import *
 
 flag = True
@@ -22,7 +22,7 @@ while flag:
         from .progress import *
         from .qhelper import *
         from .tools import *
-        from .utils import _catutils, _format
+        from .utils import _catutils, _format  # noqa F401
 
         break
     except ModuleNotFoundError as e:

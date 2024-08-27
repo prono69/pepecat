@@ -17,7 +17,7 @@ from userbot import catub
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import reply_id
-from . import progress, reply_id
+from . import progress
 
 plugin_category = "utils"
 
@@ -25,7 +25,7 @@ thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg"
 
 
 @catub.cat_cmd(
-    pattern="rnup ?(-f)? ([\s\S]*)",
+    pattern=r"rnup ?(-f)? ([\s\S]*)",
     command=("rnup", plugin_category),
     info={
         "header": "To rename and upload the replied file.",
@@ -50,9 +50,7 @@ async def _(event):
     reply_to_id = await reply_id(event)
     input_str = event.pattern_match.group(2)
     if not event.reply_to_msg_id:
-        return await catevent.edit(
-            "**Syntax : **`.rnup file name` as reply to a Telegram media"
-        )
+        return await catevent.edit("**Syntax : **`.rnup file name` as reply to a Telegram media")
     start = datetime.now()
     file_name = input_str
     reply_message = await event.get_reply_message()
@@ -61,9 +59,7 @@ async def _(event):
     downloaded_file_name = await event.client.download_media(
         reply_message,
         downloaded_file_name,
-        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-            progress(d, t, catevent, c_time, "trying to download", file_name)
-        ),
+        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, catevent, c_time, "trying to download", file_name)),
     )
     end = datetime.now()
     ms_one = (end - start).seconds
@@ -74,7 +70,7 @@ async def _(event):
     if not os.path.exists(downloaded_file_name):
         return await catevent.edit(f"File Not Found {input_str}")
     c_time = time.time()
-    caat = await event.client.send_file(
+    await event.client.send_file(
         event.chat_id,
         downloaded_file_name,
         force_document=forcedoc,
@@ -82,9 +78,7 @@ async def _(event):
         allow_cache=False,
         reply_to=reply_to_id,
         thumb=thumb,
-        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-            progress(d, t, event, c_time, "trying to upload", downloaded_file_name)
-        ),
+        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, event, c_time, "trying to upload", downloaded_file_name)),
     )
     end_two = datetime.now()
     os.remove(downloaded_file_name)

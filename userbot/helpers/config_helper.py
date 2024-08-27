@@ -129,9 +129,7 @@ async def set_var(event, vname, vinfo):
         if vname == "DEFAULT_BIO" and len(vinfo) > 70:
             return f"No of characters in your bio must not exceed 70 so compress it and set again\n`{vinfo}`"
         addgvar(vname, vinfo)
-    await event.client.send_message(
-        BOTLOG_CHATID, f"#DATABASE_VAR  #UPDATED\n\n`{vname}` = `{vinfo}`", silent=True
-    )
+    await event.client.send_message(BOTLOG_CHATID, f"#DATABASE_VAR  #UPDATED\n\n`{vname}` = `{vinfo}`", silent=True)
     return f"📑 Value of **{vname}** is changed to :- `{vinfo}`"
 
 
@@ -151,7 +149,5 @@ async def del_var(event, vname):
         if gvarstatus("DEFAULT_PIC"):
             delgvar("DEFAULT_PIC")
     delgvar(vname)
-    await event.client.send_message(
-        BOTLOG_CHATID, f"#DATABASE_VAR  #DELETED\n\n`{vname}`", silent=True
-    )
+    await event.client.send_message(BOTLOG_CHATID, f"#DATABASE_VAR  #DELETED\n\n`{vname}`", silent=True)
     return f"📑 Value of **{vname}** is now deleted & set to default."

@@ -15,11 +15,7 @@ from platform import python_version
 
 import requests
 from telethon import version
-from telethon.errors.rpcerrorlist import (
-    MediaEmptyError,
-    WebpageCurlFailedError,
-    WebpageMediaEmptyError,
-)
+from telethon.errors.rpcerrorlist import MediaEmptyError, WebpageCurlFailedError, WebpageMediaEmptyError
 from telethon.events import CallbackQuery
 
 import userbot
@@ -36,7 +32,7 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="alive$",
+    pattern=r"alive$",
     command=("alive", plugin_category),
     info={
         "header": "To check bot's alive status",
@@ -86,9 +82,7 @@ async def amireallyalive(event):
         CAT = list(CAT_IMG.split())
         PIC = random.choice(CAT)
         try:
-            await event.client.send_file(
-                event.chat_id, PIC, caption=caption, reply_to=reply_to_id
-            )
+            await event.client.send_file(event.chat_id, PIC, caption=caption, reply_to=reply_to_id)
             await catevent.delete()
         except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError):
             return await edit_or_reply(
@@ -122,7 +116,7 @@ def catalive_text():
 
 
 @catub.cat_cmd(
-    pattern="ialive$",
+    pattern=r"ialive$",
     command=("ialive", plugin_category),
     info={
         "header": "To check bot's alive status via inline mode",
@@ -132,7 +126,7 @@ def catalive_text():
         ],
     },
 )
-async def amireallyalive(event):
+async def am_i_really_alive(event):
     "A kind of showing bot details by your inline bot"
     reply_to_id = await reply_id(event)
     results = await event.client.inline_query(Config.TG_BOT_USERNAME, "ialive")

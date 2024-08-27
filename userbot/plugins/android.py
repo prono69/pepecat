@@ -20,7 +20,7 @@ plugin_category = "extra"
 
 
 @catub.cat_cmd(
-    pattern="magisk$",
+    pattern=r"magisk$",
     command=("magisk", plugin_category),
     info={
         "header": "To Get latest Magisk releases",
@@ -39,15 +39,12 @@ async def kakashi(event):
     releases = "**Latest Magisk Releases**\n\n"
     for name, release_url in magisk_dict.items():
         data = get(release_url).json()
-        releases += (
-            f'{name}: [APK v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | '
-            f'[Changelog]({data["magisk"]["note"]})\n'
-        )
+        releases += f'{name}: [APK v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | ' f'[Changelog]({data["magisk"]["note"]})\n'
     await edit_or_reply(event, releases)
 
 
 @catub.cat_cmd(
-    pattern="device(?: |$)(\S*)",
+    pattern=r"device(?: |$)(\S*)",
     command=("device", plugin_category),
     info={
         "header": "To get android device name/model from its codename",
@@ -64,27 +61,18 @@ async def device_info(event):
             codename = textx.text
         else:
             return await edit_delete(event, "`Usage: .device <codename> / <model>`")
-    data = json.loads(
-        get(
-            "https://raw.githubusercontent.com/androidtrackers/"
-            "certified-android-devices/master/by_device.json"
-        ).text
-    )
+    data = json.loads(get("https://raw.githubusercontent.com/androidtrackers/" "certified-android-devices/master/by_device.json").text)
     if results := data.get(codename.lower()):
         reply = f"**Search results for `{codename.lower()}` :**\n\n"
         for item in results:
-            reply += (
-                f"**Brand**: `{item['brand']}`\n"
-                f"**Name**: `{item['name']}`\n"
-                f"**Model**: `{item['model']}`\n\n"
-            )
+            reply += f"**Brand**: `{item['brand']}`\n" f"**Name**: `{item['name']}`\n" f"**Model**: `{item['model']}`\n\n"
     else:
         reply = f"`Couldn't find info about {codename}!`\n"
     await edit_or_reply(event, reply)
 
 
 @catub.cat_cmd(
-    pattern="codename(?: |)([\S]*)(?: |)([\s\S]*)",
+    pattern=r"codename(?: |)([\S]*)(?: |)([\s\S]*)",
     command=("codename", plugin_category),
     info={
         "header": "To Search for android device codename",
@@ -105,37 +93,24 @@ async def codename_info(event):
     else:
         return await edit_delete(event, "`Usage: .codename <brand> <device>`")
 
-    data = json.loads(
-        get(
-            "https://raw.githubusercontent.com/androidtrackers/"
-            "certified-android-devices/master/by_brand.json"
-        ).text
-    )
+    data = json.loads(get("https://raw.githubusercontent.com/androidtrackers/" "certified-android-devices/master/by_brand.json").text)
     devices_lower = {k.lower(): v for k, v in data.items()}
     devices = devices_lower.get(brand)
     if not devices:
         return await edit_or_reply(event, f"__I couldn't find {brand}.__")
-    if results := [
-        i
-        for i in devices
-        if i["name"].lower() == device.lower() or i["model"].lower() == device.lower()
-    ]:
+    if results := [i for i in devices if i["name"].lower() == device.lower() or i["model"].lower() == device.lower()]:
         reply = f"**Search results for {brand} {device}**:\n\n"
         if len(results) > 8:
             results = results[:8]
         for item in results:
-            reply += (
-                f"**Device**: `{item['device']}`\n"
-                f"**Name**: `{item['name']}`\n"
-                f"**Model**: `{item['model']}`\n\n"
-            )
+            reply += f"**Device**: `{item['device']}`\n" f"**Name**: `{item['name']}`\n" f"**Model**: `{item['model']}`\n\n"
     else:
         reply = f"`Couldn't find {device} codename!`\n"
     await edit_or_reply(event, reply)
 
 
 @catub.cat_cmd(
-    pattern="twrp(?: |$)(\S*)",
+    pattern=r"twrp(?: |$)(\S*)",
     command=("twrp", plugin_category),
     info={
         "header": "To Get latest twrp download links for android device.",
@@ -163,9 +138,5 @@ async def twrp(event):
     dl_file = download.text
     size = page.find("span", {"class": "filesize"}).text
     date = page.find("em").text.strip()
-    reply = (
-        f"**Latest TWRP for {device}:**\n"
-        f"[{dl_file}]({dl_link}) - __{size}__\n"
-        f"**Updated:** __{date}__\n"
-    )
+    reply = f"**Latest TWRP for {device}:**\n" f"[{dl_file}]({dl_link}) - __{size}__\n" f"**Updated:** __{date}__\n"
     await edit_or_reply(event, reply)

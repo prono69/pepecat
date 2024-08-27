@@ -61,7 +61,7 @@ async def file_data(reply):
 
 
 @catub.cat_cmd(
-    pattern="minfo$",
+    pattern=r"minfo$",
     command=("minfo", plugin_category),
     info={
         "header": "To get media information.",
@@ -95,7 +95,7 @@ async def mediainfo(event):
 </code>
 <h2>DETAILS</h2>
 <code>
-{out} 
+{out}
 </code>"""
     link = await post_to_telegraph(f"{X_MEDIA}", body_text)
     await catevent.edit(

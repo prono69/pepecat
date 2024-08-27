@@ -24,7 +24,7 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="\#(\S+)",
+    pattern=r"\#(\S+)",
 )
 async def incom_note(event):
     if not BOTLOG:
@@ -37,9 +37,7 @@ async def incom_note(event):
             message_id_to_reply = await reply_id(event)
             if note:
                 if note.f_mesg_id:
-                    msg_o = await event.client.get_messages(
-                        entity=BOTLOG_CHATID, ids=int(note.f_mesg_id)
-                    )
+                    msg_o = await event.client.get_messages(entity=BOTLOG_CHATID, ids=int(note.f_mesg_id))
                     await event.delete()
                     await event.client.send_message(
                         event.chat_id,
@@ -58,7 +56,7 @@ async def incom_note(event):
 
 
 @catub.cat_cmd(
-    pattern="snips (\w*)",
+    pattern=r"snips (\w*)",
     command=("snips", plugin_category),
     info={
         "header": "To save notes to the bot.",
@@ -69,9 +67,7 @@ async def incom_note(event):
 async def add_snip(event):
     "To save notes to bot."
     if not BOTLOG:
-        return await edit_delete(
-            event, "`To save snip or notes you need to set PRIVATE_GROUP_BOT_API_ID`"
-        )
+        return await edit_delete(event, "`To save snip or notes you need to set PRIVATE_GROUP_BOT_API_ID`")
     keyword = event.pattern_match.group(1)
     string = event.text.partition(keyword)[2]
     msg = await event.get_reply_message()
@@ -84,9 +80,7 @@ async def add_snip(event):
             \n**Keyword :** `#{keyword}`\
             \n\nThe following message is saved as the snip in your bot , do NOT delete it !!",
         )
-        msg_o = await event.client.forward_messages(
-            entity=BOTLOG_CHATID, messages=msg, from_peer=event.chat_id, silent=True
-        )
+        msg_o = await event.client.forward_messages(entity=BOTLOG_CHATID, messages=msg, from_peer=event.chat_id, silent=True)
         msg_id = msg_o.id
     elif msg:
         return await edit_delete(
@@ -110,15 +104,13 @@ async def add_snip(event):
     if add_note(keyword, string, msg_id) is False:
         rm_note(keyword)
         if add_note(keyword, string, msg_id) is False:
-            return await edit_or_reply(
-                event, f"Error in saving the given snip {keyword}"
-            )
+            return await edit_or_reply(event, f"Error in saving the given snip {keyword}")
         return await edit_or_reply(event, success.format(keyword, "updated", keyword))
     return await edit_or_reply(event, success.format(keyword, "added", keyword))
 
 
 @catub.cat_cmd(
-    pattern="snipl$",
+    pattern=r"snipl$",
     command=("snipl", plugin_category),
     info={
         "header": "To list all notes in bot.",
@@ -130,9 +122,7 @@ async def on_snip_list(event):
     message = "You havent saved any notes/snip"
     notes = get_notes()
     if not BOTLOG:
-        return await edit_delete(
-            event, "`For saving snip you must set PRIVATE_GROUP_BOT_API_ID`"
-        )
+        return await edit_delete(event, "`For saving snip you must set PRIVATE_GROUP_BOT_API_ID`")
     for note in notes:
         if message == "You havent saved any notes/snip":
             message = "Notes saved in your bot are\n\n"
@@ -146,7 +136,7 @@ async def on_snip_list(event):
 
 
 @catub.cat_cmd(
-    pattern="snipd (\S+)",
+    pattern=r"snipd (\S+)",
     command=("snipd", plugin_category),
     info={
         "header": "To delete paticular note in bot.",
@@ -157,10 +147,8 @@ async def on_snip_delete(event):
     "To delete paticular note in bot."
     name = event.pattern_match.group(1)
     name = name.lower()
-    if catsnip := get_note(name):
+    if get_note(name):
         rm_note(name)
     else:
-        return await edit_or_reply(
-            event, f"Are you sure that #{name} is saved as snip?"
-        )
+        return await edit_or_reply(event, f"Are you sure that #{name} is saved as snip?")
     await edit_or_reply(event, f"`snip #{name} deleted successfully`")

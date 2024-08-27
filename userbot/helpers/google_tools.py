@@ -55,9 +55,7 @@ class chromeDriver:
             with contextlib.suppress(Exception):
                 driver.find_element(By.ID, "L2AGLb").click()
             with contextlib.suppress(Exception):
-                driver.find_element(
-                    By.XPATH, "//button[@aria-label='Accept all']"
-                ).click()
+                driver.find_element(By.XPATH, "//button[@aria-label='Accept all']").click()
         return driver, None
 
     @staticmethod
@@ -70,9 +68,7 @@ class chromeDriver:
         return html, None
 
     @staticmethod
-    def get_rayso(
-        inputstr, file_name="Rayso.png", title="CatUB", theme="crimson", darkMode=True
-    ):
+    def get_rayso(inputstr, file_name="Rayso.png", title="CatUB", theme="crimson", darkMode=True):
         url = f'https://ray.so/#code={base64.b64encode(inputstr.encode()).decode().replace("+","-")}&title={title}&theme={theme}&padding=64&darkMode={darkMode}&language=python'
         driver, error = chromeDriver.start_driver()
         if error:
@@ -93,15 +89,9 @@ class chromeDriver:
         if not driver:
             return None, error
         if event:
-            await edit_or_reply(
-                event, "`Calculating Page Dimensions with Google Chrome BIN`"
-            )
-        height = driver.execute_script(
-            "return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);"
-        )
-        width = driver.execute_script(
-            "return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);"
-        )
+            await edit_or_reply(event, "`Calculating Page Dimensions with Google Chrome BIN`")
+        height = driver.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
+        width = driver.execute_script("return Math.max(document.body.scrollWidth, document.body.offsetWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.documentElement.offsetWidth);")
         driver.set_window_size(width + 100, height + 100)
         im_png = driver.get_screenshot_as_png()
         if event:
@@ -150,26 +140,18 @@ class GooglePic:
                     if res2.ok:
                         html = res2.text.encode().decode("unicode_escape")
                         with contextlib.suppress(Exception):
-                            data["google"] = re.search(
-                                r"https://www.google.com/search\?tbs.+?(?=\")", html
-                            ).group()
+                            data["google"] = re.search(r"https://www.google.com/search\?tbs.+?(?=\")", html).group()
                         if not data["google"]:
                             html, data["error"] = chromeDriver.get_html(data["lens"])
                             html = html.encode().decode("unicode_escape")
-                            data["google"] = re.search(
-                                r"https://www.google.com/search\?tbs.+?(?=\")", html
-                            ).group()
+                            data["google"] = re.search(r"https://www.google.com/search\?tbs.+?(?=\")", html).group()
                     if html:
                         if flag:
                             data["image_set"] = set()
-                            for link in re.findall(
-                                r"https://www.google.com/imgres\?[^\"]+", html
-                            ):
+                            for link in re.findall(r"https://www.google.com/imgres\?[^\"]+", html):
                                 image = re.search(r"imgurl=(.+?)&", link)[1]
                                 site = re.search(r"imgrefurl=(.+?)&", link)[1]
-                                if image.endswith(
-                                    (".jpg", ".jpeg", ".png", ".gif")
-                                ) or site.endswith((".jpg", ".jpeg", ".png", ".gif")):
+                                if image.endswith((".jpg", ".jpeg", ".png", ".gif")) or site.endswith((".jpg", ".jpeg", ".png", ".gif")):
                                     data["image_set"].add(GooglePic(image, site))
                         data["title"] = GooglePic.__title_fetch__(html)
             except Exception as error:

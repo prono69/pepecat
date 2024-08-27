@@ -27,7 +27,7 @@ plugin_category = "misc"
 
 
 @catub.cat_cmd(
-    pattern="direct(?: |$)([\s\S]*)",
+    pattern=r"direct(?: |$)([\s\S]*)",
     command=("direct", plugin_category),
     info={
         "header": "To generate a direct download link from a URL.",
@@ -117,9 +117,7 @@ def gdrive(url: str) -> str:
         page = BeautifulSoup(download.content, "lxml")
         export = drive + page.find("a", {"id": "uc-download-link"}).get("href")
         name = page.find("span", {"class": "uc-name-size"}).text
-        response = requests.get(
-            export, stream=True, allow_redirects=False, cookies=cookies
-        )
+        response = requests.get(export, stream=True, allow_redirects=False, cookies=cookies)
         dl_url = response.headers["location"]
         if "accounts.google.com" in dl_url:
             reply += "Link is not public!"
@@ -144,13 +142,9 @@ def zippy_share(url: str) -> str:
     scripts = page_soup.find_all("script", {"type": "text/javascript"})
     for script in scripts:
         if "getElementById('dlbutton')" in script.text:
-            url_raw = re.search(
-                r"= (?P<url>\".+\" \+ (?P<math>\(.+\)) .+);", script.text
-            )["url"]
+            url_raw = re.search(r"= (?P<url>\".+\" \+ (?P<math>\(.+\)) .+);", script.text)["url"]
 
-            math = re.search(r"= (?P<url>\".+\" \+ (?P<math>\(.+\)) .+);", script.text)[
-                "math"
-            ]
+            math = re.search(r"= (?P<url>\".+\" \+ (?P<math>\(.+\)) .+);", script.text)["math"]
 
             dl_url = url_raw.replace(math, f'"{str(eval(math))}"')
             break
@@ -250,17 +244,12 @@ def sourceforge(url: str) -> str:
     file_path = re.findall(r"files([\s\S]*)/download", link)[0]
     reply = f"Mirrors for __{file_path.split('/')[-1]}__\n"
     project = re.findall(r"projects?/(.*?)/files", link)[0]
-    mirrors = (
-        f"https://sourceforge.net/settings/mirror_choices?"
-        f"projectname={project}&filename={file_path}"
-    )
+    mirrors = f"https://sourceforge.net/settings/mirror_choices?" f"projectname={project}&filename={file_path}"
     page = BeautifulSoup(requests.get(mirrors).content, "html.parser")
     info = page.find("ul", {"id": "mirrorList"}).findAll("li")
     for mirror in info[1:]:
         name = re.findall(r"\(([\s\S]*)\)", mirror.text.strip())[0]
-        dl_url = (
-            f'https://{mirror["id"]}.dl.sourceforge.net/project/{project}/{file_path}'
-        )
+        dl_url = f'https://{mirror["id"]}.dl.sourceforge.net/project/{project}/{file_path}'
         reply += f"[{name}]({dl_url}) "
     return reply
 
@@ -355,10 +344,7 @@ def useragent():
     useragent random setter
     """
     useragents = BeautifulSoup(
-        requests.get(
-            "https://developers.whatismybrowser.com/"
-            "useragents/explore/operating_system_name/android/"
-        ).content,
+        requests.get("https://developers.whatismybrowser.com/" "useragents/explore/operating_system_name/android/").content,
         "lxml",
     ).findAll("td", {"class": "useragent"})
     user_agent = choice(useragents)

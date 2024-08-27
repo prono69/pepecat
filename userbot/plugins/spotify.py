@@ -1,4 +1,4 @@
-""" Module to display Currenty Playing Spotify Songs in your bio """
+"""Module to display Currenty Playing Spotify Songs in your bio"""
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~# CatUserBot #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Copyright (C) 2020-2023 by TgCatUB@Github.
@@ -37,13 +37,7 @@ from userbot.core.logger import logging
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.functions.functions import (
-    delete_conv,
-    ellipse_create,
-    ellipse_layout_create,
-    post_to_telegraph,
-    text_draw,
-)
+from ..helpers.functions.functions import delete_conv, ellipse_create, ellipse_layout_create, post_to_telegraph, text_draw
 from ..helpers.utils import reply_id
 from ..sql_helper import global_collectionjson as glob_db
 from . import BOTLOG, BOTLOG_CHATID, LyricsGen, catub
@@ -155,7 +149,7 @@ def ms_converter(millis):
 
 
 @catub.cat_cmd(
-    pattern="spsetup$",
+    pattern=r"spsetup$",
     command=("spsetup", plugin_category),
     info={
         "header": "Setup for Spotify Auth",
@@ -175,9 +169,7 @@ async def spotify_setup(event):
     if not (SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET):
         return await edit_delete(event, no_sp_vars, 10)
     if event.chat_id != BOTLOG_CHATID:
-        return await edit_delete(
-            event, "CHAT INVALID :: Do this in your Log Channel", 7
-        )
+        return await edit_delete(event, "CHAT INVALID :: Do this in your Log Channel", 7)
     authurl = (
         "https://accounts.spotify.com/authorize?client_id={}&response_type=code&redirect_uri="
         "https%3A%2F%2Fexample.com%2Fcallback&scope=user-read-playback-state%20user-read-currently"
@@ -185,10 +177,7 @@ async def spotify_setup(event):
         "-modify-private+user-follow-modify+user-read-private"
     )
     async with event.client.conversation(BOTLOG_CHATID) as conv:
-        msg = await conv.send_message(
-            "Go to the following link in "
-            f"your browser: {authurl.format(SPOTIFY_CLIENT_ID)} and reply this msg with the Page Url you got after giving authencation."
-        )
+        msg = await conv.send_message("Go to the following link in " f"your browser: {authurl.format(SPOTIFY_CLIENT_ID)} and reply this msg with the Page Url you got after giving authencation.")
         res = conv.wait_event(events.NewMessage(outgoing=True, chats=BOTLOG_CHATID))
         res = await res
         await msg.edit("`Processing ...`")
@@ -261,9 +250,7 @@ if SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET:
             skip = False
             to_insert = {}
             oauth = {"Authorization": f"Bearer {SP_DATABASE.return_token()}"}
-            r = requests.get(
-                "https://api.spotify.com/v1/me/player/currently-playing", headers=oauth
-            )
+            r = requests.get("https://api.spotify.com/v1/me/player/currently-playing", headers=oauth)
             # 200 means user plays smth
             if r.status_code == 200:
                 received = r.json()
@@ -271,41 +258,29 @@ if SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET:
                     to_insert["title"] = received["item"]["name"]
                     to_insert["progress"] = ms_converter(received["progress_ms"])
                     to_insert["interpret"] = received["item"]["artists"][0]["name"]
-                    to_insert["duration"] = ms_converter(
-                        received["item"]["duration_ms"]
-                    )
+                    to_insert["duration"] = ms_converter(received["item"]["duration_ms"])
                     to_insert["link"] = received["item"]["external_urls"]["spotify"]
                     to_insert["image"] = received["item"]["album"]["images"][1]["url"]
                     if save_spam("spotify", False):
-                        stringy = (
-                            "**[INFO]**\n\nEverything returned back to normal, the previous spotify issue has been "
-                            "resolved."
-                        )
+                        string = "**[INFO]**\n\nEverything returned back to normal, the previous spotify issue has been " "resolved."
                         await catub.send_message(BOTLOG_CHATID, string)
                 elif save_spam("spotify", True):
                     # currently item is not passed when the user plays a
                     # podcast
-                    string = (
-                        f"**[INFO]**\n\nThe playback {received['currently_playing_type']}"
-                        " didn't gave me any additional information, so I skipped updating the bio."
-                    )
+                    string = f"**[INFO]**\n\nThe playback {received['currently_playing_type']}" " didn't gave me any additional information, so I skipped updating the bio."
                     await catub.send_message(BOTLOG_CHATID, string)
             elif r.status_code == 429:
                 to_wait = r.headers["Retry-After"]
                 LOGS.error(f"Spotify, have to wait for {str(to_wait)}")
                 await catub.send_message(
                     BOTLOG_CHATID,
-                    "**[WARNING]**\n\nI caught a spotify api limit. I shall sleep for "
-                    f"{str(to_wait)} seconds until I refresh again",
+                    "**[WARNING]**\n\nI caught a spotify api limit. I shall sleep for " f"{str(to_wait)} seconds until I refresh again",
                 )
                 skip = True
                 await asyncio.sleep(int(to_wait))
             elif r.status_code == 204:
                 if save_spam("spotify", False):
-                    stringy = (
-                        "**[INFO]**\n\nEverything returned back to normal, the previous spotify issue has been "
-                        "resolved."
-                    )
+                    stringy = "**[INFO]**\n\nEverything returned back to normal, the previous spotify issue has been " "resolved."
                     await catub.send_message(BOTLOG_CHATID, stringy)
             elif r.status_code == 401:
                 data = {
@@ -334,18 +309,11 @@ if SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET:
                 skip = True
             elif r.status_code == 502:
                 if save_spam("spotify", True):
-                    string = (
-                        "**[WARNING]**\n\nSpotify returned a Bad gateway, which means they have a problem on their "
-                        "servers. The bot will continue to run but may not update the bio for a short time."
-                    )
+                    string = "**[WARNING]**\n\nSpotify returned a Bad gateway, which means they have a problem on their " "servers. The bot will continue to run but may not update the bio for a short time."
                     await catub.send_message(BOTLOG_CHATID, string)
             elif r.status_code == 503:
                 if save_spam("spotify", True):
-                    string = (
-                        "**[WARNING]**\n\nSpotify said that the service is unavailable, which means they have a "
-                        "problem on their servers. The bot will continue to run but may not update the bio for a "
-                        "short time."
-                    )
+                    string = "**[WARNING]**\n\nSpotify said that the service is unavailable, which means they have a " "problem on their servers. The bot will continue to run but may not update the bio for a " "short time."
                     await catub.send_message(BOTLOG_CHATID, string)
             elif r.status_code == 404:
                 if save_spam("spotify", True):
@@ -354,11 +322,7 @@ if SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET:
             else:
                 await catub.send_message(
                     BOTLOG_CHATID,
-                    "**[ERROR]**\n\nOK, so something went reeeally wrong with spotify. The bot "
-                    "was stopped.\nStatus code: "
-                    + str(r.status_code)
-                    + "\n\nText: "
-                    + r.text,
+                    "**[ERROR]**\n\nOK, so something went reeeally wrong with spotify. The bot " "was stopped.\nStatus code: " + str(r.status_code) + "\n\nText: " + r.text,
                 )
                 LOGS.error(f"Spotify, error {r.status_code}, text: {r.text}")
                 # stop the whole program since I dont know what happens here
@@ -412,10 +376,7 @@ if SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET:
                                 await catub(UpdateProfileRequest(about=new_bio))
                                 spotify_bio.lrt = time.time()
                                 if save_spam("telegram", False):
-                                    stringy = (
-                                        "**[INFO]**\n\nEverything returned back to normal, the previous telegram "
-                                        "issue has been resolved."
-                                    )
+                                    stringy = "**[INFO]**\n\nEverything returned back to normal, the previous telegram " "issue has been resolved."
                                     await catub.send_message(BOTLOG_CHATID, stringy)
                             # this can happen if our LIMIT check failed because telegram counts emojis twice and python
                             # doesnt. Refer to the constants file to learn more
@@ -431,17 +392,11 @@ if SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET:
                     # if we dont have a bio, everything was too long, so we
                     # tell the user that
                     if not new_bio and save_spam("telegram", True):
-                        to_send = (
-                            "**[INFO]**\n\nThe current track exceeded the character limit, so the bio wasn't "
-                            f"updated.\n\n Track: {title}\nInterpret: {interpret}"
-                        )
+                        to_send = "**[INFO]**\n\nThe current track exceeded the character limit, so the bio wasn't " f"updated.\n\n Track: {title}\nInterpret: {interpret}"
                         await catub.send_message(BOTLOG_CHATID, to_send)
                 else:
                     if save_spam("telegram", False):
-                        stringy = (
-                            "**[INFO]**\n\nEverything returned back to normal, the previous telegram issue has "
-                            "been resolved."
-                        )
+                        stringy = "**[INFO]**\n\nEverything returned back to normal, the previous telegram issue has " "been resolved."
                         await catub.send_message(BOTLOG_CHATID, stringy)
                     old_bio = SP_DATABASE.return_bio()
                     # this means the bio is blank, so we save that as the new
@@ -455,8 +410,7 @@ if SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET:
                 LOGS.error(f"to wait for {str(to_wait)}")
                 await catub.send_message(
                     BOTLOG_CHATID,
-                    "**[WARNING]**\n\nI caught a telegram api limit. I shall sleep "
-                    f"{str(to_wait)} seconds until I refresh again",
+                    "**[WARNING]**\n\nI caught a telegram api limit. I shall sleep " f"{str(to_wait)} seconds until I refresh again",
                 )
                 skip = True
                 await asyncio.sleep(to_wait)
@@ -471,15 +425,13 @@ async def sp_var_check(event):
         await event.edit(no_sp_vars)
         return False
     if SP_DATABASE is None:
-        await event.edit(
-            "ERROR :: No Database was found!\n**Do `.help spsetup` for more info.**\n\n[Follow this tutorial](https://graph.org/Steps-of-setting-Spotify-Vars-in-Catuserbot-04-24-2)"
-        )
+        await event.edit("ERROR :: No Database was found!\n**Do `.help spsetup` for more info.**\n\n[Follow this tutorial](https://graph.org/Steps-of-setting-Spotify-Vars-in-Catuserbot-04-24-2)")
         return False
     return True
 
 
 @catub.cat_cmd(
-    pattern="spbio$",
+    pattern=r"spbio$",
     command=("spbio", plugin_category),
     info={
         "header": "To Enable or Disable the spotify current playing to bio",
@@ -501,9 +453,7 @@ async def spotifybio(event):
             event,
             "✅ `Spotify Bio enabled` \nCurrent Spotify playback will updated in the Bio",
         )
-        USER_INITIAL_BIO["bio"] = (
-            (await catub(GetFullUserRequest(catub.uid))).full_user
-        ).about or ""
+        USER_INITIAL_BIO["bio"] = ((await catub(GetFullUserRequest(catub.uid))).full_user).about or ""
         SP_DATABASE.SPOTIFY_MODE = True
         await spotify_bio()
 
@@ -511,9 +461,7 @@ async def spotifybio(event):
 def title_fetch(title):
     pattern = re.compile(r"([^(-]+) [(-].*")
     if "-E-" in title or "- E -" in title:
-        pattern = re.compile(
-            r"([a-zA-Z0-9]+(?: ?[a-zA-Z0-9]+)+(?: - \w - \w+)?(?:-\w-\w+)?).*"
-        )
+        pattern = re.compile(r"([a-zA-Z0-9]+(?: ?[a-zA-Z0-9]+)+(?: - \w - \w+)?(?:-\w-\w+)?).*")
     return regx[1] if (regx := pattern.search(title)) else title
 
 
@@ -525,12 +473,7 @@ async def telegraph_lyrics(tittle, artist):
     else:
         try:
             album, content = LyricsGen.lyrics(tittle, artist)
-            content = (
-                content.replace("\n", "<br>")
-                .replace("<br><br>", "<br>‌‌‎ <br>")
-                .replace("[", "<b>[")
-                .replace("]", "]</b>")
-            )
+            content = content.replace("\n", "<br>").replace("<br><br>", "<br>‌‌‎ <br>").replace("[", "<b>[").replace("]", "]</b>")
             result = f"<img src='{album}'/><h4>{tittle}</h4><br><b>by {artist}</b><br>‌‌‎ <br>{content}"
             symbol = "ıllılı."
         except Exception:
@@ -625,9 +568,7 @@ async def make_thumb(url, client, song, artist, now, full):
         photos = await client.get_profile_photos(client.uid)
         myphoto = await client.download_media(photos[0])
     except IndexError:
-        myphoto = urllib.request.urlretrieve(
-            "https://github.com/TgCatUB/CatUserbot-Resources/raw/master/Resources/Spotify/SwagCat.jpg"
-        )
+        myphoto = urllib.request.urlretrieve("https://github.com/TgCatUB/CatUserbot-Resources/raw/master/Resources/Spotify/SwagCat.jpg")
     user_lay = ellipse_layout_create(myphoto, 6, 30)
     thumbmask.paste(user_lay, (700, 450), user_lay)
     user, x = ellipse_create(myphoto, 7.5, 0)
@@ -636,9 +577,7 @@ async def make_thumb(url, client, song, artist, now, full):
         song = f"{song[:18]}..."
     text_draw(mfont, 30, thumbmask, "NOW PLAYING", 745)
     text_draw(bfont, 80, thumbmask, song, 772, stroke_width=1, stroke_fill="white")
-    text_draw(
-        bfont, 38, thumbmask, f"by {artist}", 870, stroke_width=1, stroke_fill="white"
-    )
+    text_draw(bfont, 38, thumbmask, f"by {artist}", 870, stroke_width=1, stroke_fill="white")
     text_draw(mfont, 35, thumbmask, f"{now} | {full}", 925)
     thumbmask.save(pic_name)
     os.remove(myphoto)
@@ -674,11 +613,7 @@ async def get_spotify(response):
 async def spotify_inline_article():
     thumb = None
     media = "https://github.com/TgCatUB/CatUserbot-Resources/raw/master/Resources/Inline/spotify_off.png"
-    if (
-        not Config.SPOTIFY_CLIENT_ID
-        or not Config.SPOTIFY_CLIENT_SECRET
-        or SP_DATABASE is None
-    ):
+    if not Config.SPOTIFY_CLIENT_ID or not Config.SPOTIFY_CLIENT_SECRET or SP_DATABASE is None:
         query = "__Spotify is not setup properly. \nDo `.help spsetup` and follow the tutorial.__"
         buttons = [
             Button.url(
@@ -694,9 +629,7 @@ async def spotify_inline_article():
         else:
             media, tittle, dic, lyrics, symbol = await get_spotify(response)
             thumb = "https://github.com/TgCatUB/CatUserbot-Resources/raw/master/Resources/Inline/spotify_on.png"
-            query = (
-                f'**🎶 Track :- ** `{tittle}`\n**🎤 Artist :- ** `{dic["interpret"]}`'
-            )
+            query = f'**🎶 Track :- ** `{tittle}`\n**🎤 Artist :- ** `{dic["interpret"]}`'
             buttons = [
                 (
                     Button.url("🎧 Spotify", dic["link"]),
@@ -707,7 +640,7 @@ async def spotify_inline_article():
 
 
 @catub.cat_cmd(
-    pattern="spnow$",
+    pattern=r"spnow$",
     command=("spnow", plugin_category),
     info={
         "header": "To fetch scrobble data from spotify",
@@ -723,9 +656,7 @@ async def spotify_player(event):
     catevent = await edit_or_reply(event, "🎶 `Fetching...`")
     r = sp_data("https://api.spotify.com/v1/me/player/currently-playing")
     if r.status_code == 204:
-        return await edit_delete(
-            catevent, "\n**I'm not listening anything right now  ;)**"
-        )
+        return await edit_delete(catevent, "\n**I'm not listening anything right now  ;)**")
     if SP_DATABASE.SPOTIFY_MODE:
         info = f"🎶 Vibing ; [{spotify_bio.title}]({spotify_bio.link}) - {spotify_bio.interpret}"
         return await edit_or_reply(event, info, link_preview=True)
@@ -735,7 +666,7 @@ async def spotify_player(event):
 
 
 @catub.cat_cmd(
-    pattern="spinfo$",
+    pattern=r"spinfo$",
     command=("spinfo", plugin_category),
     info={
         "header": "To fetch Info of current spotify user",
@@ -771,7 +702,7 @@ async def spotify_info(event):
 
 
 @catub.cat_cmd(
-    pattern="sprecent$",
+    pattern=r"sprecent$",
     command=("sprecent", plugin_category),
     info={
         "header": "To fetch list of recently played songs",
@@ -794,7 +725,7 @@ async def spotify_recent(event):
 
 
 @catub.cat_cmd(
-    pattern="(i|)now(?:\s|$)([\s\S]*)",
+    pattern=r"(i|)now(?:\s|$)([\s\S]*)",
     command=("now", plugin_category),
     info={
         "header": "To get song from spotify",
@@ -822,9 +753,7 @@ async def spotify_now(event):
             return
         r = sp_data("https://api.spotify.com/v1/me/player/currently-playing")
         if r.status_code == 204:
-            return await edit_delete(
-                catevent, "**I'm not listening anything right now  ;)**"
-            )
+            return await edit_delete(catevent, "**I'm not listening anything right now  ;)**")
         received = r.json()
         if received["currently_playing_type"] == "track":
             link = received["item"]["external_urls"]["spotify"]

@@ -45,11 +45,7 @@ async def catalive(StartTime):
     heroku_api = "https://api.heroku.com"
     uptime = await get_readable_time((time.time() - StartTime))
     try:
-        useragent = (
-            "Mozilla/5.0 (Linux; Android 10; SM-G975F) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/80.0.3987.149 Mobile Safari/537.36"
-        )
+        useragent = "Mozilla/5.0 (Linux; Android 10; SM-G975F) " "AppleWebKit/537.36 (KHTML, like Gecko) " "Chrome/80.0.3987.149 Mobile Safari/537.36"
         user_id = Heroku.account().id
         headers = {
             "User-Agent": useragent,

@@ -16,14 +16,14 @@ from telethon.tl.functions.contacts import UnblockRequest as unblock
 from userbot import catub
 
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers import _format, sanga_seperator
+from ..helpers import sanga_seperator
 from ..helpers.utils import _format
 
 plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="sg(|u)(?:\s|$)([\s\S]*)",
+    pattern=r"sg(|u)(?:\s|$)([\s\S]*)",
     command=("sg", plugin_category),
     info={
         "header": "To get name history of the user.",
@@ -77,10 +77,6 @@ async def sangmata(event):
 
     names, usernames = sanga_seperator(responses)
     check = (usernames, "Username") if cmd == "u" else (names, "Name")
-    user_name = (
-        f"{userinfo.first_name} {userinfo.last_name}"
-        if userinfo.last_name
-        else userinfo.first_name
-    )
+    user_name = f"{userinfo.first_name} {userinfo.last_name}" if userinfo.last_name else userinfo.first_name
     output = f"**➜ User Info :**  {_format.mentionuser(user_name, userinfo.id)}\n**➜ {check[1]} History :**\n{check[0]}"
     await edit_or_reply(catevent, output)

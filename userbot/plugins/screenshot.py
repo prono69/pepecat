@@ -25,7 +25,7 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="(ss|gis)(?:\s|$)([\s\S]*)",
+    pattern=r"(ss|gis)(?:\s|$)([\s\S]*)",
     command=("ss", plugin_category),
     info={
         "header": "To Take a screenshot of a website.",
@@ -72,7 +72,7 @@ async def screenshot(event):
 
 
 @catub.cat_cmd(
-    pattern="scapture ([\s\S]*)",
+    pattern=r"scapture ([\s\S]*)",
     command=("scapture", plugin_category),
     info={
         "header": "To Take a screenshot of a website.",
@@ -100,11 +100,7 @@ async def scapture(event):
         caturl = url(inputstr)
     if not caturl:
         return await catevent.edit("`The given input is not supported url`")
-    response_api = requests.get(
-        sample_url.format(
-            Config.SCREEN_SHOT_LAYER_ACCESS_KEY, inputstr, "1", "2560x1440", "PNG", "1"
-        )
-    )
+    response_api = requests.get(sample_url.format(Config.SCREEN_SHOT_LAYER_ACCESS_KEY, inputstr, "1", "2560x1440", "PNG", "1"))
     # https://stackoverflow.com/a/23718458/4723940
     contentType = response_api.headers["content-type"]
     end = datetime.now()

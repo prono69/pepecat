@@ -27,13 +27,11 @@ plugin_category = "misc"
 LOGS = logging.getLogger(__name__)
 
 
-link_regex = re.compile(
-    "((https?):((//)|(\\\\))+([\w\d:#@%/;$()~_?\+-=\\\.&](#!)?)*)", re.DOTALL
-)
+link_regex = re.compile(r"((https?):((//)|(\\\\))+([\w\d:#@%/;$()~_?\+-=\\\.&](#!)?)*)", re.DOTALL)
 
 
 @catub.cat_cmd(
-    pattern="labstack(?:\s|$)([\s\S]*)",
+    pattern=r"labstack(?:\s|$)([\s\S]*)",
     command=("labstack", plugin_category),
     info={
         "header": "To upload media to labstack.",
@@ -49,13 +47,9 @@ async def labstack(event):
     if input_str:
         filebase = input_str
     elif reply:
-        filebase = await event.client.download_media(
-            reply.media, Config.TMP_DOWNLOAD_DIRECTORY
-        )
+        filebase = await event.client.download_media(reply.media, Config.TMP_DOWNLOAD_DIRECTORY)
     else:
-        return await editor.edit(
-            "Reply to a media file or provide a directory to upload the file to labstack"
-        )
+        return await editor.edit("Reply to a media file or provide a directory to upload the file to labstack")
     filesize = os.path.getsize(filebase)
     filename = os.path.basename(filebase)
     headers2 = {"Up-User-ID": "IZfFbjUcgoo3Ao3m"}
@@ -63,9 +57,7 @@ async def labstack(event):
         "ttl": 604800,
         "files": [{"name": filename, "type": "", "size": filesize}],
     }
-    r2 = requests.post(
-        "https://up.labstack.com/api/v1/links", json=files2, headers=headers2
-    )
+    r2 = requests.post("https://up.labstack.com/api/v1/links", json=files2, headers=headers2)
     r2json = json.loads(r2.text)
     url = f'https://up.labstack.com/api/v1/links/{r2json["code"]}/send'
     max_days = 7
@@ -87,16 +79,12 @@ async def labstack(event):
         return await editor.edit(exc.output.decode("UTF-8"))
     else:
         LOGS.info(t_response)
-        t_response_arry = (
-            f'https://up.labstack.com/api/v1/links/{r2json["code"]}/receive'
-        )
-    await editor.edit(
-        t_response_arry + "\nMax Days:" + str(max_days), link_preview=False
-    )
+        t_response_arry = f'https://up.labstack.com/api/v1/links/{r2json["code"]}/receive'
+    await editor.edit(t_response_arry + "\nMax Days:" + str(max_days), link_preview=False)
 
 
 @catub.cat_cmd(
-    pattern="webupload ?(.+?|) --(fileio|anonfiles|transfer|filebin|anonymousfiles|bayfiles)",
+    pattern=r"webupload ?(.+?|) --(fileio|anonfiles|transfer|filebin|anonymousfiles|bayfiles)",
     command=("webupload", plugin_category),
     info={
         "header": "To upload media to some online media sharing platforms.",
@@ -126,17 +114,14 @@ async def _(event):
         file_name = input_str
     else:
         reply = await event.get_reply_message()
-        file_name = await event.client.download_media(
-            reply.media, Config.TMP_DOWNLOAD_DIRECTORY
-        )
+        file_name = await event.client.download_media(reply.media, Config.TMP_DOWNLOAD_DIRECTORY)
         catcheck = True
     # a dictionary containing the shell commands
     CMD_WEB = {
         "fileio": 'curl -F "file=@{full_file_path}" https://file.io',
         "oload": 'curl -F "file=@{full_file_path}" https://api.openload.cc/upload',
         "anonfiles": 'curl -F "file=@{full_file_path}" https://api.anonfiles.com/upload',
-        "transfer": 'curl --upload-file "{full_file_path}" https://transfer.sh/'
-        + os.path.basename(file_name),
+        "transfer": 'curl --upload-file "{full_file_path}" https://transfer.sh/' + os.path.basename(file_name),
         "filebin": 'curl -X POST --data-binary "@{full_file_path}" -H "filename: {bare_local_name}" "https://filebin.net"',
         "anonymousfiles": 'curl -F "file=@{full_file_path}" https://api.anonymousfiles.io/',
         "vshare": 'curl -F "file=@{full_file_path}" https://api.vshare.is/upload',
@@ -144,16 +129,12 @@ async def _(event):
     }
     filename = os.path.basename(file_name)
     try:
-        selected_one = CMD_WEB[selected_transfer].format(
-            full_file_path=file_name, bare_local_name=filename
-        )
+        selected_one = CMD_WEB[selected_transfer].format(full_file_path=file_name, bare_local_name=filename)
     except KeyError:
         return await editor.edit("Invalid selected Transfer")
     cmd = selected_one
     # start the subprocess $SHELL
-    process = await asyncio.create_subprocess_shell(
-        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-    )
+    process = await asyncio.create_subprocess_shell(cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
     stdout, stderr = await process.communicate()
     error = stderr.decode().strip()
     if t_response := stdout.decode().strip():
@@ -162,7 +143,7 @@ async def _(event):
         except Exception as e:
             # some sites don't return valid JSONs
             LOGS.info(str(e))
-        urls = links = re.findall(link_regex, t_response)
+        urls = re.findall(link_regex, t_response)
         result = ""
         for i in urls:
             if not result:

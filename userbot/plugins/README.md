@@ -1,4 +1,5 @@
 ## Mandatory Imports
+
 ```python3
 from userbot import catub
 
@@ -8,7 +9,9 @@ plugin_category="extra"
 ```
 
 ### Formation
+
 This below one is Sample format of making plugin
+
 ```python3
 from userbot import catub
 
@@ -17,7 +20,7 @@ from ..core.managers import edit_delete, edit_or_reply
 plugin_category="extra"
 
 @catub.cat_cmd(
-    pattern="hibuddy(?:\s|$)([\s\S]*)",
+    pattern=r"hibuddy(?:\s|$)([\s\S]*)",
     command=("hibuddy", plugin_category),
     info={
         "header": "Just to say hi to other user.",
@@ -38,11 +41,11 @@ async def hi_buddy(event):
 
 For more information refer this [Docs](https://docs.telethon.dev/en/latest/)
 
-
 Arguments in cat_cmd are as follows:
+
 ```
 
-pattern="Regex for command"
+pattern=r"Regex for command"
 command=("Just command name", plugin_category) use plugin_category name from predefined names (admin,bot,utils,tools,extra,fun,misc)
 info={
         "header":string - "intro for command",

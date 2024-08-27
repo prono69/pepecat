@@ -6,12 +6,7 @@ from telethon.utils import get_display_name
 from userbot import catub
 
 from ..core.managers import edit_or_reply
-from ..sql_helper.filter_sql import (
-    add_filter,
-    get_filters,
-    remove_all_filters,
-    remove_filter,
-)
+from ..sql_helper.filter_sql import add_filter, get_filters, remove_all_filters, remove_filter
 from . import BOTLOG, BOTLOG_CHATID
 
 plugin_category = "utils"
@@ -48,9 +43,7 @@ async def filter_incoming_handler(event):  # sourcery no-metrics
             file_media = None
             filter_msg = None
             if trigger.f_mesg_id:
-                msg_o = await event.client.get_messages(
-                    entity=BOTLOG_CHATID, ids=int(trigger.f_mesg_id)
-                )
+                msg_o = await event.client.get_messages(entity=BOTLOG_CHATID, ids=int(trigger.f_mesg_id))
                 file_media = msg_o.media
                 filter_msg = msg_o.message
                 link_preview = True
@@ -79,7 +72,7 @@ async def filter_incoming_handler(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="filter (.*)",
+    pattern=r"filter (.*)",
     command=("filter", plugin_category),
     info={
         "header": "To save filter for the given keyword.",
@@ -144,7 +137,7 @@ async def add_new_filter(event):
 
 
 @catub.cat_cmd(
-    pattern="filters$",
+    pattern=r"filters$",
     command=("filters", plugin_category),
     info={
         "header": "To list all filters in that chat.",
@@ -169,7 +162,7 @@ async def on_snip_list(event):
 
 
 @catub.cat_cmd(
-    pattern="stop ([\s\S]*)",
+    pattern=r"stop ([\s\S]*)",
     command=("stop", plugin_category),
     info={
         "header": "To delete that filter . so if user send that keyword bot will not reply",
@@ -186,7 +179,7 @@ async def remove_a_filter(event):
 
 
 @catub.cat_cmd(
-    pattern="rmfilters$",
+    pattern=r"rmfilters$",
     command=("rmfilters", plugin_category),
     info={
         "header": "To delete all filters in that group.",
@@ -195,7 +188,7 @@ async def remove_a_filter(event):
 )
 async def on_all_snip_delete(event):
     "To delete all filters in that group."
-    if filters := get_filters(event.chat_id):
+    if get_filters(event.chat_id):
         remove_all_filters(event.chat_id)
         await edit_or_reply(event, "filters in current chat deleted successfully")
     else:

@@ -13,11 +13,7 @@ import time
 from datetime import datetime
 
 import requests
-from telethon.errors.rpcerrorlist import (
-    MediaEmptyError,
-    WebpageCurlFailedError,
-    WebpageMediaEmptyError,
-)
+from telethon.errors.rpcerrorlist import MediaEmptyError, WebpageCurlFailedError, WebpageMediaEmptyError
 
 from ..Config import Config
 from ..core.managers import edit_or_reply
@@ -36,7 +32,7 @@ if Config.BADCAT:
 
 
 @catub.cat_cmd(
-    pattern="ping( -a|$)",
+    pattern=r"ping( -a|$)",
     command=("ping", plugin_category),
     info={
         "header": "check how long it takes to ping your userbot",
@@ -80,9 +76,7 @@ async def _(event):
             CAT = list(PING_PIC.split())
             PIC = random.choice(CAT)
             try:
-                await event.client.send_file(
-                    event.chat_id, PIC, caption=caption, reply_to=reply_to_id
-                )
+                await event.client.send_file(event.chat_id, PIC, caption=caption, reply_to=reply_to_id)
                 await catevent.delete()
             except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError):
                 return await edit_or_reply(

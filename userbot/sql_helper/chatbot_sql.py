@@ -21,9 +21,7 @@ class ChatBot(BASE):
     user_username = Column(UnicodeText)
     chat_type = Column(UnicodeText)
 
-    def __init__(
-        self, chat_id, user_id, chat_name, user_name, user_username, chat_type
-    ):
+    def __init__(self, chat_id, user_id, chat_name, user_name, user_username, chat_type):
         self.chat_id = str(chat_id)
         self.user_id = str(user_id)
         self.chat_name = chat_name
@@ -32,11 +30,7 @@ class ChatBot(BASE):
         self.chat_type = chat_type
 
     def __eq__(self, other):
-        return (
-            isinstance(other, ChatBot)
-            and self.chat_id == other.chat_id
-            and self.user_id == other.user_id
-        )
+        return isinstance(other, ChatBot) and self.chat_id == other.chat_id and self.user_id == other.user_id
 
 
 ChatBot.__table__.create(checkfirst=True)
@@ -70,18 +64,14 @@ def get_all_users():
 def addai(chat_id, user_id, chat_name, user_name, user_username, chat_type):
     to_check = is_added(chat_id, user_id)
     if not to_check:
-        adder = ChatBot(
-            str(chat_id), str(user_id), chat_name, user_name, user_username, chat_type
-        )
+        adder = ChatBot(str(chat_id), str(user_id), chat_name, user_name, user_username, chat_type)
         SESSION.add(adder)
         SESSION.commit()
         return True
     rem = SESSION.query(ChatBot).get((str(chat_id), str(user_id)))
     SESSION.delete(rem)
     SESSION.commit()
-    adder = ChatBot(
-        str(chat_id), str(user_id), chat_name, user_name, user_username, chat_type
-    )
+    adder = ChatBot(str(chat_id), str(user_id), chat_name, user_name, user_username, chat_type)
     SESSION.add(adder)
     SESSION.commit()
     return False

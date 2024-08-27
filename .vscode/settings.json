@@ -1,9 +1,8 @@
 {
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": true,
-        "source.fixAll": true,
-        "sourcery.apply": true
-    },
-    "python.formatting.provider": "black",
-    "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll": "explicit",
+    "sourcery.apply": "explicit"
+  },
+  "editor.formatOnSave": true
 }

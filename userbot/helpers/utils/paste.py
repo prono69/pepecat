@@ -34,11 +34,7 @@ async def p_paste(message, extension=None):
         return {"error": str(e)}
     if response.ok:
         response = response.json()
-        purl = (
-            f"https://pasty.lus.pm/{response['id']}.{extension}"
-            if extension
-            else f"https://pasty.lus.pm/{response['id']}.txt"
-        )
+        purl = f"https://pasty.lus.pm/{response['id']}.{extension}" if extension else f"https://pasty.lus.pm/{response['id']}.txt"
         try:
             from ...core.session import catub
 
@@ -62,9 +58,7 @@ async def s_paste(message, extension="txt"):
     """
     siteurl = "https://spaceb.in/api/v1/documents/"
     try:
-        response = requests.post(
-            siteurl, data={"content": message, "extension": extension}
-        )
+        response = requests.post(siteurl, data={"content": message, "extension": extension})
     except Exception as e:
         return {"error": str(e)}
     if response.ok:
@@ -85,9 +79,7 @@ def spaste(message, extension="txt"):
     """
     siteurl = "https://spaceb.in/api/v1/documents/"
     try:
-        response = requests.post(
-            siteurl, data={"content": message, "extension": extension}
-        )
+        response = requests.post(siteurl, data={"content": message, "extension": extension})
     except Exception as e:
         return {"error": str(e)}
     if response.ok:
@@ -114,11 +106,7 @@ async def n_paste(message, extension=None):
         return {"error": str(e)}
     if response.ok:
         response = response.json()
-        purl = (
-            f"nekobin.com/{response['result']['key']}.{extension}"
-            if extension
-            else f"nekobin.com/{response['result']['key']}"
-        )
+        purl = f"nekobin.com/{response['result']['key']}.{extension}" if extension else f"nekobin.com/{response['result']['key']}"
         return {
             "url": purl,
             "raw": f"nekobin.com/raw/{response['result']['key']}",
@@ -139,11 +127,7 @@ async def d_paste(message, extension=None):
         return {"error": str(e)}
     if response.ok:
         response = response.json()
-        purl = (
-            f"http://catbin.up.railway.app/{response['key']}.{extension}"
-            if extension
-            else f"http://catbin.up.railway.app/{response['key']}"
-        )
+        purl = f"http://catbin.up.railway.app/{response['key']}.{extension}" if extension else f"http://catbin.up.railway.app/{response['key']}"
         return {
             "url": purl,
             "raw": f"http://catbin.up.railway.app/raw/{response['key']}",

@@ -19,7 +19,7 @@ plugin_category = "Extra"
 
 
 @catub.cat_cmd(
-    pattern="gifs(?:\s|$)([\s\S]*)",
+    pattern=r"gifs(?:\s|$)([\s\S]*)",
     command=("gifs", plugin_category),
     info={
         "header": "Sends random gifs",
@@ -45,9 +45,7 @@ async def some(event):
     res = requests.get("https://giphy.com/")
     res = res.text.split("GIPHY_FE_WEB_API_KEY =")[1].split("\n")[0]
     api_key = res[2:-1]
-    r = requests.get(
-        f"https://api.giphy.com/v1/gifs/search?q={inpt}&api_key={api_key}&limit=50"
-    ).json()
+    r = requests.get(f"https://api.giphy.com/v1/gifs/search?q={inpt}&api_key={api_key}&limit=50").json()
     list_id = [r["data"][i]["id"] for i in range(len(r["data"]))]
     rlist = random.sample(list_id, int(count))
     for items in rlist:

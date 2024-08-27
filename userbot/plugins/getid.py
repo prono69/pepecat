@@ -20,7 +20,7 @@ LOGS = logging.getLogger(__name__)
 
 
 @catub.cat_cmd(
-    pattern="(get_id|id)(?:\s|$)([\s\S]*)",
+    pattern=r"(get_id|id)(?:\s|$)([\s\S]*)",
     command=("id", plugin_category),
     info={
         "header": "To get id of the group or user.",
@@ -38,15 +38,11 @@ async def _(event):
             return await edit_delete(event, f"`{e}`", 5)
         try:
             if p.first_name:
-                return await edit_or_reply(
-                    event, f"The id of the user `{input_str}` is `{p.id}`"
-                )
+                return await edit_or_reply(event, f"The id of the user `{input_str}` is `{p.id}`")
         except Exception:
             try:
                 if p.title:
-                    return await edit_or_reply(
-                        event, f"The id of the chat/channel `{p.title}` is `{p.id}`"
-                    )
+                    return await edit_or_reply(event, f"The id of the chat/channel `{p.title}` is `{p.id}`")
             except Exception as e:
                 LOGS.info(str(e))
         await edit_or_reply(event, "`Either give input as username or reply to user`")

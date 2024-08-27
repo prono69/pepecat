@@ -28,7 +28,7 @@ plugin_category = "tools"
 
 
 @catub.cat_cmd(
-    pattern="gs ([\s\S]*)",
+    pattern=r"gs ([\s\S]*)",
     command=("gs", plugin_category),
     info={
         "header": "Google search command.",
@@ -111,7 +111,7 @@ async def gsearch(q_event):
 
 
 @catub.cat_cmd(
-    pattern="gis ([\s\S]*)",
+    pattern=r"gis ([\s\S]*)",
     command=("gis", plugin_category),
     info={
         "header": "Google search in image format",
@@ -124,7 +124,7 @@ async def gis(event):
 
 
 @catub.cat_cmd(
-    pattern="grs$",
+    pattern=r"grs$",
     command=("grs", plugin_category),
     info={
         "header": "Google reverse search command.",
@@ -137,11 +137,11 @@ async def grs(event):
 
 
 @catub.cat_cmd(
-    pattern="(grs|reverse)(?:\s|$)([\s\S]*)",
+    pattern=r"(grs|reverse)(?:\s|$)([\s\S]*)",
     command=("reverse", plugin_category),
     info={
         "header": "Google reverse search command.",
-        "description": "Reverse search replied media in google and shows results. If count is not used then it send 3 image by default.",
+        "description": "Reverse search replied media in google and shows results. If count is not used then it send 3 image by default.",  # noqa F821
         "usage": "{tr}reverse < 1 - 10 >",
     },
 )
@@ -158,13 +158,9 @@ async def reverse(event):
     if not message and not message.media:
         return await edit_or_reply(event, "`Reply to media...`")
     # convert media file into image to search in google
-    photo = await Convert.to_image(
-        event, message, dirct="./temp", file="reverse.png", noedits=True
-    )
+    photo = await Convert.to_image(event, message, dirct="./temp", file="reverse.png", noedits=True)
     if photo[1] is None:
-        return await edit_delete(
-            event, "`Unable to extract image from the replied message..`"
-        )
+        return await edit_delete(event, "`Unable to extract image from the replied message..`")
     catevent = await edit_or_reply(event, "`Processing...`")
     # get data accoding to cmd
     flag = cmd != "grs"
@@ -183,11 +179,7 @@ async def reverse(event):
                 file.write(pic)
     else:
         for checker, item in enumerate(data["image_set"], 1):
-            url = (
-                item.image
-                if item.image.endswith((".jpg", ".jpeg", ".png", ".gif"))
-                else item.site
-            )
+            url = item.image if item.image.endswith((".jpg", ".jpeg", ".png", ".gif")) else item.site
             # scamming telethon to send media as album
             # gif file can't album so doing single
             with contextlib.suppress(Exception):
@@ -205,7 +197,7 @@ async def reverse(event):
                     break
     end = datetime.now()
     ms = (end - start).seconds
-    caption = f'<b>➥ Google Reverse Search:</b>  <code>{data["title"]}</code>\n<b>➥ View Source: <a href="{data["google"]}">Google Image</a></b>\n<b>➥ View Similar: <a href="{data["lens"]}">Google Lens</a> </b>(Desktop)\n<b>➥ Time Taken:</b>  <code>{ms} seconds</code>'
+    caption = f'<b>➥ Google Reverse Search:</b>  <code>{data["title"]}</code>\n<b>➥ View Source: <a href="{data["google"]}">Google Image</a></b>\n<b>➥ View Similar: <a href="{data["lens"]}">Google Lens</a> </b>(Desktop)\n<b>➥ Time Taken:</b>  <code>{ms} seconds</code>'  # noqa E501
     # if no similar image found save the replied image to respond
     if not imagelist:
         imagelist.append(outfile)
@@ -226,11 +218,11 @@ async def reverse(event):
 
 
 @catub.cat_cmd(
-    pattern="google(?:\s|$)([\s\S]*)",
+    pattern=r"google(?:\s|$)([\s\S]*)",
     command=("google", plugin_category),
     info={
         "header": "To get link for google search",
-        "description": "Will show google search link as button instead of google search results try {tr}gs for google search results.",
+        "description": "Will show google search link as button instead of google search results try {tr}gs for google search results.",  # noqa F821
         "usage": [
             "{tr}google query",
         ],
@@ -241,9 +233,7 @@ async def google_search(event):
     input_str = event.pattern_match.group(1)
     reply_to_id = await reply_id(event)
     if not input_str:
-        return await edit_delete(
-            event, "__What should i search? Give search query plox.__"
-        )
+        return await edit_delete(event, "__What should i search? Give search query plox.__")
     input_str = deEmojify(input_str).strip()
     if len(input_str) > 195 or len(input_str) < 1:
         return await edit_delete(

@@ -59,9 +59,7 @@ def progress_str(total: int, current: int) -> str:
     return prog_arg.format(
         percentage,
         "".join(Config.FINISHED_PROGRESS_STR for _ in range(floor(percentage / 5))),
-        "".join(
-            Config.UNFINISHED_PROGRESS_STR for _ in range(20 - floor(percentage / 5))
-        ),
+        "".join(Config.UNFINISHED_PROGRESS_STR for _ in range(20 - floor(percentage / 5))),
     )
 
 
@@ -71,9 +69,7 @@ async def ban_user_from_bot(user, reason, reply_to=None):
         add_user_to_bl(user.id, get_display_name(user), user.username, reason, date)
     except Exception as e:
         LOGS.error(str(e))
-    banned_msg = (
-        f"**You have been Banned Forever from using this bot.\nReason** : {reason}"
-    )
+    banned_msg = f"**You have been Banned Forever from using this bot.\nReason** : {reason}"
     await catub.tgbot.send_message(user.id, banned_msg)
     info = f"**#Banned_Bot_PM_User**\
             \n\n👤 {_format.mentionuser(get_display_name(user) , user.id)}\

@@ -60,12 +60,7 @@ class LyricGenius:
             song = self.genius.search_song(title, artist)
             lyrics = song.lyrics.split(f"{title} Lyrics")
             if len(lyrics) > 1:
-                lyrics = (
-                    lyrics[1]
-                    .replace("[", "\n\n[")
-                    .replace("\n\n\n[", "\n\n[")
-                    .replace("\n\n\n", "\n\n")
-                )
+                lyrics = lyrics[1].replace("[", "\n\n[").replace("\n\n\n[", "\n\n[").replace("\n\n\n", "\n\n")
         except Exception:
             # try to scrap 1st
             url = f"https://www.musixmatch.com/lyrics/{artist.replace(' ', '-')}/{title.replace(' ', '-')}"
@@ -78,10 +73,7 @@ class LyricGenius:
             # if private data then show 30%
             if not lyrics:
                 base_url = "https://api.musixmatch.com/ws/1.1/"
-                endpoint = (
-                    base_url
-                    + f"matcher.lyrics.get?format=json&q_track={title}&q_artist={artist}&apikey=bf9bfaeccae52f5a4366bcdb2a6b0c4e"
-                )
+                endpoint = base_url + f"matcher.lyrics.get?format=json&q_track={title}&q_artist={artist}&apikey=bf9bfaeccae52f5a4366bcdb2a6b0c4e"
                 response = requests.get(endpoint)
                 data = response.json()
                 lyrics = data["message"]["body"]["lyrics"]["lyrics_body"]
@@ -111,9 +103,7 @@ async def song_download(url, event, quality="128k", video=False, title=True):
     if not os.path.exists(media_file):
         media_file = Path(f"{media_name}.{media_ext[1]}")
     elif not os.path.exists(media_file):
-        return await edit_or_reply(
-            event, f"__Sorry!.. I'm unable to find your requested {media_type}.__"
-        )
+        return await edit_or_reply(event, f"__Sorry!.. I'm unable to find your requested {media_type}.__")
     await edit_or_reply(event, f"__Uploading requested {media_type}...__")
     media_thumb = Path(f"{media_name}.jpg")
     if not os.path.exists(media_thumb):

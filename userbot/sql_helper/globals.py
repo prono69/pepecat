@@ -27,12 +27,7 @@ Globals.__table__.create(checkfirst=True)
 
 def gvarstatus(variable):
     try:
-        return (
-            SESSION.query(Globals)
-            .filter(Globals.variable == str(variable))
-            .first()
-            .value
-        )
+        return SESSION.query(Globals).filter(Globals.variable == str(variable)).first().value
     except BaseException:
         return None
     finally:
@@ -48,9 +43,5 @@ def addgvar(variable, value):
 
 
 def delgvar(variable):
-    if rem := (
-        SESSION.query(Globals)
-        .filter(Globals.variable == str(variable))
-        .delete(synchronize_session="fetch")
-    ):
+    if SESSION.query(Globals).filter(Globals.variable == str(variable)).delete(synchronize_session="fetch"):
         SESSION.commit()

@@ -27,12 +27,7 @@ from urlextract import URLExtract
 
 from ..Config import Config
 from ..helpers.utils import _format
-from ..sql_helper.global_list import (
-    add_to_list,
-    get_collection_list,
-    is_in_list,
-    rm_from_list,
-)
+from ..sql_helper.global_list import add_to_list, get_collection_list, is_in_list, rm_from_list
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from . import BOTLOG, BOTLOG_CHATID, _catutils, catub, edit_delete, logging
 
@@ -68,9 +63,7 @@ def fetch_data():
     DEFAULTUSER = gvarstatus("DEFAULT_NAME") or Config.ALIVE_NAME
     CHANGE_TIME = int(gvarstatus("CHANGE_TIME") or "60")
     DEFAULT_PIC = gvarstatus("DEFAULT_PIC") or None
-    digitalpfp = (
-        gvarstatus("DIGITAL_PIC") or "https://graph.org/file/aeaebe33b1f3988a0b690.jpg"
-    )
+    digitalpfp = gvarstatus("DIGITAL_PIC") or "https://graph.org/file/aeaebe33b1f3988a0b690.jpg"
 
 
 async def autopicloop():
@@ -96,7 +89,7 @@ async def autopicloop():
                 pass
         shutil.copy(autopic_path, autophoto_path)
         im = Image.open(autophoto_path)
-        file_test = im.rotate(counter, expand=False).save(autophoto_path, "PNG")
+        im.rotate(counter, expand=False).save(autophoto_path, "PNG")
         current_time = datetime.now().strftime("  Time: %H:%M \n  Date: %d.%m.%y ")
         img = Image.open(autophoto_path)
         drawn_text = ImageDraw.Draw(img)
@@ -127,11 +120,7 @@ async def custompfploop():
         file = await catub.upload_file("donottouch.jpg")
         try:
             if i > 0:
-                await catub(
-                    functions.photos.DeletePhotosRequest(
-                        await catub.get_profile_photos("me", limit=1)
-                    )
-                )
+                await catub(functions.photos.DeletePhotosRequest(await catub.get_profile_photos("me", limit=1)))
             i += 1
             await catub(functions.photos.UploadProfilePhotoRequest(file))
             os.remove("donottouch.jpg")
@@ -156,20 +145,14 @@ async def digitalpicloop():
         current_time = datetime.now().strftime("%H:%M")
         img = Image.open(autophoto_path)
         drawn_text = ImageDraw.Draw(img)
-        cat = str(base64.b64decode("dXNlcmJvdC9oZWxwZXJzL3N0eWxlcy9kaWdpdGFsLnR0Zg=="))[
-            2:36
-        ]
+        cat = str(base64.b64decode("dXNlcmJvdC9oZWxwZXJzL3N0eWxlcy9kaWdpdGFsLnR0Zg=="))[2:36]
         fnt = ImageFont.truetype(cat, 200)
         drawn_text.text((350, 100), current_time, font=fnt, fill=(124, 252, 0))
         img.save(autophoto_path)
         file = await catub.upload_file(autophoto_path)
         try:
             if i > 0:
-                await catub(
-                    functions.photos.DeletePhotosRequest(
-                        await catub.get_profile_photos("me", limit=1)
-                    )
-                )
+                await catub(functions.photos.DeletePhotosRequest(await catub.get_profile_photos("me", limit=1)))
             i += 1
             await catub(functions.photos.UploadProfilePhotoRequest(file))
             os.remove(autophoto_path)
@@ -226,7 +209,7 @@ async def bloom_pfploop():
 
 async def autoname_loop():
     fetch_data()
-    while AUTONAMESTART := gvarstatus("autoname") == "true":
+    while gvarstatus("autoname") == "true":
         DM = time.strftime("%d-%m-%y")
         HM = time.strftime("%H:%M")
         name = f"⌚️ {HM}||›  {DEFAULTUSER} ‹||📅 {DM}"
@@ -241,7 +224,7 @@ async def autoname_loop():
 
 async def autobio_loop():
     fetch_data()
-    while AUTOBIOSTART := gvarstatus("autobio") == "true":
+    while gvarstatus("autobio") == "true":
         DMY = time.strftime("%d.%m.%Y")
         HM = time.strftime("%H:%M")
         bio = f"📅 {DMY} | {DEFAULTUSERBIO} | ⌚️ {HM}"
@@ -284,11 +267,7 @@ async def autopfp_start():
         await animeprofilepic(string_list)
         file = await catub.upload_file("donottouch.jpg")
         if i > 0:
-            await catub(
-                functions.photos.DeletePhotosRequest(
-                    await catub.get_profile_photos("me", limit=1)
-                )
-            )
+            await catub(functions.photos.DeletePhotosRequest(await catub.get_profile_photos("me", limit=1)))
         i += 1
         await catub(functions.photos.UploadProfilePhotoRequest(file))
         await _catutils.runcmd("rm -rf donottouch.jpg")
@@ -297,7 +276,7 @@ async def autopfp_start():
 
 
 @catub.cat_cmd(
-    pattern="batmanpfp$",
+    pattern=r"batmanpfp$",
     command=("batmanpfp", plugin_category),
     info={
         "header": "Changes profile pic with random batman pics every 1 minute",
@@ -318,7 +297,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="thorpfp$",
+    pattern=r"thorpfp$",
     command=("thorpfp", plugin_category),
     info={
         "header": "Changes profile pic with random thor pics every 1 minute",
@@ -339,7 +318,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="autopic ?([\s\S]*)",
+    pattern=r"autopic ?([\s\S]*)",
     command=("autopic", plugin_category),
     info={
         "header": "Changes profile pic every 1 minute with the custom pic with time",
@@ -386,7 +365,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="digitalpfp$",
+    pattern=r"digitalpfp$",
     command=("digitalpfp", plugin_category),
     info={
         "header": "Updates your profile pic every 1 minute with time on it",
@@ -410,7 +389,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="bloom$",
+    pattern=r"bloom$",
     command=("bloom", plugin_category),
     info={
         "header": "Changes profile pic every 1 minute with the random colour pic with time on it",
@@ -442,7 +421,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="c(ustom)?pfp(?: |$)([\s\S]*)",
+    pattern=r"c(ustom)?pfp(?: |$)([\s\S]*)",
     command=("custompfp", plugin_category),
     info={
         "header": "Set Your Custom pfps",
@@ -480,9 +459,7 @@ async def useless(event):  # sourcery no-metrics
         return
     if flag == "l":
         if not list_link:
-            return await edit_delete(
-                event, "**ಠ∀ಠ  There no links set for custom pfp...**"
-            )
+            return await edit_delete(event, "**ಠ∀ಠ  There no links set for custom pfp...**")
         links = "**Available links for custom pfp are here:-**\n\n"
         for i, each in enumerate(list_link, start=1):
             links += f"**{i}.**  {each}\n"
@@ -491,44 +468,32 @@ async def useless(event):  # sourcery no-metrics
     if flag == "s":
         if gvarstatus("CUSTOM_PFP") is not None and gvarstatus("CUSTOM_PFP") == "true":
             delgvar("CUSTOM_PFP")
-            await event.client(
-                functions.photos.DeletePhotosRequest(
-                    await event.client.get_profile_photos("me", limit=1)
-                )
-            )
+            await event.client(functions.photos.DeletePhotosRequest(await event.client.get_profile_photos("me", limit=1)))
             return await edit_delete(event, "`Custompfp has been stopped now`")
         return await edit_delete(event, "`Custompfp haven't enabled`")
     reply = await event.get_reply_message()
     if not input_str and reply:
         input_str = reply.text
     if not input_str:
-        return await edit_delete(
-            event, "**ಠ∀ಠ  Reply to valid link or give valid link url as input...**"
-        )
+        return await edit_delete(event, "**ಠ∀ಠ  Reply to valid link or give valid link url as input...**")
     extractor = URLExtract()
     plink = extractor.find_urls(input_str)
     if len(plink) == 0:
-        return await edit_delete(
-            event, "**ಠ∀ಠ  Reply to valid link or give valid link url as input...**"
-        )
+        return await edit_delete(event, "**ಠ∀ಠ  Reply to valid link or give valid link url as input...**")
     if flag == "a":
         for i in plink:
             if not is_in_list("CUSTOM_PFP_LINKS", i):
                 add_to_list("CUSTOM_PFP_LINKS", i)
-        await edit_delete(
-            event, f"**{len(plink)} pictures sucessfully added to custom pfps**"
-        )
+        await edit_delete(event, f"**{len(plink)} pictures sucessfully added to custom pfps**")
     elif flag == "r":
         for i in plink:
             if is_in_list("CUSTOM_PFP_LINKS", i):
                 rm_from_list("CUSTOM_PFP_LINKS", i)
-        await edit_delete(
-            event, f"**{len(plink)} pictures sucessfully removed from custom pfps**"
-        )
+        await edit_delete(event, f"**{len(plink)} pictures sucessfully removed from custom pfps**")
 
 
 @catub.cat_cmd(
-    pattern="autoname$",
+    pattern=r"autoname$",
     command=("autoname", plugin_category),
     info={
         "header": "Changes your name with time",
@@ -547,7 +512,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="autobio$",
+    pattern=r"autobio$",
     command=("autobio", plugin_category),
     info={
         "header": "Changes your bio with time",
@@ -566,7 +531,7 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="end ([\s\S]*)",
+    pattern=r"end ([\s\S]*)",
     command=("end", plugin_category),
     info={
         "header": "To stop the functions of autoprofile",
@@ -593,22 +558,14 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         pfp_string = gvarstatus("autopfp_strings")[:-8]
         if pfp_string != "thorpfp":
             return await edit_delete(event, "`thorpfp is not started`")
-        await event.client(
-            functions.photos.DeletePhotosRequest(
-                await event.client.get_profile_photos("me", limit=1)
-            )
-        )
+        await event.client(functions.photos.DeletePhotosRequest(await event.client.get_profile_photos("me", limit=1)))
         delgvar("autopfp_strings")
         return await edit_delete(event, "`thorpfp has been stopped now`")
     if input_str == "batmanpfp" and gvarstatus("autopfp_strings") is not None:
         pfp_string = gvarstatus("autopfp_strings")[:-8]
         if pfp_string != "batmanpfp":
             return await edit_delete(event, "`batmanpfp is not started`")
-        await event.client(
-            functions.photos.DeletePhotosRequest(
-                await event.client.get_profile_photos("me", limit=1)
-            )
-        )
+        await event.client(functions.photos.DeletePhotosRequest(await event.client.get_profile_photos("me", limit=1)))
         delgvar("autopfp_strings")
         return await edit_delete(event, "`batmanpfp has been stopped now`")
     if input_str == "autopic":
@@ -626,11 +583,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
     if input_str == "digitalpfp":
         if gvarstatus("digitalpic") is not None and gvarstatus("digitalpic") == "true":
             delgvar("digitalpic")
-            await event.client(
-                functions.photos.DeletePhotosRequest(
-                    await event.client.get_profile_photos("me", limit=1)
-                )
-            )
+            await event.client(functions.photos.DeletePhotosRequest(await event.client.get_profile_photos("me", limit=1)))
             return await edit_delete(event, "`Digitalpfp has been stopped now`")
         return await edit_delete(event, "`Digitalpfp haven't enabled`")
     if input_str == "bloom":
@@ -648,17 +601,13 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
     if input_str == "autoname":
         if gvarstatus("autoname") is not None and gvarstatus("autoname") == "true":
             delgvar("autoname")
-            await event.client(
-                functions.account.UpdateProfileRequest(first_name=DEFAULTUSER)
-            )
+            await event.client(functions.account.UpdateProfileRequest(first_name=DEFAULTUSER))
             return await edit_delete(event, "`Autoname has been stopped now`")
         return await edit_delete(event, "`Autoname haven't enabled`")
     if input_str == "autobio":
         if gvarstatus("autobio") is not None and gvarstatus("autobio") == "true":
             delgvar("autobio")
-            await event.client(
-                functions.account.UpdateProfileRequest(about=DEFAULTUSERBIO)
-            )
+            await event.client(functions.account.UpdateProfileRequest(about=DEFAULTUSERBIO))
             return await edit_delete(event, "`Autobio has been stopped now`")
         return await edit_delete(event, "`Autobio haven't enabled`")
     if input_str == "spam":

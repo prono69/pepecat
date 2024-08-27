@@ -14,10 +14,10 @@ import time
 from .Config import Config
 from .core.logger import logging
 from .core.session import catub
-from .helpers.functions.converter import Convert
-from .helpers.functions.musictool import *
+from .helpers.functions.converter import Convert  # noqa F401
+from .helpers.functions.musictool import *  # noqa F401
 from .helpers.utils.utils import runasync
-from .sql_helper.globals import addgvar, delgvar, gvarstatus
+from .sql_helper.globals import gvarstatus
 
 __version__ = "3.3.1"
 __license__ = "GNU Affero General Public License v3.0"
@@ -69,9 +69,7 @@ try:
     import heroku3
 
     if Config.HEROKU_API_KEY is not None or Config.HEROKU_APP_NAME is not None:
-        HEROKU_APP = heroku3.from_key(Config.HEROKU_API_KEY).apps()[
-            Config.HEROKU_APP_NAME
-        ]
+        HEROKU_APP = heroku3.from_key(Config.HEROKU_API_KEY).apps()[Config.HEROKU_APP_NAME]
     else:
         HEROKU_APP = None
 except Exception:

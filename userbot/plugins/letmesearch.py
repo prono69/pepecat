@@ -17,7 +17,7 @@ plugin_category = "utils"
 
 
 @catub.cat_cmd(
-    pattern="lmg(?: |$)([\s\S]*)",
+    pattern=r"lmg(?: |$)([\s\S]*)",
     command=("lmg", plugin_category),
     info={
         "header": "Searches the given query in Google and shows you the link of that query.",
@@ -42,7 +42,7 @@ async def googal(event):
 
 
 @catub.cat_cmd(
-    pattern="lmy(?: |$)([\s\S]*)",
+    pattern=r"lmy(?: |$)([\s\S]*)",
     command=("lmy", plugin_category),
     info={
         "header": "Searches the given query in youtube and shows you the link of that query.",
@@ -57,9 +57,7 @@ async def uthoob(event):
         input_str = reply.text
     if not input_str:
         return await edit_delete(event, "**ಠ∀ಠ Give me text to search..**")
-    sample_url = (
-        f"https://www.youtube.com/results?search_query={input_str.replace(' ', '+')}"
-    )
+    sample_url = f"https://www.youtube.com/results?search_query={input_str.replace(' ', '+')}"
     await edit_or_reply(event, "`Searching.....`")
     await sleep(2)
     await edit_or_reply(
@@ -69,7 +67,7 @@ async def uthoob(event):
 
 
 @catub.cat_cmd(
-    pattern="ddg(?: |$)([\s\S]*)",
+    pattern=r"ddg(?: |$)([\s\S]*)",
     command=("ddg", plugin_category),
     info={
         "header": "Searches the given query in Duck buck go and shows you the link of that query.",
@@ -84,9 +82,7 @@ async def dukdukgo(event):
         input_str = reply.text
     if not input_str:
         return await edit_delete(event, "**ಠ∀ಠ Give me text to search..**")
-    sample_url = (
-        f"https://duckduckgo.com/?q={input_str.replace(' ', '+')}&t=h_&ia=about"
-    )
+    sample_url = f"https://duckduckgo.com/?q={input_str.replace(' ', '+')}&t=h_&ia=about"
     event = await edit_or_reply(event, "`Searching.....`")
     await sleep(2)
     await edit_or_reply(
@@ -96,7 +92,7 @@ async def dukdukgo(event):
 
 
 @catub.cat_cmd(
-    pattern="lmalt(?: |$)([\s\S]*)",
+    pattern=r"lmalt(?: |$)([\s\S]*)",
     command=("lmalt", plugin_category),
     info={
         "header": "Searches the given query in altnews and shows you the link of that query.",
@@ -121,7 +117,7 @@ async def news(event):
 
 
 @catub.cat_cmd(
-    pattern="lmvar ([\s\S]*)",
+    pattern=r"lmvar ([\s\S]*)",
     command=("lmvar", plugin_category),
     info={
         "header": "Searches the given app name in heroku and show that app vars page link .",
@@ -131,9 +127,7 @@ async def news(event):
 async def var(event):
     "Searches the given app name in heroku and show that app vars page link ."
     input_str = event.pattern_match.group(1)
-    sample_url = (
-        f"https://dashboard.heroku.com/apps/{input_str.replace(' ', '+')}/settings"
-    )
+    sample_url = f"https://dashboard.heroku.com/apps/{input_str.replace(' ', '+')}/settings"
     await edit_or_reply(event, "`Searching.....`")
     await sleep(2)
     await edit_or_reply(
@@ -143,7 +137,7 @@ async def var(event):
 
 
 @catub.cat_cmd(
-    pattern="lmlog ([\s\S]*)",
+    pattern=r"lmlog ([\s\S]*)",
     command=("lmlog", plugin_category),
     info={
         "header": "Searches the given app name in heroku and shows you logs page link of that app.",
@@ -163,7 +157,7 @@ async def log(event):
 
 
 @catub.cat_cmd(
-    pattern="dyno ([\s\S]*)",
+    pattern=r"dyno ([\s\S]*)",
     command=("dyno", plugin_category),
     info={
         "header": "Searches the given app name in heroku and shows you dyno page link of that app.",
@@ -174,9 +168,7 @@ async def dyno(event):
     "Searches the given app name in heroku and shows you dyno page link of that app."
     input_str = event.pattern_match.group(1)
     billings_url = "https://da.gd/s?url=https://dashboard.heroku.com/account/billing"
-    sample_url = (
-        f"https://da.gd/s?url=https://dashboard.heroku.com/apps/{input_str}/resources"
-    )
+    sample_url = f"https://da.gd/s?url=https://dashboard.heroku.com/apps/{input_str}/resources"
     await edit_or_reply(event, "`Searching.....`")
     await sleep(2)
     await edit_or_reply(
@@ -189,7 +181,7 @@ async def dyno(event):
 
 
 @catub.cat_cmd(
-    pattern="lmkp(?: |$)([\s\S]*)",
+    pattern=r"lmkp(?: |$)([\s\S]*)",
     command=("lmkp", plugin_category),
     info={
         "header": "Searches the given query in indian kanoon and shows you the link of that query.",
@@ -214,7 +206,7 @@ async def kanun(event):
 
 
 @catub.cat_cmd(
-    pattern="gem(?: |$)([\s\S]*)",
+    pattern=r"gem(?: |$)([\s\S]*)",
     command=("gem", plugin_category),
     info={
         "header": "Searches the given query in Government e marketplace and shows you the link of that query.",
@@ -239,7 +231,7 @@ async def gem(event):
 
 
 @catub.cat_cmd(
-    pattern="archive(?: |$)([\s\S]*)",
+    pattern=r"archive(?: |$)([\s\S]*)",
     command=("archive", plugin_category),
     info={
         "header": "Searches the given query in web archive and shows you the link of that query.",

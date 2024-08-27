@@ -27,11 +27,7 @@ class check_owner:
 
         async def wrapper(*args, **kwargs):
             c_q = args[0]
-            if c_q.query.user_id and (
-                c_q.query.user_id == Config.OWNER_ID
-                or c_q.query.user_id in Config.SUDO_USERS
-                or (self.vc and c_q.query.user_id in _vcusers_list())
-            ):
+            if c_q.query.user_id and (c_q.query.user_id == Config.OWNER_ID or c_q.query.user_id in Config.SUDO_USERS or (self.vc and c_q.query.user_id in _vcusers_list())):
                 try:
                     await self.func(c_q)
                 except FloodWaitError as e:
@@ -39,10 +35,7 @@ class check_owner:
                 except MessageNotModifiedError:
                     pass
             else:
-                HELP_TEXT = (
-                    gvarstatus("HELP_TEXT")
-                    or "Only My Master can Access This !!\n\nDeploy your own Catuserbot."
-                )
+                HELP_TEXT = gvarstatus("HELP_TEXT") or "Only My Master can Access This !!\n\nDeploy your own Catuserbot."
                 await c_q.answer(
                     HELP_TEXT,
                     alert=True,

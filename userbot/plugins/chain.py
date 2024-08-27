@@ -16,7 +16,7 @@ plugin_category = "tools"
 
 
 @catub.cat_cmd(
-    pattern="chain$",
+    pattern=r"chain$",
     command=("chain", plugin_category),
     info={
         "header": "Reply this command to any converstion(or message) and it will find the chain length of that message",
@@ -38,13 +38,7 @@ async def chain(event):
     while msg:
         reply = await msg.get_reply_message()
         if reply is None:
-            await event.client(
-                SaveDraftRequest(
-                    await event.get_input_chat(), "", reply_to_msg_id=msg.id
-                )
-            )
+            await event.client(SaveDraftRequest(await event.get_input_chat(), "", reply_to_msg_id=msg.id))
         msg = reply
         count += 1
-    await edit_or_reply(
-        event, f"**Chain length :** `{count}`\n**Thread link :** [Here]({thread})"
-    )
+    await edit_or_reply(event, f"**Chain length :** `{count}`\n**Thread link :** [Here]({thread})")

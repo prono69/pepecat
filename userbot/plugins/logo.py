@@ -67,7 +67,7 @@ def random_loader(Font, Color, Background, collection):
 
 
 @catub.cat_cmd(
-    pattern="(|f|s)logo(?: |$)([\s\S]*)",
+    pattern=r"(|f|s)logo(?: |$)([\s\S]*)",
     command=("logo", plugin_category),
     info={
         "header": "Make a logo in image or sticker",
@@ -116,42 +116,26 @@ async def very(event):  # sourcery no-metrics
     LOGO_FONT_COLOR = loader1 = gvarstatus("LOGO_FONT_COLOR") or "red"
     LOGO_FONT_STROKE_WIDTH = gvarstatus("LOGO_FONT_STROKE_WIDTH") or 0
     LOGO_FONT_STROKE_COLOR = gvarstatus("LOGO_FONT_STROKE_COLOR") or None
-    LOGO_BACKGROUND = loader2 = (
-        gvarstatus("LOGO_BACKGROUND")
-        or "https://github.com/TgCatUB/CatUserbot-Resources/raw/master/Resources/Logo/Background/black.jpg"
-    )
-    LOGO_FONT = loader3 = (
-        gvarstatus("LOGO_FONT")
-        or "https://github.com/TgCatUB/CatUserbot-Resources/blob/master/Resources/Logo/Fonts/Streamster.ttf?raw=true"
-    )
+    LOGO_BACKGROUND = loader2 = gvarstatus("LOGO_BACKGROUND") or "https://github.com/TgCatUB/CatUserbot-Resources/raw/master/Resources/Logo/Background/black.jpg"
+    LOGO_FONT = loader3 = gvarstatus("LOGO_FONT") or "https://github.com/TgCatUB/CatUserbot-Resources/blob/master/Resources/Logo/Fonts/Streamster.ttf?raw=true"
     rcheck = random_checker(LOGO_FONT, LOGO_FONT_COLOR, LOGO_BACKGROUND)
     if rcheck:
-        rjson = requests.get(
-            "https://raw.githubusercontent.com/TgCatUB/CatUserbot-Resources/master/Resources/Logo/resources.txt"
-        ).json()
+        rjson = requests.get("https://raw.githubusercontent.com/TgCatUB/CatUserbot-Resources/master/Resources/Logo/resources.txt").json()
     if count > 1 and not rcheck:
         count = 1
-        catevent = await edit_or_reply(
-            event, "Not using random value,Changing limit to 1.."
-        )
+        catevent = await edit_or_reply(event, "Not using random value,Changing limit to 1..")
     output = []
     captionlist = []
     for i in range(count):
         if rcheck:
-            LOGO_FONT, LOGO_FONT_COLOR, LOGO_BACKGROUND = random_loader(
-                LOGO_FONT, LOGO_FONT_COLOR, LOGO_BACKGROUND, rjson
-            )
+            LOGO_FONT, LOGO_FONT_COLOR, LOGO_BACKGROUND = random_loader(LOGO_FONT, LOGO_FONT_COLOR, LOGO_BACKGROUND, rjson)
         try:
             template = requests.get(LOGO_BACKGROUND)
             temp_img = Image.open(BytesIO(template.content))
         except Exception as e:
             await edit_or_reply(catevent, f"**Bad Url:** {LOGO_BACKGROUND}\n\n{e}")
         raw_width, raw_height = temp_img.size
-        resized_width, resized_height = (
-            (1024, int(1024 * raw_height / raw_width))
-            if raw_width > raw_height
-            else (int(1024 * raw_width / raw_height), 1024)
-        )
+        resized_width, resized_height = (1024, int(1024 * raw_height / raw_width)) if raw_width > raw_height else (int(1024 * raw_width / raw_height), 1024)
         img = temp_img.convert("RGBA").resize((resized_width, resized_height))
         draw = ImageDraw.Draw(img)
         logo = requests.get(LOGO_FONT)
@@ -216,7 +200,7 @@ async def very(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="(|c)lbg(?:\s|$)([\s\S]*)",
+    pattern=r"(|c)lbg(?:\s|$)([\s\S]*)",
     command=("lbg", plugin_category),
     info={
         "header": "Change the background of logo",
@@ -243,34 +227,24 @@ async def bad(event):
     if cmd == "c":
         reply_message = await event.get_reply_message()
         if not input_str and event.reply_to_msg_id and reply_message.media:
-            output = await Convert.to_image(
-                event, reply_message, dirct="./temp", file="lbg.png", noedits=True
-            )
+            output = await Convert.to_image(event, reply_message, dirct="./temp", file="lbg.png", noedits=True)
             myphoto_urls = upload_file(output[1])
             input_str = f"https://graph.org{myphoto_urls[0]}"
             os.remove(output[1])
         if not input_str.startswith("https://"):
-            return await edit_delete(
-                event, "Give a valid Telegraph picture link, Or reply to a media."
-            )
+            return await edit_delete(event, "Give a valid Telegraph picture link, Or reply to a media.")
         addgvar("LOGO_BACKGROUND", input_str)
-        return await edit_delete(
-            event, f"**Background for logo changed to :-** `{input_str}`"
-        )
+        return await edit_delete(event, f"**Background for logo changed to :-** `{input_str}`")
     if not input_str or input_str not in bg_name:
-        lbg_list = "**Available background names are here:-**\n\n**1.** `black`\n**2.** `blue`\n**3.** `purple`\n**4.** `red`\n**5.** `white`\n\n**Random Backgrounds:**\n**1.** `total random`\n**2.** `anime`\n**3.** `frame`\n**4.** `mcu/dcu`\n**5.** `neon`\n"
+        lbg_list = "**Available background names are here:-**\n\n**1.** `black`\n**2.** `blue`\n**3.** `purple`\n**4.** `red`\n**5.** `white`\n\n**Random Backgrounds:**\n**1.** `total random`\n**2.** `anime`\n**3.** `frame`\n**4.** `mcu/dcu`\n**5.** `neon`\n"  # noqa E501
         return await edit_delete(event, lbg_list, 60)
-    string = (
-        input_str
-        if input_str in rand_bg
-        else f"https://github.com/TgCatUB/CatUserbot-Resources/raw/master/Resources/Logo/Background/{input_str}.jpg"
-    )
+    string = input_str if input_str in rand_bg else f"https://github.com/TgCatUB/CatUserbot-Resources/raw/master/Resources/Logo/Background/{input_str}.jpg"
     addgvar("LOGO_BACKGROUND", string)
     await edit_delete(event, f"**Background for logo changed to :-** `{input_str}`", 10)
 
 
 @catub.cat_cmd(
-    pattern="lf(|c|s|h|w|sc|sw)(?:\s|$)([\s\S]*)",
+    pattern=r"lf(|c|s|h|w|sc|sw)(?:\s|$)([\s\S]*)",
     command=("lf", plugin_category),
     info={
         "header": "Change text style for logo.",
@@ -309,9 +283,7 @@ async def pussy(event):  # sourcery no-metrics
     cmd = event.pattern_match.group(1).lower()
     input_str = event.pattern_match.group(2)
     if cmd == "":
-        source = requests.get(
-            "https://github.com/TgCatUB/CatUserbot-Resources/tree/master/Resources/Logo/Fonts"
-        )
+        source = requests.get("https://github.com/TgCatUB/CatUserbot-Resources/tree/master/Resources/Logo/Fonts")
         soup = BeautifulSoup(source.text, features="html.parser")
         links = soup.find_all("a", class_="js-navigation-open Link--primary")
         logo_font = []
@@ -329,9 +301,7 @@ async def pussy(event):  # sourcery no-metrics
                 input_str = str(input_str).replace(" ", "%20")
             string = f"https://github.com/TgCatUB/CatUserbot-Resources/blob/master/Resources/Logo/Fonts/{input_str}.ttf?raw=true"
         addgvar("LOGO_FONT", string)
-        return await edit_delete(
-            event, f"**Font for logo changed to :-** `{input_str}`", 10
-        )
+        return await edit_delete(event, f"**Font for logo changed to :-** `{input_str}`", 10)
     elif cmd in ["c", "sc"]:
         fg_name = []
         for name, code in PIL.ImageColor.colormap.items():
@@ -346,17 +316,11 @@ async def pussy(event):  # sourcery no-metrics
                     80,
                 )
             addgvar("LOGO_FONT_COLOR", input_str)
-            return await edit_delete(
-                event, f"**Font color for logo changed to :-** `{input_str}`", 10
-            )
+            return await edit_delete(event, f"**Font color for logo changed to :-** `{input_str}`", 10)
         if not input_str or input_str not in fg_name:
-            return await edit_delete(
-                event, f"**Available stroke color names are here:-**\n\n{fg_list}", 80
-            )
+            return await edit_delete(event, f"**Available stroke color names are here:-**\n\n{fg_list}", 80)
         addgvar("LOGO_FONT_STROKE_COLOR", input_str)
-        return await edit_delete(
-            event, f"**Stroke color for logo changed to :-** `{input_str}`", 10
-        )
+        return await edit_delete(event, f"**Stroke color for logo changed to :-** `{input_str}`", 10)
     cat = re.compile(r"^\-?[1-9][0-9]*\.?[0-9]*")
     isint = re.match(cat, input_str)
     if not input_str or not isint:
@@ -365,9 +329,7 @@ async def pussy(event):  # sourcery no-metrics
         input_str = int(input_str)
         if input_str > 0 and input_str <= 1000:
             addgvar("LOGO_FONT_SIZE", input_str)
-            return await edit_delete(
-                event, f"**Font size is changed to :-** `{input_str}`", 10
-            )
+            return await edit_delete(event, f"**Font size is changed to :-** `{input_str}`", 10)
         await edit_delete(
             event,
             f"**Font size is between 0 - 1000, You can't set limit to :** `{input_str}`",
@@ -377,9 +339,7 @@ async def pussy(event):  # sourcery no-metrics
         input_str = float(input_str)
         if input_str > 0 and input_str <= 100:
             addgvar("LOGO_FONT_WIDTH", input_str)
-            return await edit_delete(
-                event, f"**Font width is changed to :-** `{input_str}`", 10
-            )
+            return await edit_delete(event, f"**Font width is changed to :-** `{input_str}`", 10)
         await edit_delete(
             event,
             f"**Font width is between 0 - 100, You can't set limit to {input_str}",
@@ -389,9 +349,7 @@ async def pussy(event):  # sourcery no-metrics
         input_str = float(input_str)
         if input_str > 0 and input_str <= 100:
             addgvar("LOGO_FONT_HEIGHT", input_str)
-            return await edit_delete(
-                event, f"**Font hight is changed to :-** `{input_str}`", 10
-            )
+            return await edit_delete(event, f"**Font hight is changed to :-** `{input_str}`", 10)
         await edit_delete(
             event,
             f"**Font hight is between 0 - 100, You can't set limit to {input_str}",
@@ -401,9 +359,7 @@ async def pussy(event):  # sourcery no-metrics
         input_str = int(input_str)
         if input_str > 0 and input_str <= 100:
             addgvar("LOGO_FONT_STROKE_WIDTH", input_str)
-            return await edit_delete(
-                event, f"**Font stroke width is changed to :-** `{input_str}`", 10
-            )
+            return await edit_delete(event, f"**Font stroke width is changed to :-** `{input_str}`", 10)
         await edit_delete(
             event,
             f"**Font stroke width size is between 0 - 100, You can't set limit to :** `{input_str}`",
@@ -412,7 +368,7 @@ async def pussy(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="(g|d|r)lvar(?:\s|$)([\s\S]*)",
+    pattern=r"(g|d|r)lvar(?:\s|$)([\s\S]*)",
     command=("lvar", plugin_category),
     info={
         "header": "Manage values which set for logo",
@@ -466,6 +422,6 @@ async def cat(event):
     else:
         await edit_delete(
             event,
-            f"**📑 Give correct vars name :**\n__Correct Vars code list is :__\n\n1. `lbg` : **LOGO_BACKGROUND**\n2. `lfc` : **LOGO_FONT_COLOR**\n3. `lf` : **LOGO_FONT**\n4. `lfs` : **LOGO_FONT_SIZE**\n5. `lfh` : **LOGO_FONT_HEIGHT**\n6. `lfw` : **LOGO_FONT_WIDTH**",
+            "**📑 Give correct vars name :**\n__Correct Vars code list is :__\n\n1. `lbg` : **LOGO_BACKGROUND**\n2. `lfc` : **LOGO_FONT_COLOR**\n3. `lf` : **LOGO_FONT**\n4. `lfs` : **LOGO_FONT_SIZE**\n5. `lfh` : **LOGO_FONT_HEIGHT**\n6. `lfw` : **LOGO_FONT_WIDTH**",  # noqa E501
             time=60,
         )

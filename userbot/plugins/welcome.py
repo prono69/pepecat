@@ -19,12 +19,7 @@ from userbot.core.logger import logging
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from ..sql_helper.welcome_sql import (
-    add_welcome_setting,
-    get_current_welcome_settings,
-    rm_welcome_setting,
-    update_previous_welcome,
-)
+from ..sql_helper.welcome_sql import add_welcome_setting, get_current_welcome_settings, rm_welcome_setting, update_previous_welcome
 from . import BOTLOG_CHATID
 
 plugin_category = "utils"
@@ -34,11 +29,7 @@ LOGS = logging.getLogger(__name__)
 @catub.on(events.ChatAction)
 async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
     cws = get_current_welcome_settings(event.chat_id)
-    if (
-        cws
-        and (event.user_joined or event.user_added)
-        and not (await event.get_user()).bot
-    ):
+    if cws and (event.user_joined or event.user_added) and not (await event.get_user()).bot:
         if gvarstatus("clean_welcome") is None:
             try:
                 await event.client.delete_messages(event.chat_id, cws.previous_welcome)
@@ -65,9 +56,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         current_saved_welcome_message = None
         if cws:
             if cws.f_mesg_id:
-                msg_o = await event.client.get_messages(
-                    entity=BOTLOG_CHATID, ids=int(cws.f_mesg_id)
-                )
+                msg_o = await event.client.get_messages(entity=BOTLOG_CHATID, ids=int(cws.f_mesg_id))
                 file_media = msg_o.media
                 current_saved_welcome_message = msg_o.message
                 link_preview = True
@@ -98,7 +87,7 @@ async def _(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
 
 
 @catub.cat_cmd(
-    pattern="savewelcome(?:\s|$)([\s\S]*)",
+    pattern=r"savewelcome(?:\s|$)([\s\S]*)",
     command=("savewelcome", plugin_category),
     info={
         "header": "To welcome new users in chat.",
@@ -138,9 +127,7 @@ async def save_welcome(event):
                 \nCHAT ID: {event.chat_id}\
                 \nThe following message is saved as the welcome note for the {get_display_name(await event.get_chat())}, Don't delete this message !!",
             )
-            msg_o = await event.client.forward_messages(
-                entity=BOTLOG_CHATID, messages=msg, from_peer=event.chat_id, silent=True
-            )
+            msg_o = await event.client.forward_messages(entity=BOTLOG_CHATID, messages=msg, from_peer=event.chat_id, silent=True)
             msg_id = msg_o.id
         else:
             return await edit_or_reply(
@@ -160,7 +147,7 @@ async def save_welcome(event):
 
 
 @catub.cat_cmd(
-    pattern="clearwelcome$",
+    pattern=r"clearwelcome$",
     command=("clearwelcome", plugin_category),
     info={
         "header": "To turn off welcome message in group.",
@@ -177,7 +164,7 @@ async def del_welcome(event):
 
 
 @catub.cat_cmd(
-    pattern="listwelcome$",
+    pattern=r"listwelcome$",
     command=("listwelcome", plugin_category),
     info={
         "header": "To check current welcome message in group.",
@@ -190,22 +177,16 @@ async def show_welcome(event):
     if not cws:
         return await edit_or_reply(event, "`No welcome message saved here.`")
     if cws.f_mesg_id:
-        msg_o = await event.client.get_messages(
-            entity=BOTLOG_CHATID, ids=int(cws.f_mesg_id)
-        )
-        await edit_or_reply(
-            event, "`I am currently welcoming new users with this welcome note.`"
-        )
+        msg_o = await event.client.get_messages(entity=BOTLOG_CHATID, ids=int(cws.f_mesg_id))
+        await edit_or_reply(event, "`I am currently welcoming new users with this welcome note.`")
         await event.reply(msg_o.message, file=msg_o.media)
     elif cws.reply:
-        await edit_or_reply(
-            event, "`I am currently welcoming new users with this welcome note.`"
-        )
+        await edit_or_reply(event, "`I am currently welcoming new users with this welcome note.`")
         await event.reply(cws.reply, link_preview=False)
 
 
 @catub.cat_cmd(
-    pattern="cleanwelcome (on|off)$",
+    pattern=r"cleanwelcome (on|off)$",
     command=("cleanwelcome", plugin_category),
     info={
         "header": "To turn off or turn on of deleting previous welcome message.",
@@ -213,7 +194,7 @@ async def show_welcome(event):
         "usage": "{tr}cleanwelcome <on/off>",
     },
 )
-async def del_welcome(event):
+async def clean_welcome_func(event):
     "To turn off or turn on of deleting previous welcome message."
     input_str = event.pattern_match.group(1)
     if input_str == "on":
@@ -226,7 +207,5 @@ async def del_welcome(event):
         )
     if gvarstatus("clean_welcome") is None:
         addgvar("clean_welcome", "false")
-        return await edit_delete(
-            event, "__From now on previous welcome message will not be deleted .__"
-        )
+        return await edit_delete(event, "__From now on previous welcome message will not be deleted .__")
     await edit_delete(event, "It was turned off already")

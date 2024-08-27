@@ -53,7 +53,7 @@ def user_full_name(user):
 
 
 @catub.cat_cmd(
-    pattern="stat$",
+    pattern=r"stat$",
     command=("stat", plugin_category),
     info={
         "header": "To get statistics of your telegram account.",
@@ -97,13 +97,7 @@ async def stats(event):  # sourcery no-metrics # sourcery skip: low-code-quality
                 broadcastchannelids.append(entity.id)
             if entity.creator:
                 creator_in_channels += 1
-        elif (
-            isinstance(entity, Channel)
-            and entity.megagroup
-            or not isinstance(entity, Channel)
-            and not isinstance(entity, User)
-            and isinstance(entity, Chat)
-        ):
+        elif isinstance(entity, Channel) and entity.megagroup or not isinstance(entity, Channel) and not isinstance(entity, User) and isinstance(entity, Chat):
             groups += 1
             if entity.creator or entity.admin_rights:
                 admin_in_groups += 1
@@ -130,9 +124,7 @@ async def stats(event):  # sourcery no-metrics # sourcery skip: low-code-quality
     response += f"   ★ `Admin Rights: {admin_in_groups - creator_in_groups}` \n"
     response += f"**Admin in Channels:** {admin_in_broadcast_channels} \n"
     response += f"   ★ `Creator: {creator_in_channels}` \n"
-    response += (
-        f"   ★ `Admin Rights: {admin_in_broadcast_channels - creator_in_channels}` \n"
-    )
+    response += f"   ★ `Admin Rights: {admin_in_broadcast_channels - creator_in_channels}` \n"
     response += f"**Unread:** {unread} \n"
     response += f"**Unread Mentions:** {unread_mentions} \n\n"
     response += f"📌 __It Took:__ {stop_time:.02f}s \n"
@@ -147,13 +139,12 @@ async def stats(event):  # sourcery no-metrics # sourcery skip: low-code-quality
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            "#ADMIN_LIST\n"
-            f"Admin groups list has been succesfully updated on {date}. If you want to update it again, do  `.stat` or `.adminlist`",
+            "#ADMIN_LIST\n" f"Admin groups list has been succesfully updated on {date}. If you want to update it again, do  `.stat` or `.adminlist`",
         )
 
 
 @catub.cat_cmd(
-    pattern="(|p)stat (g|ga|go|c|ca|co)$",
+    pattern=r"(|p)stat (g|ga|go|c|ca|co)$",
 )
 async def full_stats(event):  # sourcery no-metrics # sourcery skip: low-code-quality
     flag = event.pattern_match.group(1)
@@ -167,80 +158,46 @@ async def full_stats(event):  # sourcery no-metrics # sourcery skip: low-code-qu
         if isinstance(entity, Channel) and entity.broadcast:
             if flag == "":
                 if catcmd == "c":
-                    grp.append(
-                        f"<a href = https://t.me/c/{entity.id}/1>{entity.title}</a>"
-                    )
+                    grp.append(f"<a href = https://t.me/c/{entity.id}/1>{entity.title}</a>")
                     output = CHANNELS_STR
                 if (entity.creator or entity.admin_rights) and catcmd == "ca":
-                    grp.append(
-                        f"<a href = https://t.me/c/{entity.id}/1>{entity.title}</a>"
-                    )
+                    grp.append(f"<a href = https://t.me/c/{entity.id}/1>{entity.title}</a>")
                     output = CHANNELS_ADMINSTR
                 if entity.creator and catcmd == "co":
-                    grp.append(
-                        f"<a href = https://t.me/c/{entity.id}/1>{entity.title}</a>"
-                    )
+                    grp.append(f"<a href = https://t.me/c/{entity.id}/1>{entity.title}</a>")
                     output = CHANNELS_OWNERSTR
             elif flag == "p":
                 with contextlib.suppress(AttributeError):
                     if entity.username and catcmd == "c":
-                        grp.append(
-                            f"<a href = https://t.me/{entity.username}>{entity.title}</a>"
-                        )
+                        grp.append(f"<a href = https://t.me/{entity.username}>{entity.title}</a>")
                         output = CHANNELS_STR
-                    if (
-                        (entity.creator or entity.admin_rights) and entity.username
-                    ) and catcmd == "ca":
-                        grp.append(
-                            f"<a href = https://t.me/{entity.username}>{entity.title}</a>"
-                        )
+                    if ((entity.creator or entity.admin_rights) and entity.username) and catcmd == "ca":
+                        grp.append(f"<a href = https://t.me/{entity.username}>{entity.title}</a>")
                         output = CHANNELS_ADMINSTR
                     if (entity.creator and entity.username) and catcmd == "co":
-                        grp.append(
-                            f"<a href = https://t.me/{entity.username}>{entity.title}</a>"
-                        )
+                        grp.append(f"<a href = https://t.me/{entity.username}>{entity.title}</a>")
                         output = CHANNELS_OWNERSTR
-        elif (
-            isinstance(entity, Channel)
-            and entity.megagroup
-            or not isinstance(entity, Channel)
-            and not isinstance(entity, User)
-            and isinstance(entity, Chat)
-        ):
+        elif isinstance(entity, Channel) and entity.megagroup or not isinstance(entity, Channel) and not isinstance(entity, User) and isinstance(entity, Chat):
             if flag == "":
                 if catcmd == "g":
-                    grp.append(
-                        f"<a href = https://t.me/c/{entity.id}/1>{entity.title}</a>"
-                    )
+                    grp.append(f"<a href = https://t.me/c/{entity.id}/1>{entity.title}</a>")
                     output = GROUPS_STR
                 if (entity.creator or entity.admin_rights) and catcmd == "ga":
-                    grp.append(
-                        f"<a href = https://t.me/c/{entity.id}/1>{entity.title}</a>"
-                    )
+                    grp.append(f"<a href = https://t.me/c/{entity.id}/1>{entity.title}</a>")
                     output = GROUPS_ADMINSTR
                 if entity.creator and catcmd == "go":
-                    grp.append(
-                        f"<a href = https://t.me/c/{entity.id}/1>{entity.title}</a>"
-                    )
+                    grp.append(f"<a href = https://t.me/c/{entity.id}/1>{entity.title}</a>")
                     output = GROUPS_OWNERSTR
             elif flag == "p":
                 with contextlib.suppress(AttributeError):
                     if entity.username and catcmd == "g":
-                        grp.append(
-                            f"<a href = https://t.me/{entity.username}>{entity.title}</a>"
-                        )
+                        grp.append(f"<a href = https://t.me/{entity.username}>{entity.title}</a>")
                         output = GROUPS_STR
-                    if (
-                        (entity.creator or entity.admin_rights) and entity.username
-                    ) and catcmd == "ga":
-                        grp.append(
-                            f"<a href = https://t.me/{entity.username}>{entity.title}</a>"
-                        )
+                    if ((entity.creator or entity.admin_rights) and entity.username) and catcmd == "ga":
+                        grp.append(f"<a href = https://t.me/{entity.username}>{entity.title}</a>")
                         output = GROUPS_ADMINSTR
                     if (entity.creator and entity.username) and catcmd == "go":
-                        grp.append(
-                            f"<a href = https://t.me/{entity.username}>{entity.title}</a>"
-                        )
+                        grp.append(f"<a href = https://t.me/{entity.username}>{entity.title}</a>")
                         output = GROUPS_OWNERSTR
     for k, i in enumerate(grp, start=1):
         output += f"{k} .) {i}\n"
@@ -256,14 +213,12 @@ async def full_stats(event):  # sourcery no-metrics # sourcery skip: low-code-qu
     reply_to_msg = event.id
     if count > 1:
         for i in range(1, count):
-            new_event = await catub.send_message(
-                event.chat_id, message[i], parse_mode="html", reply_to=reply_to_msg
-            )
+            new_event = await catub.send_message(event.chat_id, message[i], parse_mode="html", reply_to=reply_to_msg)
             reply_to_msg = new_event.id
 
 
 @catub.cat_cmd(
-    pattern="ustat(?:\s|$)([\s\S]*)",
+    pattern=r"ustat(?:\s|$)([\s\S]*)",
     command=("ustat", plugin_category),
     info={
         "header": "To get list of public groups of repled person or mentioned person.",
@@ -286,9 +241,7 @@ async def ustat(event):
             try:
                 u = await event.client.get_entity(input_str)
             except ValueError:
-                await edit_delete(
-                    event, "`Give userid or username to find name history`"
-                )
+                await edit_delete(event, "`Give userid or username to find name history`")
             uid = u.id
     else:
         uid = reply_message.sender_id
@@ -329,7 +282,5 @@ async def ustat(event):
     reply_to_msg = event.id
     if checker > 1:
         for i in range(1, checker):
-            new_event = await catub.send_message(
-                event.chat_id, msg_list[i], reply_to=reply_to_msg
-            )
+            new_event = await catub.send_message(event.chat_id, msg_list[i], reply_to=reply_to_msg)
             reply_to_msg = new_event.id

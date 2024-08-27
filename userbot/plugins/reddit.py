@@ -30,7 +30,7 @@ plugin_category = "misc"
 
 
 @catub.cat_cmd(
-    pattern="reddit(?:\s|$)([\s\S]*)",
+    pattern=r"reddit(?:\s|$)([\s\S]*)",
     command=("reddit", plugin_category),
     info={
         "header": "get a random reddit post.",
@@ -52,9 +52,7 @@ async def reddit_fetch(event):
         if BOTLOG:
             code = r["code"]
             code_message = r["message"]
-            await event.client.send_message(
-                BOTLOG_CHATID, f"**Error Code: {code}**\n`{code_message}`"
-            )
+            await event.client.send_message(BOTLOG_CHATID, f"**Error Code: {code}**\n`{code_message}`")
             await edit_delete(event, f"**Error Code: {code}**\n`{code_message}`")
     else:
         if "url" not in r:
@@ -81,8 +79,6 @@ async def reddit_fetch(event):
 
         await event.delete()
         captionx += f"Source: [r/{subreddit}]({postlink})"
-        sandy = await event.client.send_file(
-            event.chat_id, media_url, caption=captionx, reply_to=reply_to
-        )
+        sandy = await event.client.send_file(event.chat_id, media_url, caption=captionx, reply_to=reply_to)
         if media_url.endswith(".gif"):
             await unsavegif(event, sandy)

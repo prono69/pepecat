@@ -25,9 +25,7 @@ plugin_category = "utils"
 
 moviepath = os.path.join(os.getcwd(), "temp", "moviethumb.jpg")
 
-justwatchapi.__dict__["HEADER"] = {
-    "User-Agent": "JustWatch client (github.com/dawoudt/JustWatchAPI)"
-}
+justwatchapi.__dict__["HEADER"] = {"User-Agent": "JustWatch client (github.com/dawoudt/JustWatchAPI)"}
 
 
 def get_stream_data(query):
@@ -42,11 +40,7 @@ def get_stream_data(query):
     movie = results["items"][0]
     stream_data = {
         "title": movie["title"],
-        "movie_thumb": (
-            "https://images.justwatch.com"
-            + movie["poster"].replace("{profile}", "")
-            + "s592"
-        ),
+        "movie_thumb": ("https://images.justwatch.com" + movie["poster"].replace("{profile}", "") + "s592"),
     }
 
     stream_data["release_year"] = movie["original_release_year"]
@@ -96,7 +90,7 @@ def get_provider(url):
 
 
 @catub.cat_cmd(
-    pattern="watch ([\s\S]*)",
+    pattern=r"watch ([\s\S]*)",
     command=("watch", plugin_category),
     info={
         "header": "To search online streaming sites for that movie.",

@@ -1,4 +1,4 @@
-""" Schedule message to anytime or in loop """
+"""Schedule message to anytime or in loop"""
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~# CatUserBot #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Copyright (C) 2020-2023 by TgCatUB@Github.
@@ -27,7 +27,7 @@ plugin_category = "tools"
 
 
 @catub.cat_cmd(
-    pattern="(auto|)schedule(?:\s|$)([\s\S]*)",
+    pattern=r"(auto|)schedule(?:\s|$)([\s\S]*)",
     command=("schedule", plugin_category),
     info={
         "header": "Schedule message to a perticulater day and time.",
@@ -74,9 +74,7 @@ async def schedule(event):
                     user = await catub.get_entity(item)
                     user_list.append(user.id)
         if not user_list:
-            return await edit_delete(
-                event, "__Didn't found any users to schedule message...__"
-            )
+            return await edit_delete(event, "__Didn't found any users to schedule message...__")
         if cmd == "auto":
             scheduled_time, error = sql.get_scdule_from_day(daytime)
             if not scheduled_time:
@@ -86,9 +84,7 @@ async def schedule(event):
             current_time = datetime.now().replace(second=0, microsecond=0)
             daytime = None
             if scheduled_time < current_time:
-                return await edit_delete(
-                    event, "__Its not a time machine to send message in the past__"
-                )
+                return await edit_delete(event, "__Its not a time machine to send message in the past__")
         logged = await catub.send_message(BOTLOG_CHATID, reply)
         message = {"chat": logged.chat_id, "msg_id": logged.id}
         sql.add_message_to_database(user_list, message, scheduled_time, daytime)
@@ -98,7 +94,7 @@ async def schedule(event):
 
 
 @catub.cat_cmd(
-    pattern="autoschedule$",
+    pattern=r"autoschedule$",
     command=("autoschedule", plugin_category),
     info={
         "header": "Schedule message in loop everyday.",
@@ -124,7 +120,7 @@ async def autoschedule(event):
 
 
 @catub.cat_cmd(
-    pattern="myschedule(?:\s|$)([\s\S]*)",
+    pattern=r"myschedule(?:\s|$)([\s\S]*)",
     command=("myschedule", plugin_category),
     info={
         "header": "Get all active schedule tasks list.",
@@ -146,9 +142,7 @@ async def schedulelist(event):
     if cmd and "-d" in cmd:
         task = cmd.replace("-d", "").strip()
         if not task:
-            return await edit_delete(
-                event, "__Reply with a task id, or `all` if want to delete all tasks.__"
-            )
+            return await edit_delete(event, "__Reply with a task id, or `all` if want to delete all tasks.__")
         elif task == "all":
             sql.delete_all_messages()
             await edit_delete(event, "__All tasks deleted successfully.__")

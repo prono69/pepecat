@@ -46,7 +46,7 @@ async def upload_unpacked(event, text_event, path):
 
 
 @catub.cat_cmd(
-    pattern="zip(?:\s|$)([\s\S]*)",
+    pattern=r"zip(?:\s|$)([\s\S]*)",
     command=("zip", plugin_category),
     info={
         "header": "To compress the file/folders",
@@ -72,22 +72,18 @@ async def zip_file(event):
         return await edit_delete(event, "`File compressing is not implemented yet`")
     mone = await edit_or_reply(event, "`Zipping in progress....`")
     filePaths = zipdir(input_str)
-    filepath = os.path.join(
-        Config.TMP_DOWNLOAD_DIRECTORY, os.path.basename(Path(input_str))
-    )
-    zip_file = zipfile.ZipFile(f"{filepath}.zip", "w")
-    with zip_file:
+    filepath = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, os.path.basename(Path(input_str)))
+    zip_file_var = zipfile.ZipFile(f"{filepath}.zip", "w")
+    with zip_file_var:
         for file in filePaths:
-            zip_file.write(file)
+            zip_file_var.write(file)
     end = datetime.now()
     ms = (end - start).seconds
-    await mone.edit(
-        f"Zipped the path `{input_str}` into `{filepath}.zip` in __{ms}__ Seconds"
-    )
+    await mone.edit(f"Zipped the path `{input_str}` into `{filepath}.zip` in __{ms}__ Seconds")
 
 
 @catub.cat_cmd(
-    pattern="tar(?:\s|$)([\s\S]*)",
+    pattern=r"tar(?:\s|$)([\s\S]*)",
     command=("tar", plugin_category),
     info={
         "header": "To compress the file/folders to tar file",
@@ -113,23 +109,19 @@ async def tar_file(event):
     mone = await edit_or_reply(event, "`Tar creation in progress....`")
     start = datetime.now()
     filePaths = zipdir(input_str)
-    filepath = os.path.join(
-        Config.TMP_DOWNLOAD_DIRECTORY, os.path.basename(Path(input_str))
-    )
+    filepath = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, os.path.basename(Path(input_str)))
     destination = f"{filepath}.tar.gz"
-    zip_file = tar_open(destination, "w:gz")
-    with zip_file:
+    tar_file_var = tar_open(destination, "w:gz")
+    with tar_file_var:
         for file in filePaths:
-            zip_file.add(file)
+            tar_file_var.add(file)
     end = datetime.now()
     ms = (end - start).seconds
-    await mone.edit(
-        f"Created a tar file for the given path {input_str} as `{destination}` in __{ms}__ Seconds"
-    )
+    await mone.edit(f"Created a tar file for the given path {input_str} as `{destination}` in __{ms}__ Seconds")
 
 
 @catub.cat_cmd(
-    pattern="unzip(?:\s|$)([\s\S]*)",
+    pattern=r"unzip(?:\s|$)([\s\S]*)",
     command=("unzip", plugin_category),
     info={
         "header": "To unpack the given zip file",
@@ -141,7 +133,7 @@ async def tar_file(event):
         ],
     },
 )
-async def zip_file(event):  # sourcery no-metrics
+async def unzip_file(event):  # sourcery no-metrics
     # sourcery skip: low-code-quality
     "To unpack the zip file"
     upload_flag = False
@@ -154,9 +146,7 @@ async def zip_file(event):  # sourcery no-metrics
         if os.path.exists(path):
             start = datetime.now()
             if not zipfile.is_zipfile(path):
-                return await edit_delete(
-                    event, f"`The Given path {path} is not zip file to unpack`"
-                )
+                return await edit_delete(event, f"`The Given path {path} is not zip file to unpack`")
 
             mone = await edit_or_reply(event, "`Unpacking....`")
             destination = os.path.join(
@@ -195,9 +185,7 @@ async def zip_file(event):  # sourcery no-metrics
             await event.client.fast_download_file(
                 location=reply.document,
                 out=dl,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to download")
-                ),
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, mone, c_time, "trying to download")),
             )
             dl.close()
         except Exception as e:
@@ -226,7 +214,7 @@ async def zip_file(event):  # sourcery no-metrics
 
 
 @catub.cat_cmd(
-    pattern="untar(?:\s|$)([\s\S]*)",
+    pattern=r"untar(?:\s|$)([\s\S]*)",
     command=("untar", plugin_category),
     info={
         "header": "To unpack the given tar file",
@@ -251,14 +239,10 @@ async def untar_file(event):  # sourcery no-metrics
         if os.path.exists(path):
             start = datetime.now()
             if not is_tarfile(path):
-                return await edit_delete(
-                    event, f"`The Given path {path} is not tar file to unpack`"
-                )
+                return await edit_delete(event, f"`The Given path {path} is not tar file to unpack`")
 
             mone = await edit_or_reply(event, "`Unpacking....`")
-            destination = os.path.join(
-                Config.TMP_DOWNLOAD_DIRECTORY, (os.path.basename(path).split("."))[0]
-            )
+            destination = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, (os.path.basename(path).split("."))[0])
             if not os.path.exists(destination):
                 os.mkdir(destination)
             file = tar_open(path)
@@ -289,21 +273,15 @@ async def untar_file(event):  # sourcery no-metrics
             await event.client.fast_download_file(
                 location=reply.document,
                 out=dl,
-                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "trying to download")
-                ),
+                progress_callback=lambda d, t: asyncio.get_event_loop().create_task(progress(d, t, mone, c_time, "trying to download")),
             )
             dl.close()
         except Exception as e:
             return await edit_delete(mone, f"**Error:**\n__{e}__")
         if not is_tarfile(filename):
-            return await edit_delete(
-                mone, "`The replied file is not tar file to unpack it recheck it`"
-            )
+            return await edit_delete(mone, "`The replied file is not tar file to unpack it recheck it`")
         await mone.edit("`Download finished Unpacking now`")
-        destination = os.path.join(
-            Config.TMP_DOWNLOAD_DIRECTORY, (os.path.basename(filename).split("."))[0]
-        )
+        destination = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, (os.path.basename(filename).split("."))[0])
 
         if not os.path.exists(destination):
             os.mkdir(destination)
