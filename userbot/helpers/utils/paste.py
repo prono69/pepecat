@@ -56,7 +56,7 @@ async def s_paste(message, extension="txt"):
     """
     To Paste the given message/text/code to spaceb.in
     """
-    siteurl = "https://spaceb.in/api/v1/documents/"
+    siteurl = "https://spaceb.in/api/"
     try:
         response = requests.post(siteurl, data={"content": message, "extension": extension})
     except Exception as e:
@@ -77,7 +77,7 @@ def spaste(message, extension="txt"):
     """
     To Paste the given message/text/code to spaceb.in
     """
-    siteurl = "https://spaceb.in/api/v1/documents/"
+    siteurl = "https://spaceb.in/api/"
     try:
         response = requests.post(siteurl, data={"content": message, "extension": extension})
     except Exception as e:
