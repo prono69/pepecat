@@ -282,7 +282,9 @@ async def app_log(event):
             log = "".join(lines)
             linktext = "**Recent 100 lines of logs: **"
     if "t" in flag:
-        return await edit_or_reply(event, log, file_name="logs.txt", caption=linktext, thumb=thumb)
+        return await edit_or_reply(
+            event, log, file_name="logs.txt", caption=linktext, thumb=thumb
+        )
     elif "r" in flag:
         outfile, error = chromeDriver.get_rayso(log, file_name="logs.png")
         if outfile:
@@ -291,7 +293,7 @@ async def app_log(event):
             )
             return os.remove(outfile)
     elif "o" in flag:
-     	with open("catub.log", "r") as f:
-     		file = f.read()[-4000:]
-     		return await edit_or_reply(event, f"`{file}`")
+        with open("catub.log", "r") as f:
+            file = f.read()[-4000:]
+            return await edit_or_reply(event, f"`{file}`")
     return await edit_or_reply(event, log, deflink=True, linktext=linktext)
