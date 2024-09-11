@@ -270,7 +270,7 @@ async def app_log(event):
     flag = event.pattern_match.group(1)
     flag = [*flag]
     thumb = thumb_image_path if os.path.exists(thumb_image_path) else None
-    if flag and (flag[0] != "-" or any(i not in ["-", "f", "r", "t"] for i in flag)):
+    if flag and (flag[0] != "-" or any(i not in ["-", "f", "r", "t", "o"] for i in flag)):
         return await edit_delete(event, "**Invalid flag...**")
 
     with open("catub.log", "r") as file:

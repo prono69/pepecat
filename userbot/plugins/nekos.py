@@ -90,17 +90,18 @@ async def neko(event):
         )
     if await age_verification(event, reply_to):
         return
-    catevent = await edit_or_reply(event, "`Processing Nekos...`")
-    target = useless.nekos(choose)
-    await catevent.delete()
     try:
-        nohorny = await event.client.send_file(
+    	catevent = await edit_or_reply(event, "`Processing Nekos...`")
+    	target = useless.nekos(choose)
+    	await catevent.delete()
+    	nohorny = await event.client.send_file(
             event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
         )
+        
     except Exception as e:
         await edit_delete(event, e)
-    await unsavegif(event, nohorny)
-
+    await unsavegif(event, nohorny)    
+    
 
 @catub.cat_cmd(
     pattern="dva$",
@@ -315,34 +316,45 @@ for m in ISFW:
     command=("nm", plugin_category),
     info={
         "header": "Contains NSFW \nSearch images from waifu.im",
-        "usage": "{tr}nm <argument from choice>",
-        "examples": "{tr}nm waifu",
+        "usage": "{tr}nm <argument from choice> [-n]",
+        "examples": "{tr}nm waifu -n",
         "options": waifu_help,
     },
 )
 async def _(event):
     "Search images from waifu.im"
     reply_to = await reply_id(event)
-    choose = event.pattern_match.group(1)
+    args = event.pattern_match.group(1).split()
+    choose = args[0] if args else ""
+    is_nsfw = "-n" in args
     url = "https://api.waifu.im"
+    
     if choose == "":
-        url = "{url}/search/"
+        url = f"{url}/search/"
     else:
         url = f"{url}/search/?included_tags={choose}"
+    if is_nsfw:
+        url += "&" if "?" in url else "?"
+        url += "is_nsfw=True"
+    
     if choose not in waifu_help:
         return await edit_delete(
             event, "**Wrong Category!!**\nDo `.help nm` for Category list (*_*)`"
         )
+    
     if await age_verification(event, reply_to):
         return
+    
     catevent = await edit_or_reply(event, "`Processing...`")
     resp = requests.get(url).json()
     target = resp["images"][0]["url"]
     nohorny = await event.client.send_file(
         event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
     )
+    
     try:
         await unsavegif(event, nohorny)
     except Exception:
         pass
+    
     await catevent.delete()
