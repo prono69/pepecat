@@ -283,9 +283,7 @@ async def app_log(event):
             log = "".join(lines)
             linktext = "**Recent 100 lines of logs: **"
     if "t" in flag:
-        return await edit_or_reply(
-            event, log, file_name="logs.txt", caption=linktext
-        )
+        return await edit_or_reply(event, log, file_name="logs.txt", caption=linktext)
     elif "r" in flag:
         outfile, error = chromeDriver.get_rayso(log, file_name="logs.png")
         if outfile:
