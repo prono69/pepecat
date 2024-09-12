@@ -99,7 +99,7 @@ async def neko(event):
         )
 
     except Exception as e:
-        await edit_delete(event, e)
+        await edit_delete(event, f"`{e}`")
     await unsavegif(event, nohorny)
 
 
@@ -325,33 +325,47 @@ async def _(event):
     "Search images from waifu.im"
     reply_to = await reply_id(event)
     args = event.pattern_match.group(1).split()
-    choose = args[0] if args else ""
+    # Identify if '-n' flag is present
     is_nsfw = "-n" in args
+    # Filter out the '-n' flag from args to get the actual category
+    args = [arg for arg in args if arg != "-n"]
+    # Choose category (if present)
+    choose = args[0] if args else ""
+
+    # Base URL
     url = "https://api.waifu.im"
 
-    if choose == "":
-        url = f"{url}/search/"
-    else:
+    # Check if no category is provided and '-n' is used (random NSFW image)
+    if choose == "" and is_nsfw:
+        url = f"{url}/search/?is_nsfw=True"
+    elif choose != "":
+        # Add the category if it's provided
+        if choose not in waifu_help:
+            return await edit_delete(
+                event, "**Wrong Category!!**\nDo `.help nm` for Category list (*_*)"
+            )
         url = f"{url}/search/?included_tags={choose}"
-    if is_nsfw:
-        url += "&" if "?" in url else "?"
-        url += "is_nsfw=True"
+        if is_nsfw:
+            url += "&is_nsfw=True"
+    else:
+        # If no category and no '-n', fetch a random SFW image
+        url = f"{url}/search/"
 
-    if choose not in waifu_help:
-        return await edit_delete(
-            event, "**Wrong Category!!**\nDo `.help nm` for Category list (*_*)`"
-        )
-
+    # Perform age verification
     if await age_verification(event, reply_to):
         return
 
+    # Send request and process the response
     catevent = await edit_or_reply(event, "`Processing...`")
     resp = requests.get(url).json()
     target = resp["images"][0]["url"]
+
+    # Send the image
     nohorny = await event.client.send_file(
-        event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
+        event.chat_id, file=target, caption=f"__**{choose}**__", reply_to=reply_to
     )
 
+    # Optionally unsave the image
     try:
         await unsavegif(event, nohorny)
     except Exception:

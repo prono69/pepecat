@@ -269,7 +269,6 @@ async def app_log(event):
     "To get log of the Catuserbot"
     flag = event.pattern_match.group(1)
     flag = [*flag]
-    thumb = thumb_image_path if os.path.exists(thumb_image_path) else None
     if flag and (
         flag[0] != "-" or any(i not in ["-", "f", "r", "t", "o"] for i in flag)
     ):
@@ -285,7 +284,7 @@ async def app_log(event):
             linktext = "**Recent 100 lines of logs: **"
     if "t" in flag:
         return await edit_or_reply(
-            event, log, file_name="logs.txt", caption=linktext, thumb=thumb
+            event, log, file_name="logs.txt", caption=linktext
         )
     elif "r" in flag:
         outfile, error = chromeDriver.get_rayso(log, file_name="logs.png")
