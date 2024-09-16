@@ -153,7 +153,10 @@ async def user(event):
     except APIException:
         return await edit_delete(event, "__No User found with given username__", 5)
     date_format = "%Y-%m-%d"
-    img = user["images"]["jpg"]["image_url"] or "https://graph.org/file/9b4205e1b1cc68a4ffd5e.jpg"
+    img = (
+        user["images"]["jpg"]["image_url"]
+        or "https://graph.org/file/9b4205e1b1cc68a4ffd5e.jpg"
+    )
     try:
         user_birthday = datetime.fromisoformat(user["birthday"])
         user_birthday_formatted = user_birthday.strftime(date_format)

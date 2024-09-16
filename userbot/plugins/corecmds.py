@@ -269,9 +269,7 @@ async def app_log(event):
     "To get log of the Catuserbot"
     flag = event.pattern_match.group(1)
     flag = [*flag]
-    if flag and (
-        flag[0] != any(i not in ["f", "r", "t", "o"] for i in flag)
-    ):
+    if flag and (flag[0] != any(i not in ["f", "r", "t", "o"] for i in flag)):
         return await edit_delete(event, "**Invalid flag...**")
 
     with open("catub.log", "r") as file:
