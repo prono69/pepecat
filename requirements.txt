@@ -23,7 +23,7 @@ hentai
 html-telegraph-poster
 httpx[http2]
 humanize
-jikanpy
+jikanpy-v4
 justwatch
 kwot
 lottie

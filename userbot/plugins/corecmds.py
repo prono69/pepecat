@@ -46,7 +46,7 @@ def plug_checker(plugin):
 
 
 @catub.cat_cmd(
-    pattern="install(?:\s|$)([\s\S]*)",
+    pattern="(install|i) (?:\s|$)([\s\S]*)",
     command=("install", plugin_category),
     info={
         "header": "To install an external plugin.",
@@ -56,7 +56,7 @@ def plug_checker(plugin):
 )
 async def install(event):
     "To install an external plugin."
-    install_path = event.pattern_match.group(1) or "userbot/plugins"
+    install_path = event.pattern_match.group(2) or "userbot/plugins"
     if event.reply_to_msg_id:
         try:
             downloaded_file_name = await event.client.download_media(
@@ -173,7 +173,7 @@ async def unload(event):
 
 
 @catub.cat_cmd(
-    pattern="uninstall(?:\s|$)([\s\S]*)",
+    pattern="(uninstall|ui) (?:\s|$)([\s\S]*)",
     command=("uninstall", plugin_category),
     info={
         "header": "To uninstall a plugin temporarily.",
@@ -185,7 +185,7 @@ async def unload(event):
 )
 async def unload(event):
     "To uninstall a plugin."
-    shortname = event.pattern_match.group(1)
+    shortname = event.pattern_match.group(2)
     path = plug_checker(shortname)
     if not os.path.exists(path):
         return await edit_delete(
@@ -270,7 +270,7 @@ async def app_log(event):
     flag = event.pattern_match.group(1)
     flag = [*flag]
     if flag and (
-        flag[0] != "-" or any(i not in ["-", "f", "r", "t", "o"] for i in flag)
+        flag[0] != any(i not in ["f", "r", "t", "o"] for i in flag)
     ):
         return await edit_delete(event, "**Invalid flag...**")
 

@@ -148,11 +148,12 @@ async def user(event):
         else:
             return await edit_delete(event, "__Whom should i search.__")
     try:
-        user = jikan.user(search_query)
+        user_ = jikan.users(search_query)
+        user = user_["data"]
     except APIException:
         return await edit_delete(event, "__No User found with given username__", 5)
     date_format = "%Y-%m-%d"
-    img = user["image_url"] or "https://graph.org/file/9b4205e1b1cc68a4ffd5e.jpg"
+    img = user["images"]["jpg"]["image_url"] or "https://graph.org/file/9b4205e1b1cc68a4ffd5e.jpg"
     try:
         user_birthday = datetime.fromisoformat(user["birthday"])
         user_birthday_formatted = user_birthday.strftime(date_format)
@@ -679,11 +680,12 @@ async def character(event):
             )
     catevent = await edit_or_reply(event, "`Searching Character...`")
     try:
-        search_result = jikan.search("character", search_query)
+        search_result = jikan.search("characters", search_query)
     except APIException:
         return await edit_delete(catevent, "`Character not found.`")
-    first_mal_id = search_result["results"][0]["mal_id"]
-    character = jikan.character(first_mal_id)
+    first_mal_id = search_result["data"][0]["mal_id"]
+    character_ = jikan.characters(first_mal_id)
+    character = character_["data"]
     caption = f"🇯🇵 [{character['name']}]({character['url']})"
     if character["name_kanji"] != "Japanese":
         caption += f" • `{character['name_kanji']}`\n"
@@ -698,7 +700,7 @@ async def character(event):
     except IndexError:
         pass
     about_string = " ".join(about)
-    mal_url = search_result["results"][0]["url"]
+    mal_url = search_result["data"][0]["url"]
     for entity in character:
         if character[entity] is None:
             character[entity] = "Unknown"
@@ -707,7 +709,7 @@ async def character(event):
     await catevent.delete()
     await event.client.send_file(
         event.chat_id,
-        file=character["image_url"],
+        file=character["images"]["jpg"]["image_url"],
         caption=replace_text(caption),
         reply_to=reply_to,
     )
@@ -948,7 +950,7 @@ async def manga(event):
     res = ""
     manga = ""
     try:
-        res = jikan.search("manga", query).get("results")[0].get("mal_id")
+        res = jikan.search("manga", query).get("data")[0].get("mal_id")
     except APIException:
         await edit_delete(event, "Error connecting to the API. Please try again!", 5)
         return ""
@@ -1020,7 +1022,7 @@ async def get_anime(message):
     try:
         jikan = jikanpy.AioJikan()
         search_res = await jikan.search("anime", query)
-        f_mal_id = search_res["results"][0]["mal_id"]
+        f_mal_id = search_res["data"][0]["mal_id"]
     except IndexError:
         await p_rm.edit(f"No Results Found for {query}")
         return
@@ -1028,7 +1030,8 @@ async def get_anime(message):
         await p_rm.edit(f"**Encountered an Unknown Exception**: \n{err}")
         return
 
-    results_ = await jikan.anime(f_mal_id)
+    results_k = await jikan.anime(f_mal_id)
+    results_ = results_k["data"]
     await jikan.close()
 
     # Get All Info of anime
