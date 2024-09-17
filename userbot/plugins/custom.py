@@ -18,12 +18,11 @@ from userbot import (
     addgvar,
     catub,
     delgvar,
-    edit_delete,
-    edit_or_reply,
     gvarstatus,
     upload_to_catbox,
 )
 from userbot.core.logger import logging
+from userbot.core.managers import edit_delete, edit_or_reply
 
 plugin_category = "tools"
 LOGS = logging.getLogger(__name__)
