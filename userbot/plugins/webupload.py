@@ -126,7 +126,7 @@ async def labstack(event):
 async def _(event):
     "To upload media to some online media sharing platforms"
     editor = await edit_or_reply(event, "Processing ...")
-    
+
     # Capture the input string (file path) and selected transfer option
     input_str = event.pattern_match.group(1)
     selected_transfer = event.pattern_match.group(2)
@@ -147,7 +147,8 @@ async def _(event):
     CMD_WEB = {
         "fileio": 'curl -F "file=@{full_file_path}" https://file.io',
         "anonfiles": 'curl -F "file=@{full_file_path}" https://api.anonfiles.com/upload',
-        "transfer": 'curl --upload-file "{full_file_path}" https://transfer.sh/' + os.path.basename(file_name),
+        "transfer": 'curl --upload-file "{full_file_path}" https://transfer.sh/'
+        + os.path.basename(file_name),
         "filebin": 'curl -X POST --data-binary "@{full_file_path}" -H "filename: {bare_local_name}" "https://filebin.net"',
         "anonymousfiles": 'curl -F "file=@{full_file_path}" https://api.anonymousfiles.io/',
         "vshare": 'curl -F "file=@{full_file_path}" https://api.vshare.is/upload',
@@ -181,7 +182,9 @@ async def _(event):
             # Handle non-JSON responses from some sites
             LOGS.info(str(e))
         urls = re.findall(link_regex, t_response)
-        result = "**Uploaded File link/links :**\n" + "\n".join(urls) if urls else t_response
+        result = (
+            "**Uploaded File link/links :**\n" + "\n".join(urls) if urls else t_response
+        )
         await editor.edit(result)
     else:
         await editor.edit(f"Error: {error}")
