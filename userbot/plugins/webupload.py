@@ -98,11 +98,11 @@ async def labstack(event):
 
 
 @catub.cat_cmd(
-    pattern="webupload ?(.+?|) --(fileio|anonfiles|transfer|filebin|anonymousfiles|bayfiles)",
+    pattern=r"webupload\s?(.+?)?\s--(fileio|anonfiles|transfer|filebin|anonymousfiles|bayfiles|megaupload|vshare|0x0|ninja|infura)",
     command=("webupload", plugin_category),
     info={
         "header": "To upload media to some online media sharing platforms.",
-        "description": "you can upload media to any of the sites mentioned. so you can share link to others.",
+        "description": "You can upload media to any of the sites mentioned. This helps in sharing links with others.",
         "options": {
             "fileio": "to file.io site",
             "anonfiles": "to anonfiles site",
@@ -125,24 +125,29 @@ async def labstack(event):
 )
 async def _(event):
     "To upload media to some online media sharing platforms"
-    editor = await edit_or_reply(event, "processing ...")
+    editor = await edit_or_reply(event, "Processing ...")
+    
+    # Capture the input string (file path) and selected transfer option
     input_str = event.pattern_match.group(1)
     selected_transfer = event.pattern_match.group(2)
     catcheck = None
+
     if input_str:
         file_name = input_str
     else:
         reply = await event.get_reply_message()
+        if not reply or not reply.media:
+            return await editor.edit("Please reply to a media file.")
         file_name = await event.client.download_media(
             reply.media, Config.TMP_DOWNLOAD_DIRECTORY
         )
         catcheck = True
-    # a dictionary containing the shell commands
+
+    # Command dictionary for various upload services
     CMD_WEB = {
         "fileio": 'curl -F "file=@{full_file_path}" https://file.io',
         "anonfiles": 'curl -F "file=@{full_file_path}" https://api.anonfiles.com/upload',
-        "transfer": 'curl --upload-file "{full_file_path}" https://transfer.sh/'
-        + os.path.basename(file_name),
+        "transfer": 'curl --upload-file "{full_file_path}" https://transfer.sh/' + os.path.basename(file_name),
         "filebin": 'curl -X POST --data-binary "@{full_file_path}" -H "filename: {bare_local_name}" "https://filebin.net"',
         "anonymousfiles": 'curl -F "file=@{full_file_path}" https://api.anonymousfiles.io/',
         "vshare": 'curl -F "file=@{full_file_path}" https://api.vshare.is/upload',
@@ -152,37 +157,41 @@ async def _(event):
         "ninja": "curl -i -F file=@{full_file_path} https://tmp.ninja/api.php?d=upload-tool",
         "infura": "curl -X POST -F file=@'{full_file_path}' \"https://ipfs.infura.io:5001/api/v0/add?pin=true\"",
     }
+
     filename = os.path.basename(file_name)
+
     try:
         selected_one = CMD_WEB[selected_transfer].format(
             full_file_path=file_name, bare_local_name=filename
         )
     except KeyError:
-        return await editor.edit("**Invalid selected Transfer**")
-    cmd = selected_one
-    # start the subprocess $SHELL
+        return await editor.edit("**Invalid selected Transfer option**")
+
+    # Start the subprocess to execute the command
     process = await asyncio.create_subprocess_shell(
-        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+        selected_one, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
     stdout, stderr = await process.communicate()
     error = stderr.decode().strip()
+
     if t_response := stdout.decode().strip():
         try:
             t_response = json.dumps(json.loads(t_response), sort_keys=True, indent=4)
         except Exception as e:
-            # some sites don't return valid JSONs
+            # Handle non-JSON responses from some sites
             LOGS.info(str(e))
-        urls = links = re.findall(link_regex, t_response)
-        result = ""
-        for i in urls:
-            if not result:
-                result = "**Uploaded File link/links :**"
-            result += f"\n{i[0]}"
+        urls = re.findall(link_regex, t_response)
+        result = "**Uploaded File link/links :**\n" + "\n".join(urls) if urls else t_response
         await editor.edit(result)
     else:
-        await editor.edit(error)
+        await editor.edit(f"Error: {error}")
+
+    # Remove file if it was downloaded
     if catcheck:
-        os.remove(file_name)
+        try:
+            os.remove(file_name)
+        except Exception as e:
+            LOGS.info(f"Error removing file: {str(e)}")
 
 
 # By @FeelDeD

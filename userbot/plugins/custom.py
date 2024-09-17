@@ -8,16 +8,13 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 from PIL import Image
-from telegraph import Telegraph, exceptions, upload_file
+from telegraph import Telegraph, exceptions
 from telethon.tl import types
 from telethon.tl.functions.users import GetFullUserRequest
 from urlextract import URLExtract
 
-from userbot import BOTLOG_CHATID, catub
+from userbot import BOTLOG_CHATID, catub, edit_delete, edit_or_reply, addgvar, delgvar, gvarstatus, upload_to_catbox
 from userbot.core.logger import logging
-
-from ..core.managers import edit_delete, edit_or_reply
-from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 
 plugin_category = "tools"
 LOGS = logging.getLogger(__name__)
@@ -153,8 +150,8 @@ async def bad(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
                 try:
                     if downloaded_file_name.endswith((".webp")):
                         resize_image(downloaded_file_name)
-                    media_urls = upload_file(downloaded_file_name)
-                    vinfo = f"https://telegra.ph{media_urls[0]}"
+                    media_urls = upload_to_catbox(downloaded_file_name)
+                    vinfo = f"{media_urls}"
                 except AttributeError:
                     return await event.edit("`Error while making link`")
                 except exceptions.TelegraphException as exc:
@@ -162,7 +159,7 @@ async def bad(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
         except AttributeError:
             vinfo = reply.text
             # ==============================================================================
-    if vname in vlist:
+    if vname:
         if vname in oldvars:
             vname = oldvars[vname]
         if cmd == "set":
@@ -192,8 +189,8 @@ async def bad(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
                 try:
                     photos = await catub.get_profile_photos(catub.uid)
                     myphoto = await catub.download_media(photos[0])
-                    myphoto_urls = upload_file(myphoto)
-                    addgvar("DEFAULT_PIC", f"https://graph.org{myphoto_urls[0]}")
+                    myphoto_urls = upload_to_catbox(myphoto)
+                    addgvar("DEFAULT_PIC", f"{myphoto_urls}")
                 except IndexError:
                     if gvarstatus("DEFAULT_PIC"):
                         delgvar("DEFAULT_PIC")

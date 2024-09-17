@@ -10,6 +10,7 @@
 import signal
 import sys
 import time
+import requests
 
 import heroku3
 from fake_useragent import UserAgent
@@ -21,6 +22,7 @@ from .helpers.functions.converter import Convert
 from .helpers.functions.musictool import *
 from .helpers.utils.utils import runasync
 from .sql_helper.globals import addgvar, delgvar, gvarstatus
+from .core.managers import edit_delete, edit_or_reply
 
 __version__ = "3.3.0"
 __license__ = "GNU Affero General Public License v3.0"
@@ -51,6 +53,25 @@ agent = UserAgent()
 def user_agent():
     return agent.random
 
+def upload_to_catbox(file_path, userhash=None):
+    url = 'https://catbox.moe/user/api.php'
+    data = {
+        'reqtype': 'fileupload',
+        'userhash': userhash
+    }
+
+    with open(file_path, 'rb') as f:
+        files = {
+            'fileToUpload': f
+        }
+        response = requests.post(url, data=data, files=files)
+        
+        if response.status_code == 200:
+            return response.text
+        else:
+            return f"Error: {response.status_code} - {response.text}"
+            
+    
 
 UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
 
