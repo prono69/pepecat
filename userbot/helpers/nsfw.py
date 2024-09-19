@@ -171,7 +171,16 @@ endpoints = {
         "checker": "url",
     },
     "v8": {
-        "end": ["hboobs", "gonewild", "tentacle", "paizuri", "hthigh", "hmidriff", "pgif", "hkitsune"],
+        "end": [
+            "hboobs",
+            "gonewild",
+            "tentacle",
+            "paizuri",
+            "hthigh",
+            "hmidriff",
+            "pgif",
+            "hkitsune",
+        ],
         "api": "https://api.night-api.com/images/nsfw/",
         "headers": {"Authorization": "s0cOd5GB0T-zqEzmtbN9E2KQdEDHizc-8wRsLtIscp"},
         "checker": "url",
@@ -188,11 +197,11 @@ def nekos(endpoint=None, endpoints=endpoints):
                 checker = details["checker"]
         result = requests.get(api + endpoint, headers=headers).json()
         if checker in result:
-        	return result[checker]
+            return result[checker]
         elif "content" in result and "url" in result["content"]:
-        	return result["content"]["url"]
+            return result["content"]["url"]
         else:
-        	raise ValueError(f"Unexpected response format: {result}")
+            raise ValueError(f"Unexpected response format: {result}")
     return (
         endpoints["v1"]["end"]
         + endpoints["v2"]["end"]

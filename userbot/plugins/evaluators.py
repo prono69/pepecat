@@ -222,12 +222,12 @@ async def search_func(event):
         with open(filename, "w") as f:
             f.write(text)
             await catub.send_file(
-            event.chat_id,
-            filename,
-            caption=caption,
-            allow_cache=False,
-            reply_to=event.message.reply_to_msg_id,
-        )
+                event.chat_id,
+                filename,
+                caption=caption,
+                allow_cache=False,
+                reply_to=event.message.reply_to_msg_id,
+            )
         os.remove(filename)
         return await catevent.delete()
     await catevent.edit(f"{caption} \n\n**OUTPUT:**\n`{text}`")
