@@ -218,18 +218,17 @@ async def search_func(event):
     filepath = inspect.getfile(source)
     caption = f"**Source:**  `{filepath}`"
     text = inspect.getsource(source)
-    
+
     await catevent.delete()
     if len(text) > 4096:
         with open(filename, "w") as f:
-        	f.write(text)
+            f.write(text)
         await catub.send_file(
-        event.chat_id,
-        filename,
-        caption=caption,
-        allow_cache=False,
-        reply_to=event.message.reply_to_msg_id,
-    )
+            event.chat_id,
+            filename,
+            caption=caption,
+            allow_cache=False,
+            reply_to=event.message.reply_to_msg_id,
+        )
     os.remove(filename)
     await edit_or_reply(event, f"{caption} \n\n**OUTPUT:**\n`{text}`")
-    
