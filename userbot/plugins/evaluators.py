@@ -230,5 +230,5 @@ async def search_func(event):
             allow_cache=False,
             reply_to=event.message.reply_to_msg_id,
         )
-    os.remove(filename)
+        os.remove(filename)
     await edit_or_reply(event, f"{caption} \n\n**OUTPUT:**\n`{text}`")
