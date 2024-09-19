@@ -252,16 +252,16 @@ async def get_the_addons(event):
             "t": "Will send the log as text file",
         },
         "usage": [
-            "{tr}logs -{flag}",
-            "{tr}logs -{flag}{flag}",
+            "{tr}logs {flag}",
+            "{tr}logs {flag}{flag}",
         ],
         "examples": [
             "{tr}logs",
-            "{tr}logs -f",
-            "{tr}logs -r",
-            "{tr}logs -t",
-            "{tr}logs -ft",
-            "{tr}logs -fr",
+            "{tr}logs f",
+            "{tr}logs r",
+            "{tr}logs t",
+            "{tr}logs ft",
+            "{tr}logs fr",
         ],
     },
 )

@@ -230,8 +230,8 @@ async def anilist(event):
 
 
 @catub.cat_cmd(
-    pattern="ianime(?:\s|$)([\s\S]*)",
-    command=("ianime", plugin_category),
+    pattern="anime(?:\s|$)([\s\S]*)",
+    command=("anime", plugin_category),
     info={
         "header": "search anime.",
         "description": "Fetches anime information from anilist",
@@ -994,12 +994,12 @@ async def manga(event):
 
 
 @catub.cat_cmd(
-    pattern="anime ?(.*)",
-    command=("anime", plugin_category),
+    pattern="ianime ?(.*)",
+    command=("ianime", plugin_category),
     info={
         "header": "Search anime in a noice format.",
-        "usage": "{tr}anime <anime name>",
-        "examples": "{tr}anime boku no pico",
+        "usage": "{tr}ianime <anime name>",
+        "examples": "{tr}ianime boku no pico",
     },
 )
 async def get_anime(message):
@@ -1058,7 +1058,7 @@ async def get_anime(message):
 
     # Info for Buttons
     mal_dir_link = results_["url"]
-    trailer_link = results_["trailer_url"]
+    trailer_link = results_["trailer"]["url"]
     if trailer_link:
         trailer_link = f"[🎬 Trailer]({trailer_link})"
     else:
