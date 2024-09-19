@@ -25,12 +25,12 @@ thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg"
 
 
 @catub.cat_cmd(
-    pattern="exec(?:\s|$)([\s\S]*)",
-    command=("exec", plugin_category),
+    pattern="bash(?:\s|$)([\s\S]*)",
+    command=("bash", plugin_category),
     info={
         "header": "To Execute terminal commands in a subprocess.",
-        "usage": "{tr}exec <command>",
-        "examples": "{tr}exec cat stringsetup.py",
+        "usage": "{tr}bash <command>",
+        "examples": "{tr}bash cat stringsetup.py",
     },
 )
 async def _(event):
@@ -48,14 +48,14 @@ async def _(event):
     curruser = catuser.username or "catuserbot"
     uid = os.geteuid()
     if uid == 0:
-        cresult = f"```{curruser}:~#``` ```{cmd}```\n```{result}```"
+        cresult = f"**{curruser}:~#** \n`{cmd}`\n\n**• OUTPUT:**\n`{result}`"
     else:
         cresult = f"```{curruser}:~$``` ```{cmd}```\n```{result}```"
     await edit_or_reply(
         catevent,
         text=cresult,
         aslink=True,
-        linktext=f"**•  Exec : **\n```{cmd}``` \n\n**•  Result : **\n",
+        linktext=f"**•  Exec : **\n`{cmd}` \n\n**•  Result : **\n",
     )
     if BOTLOG:
         await event.client.send_message(
@@ -99,7 +99,7 @@ async def _(event):
     sys.stderr = old_stderr
     evaluation = exc or stderr or stdout or _parse_eval(value) or "Success"
     final_output = (
-        f"__►__ **Eval : **\n```{cmd}``` \n\n__►__ **Result : **\n```{evaluation}``` \n"
+        f"__►__ **Eval : **\n`{cmd}` \n\n__►__ **Result : **\n`{evaluation}` \n"
     )
     if len(final_output) > 4096:
         neko = final_output.replace("`", "").replace("**", "").replace("__", "")
@@ -111,7 +111,7 @@ async def _(event):
                 force_document=True,
                 thumb=thumb_image_path,
                 allow_cache=False,
-                caption=f"```{cmd}```" if len(cmd) < 998 else None,
+                caption=f"`{cmd}`" if len(cmd) < 998 else None,
                 reply_to=reply_to_id,
             )
         return await catevent.delete()

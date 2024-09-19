@@ -98,8 +98,8 @@ async def labstack(event):
 
 
 @catub.cat_cmd(
-    pattern=r"webupload\s?(.+?)?\s--(fileio|anonfiles|transfer|filebin|anonymousfiles|bayfiles|megaupload|vshare|0x0|ninja|infura)",
-    command=("webupload", plugin_category),
+    pattern=r"webup\s?(.+?)?\s--(fileio|anonfiles|transfer|filebin|anonymousfiles|bayfiles|megaupload|vshare|0x0|ninja|infura)",
+    command=("webup", plugin_category),
     info={
         "header": "To upload media to some online media sharing platforms.",
         "description": "You can upload media to any of the sites mentioned. This helps in sharing links with others.",
@@ -117,10 +117,10 @@ async def labstack(event):
             "infura": "To infura site",
         },
         "usage": [
-            "{tr}webupload --option <Reply to media>",
-            "{tr}webupload path --option",
+            "{tr}webup --option <Reply to media>",
+            "{tr}webup path --option",
         ],
-        "examples": "{tr}webupload --fileio reply to media file.",
+        "examples": "{tr}webup --fileio reply to media file.",
     },
 )
 async def _(event):
@@ -146,7 +146,6 @@ async def _(event):
     # Command dictionary for various upload services
     CMD_WEB = {
         "fileio": 'curl -F "file=@{full_file_path}" https://file.io',
-        "anonfiles": 'curl -F "file=@{full_file_path}" https://api.anonfiles.com/upload',
         "transfer": 'curl --upload-file "{full_file_path}" https://transfer.sh/'
         + os.path.basename(file_name),
         "filebin": 'curl -X POST --data-binary "@{full_file_path}" -H "filename: {bare_local_name}" "https://filebin.net"',

@@ -6,6 +6,7 @@ cloudscraper
 colour
 cowpy
 countryinfo
+catbox-uploader
 emoji==1.7.0
 fonttools
 fake_useragent
