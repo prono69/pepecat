@@ -48,7 +48,9 @@ from ..sql_helper import global_collectionjson as glob_db
 from . import BOTLOG, BOTLOG_CHATID, LyricsGen, catub, gvarstatus, upload_to_catbox
 
 SPOTIFY_CLIENT_ID = gvarstatus("SPOTIFY_CLIENT_ID") or Config.SPOTIFY_CLIENT_ID
-SPOTIFY_CLIENT_SECRET = gvarstatus("SPOTIFY_CLIENT_SECRET") or Config.SPOTIFY_CLIENT_SECRET
+SPOTIFY_CLIENT_SECRET = (
+    gvarstatus("SPOTIFY_CLIENT_SECRET") or Config.SPOTIFY_CLIENT_SECRET
+)
 
 
 LOGS = logging.getLogger(__name__)
