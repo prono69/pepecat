@@ -25,7 +25,6 @@ import urllib.request
 import requests
 import ujson
 from PIL import Image, ImageEnhance, ImageFilter
-from telegraph import upload_file
 from telethon import Button, events
 from telethon.errors import AboutTooLongError, FloodWaitError
 from telethon.errors.rpcerrorlist import YouBlockedUserError
@@ -46,10 +45,10 @@ from ..helpers.functions.functions import (
 )
 from ..helpers.utils import reply_id
 from ..sql_helper import global_collectionjson as glob_db
-from . import BOTLOG, BOTLOG_CHATID, LyricsGen, catub
+from . import BOTLOG, BOTLOG_CHATID, LyricsGen, catub, gvarstatus, upload_to_catbox
 
-SPOTIFY_CLIENT_ID = Config.SPOTIFY_CLIENT_ID
-SPOTIFY_CLIENT_SECRET = Config.SPOTIFY_CLIENT_SECRET
+SPOTIFY_CLIENT_ID = gvarstatus("SPOTIFY_CLIENT_ID") or Config.SPOTIFY_CLIENT_ID
+SPOTIFY_CLIENT_SECRET = gvarstatus("SPOTIFY_CLIENT_SECRET") or Config.SPOTIFY_CLIENT_SECRET
 
 
 LOGS = logging.getLogger(__name__)
@@ -665,10 +664,10 @@ async def get_spotify(response):
             dic["duration"],
         )
         lyrics, symbol = await telegraph_lyrics(tittle, dic["interpret"])
-        url = upload_file(thumb)
+        url = upload_to_catbox(thumb)
         if os.path.exists(thumb):
             os.remove(thumb)
-    return f"https://graph.org{url[0]}", tittle, dic, lyrics, symbol
+    return f"{url}", tittle, dic, lyrics, symbol
 
 
 async def spotify_inline_article():

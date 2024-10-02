@@ -97,10 +97,11 @@ async def neko(event):
         nohorny = await event.client.send_file(
             event.chat_id, file=target, caption=f"**{choose}**", reply_to=reply_to
         )
+        await unsavegif(event, nohorny)
 
     except Exception as e:
         await edit_delete(event, f"`{e}`")
-    await unsavegif(event, nohorny)
+    # await unsavegif(event, nohorny)
 
 
 @catub.cat_cmd(

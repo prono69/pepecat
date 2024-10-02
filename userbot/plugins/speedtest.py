@@ -61,7 +61,7 @@ async def _(event):
         event, "`Calculating my internet speed. Please wait!`"
     )
     start = time()
-    s = speedtest.Speedtest()
+    s = speedtest.Speedtest(secure=True)
     s.get_best_server()
     s.download()
     s.upload()
