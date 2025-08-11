@@ -16,10 +16,9 @@ import PIL
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
-from telegraph import upload_file
 from telethon.tl.types import InputMessagesFilterDocument, InputMessagesFilterPhotos
 
-from userbot import Convert, catub
+from userbot import Convert, catub, upload_file
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import clippy
@@ -249,7 +248,7 @@ async def bad(event):
                 event, reply_message, dirct="./temp", file="lbg.png", noedits=True
             )
             myphoto_urls = upload_file(output[1])
-            input_str = f"https://graph.org{myphoto_urls[0]}"
+            input_str = f"{myphoto_urls}"
             os.remove(output[1])
         if not input_str.startswith("https://"):
             return await edit_delete(

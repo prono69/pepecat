@@ -45,7 +45,7 @@ from ..helpers.functions.functions import (
 )
 from ..helpers.utils import reply_id
 from ..sql_helper import global_collectionjson as glob_db
-from . import BOTLOG, BOTLOG_CHATID, LyricsGen, catub, gvarstatus, upload_to_catbox
+from . import BOTLOG, BOTLOG_CHATID, LyricsGen, catub, gvarstatus, upload_file
 
 SPOTIFY_CLIENT_ID = gvarstatus("SPOTIFY_CLIENT_ID") or Config.SPOTIFY_CLIENT_ID
 SPOTIFY_CLIENT_SECRET = (
@@ -666,7 +666,7 @@ async def get_spotify(response):
             dic["duration"],
         )
         lyrics, symbol = await telegraph_lyrics(tittle, dic["interpret"])
-        url = upload_to_catbox(thumb)
+        url = upload_file(thumb)
         if os.path.exists(thumb):
             os.remove(thumb)
     return f"{url}", tittle, dic, lyrics, symbol

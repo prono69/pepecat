@@ -14,6 +14,7 @@ import time
 import heroku3
 import requests
 from fake_useragent import UserAgent
+from catbox import CatboxUploader
 
 from .Config import Config
 from .core.logger import logging
@@ -52,20 +53,8 @@ agent = UserAgent()
 def user_agent():
     return agent.random
 
-
-def upload_to_catbox(file_path, userhash=None):
-    url = "https://catbox.moe/user/api.php"
-    data = {"reqtype": "fileupload", "userhash": userhash}
-
-    with open(file_path, "rb") as f:
-        files = {"fileToUpload": f}
-        response = requests.post(url, data=data, files=files)
-
-        if response.status_code == 200:
-            return response.text
-        else:
-            return f"Error: {response.status_code} - {response.text}"
-
+cat_uploader = CatboxUploader()
+upload_file = cat_uploader.upload_file
 
 UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
 

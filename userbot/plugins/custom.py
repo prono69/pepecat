@@ -13,7 +13,7 @@ from telethon.tl import types
 from telethon.tl.functions.users import GetFullUserRequest
 from urlextract import URLExtract
 
-from userbot import BOTLOG_CHATID, addgvar, catub, delgvar, gvarstatus, upload_to_catbox
+from userbot import BOTLOG_CHATID, addgvar, catub, delgvar, gvarstatus, upload_file
 from userbot.core.logger import logging
 from userbot.core.managers import edit_delete, edit_or_reply
 
@@ -151,7 +151,7 @@ async def bad(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
                 try:
                     if downloaded_file_name.endswith((".webp")):
                         resize_image(downloaded_file_name)
-                    media_urls = upload_to_catbox(downloaded_file_name)
+                    media_urls = upload_file(downloaded_file_name)
                     vinfo = f"{media_urls}"
                 except AttributeError:
                     return await event.edit("`Error while making link`")
@@ -190,7 +190,7 @@ async def bad(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
                 try:
                     photos = await catub.get_profile_photos(catub.uid)
                     myphoto = await catub.download_media(photos[0])
-                    myphoto_urls = upload_to_catbox(myphoto)
+                    myphoto_urls = upload_file(myphoto)
                     addgvar("DEFAULT_PIC", f"{myphoto_urls}")
                 except IndexError:
                     if gvarstatus("DEFAULT_PIC"):

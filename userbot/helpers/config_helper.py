@@ -7,11 +7,10 @@
 # Please see: https://github.com/TgCatUB/catuserbot/blob/master/LICENSE
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-from telegraph import upload_file
 from telethon.tl.functions.users import GetFullUserRequest
 from validators.url import url
 
-from userbot import BOTLOG_CHATID
+from userbot import BOTLOG_CHATID, upload_file
 
 from ..Config import Config
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
@@ -87,7 +86,7 @@ async def default_user(event):
         photos = await event.client.get_profile_photos(event.client.uid)
         myphoto = await event.client.download_media(photos[0])
         myphoto_urls = upload_file(myphoto)
-        addgvar("DEFAULT_PIC", f"https://graph.org{myphoto_urls[0]}")
+        addgvar("DEFAULT_PIC", f"{myphoto_urls}")
     except IndexError:
         if gvarstatus("DEFAULT_PIC"):
             delgvar("DEFAULT_PIC")

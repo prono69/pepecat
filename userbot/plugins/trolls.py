@@ -9,9 +9,9 @@
 
 import os
 
-from telegraph import exceptions, upload_file
+from telegraph import exceptions
 
-from userbot import Convert, catub
+from userbot import Convert, catub, upload_file
 
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import reply_id
@@ -53,7 +53,7 @@ async def _(event):
     except exceptions.TelegraphException as exc:
         os.remove(output[1])
         return await output[0].edit(f"**Error: **\n`{exc}`")
-    cat = f"https://graph.org{response[0]}"
+    cat = f"{response}"
     cat = await trash(cat)
     os.remove(output[1])
     await output[0].delete()
@@ -93,7 +93,7 @@ async def _(event):
     except exceptions.TelegraphException as exc:
         os.remove(output[1])
         return await output[0].edit(f"**Error: **\n`{exc}`")
-    cat = f"https://graph.org{response[0]}"
+    cat = f"{response}"
     cat = await threats(cat)
     await output[0].delete()
     os.remove(output[1])
@@ -143,7 +143,7 @@ async def _(event):
     except exceptions.TelegraphException as exc:
         os.remove(output[1])
         return await output[0].edit(f"**Error: **\n`{exc}`")
-    cat = f"https://graph.org{response[0]}"
+    cat = f"{response}"
     cat = await trap(text1, text2, cat)
     await output[0].delete()
     os.remove(output[1])
@@ -194,7 +194,7 @@ async def _(event):
     except exceptions.TelegraphException as exc:
         os.remove(output[1])
         return await output[0].edit(f"**Error: **\n`{exc}`")
-    cat = f"https://graph.org{response[0]}"
+    cat = f"{response}"
     cat = await phcomment(cat, text, username)
     await output[0].delete()
     os.remove(output[1])

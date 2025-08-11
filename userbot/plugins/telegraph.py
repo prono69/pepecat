@@ -14,7 +14,7 @@ from datetime import datetime
 
 import webpage2telegraph
 from PIL import Image
-from telegraph import Telegraph, exceptions, upload_file
+from telegraph import Telegraph, exceptions
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.contacts import UnblockRequest as unblock
 from telethon.utils import get_display_name
@@ -24,7 +24,7 @@ from ..Config import Config
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import delete_conv
-from . import BOTLOG, BOTLOG_CHATID, catub, reply_id
+from . import BOTLOG, BOTLOG_CHATID, catub, reply_id, upload_file
 
 LOGS = logging.getLogger(__name__)
 
@@ -97,7 +97,7 @@ async def _(event):
             ms = (end - start).seconds
             os.remove(downloaded_file_name)
             await catevent.edit(
-                f"**link : **[telegraph](https://graph.org{media_urls[0]})\
+                f"**link : **[telegraph]({media_urls})\
                     \n**Time Taken : **`{ms} seconds.`",
                 link_preview=True,
             )
