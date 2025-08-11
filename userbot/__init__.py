@@ -13,8 +13,8 @@ import time
 
 import heroku3
 import requests
-from fake_useragent import UserAgent
 from catbox import CatboxUploader
+from fake_useragent import UserAgent
 
 from .Config import Config
 from .core.logger import logging
@@ -52,6 +52,7 @@ agent = UserAgent()
 
 def user_agent():
     return agent.random
+
 
 cat_uploader = CatboxUploader()
 upload_file = cat_uploader.upload_file

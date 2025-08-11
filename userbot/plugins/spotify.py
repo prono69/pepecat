@@ -1,4 +1,4 @@
-""" Module to display Currenty Playing Spotify Songs in your bio """
+"""Module to display Currenty Playing Spotify Songs in your bio"""
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~# CatUserBot #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Copyright (C) 2020-2023 by TgCatUB@Github.

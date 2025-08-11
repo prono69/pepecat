@@ -1,4 +1,4 @@
-""" Download Youtube Video / Audio in a User friendly interface """
+"""Download Youtube Video / Audio in a User friendly interface"""
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~# CatUserBot #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # Copyright (C) 2020-2023 by TgCatUB@Github.

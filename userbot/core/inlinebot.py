@@ -444,7 +444,7 @@ async def inline_handler(event):
         match3 = re.findall(hid, query)
         if query.startswith("ping"):
             txt = f"• Ping • {mention} •"
-            button = [(Button.inline("Check", data="ping"))]
+            button = [Button.inline("Check", data="ping")]
             PIC = random.choice(gvarstatus("PING_PICS").split())
             if PIC and PIC.endswith((".jpg", ".jpeg", ".png")):  # fk it im adding
                 result = builder.photo(
