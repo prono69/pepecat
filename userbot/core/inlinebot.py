@@ -434,7 +434,7 @@ async def inline_handler(event):
     query.split(" ", 2)
     str_y = query.split(" ", 1)
     string.split()
-    query_user_id = event.query.user_id
+    query_user_id = event.sender_id
     if query_user_id == Config.OWNER_ID or query_user_id in Config.SUDO_USERS:
         hmm = re.compile("troll (.*) (.*)")
         match = re.findall(hmm, query)

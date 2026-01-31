@@ -24,7 +24,7 @@ LOGS = logging.getLogger(__name__)
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(r"^age_verification_true")))
 async def age_verification_true(event: CallbackQuery):
-    u_id = event.query.user_id
+    u_id = event.sender_id
     if u_id != Config.OWNER_ID and u_id not in Config.SUDO_USERS:
         return await event.answer(
             "Given That It's A Stupid-Ass Decision, I've Elected To Ignore It.",
@@ -47,7 +47,7 @@ async def age_verification_true(event: CallbackQuery):
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(r"^age_verification_false")))
 async def age_verification_false(event: CallbackQuery):
-    u_id = event.query.user_id
+    u_id = event.sender_id
     if u_id != Config.OWNER_ID and u_id not in Config.SUDO_USERS:
         return await event.answer(
             "Given That It's A Stupid-Ass Decision, I've Elected To Ignore It.",
@@ -70,7 +70,7 @@ async def age_verification_false(event: CallbackQuery):
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(r"^chg_of_decision_")))
 async def chg_of_decision_(event: CallbackQuery):
-    u_id = event.query.user_id
+    u_id = event.sender_id
     if u_id != Config.OWNER_ID and u_id not in Config.SUDO_USERS:
         return await event.answer(
             "Given That It's A Stupid-Ass Decision, I've Elected To Ignore It.",

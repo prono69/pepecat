@@ -62,7 +62,7 @@ async def icalc(e):
 
 @catub.tgbot.on(InlineQuery)
 async def inlinecalc(event):
-    query_user_id = event.query.user_id
+    query_user_id = event.sender_id
     query = event.text
     string = query.lower()
     if (

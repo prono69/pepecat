@@ -495,7 +495,7 @@ async def you_dm_other(event):
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"show_pmpermit_options")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == event.client.uid:
+    if event.sender_id == event.client.uid:
         text = "Idoit these options are for users who messages you, not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = f"""Ok, Now you are accessing the availabe menu of my master, {mention}.
@@ -513,13 +513,13 @@ __Let's make this smooth and let me know why you are here.__
             ),
         ),
     ]
-    sqllist.add_to_list("pmoptions", event.query.user_id)
+    sqllist.add_to_list("pmoptions", event.sender_id)
     try:
         PM_WARNS = sql.get_collection("pmwarns").json
     except AttributeError:
         PM_WARNS = {}
-    if str(event.query.user_id) in PM_WARNS:
-        del PM_WARNS[str(event.query.user_id)]
+    if str(event.sender_id) in PM_WARNS:
+        del PM_WARNS[str(event.sender_id)]
         sql.del_collection("pmwarns")
         sql.add_collection("pmwarns", PM_WARNS, {})
     await event.edit(text, buttons=buttons)
@@ -527,70 +527,70 @@ __Let's make this smooth and let me know why you are here.__
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_enquire_something")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == event.client.uid:
+    if event.sender_id == event.client.uid:
         text = "Idoit this options for user who messages you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = """__Okay. Your request has been registered. Do not spam my master's inbox now. \
 My master is busy right now, When My master comes online he/she will check your message and ping you. \
 Then we can extend this conversation more but not right now.__"""
-    sqllist.add_to_list("pmenquire", event.query.user_id)
+    sqllist.add_to_list("pmenquire", event.sender_id)
     try:
         PM_WARNS = sql.get_collection("pmwarns").json
     except AttributeError:
         PM_WARNS = {}
-    if str(event.query.user_id) in PM_WARNS:
-        del PM_WARNS[str(event.query.user_id)]
+    if str(event.sender_id) in PM_WARNS:
+        del PM_WARNS[str(event.sender_id)]
         sql.del_collection("pmwarns")
         sql.add_collection("pmwarns", PM_WARNS, {})
-    sqllist.rm_from_list("pmoptions", event.query.user_id)
+    sqllist.rm_from_list("pmoptions", event.sender_id)
     await event.edit(text)
 
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_request_something")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == event.client.uid:
+    if event.sender_id == event.client.uid:
         text = "Idoit this options for user who messages you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = """__Okay. I have notified my master about this. When he/she comes comes online\
  or when my master is free he/she will look into this chat and will ping you so we can have a friendly chat.__\
  
 **But right now please do not spam unless you wish to get blocked.**"""
-    sqllist.add_to_list("pmrequest", event.query.user_id)
+    sqllist.add_to_list("pmrequest", event.sender_id)
     try:
         PM_WARNS = sql.get_collection("pmwarns").json
     except AttributeError:
         PM_WARNS = {}
-    if str(event.query.user_id) in PM_WARNS:
-        del PM_WARNS[str(event.query.user_id)]
+    if str(event.sender_id) in PM_WARNS:
+        del PM_WARNS[str(event.sender_id)]
         sql.del_collection("pmwarns")
         sql.add_collection("pmwarns", PM_WARNS, {})
-    sqllist.rm_from_list("pmoptions", event.query.user_id)
+    sqllist.rm_from_list("pmoptions", event.sender_id)
     await event.edit(text)
 
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_chat_with_my_master")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == event.client.uid:
+    if event.sender_id == event.client.uid:
         text = "Idoit these options are for users who message you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = """__Yaa sure we can have a friendly chat but not right now. we can have this\
 some other time. Right now I am a little busy. when I come online and if I am free. I will ping you ,this is Damm sure.__"""
-    sqllist.add_to_list("pmchat", event.query.user_id)
+    sqllist.add_to_list("pmchat", event.sender_id)
     try:
         PM_WARNS = sql.get_collection("pmwarns").json
     except AttributeError:
         PM_WARNS = {}
-    if str(event.query.user_id) in PM_WARNS:
-        del PM_WARNS[str(event.query.user_id)]
+    if str(event.sender_id) in PM_WARNS:
+        del PM_WARNS[str(event.sender_id)]
         sql.del_collection("pmwarns")
         sql.add_collection("pmwarns", PM_WARNS, {})
-    sqllist.rm_from_list("pmoptions", event.query.user_id)
+    sqllist.rm_from_list("pmoptions", event.sender_id)
     await event.edit(text)
 
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(rb"to_spam_my_master_inbox")))
 async def on_plug_in_callback_query_handler(event):
-    if event.query.user_id == event.client.uid:
+    if event.sender_id == event.client.uid:
         text = "Idoit these options are for users who message you. not for you"
         return await event.answer(text, cache_time=0, alert=True)
     text = "`███████▄▄███████████▄\
@@ -608,16 +608,16 @@ async def on_plug_in_callback_query_handler(event):
          \n░░░░░░░░░░░░▀▀`\
          \n**So uncool, this is not your home. Go bother somewhere else.\
          \n\nAnd this is your last warning if you send one more message you will be blocked automatically.**"
-    sqllist.add_to_list("pmspam", event.query.user_id)
+    sqllist.add_to_list("pmspam", event.sender_id)
     try:
         PM_WARNS = sql.get_collection("pmspam").json
     except AttributeError:
         PM_WARNS = {}
-    if str(event.query.user_id) in PM_WARNS:
-        del PM_WARNS[str(event.query.user_id)]
+    if str(event.sender_id) in PM_WARNS:
+        del PM_WARNS[str(event.sender_id)]
         sql.del_collection("pmwarns")
         sql.add_collection("pmwarns", PM_WARNS, {})
-    sqllist.rm_from_list("pmoptions", event.query.user_id)
+    sqllist.rm_from_list("pmoptions", event.sender_id)
     await event.edit(text)
 
 

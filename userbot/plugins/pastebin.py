@@ -376,7 +376,7 @@ async def get_dogbin_content(event):
         if "pasty" in url:
             rawurl = f"https://pasty.lus.pm/{fid[0]}/raw"
         elif "spaceb" in url:
-            rawurl = f"https://spaceb.in/api/v1/documents/{fid[0]}/raw"
+            rawurl = f"https://spaceb.in/api/{fid[0]}/raw"
         elif "nekobin" in url:
             rawurl = f"nekobin.com/raw/{fid[0]}"
         elif "catbin" in url:
