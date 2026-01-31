@@ -62,7 +62,9 @@ async def s_paste(message, extension="txt"):
     """
     siteurl = "https://spaceb.in/api/"
     try:
-        response = requests.post(siteurl, json={"content": message, "extension": extension})
+        response = requests.post(
+            siteurl, json={"content": message, "extension": extension}
+        )
     except Exception as e:
         return {"error": str(e)}
     if response.ok:
@@ -83,7 +85,9 @@ def spaste(message, extension="txt"):
     """
     siteurl = "https://spaceb.in/api/"
     try:
-        response = requests.post(siteurl, json={"content": message, "extension": extension})
+        response = requests.post(
+            siteurl, json={"content": message, "extension": extension}
+        )
     except Exception as e:
         return {"error": str(e)}
     if response.ok:

@@ -238,7 +238,7 @@ class Main(object):
 
     def fetch_storage(self, url):
         self.log(f"Fetching storage: {url}", True)
-        (code, headers, body) = self.request_data(self.options.url[0])
+        code, headers, body = self.request_data(self.options.url[0])
         self.assert_status_code(code, 200)
 
         html = self.request_data_decode(body, headers)
@@ -291,7 +291,7 @@ class Main(object):
     def fetch_token(self):
         url = "https://cloud.mail.ru/api/v2/tokens/download"
         self.log(f"Fetching token: {url}", True)
-        (code, headers, body) = self.request_data(url)
+        code, headers, body = self.request_data(url)
         self.assert_status_code(code, 200)
 
         json_str = self.request_data_decode(body, headers)

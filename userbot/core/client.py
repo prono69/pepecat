@@ -169,7 +169,8 @@ class CatUserBotClient(TelegramClient):
                         if Config.PRIVATE_GROUP_BOT_API_ID == 0:
                             return
                         date = (datetime.datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-                        ftext = f"\nDisclaimer:\nThis file is pasted only here ONLY here,\
+                        ftext = (
+                            f"\nDisclaimer:\nThis file is pasted only here ONLY here,\
                                   \nwe logged only fact of error and date,\nwe respect your privacy,\
                                   \nyou may not report this error if you've\
                                   \nany confidential data here, no one will see your data\
@@ -180,6 +181,7 @@ class CatUserBotClient(TelegramClient):
                                   \n\nEvent Trigger:\n{str(check.text)}\
                                   \n\nTraceback info:\n{str(traceback.format_exc())}\
                                   \n\nError text:\n{str(sys.exc_info()[1])}"
+                        )
                         new = {
                             "error": str(sys.exc_info()[1]),
                             "date": datetime.datetime.now(),
@@ -309,7 +311,8 @@ class CatUserBotClient(TelegramClient):
                         if Config.PRIVATE_GROUP_BOT_API_ID == 0:
                             return
                         date = (datetime.datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-                        ftext = f"\nDisclaimer:\nThis file is pasted only here ONLY here,\
+                        ftext = (
+                            f"\nDisclaimer:\nThis file is pasted only here ONLY here,\
                                     \nwe logged only fact of error and date,\nwe respect your privacy,\
                                     \nyou may not report this error if you've\
                                     \nany confidential data here, no one will see your data\
@@ -320,6 +323,7 @@ class CatUserBotClient(TelegramClient):
                                     \n\nEvent Trigger:\n{str(check.text)}\
                                     \n\nTraceback info:\n{str(traceback.format_exc())}\
                                     \n\nError text:\n{str(sys.exc_info()[1])}"
+                        )
                         new = {
                             "error": str(sys.exc_info()[1]),
                             "date": datetime.datetime.now(),

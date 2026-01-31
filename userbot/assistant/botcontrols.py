@@ -39,8 +39,7 @@ cmhd = Config.COMMAND_HAND_LER
 
 @catub.bot_cmd(pattern=f"^/help({botusername})?([\s]+)?$", from_users=Config.OWNER_ID)
 async def bot_help(event):
-    await event.reply(
-        f"""The commands in the bot are:
+    await event.reply(f"""The commands in the bot are:
 **Note : **__This commands work only in this bot__ {botusername}
 
 • **Cmd : **/uinfo <reply to user message>
@@ -61,8 +60,7 @@ async def bot_help(event):
 
 • **Cmd : **/ping
 • **Info : **__Check bot ping.__
-"""
-    )
+""")
 
 
 @catub.bot_cmd(pattern="^/broadcast$", from_users=Config.OWNER_ID)

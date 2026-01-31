@@ -193,10 +193,8 @@ async def download_audio(event):  # sourcery skip: low-code-quality
                 _fpath = _path
         if not _fpath:
             return await edit_delete(catevent, "__Unable to upload file__")
-        await catevent.edit(
-            f"`Preparing to upload video:`\
-            \n**{vid_data['title']}***"
-        )
+        await catevent.edit(f"`Preparing to upload video:`\
+            \n**{vid_data['title']}***")
         attributes, mime_type = get_attributes(str(_fpath))
         ul = io.open(pathlib.Path(_fpath), "rb")
         if thumb_pic is None:
@@ -273,10 +271,8 @@ async def download_video(event):
                 catthumb = pathlib.Path("cat_ytv.webp")
             if not os.path.exists(catthumb):
                 catthumb = None
-            await catevent.edit(
-                f"`Preparing to upload video:`\
-                \n**{ytdl_data['title']}**"
-            )
+            await catevent.edit(f"`Preparing to upload video:`\
+                \n**{ytdl_data['title']}**")
             ul = io.open(f, "rb")
             c_time = time()
             attributes, mime_type = await fix_attributes(

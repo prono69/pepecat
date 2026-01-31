@@ -323,8 +323,10 @@ async def rm_deletedacc(show):  # sourcery no-metrics
                 f"Successfully cleaned **{del_u}** deleted account(s) in the group."
             )
         if del_a > 0:
-            del_status = f"Successfully cleaned **{del_u}** deleted account(s) in the group.\
+            del_status = (
+                f"Successfully cleaned **{del_u}** deleted account(s) in the group.\
             \n**{del_a}** deleted admin accounts are not removed"
+            )
     else:
         catadmin = await is_admin(show.client, show.chat_id, show.client.uid)
         if not catadmin:
@@ -525,8 +527,7 @@ Bots: {}
 None: {}"""
         await et.edit(required_string.format(c, p, d, y, m, w, o, q, r, b, n))
         await sleep(5)
-    await et.edit(
-        """Total: {} users
+    await et.edit("""Total: {} users
 Deleted Accounts: {}
 UserStatusEmpty: {}
 UserStatusLastMonth: {}
@@ -535,7 +536,4 @@ UserStatusOffline: {}
 UserStatusOnline: {}
 UserStatusRecently: {}
 Bots: {}
-None: {}""".format(
-            p, d, y, m, w, o, q, r, b, n
-        )
-    )
+None: {}""".format(p, d, y, m, w, o, q, r, b, n))

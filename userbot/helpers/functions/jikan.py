@@ -402,8 +402,7 @@ async def anilist_user(input_str):
         error_sts = error[0].get("message")
         return [f"{error_sts}"]
     user_data = result["data"]["User"]
-    stats = textwrap.dedent(
-        f"""
+    stats = textwrap.dedent(f"""
 **User name :** [{user_data['name']}]({user_data['siteUrl']})
 **Anilist ID :** `{user_data['id']}` 
 **Joined anilist :**`{datetime.fromtimestamp(user_data['createdAt'])}`
@@ -420,8 +419,7 @@ async def anilist_user(input_str):
 • **Total Chapters Read :** `{user_data["statistics"]["manga"]['chaptersRead']}`
 • **Total Volumes Read : **`{user_data["statistics"]["manga"]['volumesRead']}`
 • **Average Score : **`{user_data["statistics"]["manga"]['meanScore']}`
-"""
-    )
+""")
     return stats, f'https://img.anili.st/user/{user_data["id"]}?a={time.time()}'
 
 
@@ -630,8 +628,7 @@ async def get_anime_manga(search_str, search_type, _user_id):  # sourcery no-met
                 endaired += "-" + str(result["endDate"]["month"])
             if result["endDate"]["day"]:
                 endaired += "-" + str(result["endDate"]["day"])
-        caption += textwrap.dedent(
-            f"""
+        caption += textwrap.dedent(f"""
         🆎 <b>Type</b>: <i>{result['type'].lower()}</i>
         🆔 <b>MAL ID</b>: <i>{result['idMal']}</i>
         🆔 <b>AL ID</b>: <i>{result['id']}</i>
@@ -645,8 +642,7 @@ async def get_anime_manga(search_str, search_type, _user_id):  # sourcery no-met
         ⌛ <b>Duration</b>: <i>{result['duration']}</i>
         🎭 <b>Genres</b>: <i>{genre_string}</i>
         🎙️ <b>Studios</b>: <i>{studio_string}</i>
-        """
-        )
+        """)
         synopsis_link = await post_to_telegraph(
             title_h,
             f"<img src='{title_img}' title={romaji}/>\n"
@@ -656,8 +652,7 @@ async def get_anime_manga(search_str, search_type, _user_id):  # sourcery no-met
         )
         caption += f"<b>{TRAILER}</b>\n📖 <a href='{synopsis_link}'><b>Synopsis</b></a> <b>&</b> <a href='{result['siteUrl']}'><b>Read More</b></a>"
     elif search_type == "anime_manga":
-        caption += textwrap.dedent(
-            f"""
+        caption += textwrap.dedent(f"""
         🆎 <b>Type</b>: <i>{result['type'].lower()}</i>
         🆔 <b>MAL ID</b>: <i>{result['idMal']}</i>
         🆔 <b>AL ID</b>: <i>{result['id']}</i>
@@ -667,8 +662,7 @@ async def get_anime_manga(search_str, search_type, _user_id):  # sourcery no-met
         💯 <b>Score</b>: <i>{result['averageScore']}</i>
         📊 <b>Popularity</b>: <i>{result['popularity']}</i>
         🎭 <b>Genres</b>: <i>{genre_string}</i>
-        """
-        )
+        """)
         synopsis_link = await post_to_telegraph(
             title_h,
             f"<img src='{title_img}' title={romaji}/>\n"

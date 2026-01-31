@@ -487,7 +487,5 @@ Title: {}
 Alt: {}
 Day: {}
 Month: {}
-Year: {}""".format(
-        img, input_str, xkcd_link, safe_title, alt, day, month, year
-    )
+Year: {}""".format(img, input_str, xkcd_link, safe_title, alt, day, month, year)
     await catevent.edit(output_str, link_preview=True)
