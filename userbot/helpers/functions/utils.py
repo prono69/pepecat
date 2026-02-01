@@ -14,6 +14,7 @@ from datetime import datetime
 import aiohttp
 import requests
 from emoji import get_emoji_regexp
+from typing import Optional, Any
 from telethon.tl.types import Channel, PollAnswer
 
 
