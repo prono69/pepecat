@@ -21,6 +21,7 @@ from .core.logger import logging
 from .core.session import catub
 from .helpers.functions.converter import Convert
 from .helpers.functions.musictool import *
+from .helpers.functions.utils import upload_to_temp_web, upload_to_envs
 from .helpers.utils.utils import runasync
 from .sql_helper.globals import addgvar, delgvar, gvarstatus
 
@@ -56,6 +57,8 @@ def user_agent():
 
 cat_uploader = CatboxUploader()
 upload_file = cat_uploader.upload_file
+upload_web = upload_to_temp_web
+upload_envs = upload_to_envs
 
 UPSTREAM_REPO_URL = Config.UPSTREAM_REPO
 

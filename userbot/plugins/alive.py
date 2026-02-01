@@ -10,10 +10,11 @@
 import random
 import re
 import time
+import aiohttp
+import asyncio
 from datetime import datetime
 from platform import python_version
 
-import requests
 from telethon import version
 from telethon.errors.rpcerrorlist import (
     MediaEmptyError,
@@ -34,86 +35,100 @@ from . import mention
 plugin_category = "utils"
 sucks = "The stars sure are beautiful tonight | Am I frightening... woman? "  # dis is str for a reason
 
+async def get_anime_quote():
+    url = "https://waifu.it/api/v4/quote"
+    headers = {
+        "Authorization": "NDE0OTk4MTA0MzQyMDAzNzIz.MTcxODQyNDM5NA--.ab7207fceb"
+    }
+
+    timeout = aiohttp.ClientTimeout(total=8)
+
+    try:
+        async with aiohttp.ClientSession(timeout=timeout) as session:
+            async with session.get(url, headers=headers) as resp:
+                if resp.status != 200:
+                    return None
+                data = await resp.json()
+                return data
+    except (aiohttp.ClientError, asyncio.TimeoutError):
+        return None
+
 
 @catub.cat_cmd(
     pattern="alive$",
     command=("alive", plugin_category),
     info={
-        "header": "To check bot's alive status",
-        "options": "To show media in this cmd you need to set ALIVE_PIC with media link, get this by replying the media by .tgm",
-        "usage": [
-            "{tr}alive",
-        ],
+        "header": "Check bot alive status",
+        "options": "Set ALIVE_PIC with media link (use .tgm)",
+        "usage": ["{tr}alive"],
     },
 )
 async def amireallyalive(event):
-    "A kind of showing bot details"
     reply_to_id = await reply_id(event)
-    ANIME = None
-    cat_caption = gvarstatus("ALIVE_TEMPLATE") or temp
-    if "ANIME" in cat_caption:
-        data = requests.get(
-            "https://waifu.it/api/v4/quote",
-            headers={
-                "Authorization": "NDE0OTk4MTA0MzQyMDAzNzIz.MTcxODQyNDM5NA--.ab7207fceb",
-            },
-        ).json()
-        ANIME = f"**“{data['quote']}” - {data['author']} ({data['anime']})**"
-    uptime = await get_readable_time((time.time() - StartTime))
-    start = datetime.now()
     catevent = await edit_or_reply(event, "`Checking...`")
-    end = datetime.now()
-    ms = (end - start).microseconds / 1000
-    _, check_sgnirts = check_data_base_heal_th()
+
+    start = datetime.now()
+
+    # Uptime & ping
+    uptime = await get_readable_time(time.time() - StartTime)
+    ping = (datetime.now() - start).microseconds / 1000
+
+    # DB health
+    _, db_health = check_data_base_heal_th()
+
+    # Vars
     EMOJI = gvarstatus("ALIVE_EMOJI") or "〣 "
-    # ================================================
-    api_url = requests.get(
-        "https://waifu.it/api/v4/quote",
-        headers={
-            "Authorization": "NDE0OTk4MTA0MzQyMDAzNzIz.MTcxODQyNDM5NA--.ab7207fceb",
-        },
-    ).json()
-    try:
-        response = api_url
-    except Exception:
-        response = None
-    quote = response["quote"]
-    while len(quote) > 150 and (quote not in sucks):
-        res = api_url
-        quote = res["quote"]
-    ANIME_QUOTE = f"__{quote}__"
-    # ================================================
-    ALIVE_TEXT = ANIME_QUOTE or gvarstatus("ALIVE_TEXT")
     CAT_IMG = gvarstatus("ALIVE_PIC")
+    cat_caption = gvarstatus("ALIVE_TEMPLATE") or temp
+
+    ANIME = None
+    ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or sucks
+
+    # Fetch anime quote (safe)
+    quote_data = await get_anime_quote()
+
+    if quote_data:
+        quote = quote_data.get("quote", "")
+        author = quote_data.get("author", "")
+        anime = quote_data.get("anime", "")
+
+        if len(quote) <= 150:
+            ALIVE_TEXT = f"__{quote}__"
+            ANIME = f"**“{quote}” - {author} ({anime})**"
+
+    # Final caption
     caption = cat_caption.format(
         ALIVE_TEXT=ALIVE_TEXT,
-        ANIME=ANIME,
+        ANIME=ANIME or "",
         EMOJI=EMOJI,
         mention=mention,
         uptime=uptime,
         telever=version.__version__,
         catver=catversion,
         pyver=python_version(),
-        dbhealth=check_sgnirts,
-        ping=ms,
+        dbhealth=db_health,
+        ping=ping,
     )
-    if CAT_IMG:
-        CAT = list(CAT_IMG.split())
-        PIC = random.choice(CAT)
-        try:
+
+    # Send media or text
+    try:
+        if CAT_IMG:
+            pics = CAT_IMG.split()
+            pic = random.choice(pics)
             await event.client.send_file(
-                event.chat_id, PIC, caption=caption, reply_to=reply_to_id
+                event.chat_id,
+                pic,
+                caption=caption,
+                reply_to=reply_to_id,
             )
             await catevent.delete()
-        except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError):
-            return await edit_or_reply(
-                catevent,
-                f"**Media Value Error!!**\n__Change the link by __`.setdv`\n\n**__Can't get media from this link :-**__ `{PIC}`",
-            )
-    else:
+        else:
+            await edit_or_reply(catevent, caption)
+
+    except (WebpageMediaEmptyError, MediaEmptyError, WebpageCurlFailedError):
         await edit_or_reply(
             catevent,
-            caption,
+            "**Media Error!**\nUse `.setdv` to update ALIVE_PIC.",
         )
 
 

@@ -8,22 +8,17 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 from PIL import Image
-from telegraph import Telegraph, exceptions
 from telethon.tl import types
 from telethon.tl.functions.users import GetFullUserRequest
 from urlextract import URLExtract
+from validators.url import url
 
-from userbot import BOTLOG_CHATID, addgvar, catub, delgvar, gvarstatus, upload_file
+from userbot import BOTLOG_CHATID, addgvar, catub, delgvar, gvarstatus, upload_envs
 from userbot.core.logger import logging
 from userbot.core.managers import edit_delete, edit_or_reply
 
 plugin_category = "tools"
 LOGS = logging.getLogger(__name__)
-
-
-telegraph = Telegraph()
-r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
-auth_url = r["auth_url"]
 
 
 def resize_image(image):
@@ -151,11 +146,11 @@ async def bad(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
                 try:
                     if downloaded_file_name.endswith((".webp")):
                         resize_image(downloaded_file_name)
-                    media_urls = upload_file(downloaded_file_name)
+                    media_urls = await upload_envs(downloaded_file_name)
                     vinfo = f"{media_urls}"
                 except AttributeError:
                     return await event.edit("`Error while making link`")
-                except exceptions.TelegraphException as exc:
+                except Exception as exc:
                     return await event.edit(f"**Error** : `{str(exc)}`")
         except AttributeError:
             vinfo = reply.text
@@ -190,7 +185,7 @@ async def bad(event):  # sourcery no-metrics  # sourcery skip: low-code-quality
                 try:
                     photos = await catub.get_profile_photos(catub.uid)
                     myphoto = await catub.download_media(photos[0])
-                    myphoto_urls = upload_file(myphoto)
+                    myphoto_urls = await upload_envs(myphoto)
                     addgvar("DEFAULT_PIC", f"{myphoto_urls}")
                 except IndexError:
                     if gvarstatus("DEFAULT_PIC"):

@@ -9,11 +9,41 @@
 
 import re
 import time
+import requests
+import aiohttp
 from datetime import datetime
 
 from emoji import get_emoji_regexp
 from telethon.tl.types import Channel, PollAnswer
 
+async def upload_to_temp_web(file_path: str, secret: bool = True, expires: Optional[int] = None) -> str:
+    url = "https://0x0.st"
+    headers = {"User-Agent": "MyUploader/1.0"}
+    data = {}
+    if secret:
+        data["secret"] = ""
+    if expires is not None:
+        data["expires"] = str(expires)
+    with open(file_path, "rb") as f:
+        resp = requests.post(url, headers=headers, files={"file": f}, data=data)
+    if resp.status_code == 200:
+        return resp.text.strip()
+    return None
+    
+    
+async def upload_to_envs(file_path):
+    url = "https://envs.sh"
+    async with aiohttp.ClientSession() as session:
+        with open(file_path, "rb") as f:
+            files = {"file": f.read()}  # Read file content asynchronously
+        async with session.post(url, data=files) as response:
+            if response.status == 200:
+                response_text = await response.text()
+                url_ = response_text.split(" ")[-1]
+                return url_
+            else:
+                return f"Error: {response.status} - {await response.text()}"
+    
 
 async def get_message_link(channelid, msgid):
     if str(channelid).startswith("-"):

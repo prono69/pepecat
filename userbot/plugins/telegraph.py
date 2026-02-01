@@ -24,7 +24,7 @@ from ..Config import Config
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import delete_conv
-from . import BOTLOG, BOTLOG_CHATID, catub, reply_id, upload_file
+from . import BOTLOG, BOTLOG_CHATID, catub, reply_id, upload_envs
 
 LOGS = logging.getLogger(__name__)
 
@@ -88,7 +88,7 @@ async def _(event):
         if downloaded_file_name.endswith((".webp")):
             resize_image(downloaded_file_name)
         try:
-            media_urls = upload_file(downloaded_file_name)
+            media_urls = await upload_envs(downloaded_file_name)
         except exceptions.TelegraphException as exc:
             await edit_delete(event, f"**Error : **\n`{exc}`")
             os.remove(downloaded_file_name)
@@ -97,7 +97,7 @@ async def _(event):
             ms = (end - start).seconds
             os.remove(downloaded_file_name)
             await catevent.edit(
-                f"**link : **[telegraph]({media_urls})\
+                f"**link : **[Telegraph]({media_urls})\
                     \n**Time Taken : **`{ms} seconds.`",
                 link_preview=True,
             )
