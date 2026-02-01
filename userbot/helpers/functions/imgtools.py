@@ -55,14 +55,14 @@ async def crop(imagefile, endname, x):
 
 
 async def crop_and_divide(img):
-    (width, height) = img.size
+    width, height = img.size
     rows = 5
     columns = 5
     scale_width = width // columns
     scale_height = height // rows
     if (scale_width * columns, scale_height * rows) != (width, height):
         img = img.resize((scale_width * columns, scale_height * rows))
-    (new_width, new_height) = (0, 0)
+    new_width, new_height = (0, 0)
     media = []
     for _ in range(1, rows + 1):
         for _ in range(1, columns + 1):

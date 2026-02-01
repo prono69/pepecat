@@ -238,10 +238,8 @@ async def untar_file(event):  # sourcery no-metrics
             file.close()
             end = datetime.now()
             ms = (end - start).seconds
-            await mone.edit(
-                f"**Time Taken :** `{ms} seconds`\
-                \nUnpacked the input path `{input_str}` and stored to `{destination}`"
-            )
+            await mone.edit(f"**Time Taken :** `{ms} seconds`\
+                \nUnpacked the input path `{input_str}` and stored to `{destination}`")
         else:
             await edit_delete(event, f"I can't find that path `{input_str}`", 10)
     elif event.reply_to_msg_id:
@@ -282,10 +280,8 @@ async def untar_file(event):  # sourcery no-metrics
         file.close()
         end = datetime.now()
         ms = (end - start).seconds
-        await mone.edit(
-            f"**Time Taken :** `{ms} seconds`\
-                \nUnpacked the replied file and stored to `{destination}`"
-        )
+        await mone.edit(f"**Time Taken :** `{ms} seconds`\
+                \nUnpacked the replied file and stored to `{destination}`")
         os.remove(filename)
     else:
         await edit_delete(

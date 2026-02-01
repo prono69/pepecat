@@ -549,8 +549,7 @@ class googleimagesdownload:
 
         # Open the link
         browser.get(url)
-        browser.execute_script(
-            """
+        browser.execute_script("""
             (function(XHR){
                 "use strict";
                 var open = XHR.prototype.open;
@@ -576,8 +575,7 @@ class googleimagesdownload:
                 };
                 XHR.prototype._data = [];
             })(XMLHttpRequest);
-        """
-        )
+        """)
 
         time.sleep(1)
         print("Getting you a lot of images. This may take a few moments...")

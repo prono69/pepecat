@@ -175,8 +175,7 @@ async def user(event):
     about_string = " ".join(about)
     about_string = about_string.replace("<br>", "").strip().replace("\r\n", "\n")
     caption = ""
-    caption += textwrap.dedent(
-        f"""
+    caption += textwrap.dedent(f"""
     **Username:** [{user['username']}]({user['url']})
     **Gender:** `{user['gender']}`
     **MAL ID:** `{user['user_id']}`
@@ -188,8 +187,7 @@ async def user(event):
     **No of completed Animes:** `{user['anime_stats']['completed']}`
     **Total No of episodes Watched:** `{user['anime_stats']['episodes_watched']}`
     **Days wasted reading Manga:** `{user['manga_stats']['days_read']}`
-    """
-    )
+    """)
 
     caption += f"**About:** __{about_string}__"
     await event.client.send_file(
@@ -625,8 +623,7 @@ async def anilist(event):  # sourcery no-metrics
     if result["dateOfBirth"]["day"]:
         dateofbirth.append(str(result["dateOfBirth"]["day"]))
     dob = "-".join(dateofbirth) if dateofbirth else "Unknown"
-    caption = textwrap.dedent(
-        f"""
+    caption = textwrap.dedent(f"""
         🆎 <b> Name</b>: <i>{result['name']['full']}</i>
         🆔 <b>AL ID</b>: <i>{result['id']}</i>
         👫 <b>Gender</b>: <i>{result['gender'].lower()}</i>
@@ -634,8 +631,7 @@ async def anilist(event):  # sourcery no-metrics
         🎂 <b>Date of Birth</b>: {dob}
         📃 <b>Blood Type</b>: <i>{result['bloodType']}</i>
         📊 <b>Liked By</b>: <i>{result['favourites']}</i>
-        """
-    )
+        """)
     html_ = f"""<a href="{result['siteUrl']}">"""
     html_ += f"""<img src="{result['image']['large']}"/></a>"""
     html_ += "<br>"
