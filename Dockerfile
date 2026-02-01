@@ -7,7 +7,7 @@
 # Please see: https://github.com/TgCatUB/catuserbot/blob/master/LICENSE
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
  
-FROM catub/core:bullseye
+FROM pepecat/core:bullseye
  
 # Working directory 
 WORKDIR /userbot
