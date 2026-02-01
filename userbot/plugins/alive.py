@@ -7,14 +7,14 @@
 # Please see: https://github.com/TgCatUB/catuserbot/blob/master/LICENSE
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
+import asyncio
 import random
 import re
 import time
-import aiohttp
-import asyncio
 from datetime import datetime
 from platform import python_version
 
+import aiohttp
 from telethon import version
 from telethon.errors.rpcerrorlist import (
     MediaEmptyError,
@@ -35,11 +35,10 @@ from . import mention
 plugin_category = "utils"
 sucks = "The stars sure are beautiful tonight | Am I frightening... woman? "  # dis is str for a reason
 
+
 async def get_anime_quote():
     url = "https://waifu.it/api/v4/quote"
-    headers = {
-        "Authorization": "NDE0OTk4MTA0MzQyMDAzNzIz.MTcxODQyNDM5NA--.ab7207fceb"
-    }
+    headers = {"Authorization": "NDE0OTk4MTA0MzQyMDAzNzIz.MTcxODQyNDM5NA--.ab7207fceb"}
 
     timeout = aiohttp.ClientTimeout(total=8)
 

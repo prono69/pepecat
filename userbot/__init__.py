@@ -21,7 +21,7 @@ from .core.logger import logging
 from .core.session import catub
 from .helpers.functions.converter import Convert
 from .helpers.functions.musictool import *
-from .helpers.functions.utils import upload_to_temp_web, upload_to_envs
+from .helpers.functions.utils import upload_to_envs, upload_to_temp_web
 from .helpers.utils.utils import runasync
 from .sql_helper.globals import addgvar, delgvar, gvarstatus
 
