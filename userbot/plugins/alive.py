@@ -33,18 +33,16 @@ from ..sql_helper.globals import gvarstatus
 from . import mention
 
 plugin_category = "utils"
-sucks = "The stars sure are beautiful tonight | Am I frightening... woman? "  # dis is str for a reason
+sucks = "The night hides more truths than the day ever will."  # dis is str for a reason
 
 
 async def get_anime_quote():
-    url = "https://waifu.it/api/v4/quote"
-    headers = {"Authorization": "NDE0OTk4MTA0MzQyMDAzNzIz.MTcxODQyNDM5NA--.ab7207fceb"}
-
+    url = "https://api.animechan.io/v1/quotes/random"
     timeout = aiohttp.ClientTimeout(total=8)
 
     try:
         async with aiohttp.ClientSession(timeout=timeout) as session:
-            async with session.get(url, headers=headers) as resp:
+            async with session.get(url) as resp:
                 if resp.status != 200:
                     return None
                 data = await resp.json()
@@ -85,11 +83,12 @@ async def amireallyalive(event):
 
     # Fetch anime quote (safe)
     quote_data = await get_anime_quote()
+    data = quote_data.get("data", {})
 
     if quote_data:
-        quote = quote_data.get("quote", "")
-        author = quote_data.get("author", "")
-        anime = quote_data.get("anime", "")
+        quote = data.get("content", "")
+        author = data.get("character", {}).get("name", "")
+        anime = data.get("anime", {}).get("name", "")
 
         if len(quote) <= 150:
             ALIVE_TEXT = f"__{quote}__"
