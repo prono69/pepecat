@@ -10,9 +10,10 @@
 import asyncio
 import os
 
+from telethon.tl.custom import Message
+
 from ..helpers.utils.format import md_to_text, paste_message
 from .data import _sudousers_list
-from telethon.tl.custom import Message
 
 
 # https://t.me/c/1220993104/623253
@@ -93,6 +94,7 @@ async def edit_delete(event, text, time=None, parse_mode=None, link_preview=None
         )
     await asyncio.sleep(time)
     return await catevent.delete()
+
 
 setattr(Message, "eor", edit_or_reply)
 setattr(Message, "eod", edit_delete)
